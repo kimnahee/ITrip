@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.itrip.prj.cbtUser.mapper.CbtUserMapper">
+
+<select id="cbtUserList" resultType="co.itrip.prj.cbtUser.service.CbtUserVO">
+	select * from cbt_user
+</select>
+</mapper>
