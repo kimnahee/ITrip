@@ -4,6 +4,8 @@ import lombok.Data;
 
 @Data
 public class MemberVO {
+	
+	// 멤버 테이블
 	String memberId;
 	String nick;
 	String pw;
