@@ -121,7 +121,6 @@
 
 						<!-- 관리자 페이지 : 권한에 따라 보이게? -->
 						<li class='sidebar-title'>관리자 페이지</li>
-
 						<li class="sidebar-item  has-sub"><a href="#"
 							class='sidebar-link'> <i data-feather="user" width="20"></i>
 								<span>관리자</span>
@@ -151,21 +150,18 @@
 					<span class="navbar-toggler-icon"></span>
 				</button>
 				
-				<!-- 알람(종아이콘) -->
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav d-flex align-items-center navbar-light ml-auto">
 						
-						<li class="dropdown"><a href="#" data-toggle="dropdown"
-							class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-							<!-- 로그인한 사람 -> session 사용 -->
-								<div class="d-none d-md-block d-lg-inline-block">로그인</div>
-						</a>
+						<li class="dropdown">
+						<!-- <a href="loginForm.do" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user"> -->
+							<a href="loginForm.do" class="d-none d-md-block d-lg-inline-block">로그인</a>
 						</li>
 						
 						<li class="dropdown"><a href="#" data-toggle="dropdown"
 							class="nav-link dropdown-toggle nav-link-lg nav-link-user">
 							<!-- 로그인한 사람 -> session 사용 -->
-								<div class="d-none d-md-block d-lg-inline-block">회원가입</div>
+								<a href="signupForm.do" class="d-none d-md-block d-lg-inline-block">회원가입</a>
 						</a>
 						</li>
 						
