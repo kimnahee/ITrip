@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.itrip.prj.cbtGuide.mapper.CbtGuideMapper">
+
+	<!-- List<CbtGuideVO> cbtGuideList();//전체조회(R) -->
+	<select id="cbtGuideList" resultType="co.itrip.prj.cbtGuide.service.CbtGuideVO">
+	    SELECT * FROM CBT_GUIDE
+	    <!-- 유형에 따라 분류 후 사용자가 입력한 언어코드 기준으로 조회  -->
+	    <!-- <where>
+	    <if test="01">AND LANG_CD=${langCd}</if>객관식유형
+	    <if test="02">AND LANG_CD=${langCd}</if>단답형유형
+	    <if test="03">AND LANG_CD=${langCd}</if>서술형유형
+	    </where> -->
+	</select>
+	
+	<!-- CbtGuideVO cbtGuideListOne(CbtGuideVO VO);//단건조회(R) -->
+	<select id="cbtGuideListOne" parameterType="co.itrip.prj.cbtGuide.service.CbtGuideVO" resultType="co.itrip.prj.cbtGuide.service.CbtGuideVO">
+	</select>
+	
+	<!-- public int cbtGuideInsert(CbtGuideVO VO); //등록(C) -->
+	<insert id="cbtGuideInsert">
+	</insert>
+	
+	<!-- public int cbtGuideUpdate(CbtGuideVO VO); //수정(U) -->
+	<update id="cbtGuideUpdate">
+	</update>
+	
+	<!-- public int cbutGuideDelet(CbtGuideVO VO);//삭제(D) -->
+	<delete id="cbutGuideDelet">
+	</delete>
+</mapper>

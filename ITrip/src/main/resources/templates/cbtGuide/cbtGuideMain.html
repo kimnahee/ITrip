@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>가이드 문제 출제 메인 화면</title>
+<script src="js/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <section>
+        <ul id="gtpCdSelc">
+            <li id="T0102" name="T0102">객관식/단답형</li> 
+            <li id="T03" name="T03">서술형</li>
+        </ul>
+    </section>
+    <section>
+        <ul>
+            <li>c/c++</li>
+            <li>JAVA</li>
+            <li>JAVASCRIPT</li>
+            <li>JQUERY</li>
+            <li>PHP</li>
+            <li>KOTLIN</li>
+            <li>PYTHON</li>
+            <li>HTML/CSS</li>
+            <li>SQL</li>
+            <li>R</li>
+        </ul>
+    </section>
+    <div>
+    <form>
+    <input type="hidden" id="gtpCd" name="gtpCd"></input>
+    <input type="hidden" id="langCd" name="langCd"></input>
+    
+    </form>
+    </div>
+    <script>
+    $("#gtpCdSelc").on("click","li",function(e){
+    	let tg = e.currentTarget.id;
+    	
+    	if(tg == "T0102"){
+    		let gtpCd = $("#gtpCd").val("01");
+    		console.log(gtpCd);
+    	}else{
+    		let gtpCd = $("#gtpCd").val("03");
+    		console.log(gtpCd);
+    	}
+    })
+       
+    </script>
+    
+</body>
+</html>

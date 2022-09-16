@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>가이드 문제 목록</title>
+</head>
+<body>
+	TEST
+	<div>
+		<table>
+			<thead>
+				<tr>
+					<th>유형코드</th>
+					<th>언어코드</th>
+					<th>문제번호</th>
+					<th>문제</th>
+					<th>정답</th>
+				</tr>
+			</thead>
+			<tbody>
+			<tr th:each="cbt:${cbtList}">
+			<td th:text="${cbt.gtpCd}"></td>
+			<td th:text="${cbt.langCd}"></td>
+			<td th:text="${cbt.cbtNo}"></td>
+			<td th:text="${cbt.ques}"></td>
+			<td th:text="${cbt.cnsr}"></td>
+			</tr>
+			</tbody>
+		</table>
+	</div>
+
+</body>
+</html>
