@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+layout:decorate="~{layout/layout}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="js/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<div layout:fragment="content">
+<div th:each="cbt: ${langCdList}"> 
+ 	<div th:text="${cbt.cdIni}"></div>
+ 	<div th:text="${cbt.cdNo}"></div>
+ 	<div th:text="${cbt.cdName}"></div>
+</div>
+</div>
+<div layout:fragment="content">
+	<!-- Section -->	
+	<div id="quesList">
+	    <section class="py-5">
+	        <div class="container px-4 px-lg-5 mt-5">
+	            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+					
+					<div th:each="cbt:${langCdList}"> 
+				 		<div th:text="${cbt.cdNo}"></div>
+		                <div class="col mb-5">
+		                    <div class="card h-100">
+		                        <img class="card-img-top" src="images/icon-q.svg" alt="..." />
+		                        <div class="card-body p-4">
+		                            <div class="text-center">
+		                                <h5 class="fw-bolder" th:text="${cbt.cdName}">문제카테고리</h5>
+		                                <div>작은설명</div>
+		                            </div>
+		                        </div>
+		                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+		                            <div class="text-center question">
+		                            	<a class="btn btn-outline-dark mt-auto" href="#">문제풀기</a>
+		                           	</div>
+		                        </div>
+		                    </div>
+		                </div>
+					</div>
+					
+	            </div>
+	        </div>
+	    </section>
+    </div>
+</div> 
+<form id="frm" method="post">
+	<input type="hidden" id="cbtId" name="cbtId">
+</form> 
+<script type="text/javascript">
+$("#quesList").click(function(){
+	console.log("a")
+})
+	$("#quesList").on("click",".question",function(e){
+		console.log("ll")
+		//let id = event.target.closest("section").children().eq(3).innerHTML
+		let id2 = e.target
+		console.log(id2)
+		console.log(event.target)
+		//frm.action = "cbtUserList"
+		//frm.cbtId.value = id
+		//frm.submit()
+	})
+
+</script>
+</body>
+</html>
