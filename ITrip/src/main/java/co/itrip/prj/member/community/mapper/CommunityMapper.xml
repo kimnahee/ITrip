@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.itrip.prj.member.community.mapper.CommunityMapper">
+
+	<select id="communityList" resultType="co.itrip.prj.member.community.service.CommunityVO">
+		select com_no,
+			   title,
+			   content,
+			   member_id,
+			   dt,
+			   hit,
+			   attach,
+			   attach_dir,
+			   ctgry
+		from comboard
+		order by com_no
+	</select>
+</mapper>
