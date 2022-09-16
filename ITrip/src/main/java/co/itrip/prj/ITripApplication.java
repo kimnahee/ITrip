@@ -32,10 +32,4 @@ public class ITripApplication {
 	public String signupForm() {
 		return "main/signupForm";
 	}
-	
-	//스터디게시판 => 나중에 이동
-	@GetMapping("/study.do")
-	public String study() {
-		return "community/study";
-	}
 }

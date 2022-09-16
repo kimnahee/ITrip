@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title></title>
+<link rel="stylesheet" href="bootstrap/voler/assets/css/bootstrap.css">
+<link rel="stylesheet"
+	href="bootstrap/voler/assets/vendors/simple-datatables/style.css">
+<link rel="stylesheet"
+	href="bootstrap/voler/assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
+<link rel="stylesheet" href="bootstrap/voler/assets/css/app.css">
+<link rel="shortcut icon"
+	href="bootstrap/voler/assets/images/favicon.svg" type="image/x-icon">
+<style>
+.table {
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+	width: 80%;
+}
+</style>
+</head>
+<body layout:fragment="content">
+	<h4>전체 게시글</h4>
+	<!-- 카드 템플릿 찾아서 옮기기 -->
+	<div class="table-responsive">
+		<table class="table mb-0">
+			<thead>
+				<tr>
+					<th>글번호</th>
+					<th>글제목</th>
+					<th>작성자</th>
+					<th>작성일자</th>
+					<th>조회수</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="com : ${communityList}">
+					<td th:text="${com.comNo}" class="text-bold-500"></td>
+					<td th:text="${com.title}" class="text-bold-500"></td>
+					<td th:text="${com.memberId}" class="text-bold-500"></td>
+					<td th:text="${com.dt}" class="text-bold-500"></td>
+					<td th:text="${com.hit}" class="text-bold-500"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>
