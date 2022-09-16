@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<table>
+		<thead>
+			<tr>
+				<th>문제번호</th>
+				<th>문제</th>
+				<th>정답</th>
+				<th>보기1</th>
+				<th>보기2</th>
+				<th>보기3</th>
+				<th>보기4</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="cbt: ${cbtList}">
+				<td th:text="${cbt.cbtNo}"></td>
+				<td th:text="${cbt.ques}"></td>
+				<td th:text="${cbt.cnsr}"></td>
+				<td th:text="${cbt.ex1}"></td>
+				<td th:text="${cbt.ex2}"></td>
+				<td th:text="${cbt.ex3}"></td>
+				<td th:text="${cbt.ex4}"></td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+</html>
