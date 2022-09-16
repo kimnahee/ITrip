@@ -1,52 +1,219 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
 <head>
 <meta charset="UTF-8">
 <title>가이드 문제 출제 메인 화면</title>
 <script src="js/jquery-3.6.0.min.js"></script>
+<!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
 </head>
 <body>
-    <section>
-        <ul id="gtpCdSelc">
-            <li id="T0102" name="T0102">객관식/단답형</li> 
-            <li id="T03" name="T03">서술형</li>
-        </ul>
-    </section>
-    <section>
-        <ul>
-            <li>c/c++</li>
-            <li>JAVA</li>
-            <li>JAVASCRIPT</li>
-            <li>JQUERY</li>
-            <li>PHP</li>
-            <li>KOTLIN</li>
-            <li>PYTHON</li>
-            <li>HTML/CSS</li>
-            <li>SQL</li>
-            <li>R</li>
-        </ul>
-    </section>
-    <div>
-    <form>
-    <input type="hidden" id="gtpCd" name="gtpCd"></input>
-    <input type="hidden" id="langCd" name="langCd"></input>
-    
-    </form>
-    </div>
-    <script>
-    $("#gtpCdSelc").on("click","li",function(e){
-    	let tg = e.currentTarget.id;
-    	
-    	if(tg == "T0102"){
-    		let gtpCd = $("#gtpCd").val("01");
-    		console.log(gtpCd);
-    	}else{
-    		let gtpCd = $("#gtpCd").val("03");
-    		console.log(gtpCd);
-    	}
-    })
-       
-    </script>
-    
+<div layout:fragment="content">
+	<!-- Section -->
+	<!-- 탭 -->
+	<ul class="nav nav-tabs" id="myTab" role="tablist">
+  <li class="nav-item" role="presentation">
+    <button class="nav-link active" id="T00" name="T00" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">전체</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="T01" name="T01" data-bs-toggle="tab" data-bs-target="#t1" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">객관식</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="T02" name="T02" data-bs-toggle="tab" data-bs-target="#t2" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">단답형</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="T0102" name="T0102" data-bs-toggle="tab" data-bs-target="#t12" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">객관식/단답형</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="T03" name="T03" data-bs-toggle="tab" data-bs-target="#t3" type="button" role="tab" aria-controls="disabled-tab-pane" aria-selected="false">서술형</button>
+  </li>
+</ul>
+<!--  탭 페이지 -->
+<div class="tab-content" id="myTabContent">
+<!-- 전체 탭-->
+  <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+      <!-- 카드본문 -->
+		<div>
+			<section class="py-5" >
+				<div class="container px-4 px-lg-5 mt-5" id="langSelc">
+					<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+						<div class="col mb-5" th:each="lang:${langCdList}" >
+							<div class="card h-100">
+								<img class="card-img-top" src="images/icon-q.svg" alt="..." />
+								<div class="card-body p-4">
+									<div class="text-center">
+										<h5 class="fw-bolder" th:text="${lang.cdName}">문제카테고리</h5>
+										<div>
+											클릭하면 <span th:text="${lang.cdName}"></span>의 5문제를 랜덤으로 풀 수
+											있습니다.
+										</div>
+									</div>
+								</div>
+								<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+									<div class="text-center question" >
+										<a class="btn btn-outline-dark mt-auto" href="#" id="cbtBtn">문제풀기</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+    <!-- 카드본문끝 -->
+  </div>
+<!-- 객관식 탭 -->
+  <div class="tab-pane fade" id="t1" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+    <!-- 카드본문 -->
+		<div>
+			<section class="py-5">
+				<div class="container px-4 px-lg-5 mt-5">
+					<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+						<div class="col mb-5" th:each="lang:${langCdList}">
+							<div class="card h-100">
+								<img class="card-img-top" src="images/icon-q.svg" alt="..." />
+								<div class="card-body p-4">
+									<div class="text-center">
+										<h5 class="fw-bolder" th:text="${lang.cdName}" >문제카테고리</h5>
+										<div>
+											클릭하면 <span th:text="${lang.cdName}"></span>의 5문제를 랜덤으로 풀 수
+											있습니다.
+										</div>
+									</div>
+								</div>
+								<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+									<div class="text-center question">
+										<a class="btn btn-outline-dark mt-auto" href="#" id="cbtBtn">문제풀기</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+    <!-- 카드본문끝 -->
+  </div>
+<!-- 단답형 탭--> 
+  <div class="tab-pane fade" id="t2" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+    <!-- 카드본문 -->
+		<div>
+			<section class="py-5">
+				<div class="container px-4 px-lg-5 mt-5">
+					<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+						<div class="col mb-5" th:each="lang:${langCdList}">
+							<div class="card h-100">
+								<img class="card-img-top" src="images/icon-q.svg" alt="..." />
+								<div class="card-body p-4">
+									<div class="text-center">
+										<h5 class="fw-bolder" th:text="${lang.cdName}">문제카테고리</h5>
+										<div>
+											클릭하면 <span th:text="${lang.cdName}"></span>의 5문제를 랜덤으로 풀 수
+											있습니다.
+										</div>
+									</div>
+								</div>
+								<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+									<div class="text-center question">
+										<a class="btn btn-outline-dark mt-auto" href="#" id="cbtBtn">문제풀기</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+    <!-- 카드본문끝 -->
+	</div>
+<!-- 객관식/단답형 탭 -->
+  <div class="tab-pane fade" id="t12" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+      <!-- 카드본문 -->
+		<div>
+			<section class="py-5">
+				<div class="container px-4 px-lg-5 mt-5">
+					<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+						<div class="col mb-5" th:each="lang:${langCdList}">
+							<div class="card h-100">
+								<img class="card-img-top" src="images/icon-q.svg" alt="..." />
+								<div class="card-body p-4">
+									<div class="text-center">
+										<h5 class="fw-bolder" th:text="${lang.cdName}">문제카테고리</h5>
+										<div>
+											클릭하면 <span th:text="${lang.cdName}"></span>의 5문제를 랜덤으로 풀 수
+											있습니다.
+										</div>
+									</div>
+								</div>
+								<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+									<div class="text-center question">
+										<a class="btn btn-outline-dark mt-auto" href="#" id="cbtBtn">문제풀기</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+    <!-- 카드본문끝 -->
+  </div>
+<!-- 서술형 탭 -->
+  <div class="tab-pane fade" id="t3" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+     <!-- 카드본문 -->
+		<div>
+			<section class="py-5">
+				<div class="container px-4 px-lg-5 mt-5">
+					<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+						<div class="col mb-5" th:each="lang:${langCdList}">
+							<div class="card h-100">
+								<img class="card-img-top" src="images/icon-q.svg" alt="..." />
+								<div class="card-body p-4">
+									<div class="text-center">
+										<h5 class="fw-bolder" th:text="${lang.cdName}">문제카테고리</h5>
+										<div>
+											클릭하면 <span th:text="${lang.cdName}"></span>의 5문제를 랜덤으로 풀 수
+											있습니다.
+										</div>
+									</div>
+								</div>
+								<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+									<div class="text-center question">
+										<a class="btn btn-outline-dark mt-auto" href="#">문제풀기</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+    <!-- 카드본문끝 -->
+  </div>
+</div>
+<!-- 히든frm -->
+<div>
+	<form>
+		<input type="hidden" id="gtpCd" name="gtpCd"></input>
+		<input	type="hidden" id="langCd" name="langCd"></input>
+	</form>
+</div>
+<!-- LAYOUT 안에 SCRIPT있어야함! -->
+<script>
+
+	$("#langSelc").on("click", ".question",function(e) {
+	/* 	let tg = e.currentTarget.id;*/
+		console.log(e.target); 
+		console.log("일단 실행됨")
+	})
+</script>
+
+</div>
+
+
 </body>
 </html>
