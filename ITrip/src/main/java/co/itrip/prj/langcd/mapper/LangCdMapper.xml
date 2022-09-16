@@ -3,6 +3,6 @@
 <mapper namespace="co.itrip.prj.langcd.mapper.LangCdMapper">
 
 <select id="langCdList" resultType="co.itrip.prj.langcd.service.LangCdVO">
-	select * from cmmncd
+	SELECT * FROM CMMNCD WHERE CD_NO BETWEEN 1 AND 10 AND CD_INI='L'
 </select>
 </mapper>

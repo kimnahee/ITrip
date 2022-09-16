@@ -11,10 +11,12 @@ import co.itrip.prj.cbtUser.mapper.CbtUserMapper;
 public class CbtUserServiceImpl implements CbtUserService {
 	@Autowired
 	private CbtUserMapper map;
-	
+
 	@Override
-	public List<CbtUserVO> cbtUserList() {
-		return map.cbtUserList();
+	public List<CbtUserVO> cbtUserList(CbtUserVO vo) {
+		return map.cbtUserList(vo);
 	}
+	
+	
 
 }
