@@ -1,12 +1,206 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title></title>
+
+<link rel="stylesheet" href="bootstrap/voler/assets/css/bootstrap.css">
+
+<link rel="stylesheet"
+	href="bootstrap/voler/assets/vendors/simple-datatables/style.css">
+
+<link rel="stylesheet"
+	href="bootstrap/voler/assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
+<link rel="stylesheet" href="bootstrap/voler/assets/css/app.css">
+<link rel="shortcut icon"
+	href="bootstrap/voler/assets/images/favicon.svg" type="image/x-icon">
 </head>
+
 <body>
 	<div layout:fragment="content">
-  		<h1>스터디게시판</h1>
-	</div>
+		<div class="main-content container-fluid">
+			<div class="page-title">
+				<div class="row">
+					<div class="col-12 col-md-6 order-md-1 order-last">
+						<h3>스터디게시판</h3>
+					</div>
+					<div class="col-12 col-md-6 order-md-2 order-first"></div>
+				</div>
+			</div>
+			<section class="section">
+				<div class="card">
+					<div class="card-header">게시글 목록</div>
+					<div class="card-body">
+						<table class='table table-striped' id="table1">
+							<thead>
+								<tr>
+									<th>글번호</th>
+									<!-- hidden -->
+									<th>글제목</th>
+									<th>작성자</th>
+									<th>작성일자</th>
+									<th>조회수</th>
+									<th>카테고리</th>
+									<!-- hidden -->
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>1</td>
+									<td>TEST</td>
+									<td>테스트</td>
+									<td>2022/09/16</td>
+									<td>1</td>
+									<td>스터디</td>
+								</tr>
+								<tr>
+									<td>1</td>
+									<td>TEST</td>
+									<td>테스트</td>
+									<td>2022/09/16</td>
+									<td>1</td>
+									<td>스터디</td>
+								</tr>
+								<tr>
+									<td>1</td>
+									<td>TEST</td>
+									<td>테스트</td>
+									<td>2022/09/16</td>
+									<td>1</td>
+									<td>스터디</td>
+								</tr>
+								<tr>
+									<td>1</td>
+									<td>TEST</td>
+									<td>테스트</td>
+									<td>2022/09/16</td>
+									<td>1</td>
+									<td>스터디</td>
+								</tr>
+								<tr>
+									<td>1</td>
+									<td>TEST</td>
+									<td>테스트</td>
+									<td>2022/09/16</td>
+									<td>1</td>
+									<td>스터디</td>
+								</tr>
+								<tr>
+									<td>1</td>
+									<td>TEST</td>
+									<td>테스트</td>
+									<td>2022/09/16</td>
+									<td>1</td>
+									<td>스터디</td>
+								</tr>
+								<tr>
+									<td>1</td>
+									<td>TEST</td>
+									<td>테스트</td>
+									<td>2022/09/16</td>
+									<td>1</td>
+									<td>스터디</td>
+								</tr>
+								<tr>
+									<td>1</td>
+									<td>TEST</td>
+									<td>테스트</td>
+									<td>2022/09/16</td>
+									<td>1</td>
+									<td>스터디</td>
+								</tr>
+								<tr>
+									<td>1</td>
+									<td>TEST</td>
+									<td>테스트</td>
+									<td>2022/09/16</td>
+									<td>1</td>
+									<td>스터디</td>
+								</tr>
+								<tr>
+									<td>1</td>
+									<td>TEST</td>
+									<td>테스트</td>
+									<td>2022/09/16</td>
+									<td>1</td>
+									<td>스터디</td>
+								</tr>
+								<tr>
+									<td>1</td>
+									<td>TEST</td>
+									<td>테스트</td>
+									<td>2022/09/16</td>
+									<td>1</td>
+									<td>스터디</td>
+								</tr>
+								<tr>
+									<td>1</td>
+									<td>TEST</td>
+									<td>테스트</td>
+									<td>2022/09/16</td>
+									<td>1</td>
+									<td>스터디</td>
+								</tr>
+								<tr>
+									<td>1</td>
+									<td>TEST</td>
+									<td>테스트</td>
+									<td>2022/09/16</td>
+									<td>1</td>
+									<td>스터디</td>
+								</tr>
+								<tr>
+									<td>1</td>
+									<td>TEST</td>
+									<td>테스트</td>
+									<td>2022/09/16</td>
+									<td>1</td>
+									<td>스터디</td>
+								</tr>
+								<tr>
+									<td>1</td>
+									<td>TEST</td>
+									<td>테스트</td>
+									<td>2022/09/16</td>
+									<td>1</td>
+									<td>스터디</td>
+								</tr>
+								<tr>
+									<td>1</td>
+									<td>TEST</td>
+									<td>테스트</td>
+									<td>2022/09/16</td>
+									<td>1</td>
+									<td>스터디</td>
+								</tr>
+								<tr>
+									<td>1</td>
+									<td>TEST</td>
+									<td>테스트</td>
+									<td>2022/09/16</td>
+									<td>1</td>
+									<td>스터디</td>
+								</tr>
+
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+			</section>
+		</div>
+		<script src="bootstrap/voler/assets/js/feather-icons/feather.min.js"></script>
+		<script
+			src="bootstrap/voler/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+		<script src="bootstrap/voler/assets/js/app.js"></script>
+
+		<script
+			src="bootstrap/voler/assets/vendors/simple-datatables/simple-datatables.js"></script>
+		<script src="bootstrap/voler/assets/js/vendors.js"></script>
+
+		<script src="bootstrap/voler/assets/js/main.js"></script>
 </body>
 </html>
