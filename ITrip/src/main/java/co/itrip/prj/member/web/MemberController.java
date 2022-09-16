@@ -20,4 +20,9 @@ public class MemberController {
 	public String mConsult() {
 		return "member/mconsult";
 	}
+	
+	@GetMapping("/gApply")
+	public String gApply() {
+		return "member/gapply";
+	}
 }
