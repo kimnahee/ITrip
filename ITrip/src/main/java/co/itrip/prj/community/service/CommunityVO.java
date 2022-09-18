@@ -1,4 +1,4 @@
-package co.itrip.prj.member.community.service;
+package co.itrip.prj.community.service;
 
 import java.sql.Date;
 

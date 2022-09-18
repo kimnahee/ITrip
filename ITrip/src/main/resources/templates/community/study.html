@@ -38,153 +38,20 @@
 							<thead>
 								<tr>
 									<th>글번호</th>
-									<!-- hidden -->
 									<th>글제목</th>
 									<th>작성자</th>
 									<th>작성일자</th>
 									<th>조회수</th>
-									<th>카테고리</th>
-									<!-- hidden -->
 								</tr>
 							</thead>
-							<tbody>
-								<tr>
-									<td>1</td>
-									<td>TEST</td>
-									<td>테스트</td>
-									<td>2022/09/16</td>
-									<td>1</td>
-									<td>스터디</td>
+							<tbody id="studyList">
+								<tr th:each="study : ${studyList}">
+									<td th:text="${study.comNo}" class="text-bold-500"></td>
+									<td th:text="${study.title}" class="text-bold-500"></td>
+									<td th:text="${study.memberId}" class="text-bold-500"></td>
+									<td th:text="${study.dt}" class="text-bold-500"></td>
+									<td th:text="${study.hit}" class="text-bold-500"></td>
 								</tr>
-								<tr>
-									<td>1</td>
-									<td>TEST</td>
-									<td>테스트</td>
-									<td>2022/09/16</td>
-									<td>1</td>
-									<td>스터디</td>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>TEST</td>
-									<td>테스트</td>
-									<td>2022/09/16</td>
-									<td>1</td>
-									<td>스터디</td>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>TEST</td>
-									<td>테스트</td>
-									<td>2022/09/16</td>
-									<td>1</td>
-									<td>스터디</td>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>TEST</td>
-									<td>테스트</td>
-									<td>2022/09/16</td>
-									<td>1</td>
-									<td>스터디</td>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>TEST</td>
-									<td>테스트</td>
-									<td>2022/09/16</td>
-									<td>1</td>
-									<td>스터디</td>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>TEST</td>
-									<td>테스트</td>
-									<td>2022/09/16</td>
-									<td>1</td>
-									<td>스터디</td>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>TEST</td>
-									<td>테스트</td>
-									<td>2022/09/16</td>
-									<td>1</td>
-									<td>스터디</td>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>TEST</td>
-									<td>테스트</td>
-									<td>2022/09/16</td>
-									<td>1</td>
-									<td>스터디</td>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>TEST</td>
-									<td>테스트</td>
-									<td>2022/09/16</td>
-									<td>1</td>
-									<td>스터디</td>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>TEST</td>
-									<td>테스트</td>
-									<td>2022/09/16</td>
-									<td>1</td>
-									<td>스터디</td>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>TEST</td>
-									<td>테스트</td>
-									<td>2022/09/16</td>
-									<td>1</td>
-									<td>스터디</td>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>TEST</td>
-									<td>테스트</td>
-									<td>2022/09/16</td>
-									<td>1</td>
-									<td>스터디</td>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>TEST</td>
-									<td>테스트</td>
-									<td>2022/09/16</td>
-									<td>1</td>
-									<td>스터디</td>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>TEST</td>
-									<td>테스트</td>
-									<td>2022/09/16</td>
-									<td>1</td>
-									<td>스터디</td>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>TEST</td>
-									<td>테스트</td>
-									<td>2022/09/16</td>
-									<td>1</td>
-									<td>스터디</td>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>TEST</td>
-									<td>테스트</td>
-									<td>2022/09/16</td>
-									<td>1</td>
-									<td>스터디</td>
-								</tr>
-
 							</tbody>
 						</table>
 					</div>
