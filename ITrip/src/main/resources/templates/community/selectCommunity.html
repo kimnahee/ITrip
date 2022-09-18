@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body layout:fragment="content">
+	<h4>단일 게시글 확인 페이지</h4>
+	<div class="table-responsive">
+		<table class="table mb-0">
+			<thead>
+				<tr>
+					<th>글제목</th>
+					<th>작성자</th>
+					<th>내용</th>
+					<th>작성일자</th>
+					<th>조회수</th>
+				</tr>
+			</thead>
+			<tbody id="comList">
+				<tr th:each="com : ${selectCommunity}">
+					<td th:text="${com.title}" class="text-bold-500"></td>
+					<td th:text="${com.memberId}" class="text-bold-500"></td>
+					<td th:text="${com.content}" class="text-bold-500"></td>
+					<td th:text="${com.dt}" class="text-bold-500"></td>
+					<td th:text="${com.hit}" class="text-bold-500"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>

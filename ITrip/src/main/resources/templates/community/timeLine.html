@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title></title>
+<script src="js/jquery-3.6.0.min.js"></script>
 <link rel="stylesheet" href="bootstrap/voler/assets/css/bootstrap.css">
 <link rel="stylesheet"
 	href="bootstrap/voler/assets/vendors/simple-datatables/style.css">
@@ -37,7 +38,7 @@
 					<th>조회수</th>
 				</tr>
 			</thead>
-			<tbody>
+			<tbody id="comList">
 				<tr th:each="com : ${communityList}">
 					<td th:text="${com.comNo}" class="text-bold-500"></td>
 					<td th:text="${com.title}" class="text-bold-500"></td>
@@ -48,5 +49,11 @@
 			</tbody>
 		</table>
 	</div>
+	<script>
+		$("#comList").on("click", function(e){
+			let comNo = $(e.target).prev().html();
+			location.href="/selectCommunity.do?comNo=" + comNo;
+		})
+	</script>
 </body>
 </html>
