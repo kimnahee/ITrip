@@ -38,4 +38,9 @@ public class CbtGuideServiceImpl implements CbtGuideService {
 		return map.cbutGuideDelet(VO);
 	}
 
+	@Override
+	public List<CbtGuideVO> cbtGuideListTab(CbtGuideVO vo) {
+		return map.cbtGuideListTab(vo);
+	}
+
 }
