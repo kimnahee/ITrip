@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+<head>
+<meta charset="UTF-8">
+<title>CBT 문제 목록</title>
+</head>
+<body>
+<div layout:fragment="content">
+	<!-- Section -->
+	<div>
+		<table>
+			<thead>
+				<tr>
+					<th>유형코드</th>
+					<th>언어코드</th>
+					<th>문제번호</th>
+					<th>문제</th>
+					<th>정답</th>
+				</tr>
+			</thead>
+			<tbody>
+			<tr th:each="cbt:${cbtList}">
+			<td th:text="${cbt.gtpCd}"></td>
+			<td th:text="${cbt.langCd}"></td>
+			<td th:text="${cbt.cbtNo}"></td>
+			<td th:text="${cbt.ques}"></td>
+			<td th:text="${cbt.cnsr}"></td>
+			</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+</body>
+</html>
