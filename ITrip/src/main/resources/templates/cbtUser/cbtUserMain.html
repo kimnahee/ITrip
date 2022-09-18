@@ -25,12 +25,13 @@ layout:decorate="~{layout/layout}">
 		                <div class="col mb-5">
 		                    <div class="card h-100">
 		                        <img class="card-img-top" src="images/icon-q.svg" alt="..." />
-		                         <img class="card-img-top" th:src="@{images/${cbt.cdName}.svg}" alt="..." />
 		                        
 		                        <div class="card-body p-4">
 		                            <div class="text-center">
 		                                <h5 class="fw-bolder" th:text="${cbt.cdName}"></h5>
-		                                <div th:text="${cbt.cdName}+문제입니다"></div>
+		                                <div>
+		                                	<span th:text="${cbt.cdName}"></span>문제입니다.
+		                                </div>
 		                            </div>
 		                        </div>
 		                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
@@ -48,6 +49,9 @@ layout:decorate="~{layout/layout}">
 	    </section>
     </div>
     
+<button id="addCbt">문제출제하기</button>
+
+
 <form id="frm" method="post">
 	<input type="hidden" id="langCd" name="langCd">
 </form> 
@@ -59,6 +63,10 @@ $("#quesList").on("click",".question",function(e){
 	frm.langCd.value = code
 	frm.submit()
 }) 
+$("#addCbt").on("click",function(){
+	location.href = "/cbtUserInsertForm"
+	
+})
 </script>  
 </div> 
 </body>
