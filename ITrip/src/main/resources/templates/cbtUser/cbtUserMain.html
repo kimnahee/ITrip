@@ -59,14 +59,22 @@ layout:decorate="~{layout/layout}">
 <script type="text/javascript">
 $("#quesList").on("click",".question",function(e){
 	let code = event.target.nextElementSibling.innerHTML
-	frm.action = "/cbtUserList"
+	frm.action = "cbtUserList.do"
 	frm.langCd.value = code
 	frm.submit()
 }) 
 $("#addCbt").on("click",function(){
-	location.href = "/cbtUserInsertForm"
+	location.href = "cbtUserInsertForm.do"
 	
 })
+if("${r}==1"){
+	alert("문제등록이 정상적으로 완료되었습니다.");
+}else{
+	alert("문제등록에 오류가 발생하였습니다.");
+}
+
+
+
 </script>  
 </div> 
 </body>
