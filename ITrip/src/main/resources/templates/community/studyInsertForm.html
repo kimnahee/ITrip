@@ -18,7 +18,7 @@
 <link rel="shortcut icon"
 	href="bootstrap/voler/assets/images/favicon.svg" type="image/x-icon">
 <style>
-#content {
+#exampleFormControlTextarea1 {
 	min-height: 500px;
 }
 #btn{
@@ -28,7 +28,6 @@
 </head>
 <body>
 	<!-- 스터디게시판 글 작성 -->
-	<!-- 글쓰기를 누르면 에디터 안의 값(#snow)를 내용으로 전달 -->
 	<div layout:fragment="content">
         <div class="card">
             <div class="card-header">
@@ -39,24 +38,30 @@
                 <form action="studyInsert.do" method="post" id="frm" class="form form-horizontal" enctype="multipart/form-data">
                 <div class="form-body">
                     <div class="row">
-                    <div class="col-md-4">
-                        <label>제목</label>
-                    </div>
-                    <div class="col-md-8 form-group">
-                        <input type="text" id="title" class="form-control" name="title" placeholder="제목">
-                    </div>
-                   <input type="textarea" id="content" class="form-control" name="content" placeholder="내용">
-                   <input type="text" id="memberId" class="form-control" name="memberId" value="nahi" readonly="readonly">
-                   <input type="file" id="file" class="form-control" name="file" placeholder="파일명">
-                    <div class="col-sm-12 d-flex justify-content-end" id="btn">
-                        <button type="submit" class="btn btn-primary btn-md mb-0">작성하기</button>&nbsp;&nbsp;
-                        <button type="reset" class="btn btn-outline-primary btn-md mb-0">취소</button>
-                    </div>
+	                    <div class="form-group">
+                            <label for="basicInput">제목</label>
+                            <input type="text" class="form-control" id="title" name="title" placeholder="제목">
+                        </div>
+	                    <div class="form-group mb-3">
+                            <label for="exampleFormControlTextarea1" class="form-label">내용</label>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" name="content" rows="3" placeholder="내용"></textarea>
+                        </div>
+                        <div class="form-group mb-3">
+                   			<input type="text" id="memberId" class="form-control" name="memberId" value="nahi" readonly="readonly">
+                   		</div>
+                   		<div class="form-group mb-3">
+                   			<input type="file" id="file" class="form-control" name="file" placeholder="파일명">
+                   		</div>
+                    	<div class="col-sm-12 d-flex justify-content-end" id="btn">
+                        	<button type="submit" class="btn btn-primary btn-md mb-0">작성하기</button>&nbsp;&nbsp;
+                        	<button type="reset" class="btn btn-outline-primary btn-md mb-0">취소</button>
+                    	</div>
                     </div>
                 </div>
                 </form>
             </div>
             </div>
+            
         </div>
         </div>
 		<script src="bootstrap/voler/assets/js/feather-icons/feather.min.js"></script>

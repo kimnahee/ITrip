@@ -58,19 +58,44 @@ public class CommunityController {
 
 	// 스터디게시판 글 작성(파일업로드)
 	@PostMapping("/studyInsert.do")
-	public String studyInsert(CommunityVO vo, @RequestParam("file") MultipartFile file) throws IllegalStateException, IOException {
-		// 파일 업로드 처리
-		String saveFolder = servletContext.getRealPath("/fileUpload"); // 저장할 공간 폴더 명
-		File sfile = new File(saveFolder); // 물리적 저장할 위치
-		String oFileName = file.getOriginalFilename(); // 넘어온 파일의 이름
-		if (!oFileName.isEmpty()) {
-			// 파일 명 충돌방지를 위한 별명
-			String sFileName = UUID.randomUUID().toString() + oFileName.substring(oFileName.lastIndexOf("."));// 물리적 위치에
-			file.transferTo(new File(sfile, sFileName)); // 파일을 물리적 위치에 저장
-			vo.setAttach(oFileName);
-			vo.setAttachDir(saveFolder + File.separator + sFileName); // fileUpload/273747.txt | File.separator 대신
-		}
+	public String studyInsert(CommunityVO vo, MultipartFile file) throws IllegalStateException, IOException {
+		String projectPath = System.getProperty("user.dir")+"/src/main/resources/static/files"; //프로젝트 경로
+		UUID uuid = UUID.randomUUID();
+		String filename = uuid + "_" + file.getOriginalFilename();
+		File saveFile = new File(projectPath, filename);
+		file.transferTo(saveFile);
+		vo.setAttach(filename);
+		String path = "/files/" + filename;
+		vo.setAttachDir(path);
 		dao.studyInsert(vo);
 		return "redirect:study.do";
 	}
+	
+	//스터디게시판 글 수정 폼
+	@GetMapping("/studyUpdateForm.do")
+	public String studyUpdateForm(CommunityVO vo, Model model, HttpServletRequest request) {
+		System.out.println(request.getParameter("comNo")); // 글번호 확인
+		vo.setComNo(Integer.parseInt(request.getParameter("comNo")));
+		model.addAttribute("selectStudy", dao.selectCommunity(vo));
+		return "community/studyUpdateForm";
+	}
+	
+	//스터디게시판 글 수정
+	@GetMapping("/studyUpdate.do")
+	public String studyUpdate(CommunityVO vo, Model model, HttpServletRequest request) {
+		System.out.println(request.getParameter("comNo")); // 글번호 확인
+		vo.setComNo(Integer.parseInt(request.getParameter("comNo")));
+		
+		return "redirect:study.do";
+	}
+	
+	//스터디게시판 글 삭제
+	@GetMapping("/studyDelete.do")
+	public String studyDelete(CommunityVO vo, Model model, HttpServletRequest request) {
+		System.out.println(request.getParameter("comNo")); // 글번호 확인
+		vo.setComNo(Integer.parseInt(request.getParameter("comNo")));
+		dao.studyUpdate(vo);
+		return "redirect:study.do";
+	}
+	
 }
