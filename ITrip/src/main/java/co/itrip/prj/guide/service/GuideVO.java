@@ -2,6 +2,8 @@ package co.itrip.prj.guide.service;
 
 import java.sql.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.Data;
 
 @Data
@@ -17,7 +19,5 @@ public class GuideVO {
 	private String stateCd; // 승인코드
 	private Date dt; // 신청일자
 	private int star; // 별점
-	
-	
 
 }

@@ -7,7 +7,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+
+import co.itrip.prj.community.service.CommunityService;
+
 import org.springframework.web.bind.annotation.RequestMapping;
+
 
 
 
@@ -52,13 +56,9 @@ public class MemberController {
 		return "member/mywriter";
 	}
 	
-	@GetMapping("/iClass") // 경아언니
-	public String iClass(Model model) {
-		return "member/iclass";
-	}
 	
 	@GetMapping("/cStart")
-	public String cStart(Model model) {
+	public String cStart() {
 		return "member/cstart";
 	}
 	
@@ -86,5 +86,6 @@ public class MemberController {
 		request.getSession().setAttribute("id", "eunji");
 		return "member/grevice";
 	}
+
 	
 }
