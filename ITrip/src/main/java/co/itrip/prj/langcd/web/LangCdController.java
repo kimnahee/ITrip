@@ -12,7 +12,7 @@ public class LangCdController {
 	@Autowired
 	LangCdMapper dao;
 	
-	@RequestMapping("/cbtUserMain")
+	@RequestMapping("/cbtUserMain.do")
 	public String langCdList(Model model) {
 		model.addAttribute("langCdList",dao.langCdList());
 		return "cbtUser/cbtUserMain";

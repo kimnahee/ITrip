@@ -4,11 +4,148 @@
 	layout:decorate="~{layout/layout}">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>CBT 문제 제출하기</title>
+<style>
+p {
+	font-size: '1px';
+}
+</style>
+
 </head>
 <body>
 	<div layout:fragment="content">
-문제출제하는
-</div>
+		<!-- Section -->
+		<!-- Input Group Select start -->
+		<section class="input-group-select">
+			<div class="row">
+				<div class="col-12">
+					<div class="card">
+						<div class="card-header">
+							<h4 class="card-title">CBT 문제 출제하기</h4>
+						</div>
+						<div class="card-content">
+							<form id="Frm" action="cbtUserInsert.do" method="post" enctype="multipart/form-data">
+							<div class="card-body">
+							
+							
+								<div class="row">
+									<div class="col-md-6 mb-1">
+										<div class="input-group mb-2">
+											<label class="input-group-text" for="utpCd">유형</label>
+											<select class="form-select" id="utpCd" name="utpCd" onchange="mySel(this.value)">
+												<option>==== 유형 선택 ====</option>
+												<option th:each="utp : ${utpCdList}" th:value="${utp.cdNo}" th:utext="${utp.cdName}"></option>
+											</select>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-6 mb-1">
+										<div class="input-group mb-2">
+											<label class="input-group-text" for="langCd">언어</label>
+											<select class="form-select" id="langCd" name="langCd">
+												<option selected>==== 언어 선택 ====</option>
+												<option th:each="lang : ${langCdList}" th:value="${lang.cdName}" th:utext="${lang.cdName}"></option>
+											</select>
+										</div>
+									</div>
+								</div>
+								<div class="form-group mb-3">
+									<label for="ques" class="form-label">문제</label>
+									<textarea class="form-control" id="ques" name="ques" rows="3" placeholder="출제할 문제를 입력하세요."></textarea>
+								</div>
+
+
+
+								<div class="form-group mb-3" id="exList">
+									<!-- <label for="ex1" class="form-label">보기①</label>
+									<textarea class="form-control" id="ex1" name="ex1" rows="1"></textarea>
+									<label for="ex3" class="form-label">보기②</label>
+									<textarea class="form-control" id="ex2" name="ex2" rows="1"></textarea>
+									<label for="ex4" class="form-label">보기③</label>
+									<textarea class="form-control" id="ex3" name="ex3" rows="1"></textarea>
+									<label for="ex5" class="form-label">보기④</label>
+									<textarea class="form-control" id="ex4" name="ex4" rows="1"></textarea> -->
+								</div>
+
+
+
+
+
+								<div class="form-group mb-3" id="answer">
+									<!-- 정답들어가는곳 -->
+								</div>
+								
+								<div class="form-group mb-3">
+									<label for="explna" class="form-label">풀이</label>
+									<textarea class="form-control" id="explna" name="explna" rows="3" placeholder="문제 풀이 내용을 입력하세요."></textarea>
+								</div>
+								<div class="col-md-6 mb-1">
+									<div class="input-group mb-8">
+										<span class="input-group-text" id="inputGroupFileAddon01">
+											<i data-feather="upload"></i>
+										</span>
+										<div class="form-file">
+											<input type="file" id="attach" name="file" aria-describedby="attach"> <!--  class="form-file-input" -->
+											<!-- <label class="form-file-label" for="attach"> 
+											<span class="form-file-text"></span> 
+											<span class="form-file-button">Upload File</span>
+											</label> -->
+										</div>
+									</div>
+								</div>
+								<input id="memberId" name="memberId" value="park"  type="hidden">
+							</div>
+							<!-- 풀이내용까지 끝 -->
+							<div class="col-12 d-flex justify-content-end">
+								<button type="submit" class="btn btn-primary mr-1 mb-1">제출</button>
+								<button type="reset" class="btn btn-light-secondary mr-1 mb-1">초기화</button>
+							</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- Bootstrap Select end -->
+		
+	<script type="text/javascript">
+	let exList = document.getElementById("exList");
+	let answer = document.getElementById("answer");
+	function mySel(val){
+		if(val==1){
+			exList.innerHTML="";
+			answer.innerHTML="";
+			exList.innerHTML+=
+				`<label for="ex1" class="form-label">보기①</label>
+				<textarea class="form-control" id="ex1" name="ex1" rows="1"></textarea>
+				<label for="ex3" class="form-label">보기②</label>
+				<textarea class="form-control" id="ex2" name="ex2" rows="1"></textarea>
+				<label for="ex4" class="form-label">보기③</label>
+				<textarea class="form-control" id="ex3" name="ex3" rows="1"></textarea>
+				<label for="ex5" class="form-label">보기④</label>
+				<textarea class="form-control" id="ex4" name="ex4" rows="1"></textarea>`
+			answer.innerHTML +=`<label for="cnsr" class="form-label">정답</label>
+				<textarea class="form-control" id="cnsr" name="cnsr" rows="1" placeholder="문제의 답을 입력하세요."></textarea>`
+			
+		}
+		if(val==2){
+			exList.innerHTML="";
+			answer.innerHTML="";
+			answer.innerHTML+=
+				`<label for="cnsr" class="form-label">정답</label>
+				<div class="form-check">
+					<input class="form-check-input" type="radio" name="cnsr" id="cnsr"> O
+				</div>
+				<div class="form-check">
+					<input class="form-check-input" type="radio" name="cnsr" id="cnsr"> X
+				</div>`
+		}
+		
+	}
+	
+		
+	</script>
+	</div>
 </body>
 </html>

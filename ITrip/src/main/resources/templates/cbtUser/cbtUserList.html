@@ -15,7 +15,9 @@
 <body>
 	<div layout:fragment="content">
 
-
+ 
+<div th:if="${#lists.isEmpty(cbtList)}">문제가없습니다.</div>
+<div th:unless="${#lists.isEmpty(cbtList)}">
 
 
 <table>
@@ -51,7 +53,7 @@
 		</tr>
 	</tbody>
 </table>
-
+</div>
 
 
 
