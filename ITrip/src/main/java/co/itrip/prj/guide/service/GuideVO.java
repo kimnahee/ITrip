@@ -2,6 +2,8 @@ package co.itrip.prj.guide.service;
 
 import java.sql.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.Data;
 
 @Data
@@ -13,8 +15,8 @@ public class GuideVO {
 	private String dc;
 	private String duty;
 	private String attach;
-	private String AttachDir;
-	private String stateCd;
+	private String attachDir;
+	private String stateCd;	
 	private Date dt;
 	private int star;
 	
