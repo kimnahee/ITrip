@@ -18,7 +18,7 @@ p {
 		<!-- Input Group Select start -->
 		<section class="input-group-select">
 			<div class="row">
-				<div class="col-12">
+				<div class="col-12" style="margin: 0 auto;width: 60%">
 					<div class="card">
 						<div class="card-header">
 							<h4 class="card-title">CBT 문제 출제하기</h4>
@@ -29,7 +29,7 @@ p {
 							
 							
 								<div class="row">
-									<div class="col-md-6 mb-1">
+									<div class="form-group mb-3">
 										<div class="input-group mb-2">
 											<label class="input-group-text" for="utpCd">유형</label>
 											<select class="form-select" id="utpCd" name="utpCd" onchange="mySel(this.value)">
@@ -40,7 +40,7 @@ p {
 									</div>
 								</div>
 								<div class="row">
-									<div class="col-md-6 mb-1">
+									<div class="form-group mb-3">
 										<div class="input-group mb-2">
 											<label class="input-group-text" for="langCd">언어</label>
 											<select class="form-select" id="langCd" name="langCd">
@@ -110,6 +110,7 @@ p {
 		<!-- Bootstrap Select end -->
 		
 	<script type="text/javascript">
+	
 	let exList = document.getElementById("exList");
 	let answer = document.getElementById("answer");
 	function mySel(val){
@@ -135,10 +136,10 @@ p {
 			answer.innerHTML+=
 				`<label for="cnsr" class="form-label">정답</label>
 				<div class="form-check">
-					<input class="form-check-input" type="radio" name="cnsr" id="cnsr"> O
+					<input class="form-check-input" type="radio" name="cnsr" id="cnsr" value="O"> O
 				</div>
 				<div class="form-check">
-					<input class="form-check-input" type="radio" name="cnsr" id="cnsr"> X
+					<input class="form-check-input" type="radio" name="cnsr" id="cnsr" value="X"> X
 				</div>`
 		}
 		

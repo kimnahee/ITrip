@@ -9,12 +9,10 @@ layout:decorate="~{layout/layout}">
 </head>
 <body>
 
-<div th:each="cbt: ${langCdList}"> 
- 	<div th:text="${cbt.cdIni}"></div>
- 	<div th:text="${cbt.cdNo}"></div>
- 	<div th:text="${cbt.cdName}"></div>
-</div>
 <div layout:fragment="content">
+<div class="buttons" style="float: right;">
+<button id="addCbt" class="btn btn-primary">문제출제하기</button>
+</div>
 	<!-- Section -->	
 	<div id="quesList">
 	    <section class="py-5">
@@ -49,7 +47,6 @@ layout:decorate="~{layout/layout}">
 	    </section>
     </div>
     
-<button id="addCbt">문제출제하기</button>
 
 
 <form id="frm" method="post">
@@ -67,11 +64,11 @@ $("#addCbt").on("click",function(){
 	location.href = "cbtUserInsertForm.do"
 	
 })
-if("${r}==1"){
+/*if("${r}==1"){
 	alert("문제등록이 정상적으로 완료되었습니다.");
 }else{
 	alert("문제등록에 오류가 발생하였습니다.");
-}
+}*/
 
 
 

@@ -7,8 +7,73 @@
 <title>Insert title here</title>
 <script src="js/jquery-3.6.0.min.js"></script>
 <style type="text/css">
+.content{ /*컨텐츠 넓이지정*/
+  position:relative;
+  width:600px;
+}
+.slides { /*슬라이드 아이템이 나올 뼈대 지정*/
+  width:600px;
+  height:300px;
+  position:relative;
 
+}
+.slide_item { /*슬라이드 아이템을 absolute로 겹쳐놓고 투명하게 하기*/
+  position:absolute;
+  width:600px;
+  height:300px;
+  opacity:0;
+   transition:all 0.3s;
+}
+.ontheSlide { /*현재 아이템에 붙여줄 클래스*/
+  opacity:1;
+  transition:all 0.3s;
+}
+.ontheThumbnail { /*현재 썸네일에 붙여줄 클래스*/
+  border: 1px dashed red;
+}
+.nextButton,.prevButton { /*다음,이전 버튼을 드래그되지 않게 방지해주기*/
+ -webkit-user-select: none;
+	-ms-user-select: none;
+	user-select: none
+}
+.nextButton { /*다음 버튼을 오른쪽으로 보내기*/
+  float:right;
+}
+.prevButton{ /*왼쪽 버튼을 왼쪽으로 보내기*/
+  float:left;
+}
+/*.Thumbnail { 썸네일 아이템을 감쌀 뼈대
+  display:flex;
+  flex-flow:row wrap;
+  width:100%;
+  height:50px;
+  position:absolute;
+  bottom:0px;
+  justify-content:center;
+}
 
+.slide_item:nth-of-type(1),.thumbnail_item:nth-of-type(1) { 
+  background:yellow;
+}
+.slide_item:nth-of-type(2),.thumbnail_item:nth-of-type(2) {
+  background:blue;
+}
+.slide_item:nth-of-type(3),.thumbnail_item:nth-of-type(3) {
+  background:red;
+}
+.slide_item:nth-of-type(4),.thumbnail_item:nth-of-type(4) {
+  background:orange;
+}
+.slide_item:nth-of-type(5),.thumbnail_item:nth-of-type(5) {
+  background:black;
+}
+.slide_item:nth-of-type(6),.thumbnail_item:nth-of-type(6) {
+  background:green;
+}
+.thumbnail_item { 
+  width:98px;
+} 
+*/
 
 </style>
 </head>
@@ -56,8 +121,106 @@
 </div>
 
 
+<div class="content">
+<div class="col-xl-4 col-md-6 col-sm-12 slides">
+  <div class="card slide_item" th:each="cbt: ${cbtList}">
+      <div class="card-content">
+          <div class="card-body">
+              <h4 class="card-title" th:text="${cbt.ques}">Card With Header And Footer</h4>
+              <p class="card-text" th:text="${cbt.cbtNo}"></p>
+              <p class="card-text" th:text="${cbt.ques}"></p>
+              <p class="card-text" th:text="${cbt.cnsr}"></p>
+              <p class="card-text" th:text="${cbt.langCd}"></p>
+             
+          </div>
+      </div>
+      <div class="card-footer d-flex justify-content-between">
+          <span>Card Footer</span>
+          <button class="btn btn-light-primary">Read More</button>
+      </div>
+  </div>
+</div>
+<span class="nextButton">▶</span>  <!--다음 버튼 -->
+<span class="prevButton">◀</span>   <!--이전 버튼 -->
+</div>
 
 
+<div class="content2"> <!--전체를 감쌀 뼈대-->
+<div>
+<div class="slides2">  <!--슬라이드 아이템을 감쌀 뼈대-->
+
+  <div class="slide_item2" th:each="cbt: ${cbtList}">
+  	<div th:text="${cbt.cbtNo}"></div>
+  	<div th:text="${cbt.ques}"></div>
+  	<div th:text="${cbt.cnsr}"></div>
+  	<div th:text="${cbt.langCd}"></div>
+  </div>  
+</div>
+<span class="nextButton2">▶</span>  <!--다음 버튼 -->
+<span class="prevButton2">◀</span>   <!--이전 버튼 -->
+ </div> 
+</div>
+
+
+
+
+
+<script type="text/javascript">
+const slides = document.querySelector('.slides'); // 슬라이드뼈대 감지
+const item = slides.getElementsByClassName('slide_item'); // 슬라이드 아이템 획득
+function sliderOn () {
+	 
+	 const firstEle = item[0]; // 첫번째 슬라이드 아이템
+	 firstEle.classList.add('ontheSlide'); //첫번째 슬라이드 아이템에 ontheSlide 클래스 추가
+	}
+	sliderOn();
+	
+	//const gogogo = setInterval(sliderGo, 4000); // 4초마다 함수 sliderGo 함수 발동시키기
+	function sliderGo (isThat) {//isThat을 받아오기
+	    
+	    if (isThat) {//isThat이 지정되어 있다면
+	      var nextOr = 'previous'; //이전 버튼을 누른 것.
+	    }
+	    else { //isThat이 지정되지 않았다면
+	        var nextOr = 'next'; //다음 버튼을 누른 것.
+	    }
+	    
+	    const currentItem = document.querySelector('.ontheSlide');
+	    currentItem.classList.remove('ontheSlide')
+
+	  if (nextOr === 'next'){  // 다음버튼을 눌렀다면
+		if (!currentItem.nextElementSibling) {//마지막 아이템일 경우
+			alert("ㅣ마지막 ")
+			
+			item[item.length-1].classList.add('ontheSlide') //마지막  슬라이드아이템 
+			}   
+		else { //그 외의 경우
+			currentItem.nextElementSibling.classList.add('ontheSlide') //다음으로 슬라이드 아이템 이동
+			}   
+	  }
+	   else if (nextOr === 'previous') { // 이전 버튼을 눌렀다면
+	       if (!currentItem.previousElementSibling) { //첫번재 아이템일 경우
+	 		 alert("ㅣㅊ가장처음문제입니다. ")
+	 		console.log(item[0])
+			item[0].classList.add('ontheSlide') //터음  슬라이드로 
+			}   
+			else { //다른 경우
+				currentItem.previousElementSibling.classList.add('ontheSlide') //이전 슬라이드 아이템으로 이동
+			}   
+	   } 
+	    
+	  }
+	 const nextButton = document.querySelector('.nextButton');//다음버튼 감지
+	 const prevButton = document.querySelector('.prevButton');//이전버튼 감지
+	nextButton.addEventListener('click',function(){//다음 버튼을 누른다면
+	  //clearInterval(gogogo)//자동이동을 중지하고
+	  sliderGo();//수동으로 다음이동
+	})
+	prevButton.addEventListener('click',function(){//이전 버튼을 누른다면
+	  //clearInterval(gogogo)//자동이동을 중지하고
+	  sliderGo('1');//수동으로 이전 이동
+	})  
+</script>
 
 
 </div>
