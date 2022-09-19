@@ -3,32 +3,99 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layout/layout}">
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+<meta charset="utf-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="js/jquery-3.6.0.min.js"></script>
+<link rel="apple-touch-icon" sizes="76x76"
+	href="bootstrap/material/assets/img/apple-icon.png">
+<link rel="icon" type="image/png"
+	href="bootstrap/material/assets/img/favicon.png">
+<title>스터디게시판</title>
+<!--     Fonts and icons     -->
+<link rel="stylesheet" type="text/css"
+	href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
+<!-- Nucleo Icons -->
+<link href="bootstrap/material/assets/css/nucleo-icons.css"
+	rel="stylesheet" />
+<link href="bootstrap/material/assets/css/nucleo-svg.css"
+	rel="stylesheet" />
+<!-- Font Awesome Icons -->
+<script src="https://kit.fontawesome.com/42d5adcbca.js"
+	crossorigin="anonymous"></script>
+<!-- Material Icons -->
+<link
+	href="https://fonts.googleapis.com/icon?family=Material+Icons+Round"
+	rel="stylesheet">
+<!-- CSS Files -->
+<link id="pagestyle"
+	href="bootstrap/material/assets/css/material-dashboard.css?v=3.0.0"
+	rel="stylesheet" />
+<style>
+.table {
+	margin-top: 10px;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+	width: 90%;
+}
+
+.row {
+	margin-top: 50px;
+	width: 90%;
+	margin-left: auto;
+	margin-right: auto;
+}
+</style>
 </head>
 <body layout:fragment="content">
-	<h4>단일 게시글 확인 페이지</h4>
-	<div class="table-responsive">
-		<table class="table mb-0">
-			<thead>
-				<tr>
-					<th>글제목</th>
-					<th>작성자</th>
-					<th>내용</th>
-					<th>작성일자</th>
-					<th>조회수</th>
-				</tr>
-			</thead>
-			<tbody id="comList">
-				<tr th:each="com : ${selectCommunity}">
-					<td th:text="${com.title}" class="text-bold-500"></td>
-					<td th:text="${com.memberId}" class="text-bold-500"></td>
-					<td th:text="${com.content}" class="text-bold-500"></td>
-					<td th:text="${com.dt}" class="text-bold-500"></td>
-					<td th:text="${com.hit}" class="text-bold-500"></td>
-				</tr>
-			</tbody>
-		</table>
+
+<!-- 템플릿변경 -->
+	<div class="row">
+		<div class="col-12">
+			<div class="card my-4">
+				<div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+					<div
+						class="bg-gradient-info shadow-info border-radius-lg pt-4 pb-3">
+						<h6 class="text-white text-capitalize ps-3">단일 게시글 확인 페이지</h6>
+					</div>
+				</div>
+				<div class="card-body px-0 pb-2">
+					<div class="table-responsive p-0">
+						<table class="table align-items-center mb-0">
+							<thead>
+								<tr>
+									<th
+										class="text-uppercase text-secondary text-md font-weight-bolder opacity-7">글제목</th>
+									<th
+										class="text-uppercase text-secondary text-md font-weight-bolder opacity-7 ps-2">작성자</th>
+									<th
+										class="text-center text-uppercase text-secondary text-md font-weight-bolder opacity-7">내용</th>
+									<th
+										class="text-center text-uppercase text-secondary text-md font-weight-bolder opacity-7">작성일자</th>
+									<th
+										class="text-center text-uppercase text-secondary text-md font-weight-bolder opacity-7">조회수</th>
+								</tr>
+							</thead>
+							<tbody id="comList">
+								<tr th:each="sel : ${selectCommunity}">
+									<td><p class="text-md text-secondary mb-0"
+											th:text="${sel.comNo}">글번호</p></td>
+									<td><p class="text-md text-secondary mb-0"
+											th:text="${sel.title}">글제목</p></td>
+									<td><p class="text-md text-secondary mb-0"
+											th:text="${sel.memberId}">작성자</p></td>
+									<td><p class="text-md text-secondary mb-0"
+											th:text="${sel.dt}">작성일자</p></td>
+									<td><p class="text-md text-secondary mb-0"
+											th:text="${sel.hit}">조회수</p></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 </body>
 </html>
