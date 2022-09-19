@@ -14,7 +14,7 @@
 		attach_dir,
 		ctgry
 		from comboard
-		order by com_no
+		order by com_no desc
 	</select>
 
 	<select id="selectCommunity"
@@ -29,6 +29,7 @@
 		select *
 		from comboard
 		where ctgry='스터디'
+		order by com_no desc
 	</select>
 
 	<insert id="studyInsert" parameterType="co.itrip.prj.community.service.CommunityVO">
@@ -39,6 +40,24 @@
 			from comboard
 		</selectKey>
 		insert into comboard
-		values(#{comNo}, #{title}, #{content}, #{memberId}, sysdate, 0, #{attach}, '', '스터디')
+		values(#{comNo}, #{title}, #{content}, #{memberId}, sysdate, 0, #{attach}, #{attachDir}, '스터디')
 	</insert>
+	
+	<update id="studyUpdate">
+		update comboard
+			<set>
+				<if test="title != null">title = #{title},</if>
+				<if test="content != null">content = #{content},</if>
+				<if test="attach != null">attach = #{attach},</if>
+				<if test="attach != null">attach_dir = #{attachDir},</if>
+			</set>
+			where com_no = #{comNo}
+	</update>
+	
+	<delete id="studyDelete">
+		delete 
+		from comboard
+		where com_no=#{comNo}
+	</delete>
+	
 </mapper>

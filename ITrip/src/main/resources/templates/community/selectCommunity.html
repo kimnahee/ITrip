@@ -28,9 +28,7 @@
 	href="https://fonts.googleapis.com/icon?family=Material+Icons+Round"
 	rel="stylesheet">
 <!-- CSS Files -->
-<link id="pagestyle"
-	href="bootstrap/material/assets/css/material-dashboard.css?v=3.0.0"
-	rel="stylesheet" />
+<link id="pagestyle" href="bootstrap/material/assets/css/material-dashboard.css?v=3.0.0" rel="stylesheet" />
 <style>
 .table {
 	margin-top: 10px;
@@ -46,12 +44,20 @@
 	margin-left: auto;
 	margin-right: auto;
 }
+.card-body {
+	width: 90%;
+	margin-left: auto;
+	margin-right: auto;
+}
+.list-group-item{
+	min-height: 100px;
+}
 </style>
 </head>
 <body layout:fragment="content">
 
 <!-- 템플릿변경 -->
-	<div class="row">
+	<div class="row" th:object="${selectCommunity}">
 		<div class="col-12">
 			<div class="card my-4">
 				<div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
@@ -60,42 +66,47 @@
 						<h6 class="text-white text-capitalize ps-3">단일 게시글 확인 페이지</h6>
 					</div>
 				</div>
-				<div class="card-body px-0 pb-2">
-					<div class="table-responsive p-0">
-						<table class="table align-items-center mb-0">
-							<thead>
-								<tr>
-									<th
-										class="text-uppercase text-secondary text-md font-weight-bolder opacity-7">글제목</th>
-									<th
-										class="text-uppercase text-secondary text-md font-weight-bolder opacity-7 ps-2">작성자</th>
-									<th
-										class="text-center text-uppercase text-secondary text-md font-weight-bolder opacity-7">내용</th>
-									<th
-										class="text-center text-uppercase text-secondary text-md font-weight-bolder opacity-7">작성일자</th>
-									<th
-										class="text-center text-uppercase text-secondary text-md font-weight-bolder opacity-7">조회수</th>
-								</tr>
-							</thead>
-							<tbody id="comList">
-								<tr th:each="sel : ${selectCommunity}">
-									<td><p class="text-md text-secondary mb-0"
-											th:text="${sel.comNo}">글번호</p></td>
-									<td><p class="text-md text-secondary mb-0"
-											th:text="${sel.title}">글제목</p></td>
-									<td><p class="text-md text-secondary mb-0"
-											th:text="${sel.memberId}">작성자</p></td>
-									<td><p class="text-md text-secondary mb-0"
-											th:text="${sel.dt}">작성일자</p></td>
-									<td><p class="text-md text-secondary mb-0"
-											th:text="${sel.hit}">조회수</p></td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
+				<div class="card-body pt-4 p-3">
+				<li class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg">
+                  <div class="d-flex flex-column">
+                  	<!-- 글번호(hidden) -->
+                    <span class="mb-2 text-md" style="display: none;"><span id="comNo" class="text-dark ms-sm-2 font-weight-bold" th:text=*{comNo}></span></span>
+                  	<!-- 글제목 -->
+                    <h6 class="mb-3 text-lg" th:text=*{title}></h6>
+                    <!-- 글내용 -->
+                    <span class="mb-2 text-md"><span class="text-dark ms-sm-2 font-weight-bold" th:text=*{content}></span></span>
+                    <!-- 작성자 -->
+                    <span class="mb-2 text-md"><span class="text-dark ms-sm-2 font-weight-bold" th:text=*{memberId}></span></span>
+                    <!-- 글작성일 -->
+                    <span class="mb-2 text-md"><span class="text-dark ms-sm-2" th:text=*{dt}></span></span>
+                    <!-- 이미지(첨부파일) -->
+                    <!-- 이미지 없으면 안뜨게 수정 -->
+                   <span class="mb-2 text-md"><img th:src="@{*{attachDir}}" style="width: 500px;  height: 500px;"></span>
+                    <!-- <span class="mb-2 text-md"><span class="text-dark ms-sm-2" th:text=*{attachDir}></span></span> -->
+                  </div>
+                </li>
+				<div class="ms-auto text-end">
+                    <a class="btn btn-link text-danger text-gradient px-3 mb-0" href="javascript:;" id="deleteBtn"><i class="material-icons text-md me-2">delete</i>삭제하기</a>
+                    <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;" id="updateBtn"><i class="material-icons text-md me-2">edit</i>수정하기</a>
+                 </div>
 				</div>
 			</div>
 		</div>
 	</div>
+	<!-- 댓글 추가 -->
+		
+	<script>
+		$("#deleteBtn").on("click", function(e){
+			let comNo = $("#comNo").html();
+			console.log(comNo);
+			location.href="/studyDelete.do?comNo=" + comNo;
+		})
+		
+		$("#updateBtn").on("click", function(e){
+			let comNo = $("#comNo").html();
+			console.log(comNo);
+			location.href="/studyUpdateForm.do?comNo=" + comNo;
+		})
+	</script>
 </body>
 </html>
