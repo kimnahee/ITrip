@@ -21,7 +21,7 @@ public class CbtGuideController {
 	@Autowired
 	private LangCdMapper langDao;
 	
-	@RequestMapping("/cbtGuideMain")
+	@RequestMapping("/cbtGuideMain.do")
 	public String cbtGuideMain(Model model) {
 		model.addAttribute("cbtList", cgDao.cbtGuideList());
 	    model.addAttribute("gtpCdList", gtpDao.gtpCdList());
@@ -34,19 +34,16 @@ public class CbtGuideController {
 		model.addAttribute("cbtList", cgDao.cbtGuideList());
 		return "cbtGuide/cbtGuideList";
 	}*/
-	@PostMapping("/cbtGuideListTab")
+	@PostMapping("/cbtGuideListTab.do")
 	public String cbtGuideListTab(CbtGuideVO vo, Model model) {
 		model.addAttribute("cbtList", cgDao.cbtGuideListTab(vo));
-		//System.out.println("gtpCd : "+vo.getGtpCd());
-		//System.out.println("langCd : "+vo.getLangCd());
 		return "cbtGuide/cbtGuideListTab";
 	}
-	@GetMapping("/cbtGuideInsertForm")
+	@GetMapping("/cbtGuideInsertForm.do")
 	public String cbtGuideInsertForm(Model model) {
 	    model.addAttribute("gtpCdList", gtpDao.gtpCdList());
 		model.addAttribute("langCdList", langDao.langCdList());
 		return "cbtGuide/cbtGuideInsertForm";
 	}
-	
 
 }

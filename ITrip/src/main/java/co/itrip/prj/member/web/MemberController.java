@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import co.itrip.prj.member.community.service.CommunityService;
+import co.itrip.prj.community.service.CommunityService;
 
 @Controller
 public class MemberController {

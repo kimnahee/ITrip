@@ -19,28 +19,34 @@ public class CbtGuideServiceImpl implements CbtGuideService {
 	}
 
 	@Override
-	public CbtGuideVO cbtGuideListOne(CbtGuideVO VO) {
-		return map.cbtGuideListOne(VO);
+	public CbtGuideVO cbtGuideListOne(CbtGuideVO vo) {
+		return map.cbtGuideListOne(vo);
 	}
 
 	@Override
-	public int cbtGuideInsert(CbtGuideVO VO) {
-		return map.cbtGuideInsert(VO);
+	public int cbtGuideInsert(CbtGuideVO vo) {
+		return map.cbtGuideInsert(vo);
 	}
 
 	@Override
-	public int cbtGuideUpdate(CbtGuideVO VO) {
-		return map.cbtGuideUpdate(VO);
+	public int cbtGuideUpdate(CbtGuideVO vo) {
+		return map.cbtGuideUpdate(vo);
 	}
 
 	@Override
-	public int cbutGuideDelet(CbtGuideVO VO) {
-		return map.cbutGuideDelet(VO);
+	public int cbutGuideDelet(CbtGuideVO vo) {
+		return map.cbutGuideDelet(vo);
 	}
 
 	@Override
 	public List<CbtGuideVO> cbtGuideListTab(CbtGuideVO vo) {
 		return map.cbtGuideListTab(vo);
+	}
+
+	@Override
+	public CbtGuideVO ajaxExplnaList(CbtGuideVO vo) {
+		// TODO Auto-generated method stub
+		return map.ajaxExplnaList(vo);
 	}
 
 }

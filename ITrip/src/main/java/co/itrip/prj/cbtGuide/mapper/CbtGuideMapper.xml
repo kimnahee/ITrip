@@ -11,15 +11,18 @@
 	<!-- List<CbtGuideVO> cbtGuideListTab(CbtGuideVO vo); //탭 클릭시 유형별, 언어별로 조회 -->
 	<select id="cbtGuideListTab" parameterType="co.itrip.prj.cbtGuide.service.CbtGuideVO" resultType="co.itrip.prj.cbtGuide.service.CbtGuideVO">
 	    SELECT * FROM CBT_GUIDE 
-	    <choose>
-			<when test = "gtpCd =='4'">
+	     <if test="gtpCd==4">
 			WHERE GTP_CD IN('1','2') AND LANG_CD='${langCd}'
-			</when>
-			<otherwise>
-			WHERE GTP_CD='${gtpCd}' AND LANG_CD='${langCd}'
-			</otherwise>
-		</choose>
+		</if>
+		 <if test="gtpCd!=4">
+			WHERE GTP_CD=#{gtpCd} AND LANG_CD=#{langCd}
+		</if>
 	     
+	</select>
+	
+	<!-- public CbtGuideVO ajaxExplnaList(CbtGuideVO VO); // 풀이 단건 리스트 -->
+	<select id="ajaxExplnaList" parameterType="co.itrip.prj.cbtGuide.service.CbtGuideVO" resultType="co.itrip.prj.cbtGuide.service.CbtGuideVO">
+	    SELECT * FROM CBT_GUIDE WHERE CBT_NO = ${cbtNo}
 	</select>
 	
 	
@@ -38,4 +41,6 @@
 	<!-- public int cbutGuideDelet(CbtGuideVO VO);//삭제(D) -->
 	<delete id="cbutGuideDelet">
 	</delete>
+	
+	
 </mapper>
