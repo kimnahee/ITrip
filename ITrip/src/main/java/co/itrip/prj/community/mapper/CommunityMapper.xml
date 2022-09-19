@@ -2,29 +2,43 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="co.itrip.prj.community.mapper.CommunityMapper">
 
-	<select id="communityList" resultType="co.itrip.prj.community.service.CommunityVO">
+	<select id="communityList"
+		resultType="co.itrip.prj.community.service.CommunityVO">
 		select com_no,
-			   title,
-			   content,
-			   member_id,
-			   dt,
-			   hit,
-			   attach,
-			   attach_dir,
-			   ctgry
+		title,
+		content,
+		member_id,
+		dt,
+		hit,
+		attach,
+		attach_dir,
+		ctgry
 		from comboard
 		order by com_no
 	</select>
-	
-	<select id="selectCommunity" resultType="co.itrip.prj.community.service.CommunityVO">
+
+	<select id="selectCommunity"
+		resultType="co.itrip.prj.community.service.CommunityVO">
 		select *
 		from comboard
 		where com_no=#{comNo}
 	</select>
-	
-	<select id="studyList" resultType="co.itrip.prj.community.service.CommunityVO">
+
+	<select id="studyList"
+		resultType="co.itrip.prj.community.service.CommunityVO">
 		select *
 		from comboard
 		where ctgry='스터디'
 	</select>
+
+	<insert id="studyInsert" parameterType="co.itrip.prj.community.service.CommunityVO">
+		<selectKey keyProperty="comNo" order="BEFORE" resultType="int">
+			select
+			case when max(com_no) is null then 1
+			else max(com_no) + 1 end as id
+			from comboard
+		</selectKey>
+		insert into comboard
+		values(#{comNo}, #{title}, #{content}, #{memberId}, sysdate, 0, #{attach}, '', '스터디')
+	</insert>
 </mapper>
