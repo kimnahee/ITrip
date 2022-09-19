@@ -6,56 +6,51 @@
 <meta charset="UTF-8">
 <title>CBT 메인 화면</title>
 <script src="js/jquery-3.6.0.min.js"></script>
-<!-- CSS only -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
-<!-- JavaScript Bundle with Popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
 <style>
 hr {
-    background:lightgray;
-    height:1px;
-    border:0;
-}
-#insertFrmCall{
-  float: right;
-}
+	background: lightgray;
+	height: 1px;
+	border: 0;
 }
 
+#insertFrmCall {
+	float: right;
+}
 </style>
 </head>
 <body>
-<div layout:fragment="content">
-	<!-- Section -->
-	<!-- 탭 -->
-	<ul class="nav nav-tabs" id="myTab" role="tablist">
-  <li class="nav-item" role="presentation">
-    <button class="nav-link active" id="T00" name="T00" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">전체</button>
-  </li>
-  <li class="nav-item" role="presentation">
-    <button class="nav-link" id="T01" name="T01" data-bs-toggle="tab" data-bs-target="#t1" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">객관식</button>
-  </li>
-  <li class="nav-item" role="presentation">
-    <button class="nav-link" id="T02" name="T02" data-bs-toggle="tab" data-bs-target="#t2" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">단답형</button>
-  </li>
-  <li class="nav-item" role="presentation">
-    <button class="nav-link" id="T0102" name="T04" data-bs-toggle="tab" data-bs-target="#t4" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">객관식/단답형</button>
-  </li>
-  <li class="nav-item" role="presentation">
-    <button class="nav-link" id="T03" name="T03" data-bs-toggle="tab" data-bs-target="#t3" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">서술형</button>
-  </li>
-</ul><br>
-  <!-- 만약 가이드라면 버튼 활성화...(아직 처리 안함)--> 
-<!-- 글쓰기 버튼 -->
-    <div class="buttons" id="insertFrmCall">
-        <a href="/cbtGuideInsertForm" class="btn btn-primary">문제출제하기</a>
-    </div>
-<!--글쓰기 버튼 끝 -->
-<!--  탭 페이지 -->
-<div class="tab-content" id="myTabContent">
-<!-- 전체 탭-->
-  <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
-
-      <!-- 카드본문 -->
+	<div layout:fragment="content">
+		<!-- Section -->
+		<!-- 만약 가이드라면 버튼 활성화...(아직 처리 안함)-->
+		<!-- 글쓰기 버튼 -->
+		<div class="buttons" id="insertFrmCall">
+			<a href="/cbtGuideInsertForm" class="btn btn-primary">문제출제하기</a>
+		</div>
+		<!--글쓰기 버튼 끝 -->
+		<!--  탭 페이지 -->
+		<div class="tab-content" id="myTabContent">
+			<div class="card-body">
+				<div class="row">
+					<div class="col-md-30">
+					    <!-- 탭 -->
+						<ul class="nav nav-tabs" id="myTab" role="tablist">
+							<li class="nav-item" role="presentation"><a class="nav-link active" id="home-tab" data-toggle="tab" href="#all" role="tab" aria-controls="home"
+								aria-selected="true">전체</a></li>
+							<li class="nav-item" role="presentation"><a class="nav-link" id="contact-tab" data-toggle="tab" href="#T1" role="tab"
+								aria-controls="contact" aria-selected="false">객관식</a></li>
+							<li class="nav-item" role="presentation"><a class="nav-link" id="contact-tab" data-toggle="tab" href="#T2" role="tab"
+								aria-controls="contact" aria-selected="false">단답형</a></li>
+							<li class="nav-item" role="presentation"><a class="nav-link" id="contact-tab" data-toggle="tab" href="#T4" role="tab"
+								aria-controls="contact" aria-selected="false">객관식/단답형</a></li>
+							<li class="nav-item" role="presentation"><a class="nav-link" id="contact-tab" data-toggle="tab" href="#T3" role="tab"
+								aria-controls="contact" aria-selected="false">서술형</a></li>
+						</ul>
+						<!-- 탭 내용 -->
+						<!-- 전체 -->
+						<div class="tab-content" id="myTabContent">
+							<div class="tab-pane fade show active" id="all" role="tabpanel" aria-labelledby="home-tab">
+								<p class='my-5'>
+								<!-- 전체 카드본문 -->
 		<div>
 			<section class="py-5" th:each="gtp:${gtpCdList}">
 				<div class="container px-4 px-lg-5 mt-5 langSelc">
@@ -68,8 +63,7 @@ hr {
 									<div class="text-center">
 										<h5 class="fw-bolder" th:text="${lang.cdName}">문제카테고리</h5>
 										<div>
-											클릭하면 <span th:text="${lang.cdName}"></span>의 5문제를 랜덤으로 풀 수
-											있습니다.
+											<span th:text="${lang.cdName}"></span>의 5문제를 랜덤으로 풀 수 있습니다.
 										</div>
 									</div>
 								</div>
@@ -86,10 +80,9 @@ hr {
 			</section>
 		</div>
     <!-- 카드본문끝 -->
-  </div>
-<!-- 객관식 탭 -->
-  <div class="tab-pane fade" id="t1" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-        <!-- 카드본문 -->
+							</div>
+							<div class="tab-pane fade" id="T1" role="tabpanel" aria-labelledby="contact-tab">
+							      <!-- 객관식 카드본문 -->
 		<div>
 			<section class="py-5" >
 				<div class="container px-4 px-lg-5 mt-5 langSelc">
@@ -119,10 +112,9 @@ hr {
 			</section>
 		</div>
     <!-- 카드본문끝 -->
-  </div>
-<!-- 단답형 탭--> 
-  <div class="tab-pane fade" id="t2" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-    <!-- 카드본문 -->
+							</div>
+							<div class="tab-pane fade" id="T2" role="tabpanel" aria-labelledby="contact-tab">
+								 <!-- 단답형 카드본문 -->
 		<div>
 			<section class="py-5">
 				<div class="container px-4 px-lg-5 mt-5 langSelc">
@@ -134,8 +126,7 @@ hr {
 									<div class="text-center">
 										<h5 class="fw-bolder" th:text="${lang.cdName}">문제카테고리</h5>
 										<div>
-											클릭하면 <span th:text="${lang.cdName}"></span>의 5문제를 랜덤으로 풀 수
-											있습니다.
+											<span th:text="${lang.cdName}"></span>의 5문제를 랜덤으로 풀 수 있습니다.
 										</div>
 									</div>
 								</div>
@@ -151,10 +142,9 @@ hr {
 			</section>
 		</div>
     <!-- 카드본문끝 -->
-	</div>
-<!-- 객관식/단답형 탭 -->
-  <div class="tab-pane fade" id="t4" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-      <!-- 카드본문 -->
+							</div>
+							<div class="tab-pane fade" id="T4" role="tabpanel" aria-labelledby="contact-tab">
+								<!-- 객관식/단답형 카드본문 -->
 		<div>
 			<section class="py-5">
 				<div class="container px-4 px-lg-5 mt-5 langSelc">
@@ -166,8 +156,7 @@ hr {
 									<div class="text-center">
 										<h5 class="fw-bolder" th:text="${lang.cdName}">문제카테고리</h5>
 										<div>
-											클릭하면 <span th:text="${lang.cdName}"></span>의 5문제를 랜덤으로 풀 수
-											있습니다.
+											<span th:text="${lang.cdName}"></span>의 5문제를 랜덤으로 풀 수 있습니다.
 										</div>
 									</div>
 								</div>
@@ -183,10 +172,9 @@ hr {
 			</section>
 		</div>
     <!-- 카드본문끝 -->
-  </div>
-<!-- 서술형 탭 -->
-  <div class="tab-pane fade" id="t3" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-     <!-- 카드본문 -->
+							</div>
+							<div class="tab-pane fade" id="T3" role="tabpanel" aria-labelledby="contact-tab">
+								  <!-- 서술형 카드본문 -->
 		<div>
 			<section class="py-5">
 				<div class="container px-4 px-lg-5 mt-5 langSelc">
@@ -198,8 +186,7 @@ hr {
 									<div class="text-center">
 										<h5 class="fw-bolder" th:text="${lang.cdName}">문제카테고리</h5>
 										<div>
-											클릭하면 <span th:text="${lang.cdName}"></span>의 5문제를 랜덤으로 풀 수
-											있습니다.
+											<span th:text="${lang.cdName}"></span>의 5문제를 랜덤으로 풀 수 있습니다.
 										</div>
 									</div>
 								</div>
@@ -215,45 +202,46 @@ hr {
 			</section>
 		</div>
     <!-- 카드본문끝 -->
-  </div>
-</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 
-<!-- 히든frm -->
-<div>
-	<form id="frm" method="post">
-		<input	type="hidden" id="gtpCd" name="gtpCd"></input>
-		<input	type="hidden" id="langCd" name="langCd"></input>
-	</form>
-</div>
-<!-- LAYOUT 안에 SCRIPT있어야함! -->
-<script>
-     // 버튼 클릭했을 때 cbt타입코드와 lang코드를 넘기는 클릭이벤트
-	$(".langSelc").on("click", ".question",function(e) {
+		<!-- 히든frm -->
+		<div>
+			<form id="frm" method="post">
+				<input type="hidden" id="gtpCd" name="gtpCd"></input> <input
+					type="hidden" id="langCd" name="langCd"></input>
+			</form>
+		</div>
+		<!-- LAYOUT 안에 SCRIPT있어야함! -->
+		<script>
+			// 버튼 클릭했을 때 cbt타입코드와 lang코드를 넘기는 클릭이벤트
+			$(".langSelc").on("click", ".question", function(e) {
 
-	    let tg = e.target.id;
-	    let gNo = tg.substring(1,2); //전체 조회 중 유형 코드 추출 
-	    let lNo = tg.substring(3); //전체 조회 중 언어 코드 추출
-	    
-	    console.log(tg);
-	    console.log(gNo);
-	    console.log(lNo);
+				let tg = e.target.id;
+				let gNo = tg.substring(1, 2); //전체 조회 중 유형 코드 추출 
+				let lNo = tg.substring(3); //전체 조회 중 언어 코드 추출
 
-	    if(gNo == '4'){
-	        $("#gtpCd").val('4');
-	        $("#langCd").val(lNo);
-	        $("#frm").attr("action","/cbtGuideListTab").submit();
-	    }
-	    else{
-	        $("#gtpCd").val(gNo);
-	        $("#langCd").val(lNo);
-	        $("#frm").attr("action","/cbtGuideListTab").submit();
-	    }
-	})
+				console.log(tg);
+				console.log(gNo);
+				console.log(lNo);
 
+				if (gNo == '4') {
+					$("#gtpCd").val('4');
+					$("#langCd").val(lNo);
+					$("#frm").attr("action", "/cbtGuideListTab.do").submit();
+				} else {
+					$("#gtpCd").val(gNo);
+					$("#langCd").val(lNo);
+					$("#frm").attr("action", "/cbtGuideListTab.do").submit();
+				}
+			})
+		</script>
 
-</script>
-
-</div>
+	</div>
 
 
 </body>

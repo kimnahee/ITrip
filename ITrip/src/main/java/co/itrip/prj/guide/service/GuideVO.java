@@ -10,16 +10,14 @@ import lombok.Data;
 public class GuideVO {
 	
 	// 가이드 테이블
-	private String guideId;
-	private String career;
-	private String dc;
-	private String duty;
-	private String attach;
-	private String attachDir;
-	private String stateCd;	
-	private Date dt;
-	private int star;
-	
-	
+	private String guideId; // 유저 아이디
+	private String career; // 경력
+	private String dc; // 설명
+	private String duty; // 직무
+	private String attach; // 파일
+	private String AttachDir; // 파일경로
+	private String stateCd; // 승인코드
+	private Date dt; // 신청일자
+	private int star; // 별점
 
 }
