@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+<head>
+ <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Layout - Voler Admin Dashboard</title>
+    
+    <link rel="stylesheet" href="bootstrap/voler/assets/css/bootstrap.css">
+    
+    <link rel="stylesheet" href="bootstrap/voler/assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" href="bootstrap/voler/assets/css/app.css">
+    <link rel="shortcut icon" href="bootstrap/voler/assets/images/favicon.svg" type="image/x-icon">
+    <style>
+
+#testDiv{
+	width:900px;
+	margin:0 auto;
+}
+</style>
+</head>
+<body layout:fragment="content">
+<div class="text-center">
+        <h1 class="display-5 mb-5">Start Class</h1>
+    </div>
+<div class="col-md-6 col-12" id="testDiv">
+        <div class="card">
+            <div class="card-header">
+            <h4 class="card-title">Class 신청폼</h4>
+            </div>
+            <div class="card-content">
+            <div class="card-body">
+                <form class="form form-horizontal">
+                <div class="form-body">
+                    <div class="row">
+                    <div class="col-md-4">
+                        <label>클래스 카테고리</label>
+                    </div>
+                    <div class="col-md-8 form-group">
+                        <select class="form-select" id="basicSelect">
+                                            <option>IT</option>
+                                            <option>Blade Runner</option>
+                                            <option>Thor Ragnarok</option>
+                                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label>클래스 이름</label>
+                    </div>
+                    <div class="col-md-8 form-group">
+                        <input type="email" id="email-id" class="form-control" name="email-id" placeholder="class name">
+                    </div>
+                    <div class="col-md-4">
+                        <label>클래스 설명</label>
+                    </div>
+                    <div class="col-md-8 form-group">
+                        <input type="number" id="contact-info" class="form-control" name="contact" placeholder="introduce">
+                    </div>
+                    <div class="col-md-4">
+                        <label>가이드 이름</label>
+                    </div>
+                    <div class="col-md-8 form-group">
+                        <input type="password" id="password" class="form-control" name="password" placeholder="guidename">
+                    </div>
+                     <div class="col-md-4">
+                        <label>등록날짜</label>
+                    </div>
+                    <div class="col-md-8 form-group">
+                        <input type="password" id="password" class="form-control" name="password" placeholder="sysdate">
+                    </div>
+                    <div class="col-md-4">
+                        <label>수업시간</label>
+                    </div>
+                     <div class="col-md-8 form-group" >
+                     	<div class="card-body " >
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                            <label class="form-check-label" for="flexRadioDefault1">
+                                Default radio
+                            </label> 
+                                                     
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                            <label class="form-check-label" for="flexRadioDefault2">
+                                Default checked radio
+                            </label>
+                        </div>                                          
+                    </div>
+                        <input type="password" id="password" class="form-control form-group" name="password" placeholder="price">
+                        <input type="password" id="password" class="form-control form-group" name="password" placeholder="price">
+                        <input type="password" id="password" class="form-control form-group" name="password" placeholder="price">
+                        <input type="password" id="password" class="form-control form-group" name="password" placeholder="price">
+                    </div>
+                    <div class="col-md-4">
+                        <label>클래스 희망가격</label>
+                    </div>
+                    <div class="col-md-8 form-group ">
+                        <input type="password" id="password" class="form-control" name="password" placeholder="Password">
+                    </div>
+                    <div class="col-sm-12 d-flex justify-content-end">
+                        <button type="submit" class="btn btn-primary mr-1 mb-1">Submit</button>
+                        <button type="reset" class="btn btn-light-secondary mr-1 mb-1">Reset</button>
+                    </div>
+                    </div>
+                </div>
+                </form>
+            </div>
+            </div>
+        </div>
+        </div>
+        
+         <script src="bootstrap/voler/assets/js/feather-icons/feather.min.js"></script>
+    <script src="bootstrap/voler/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="bootstrap/voler/assets/js/app.js"></script>
+    
+    <script src="bootstrap/voler/assets/js/main.js"></script>
+</body>
+</html>
