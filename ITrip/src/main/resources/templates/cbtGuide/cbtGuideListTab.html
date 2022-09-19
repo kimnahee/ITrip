@@ -5,32 +5,98 @@
 <head>
 <meta charset="UTF-8">
 <title>CBT 문제 목록</title>
+<script src="js/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-<div layout:fragment="content">
-	<!-- Section -->
-	<div>
-		<table>
-			<thead>
-				<tr>
-					<th>유형코드</th>
-					<th>언어코드</th>
-					<th>문제번호</th>
-					<th>문제</th>
-					<th>정답</th>
-				</tr>
-			</thead>
-			<tbody>
-			<tr th:each="cbt:${cbtList}">
-			<td th:text="${cbt.gtpCd}"></td>
-			<td th:text="${cbt.langCd}"></td>
-			<td th:text="${cbt.cbtNo}"></td>
-			<td th:text="${cbt.ques}"></td>
-			<td th:text="${cbt.cnsr}"></td>
-			</tr>
-			</tbody>
-		</table>
+	<div layout:fragment="content">
+		<!-- Section -->
+		<!-- Basic Vertical form layout section start -->
+		<div class="row match-height">
+			<div class="col-md-6 col-12 cbtNoSelc" >
+				<div class="card">
+					<div class="card-header" >
+						<h4 class="card-title">문제</h4>
+					</div>
+					<div class="card-content" >
+						<div><h5 th:if="${#lists.isEmpty(cbtList)}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;문제가 없습니다...</h5></div> 
+						<div class="card-body" th:each="cbt:${cbtList}">
+						<div th:if="${cbt.gtpCd} == '3'">
+							<form class="form form-vertical" >
+								<div class="form-body">
+									<div class="row">
+										<div class="col-12">
+											<div class="form-group">
+												<h3 >문제 <span th:text="${cbt.cbtNo}"></span></h3>
+												<br>
+												<span id="QUES" th:text="${cbt.ques}">문제</span>
+											</div>
+										</div>
+										<div class="col-12">
+											<textarea class="form-control" id="inputCNSR" rows="3"
+												placeholder="문제에 대한 답을 서술하세요."></textarea>
+										</div>
+										<!-- 풀이 ajax : 정답보기 버튼을 누르면 해당 문제 풀이글 활성화 -->
+										<div class="explnaArea">
+										</div>
+										<!-- 풀이 끝 -->
+										<div class="col-12 d-flex justify-content-end">
+										    <input type="hidden" id ="cbtNo" name="cbtNo" th:value="${cbt.cbtNo}">
+										    <input type="hidden" id ="explna" name="explna" th:value="${cbt.explna}">
+											<button type="button" class="btn btn-primary mr-1 mb-1 check">정답보기</button>
+											<button type="reset" class="btn btn-light-secondary mr-1 mb-1">초기화</button>
+										</div>
+									</div>
+									
+								</div>
+							</form>
+								</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<!-- 히든frm -->
+		<div>
+			<form id="frm" method="post">
+				<input type="hidden" id="cbtNo" name="cbtNo"></input>
+				
+			</form>
+		</div>
+		<script>
+		$(".cbtNoSelc").on("click", ".check", function(e) {
+			let tg = e.currentTarget;
+			let cbtNum = $(tg).prev().prev().val(); // 클릭한 버튼이 있는 문제 번호
+			let cbtExplna = $(tg).prev().val();  // 해당 번호의 풀이
+			console.log(cbtNum);
+			console.log(cbtExplna);
+			
+		$.ajax({
+		    url: '/ajaxExplnaList.do',
+		    type:'post',
+		    data: {cbtNo : cbtNum, explna : cbtExplna},
+		    success: function explnaSuccess(resp) {
+		           console.log("출력값 : ",resp);
+		            $(".explnaArea").append(
+		        		   "<div class='alert alert-light-primary color-primary'>풀이</div>"
+		            ).append("");
+		           
+
+		          /*  <div class="alert alert-light-primary color-primary">
+		           					&nbsp;<i data-feather="star"></i>
+		           					<a>풀이 <span th:text="${cbt.explna}"></span></a>
+		           				</div> */
+		           
+		     },
+		    error: function searchError(xhr, err) {
+		           console.error("Error on ajax call: " + err);
+		      
+		}
+		});
+		})
+		
+		
+		</script>
 	</div>
-</div>
 </body>
 </html>
