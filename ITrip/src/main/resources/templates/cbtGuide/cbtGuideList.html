@@ -1,33 +1,92 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
 <head>
 <meta charset="UTF-8">
-<title>가이드 문제 목록</title>
+<title>CBT 풀기</title>
 </head>
 <body>
-	TEST
-	<div>
-		<table>
-			<thead>
-				<tr>
-					<th>유형코드</th>
-					<th>언어코드</th>
-					<th>문제번호</th>
-					<th>문제</th>
-					<th>정답</th>
-				</tr>
-			</thead>
-			<tbody>
-			<tr th:each="cbt:${cbtList}">
-			<td th:text="${cbt.gtpCd}"></td>
-			<td th:text="${cbt.langCd}"></td>
-			<td th:text="${cbt.cbtNo}"></td>
-			<td th:text="${cbt.ques}"></td>
-			<td th:text="${cbt.cnsr}"></td>
-			</tr>
-			</tbody>
-		</table>
-	</div>
-
+	<div layout:fragment="content">
+	<!-- Section -->
+    <!-- Input Group Select start -->
+    <section class="input-group-select">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">CBT 문제 출제하기</h4>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6 mb-1">
+                                    <div class="input-group mb-2" >
+                                        <label class="input-group-text" for="inputGroupSelect01">유형</label>
+                                        <select class="form-select" id="inputGroupSelect01" >
+                                            <option selected >==== 유형 선택 ====</option>
+                                            <option th:each="gtp : ${gtpCdList}" th:value="${gtp.cdIni}" th:utext="${gtp.cdName}"></option>
+                                        </select>
+                                     </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-1">
+                                    <div class="input-group mb-2">
+                                        <label class="input-group-text" for="inputGroupSelect02">언어</label>
+                                        <select class="form-select" id="inputGroupSelect02">
+                                            <option selected>==== 언어 선택 ====</option>
+                                            <option th:each="lang : ${langCdList}" th:value="${lang.cdIni}" th:utext="${lang.cdName}"></option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 서술형 -->
+                            <div class="form-group mb-3">
+                                <label for="exampleFormControlTextarea1" class="form-label">문제</label>
+                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="출제할 문제를 입력하세요."></textarea>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="exampleFormControlTextarea2" class="form-label">답안</label>
+                                <textarea class="form-control" id="exampleFormControlTextarea2" rows="3" placeholder="문제의 답을 입력하세요."></textarea>
+                            </div>
+                            <div class="col-sm-6">
+	                                <div class="form-group position-relative has-icon-right">
+	                                    <input type="text" class="form-control" 
+	                                        placeholder="정답 키워드를 입력해주세요. 키워드로 채점이 진행됩니다.">
+	                                    <div class="form-control-icon">
+	                                        <i data-feather="edit"></i>+
+	                                    </div>
+	                                </div>
+                                </div>
+                             <div class="form-group mb-3">
+                                <label for="exampleFormControlTextarea3" class="form-label">풀이</label>
+                                <textarea class="form-control" id="exampleFormControlTextarea3" rows="3" placeholder="문제 풀이 내용을 입력하는 곳입니다."></textarea>
+                            </div>
+                            <div class="col-md-6 mb-1">
+                                    <div class="input-group mb-8">
+                                        <span class="input-group-text" id="inputGroupFileAddon01"><i data-feather="upload"></i></span>
+                                        <div class="form-file">
+                                            <input type="file" class="form-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+                                            <label class="form-file-label" for="inputGroupFile01">
+                                                <span class="form-file-text"></span>
+                                                <span class="form-file-button">Upload File</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 풀이내용까지 끝 -->
+                            <div class="col-12 d-flex justify-content-end">
+                                <button type="submit" class="btn btn-primary mr-1 mb-1">제출</button>
+                                <button type="reset" class="btn btn-light-secondary mr-1 mb-1">초기화</button>
+                            </div>
+                             </div>
+                        </div>
+                    </div>
+                </div>
+    </section>
+    <!-- Bootstrap Select end -->
+</div>
 </body>
 </html>

@@ -16,6 +16,11 @@ public class CbtUserServiceImpl implements CbtUserService {
 	public List<CbtUserVO> cbtUserList(CbtUserVO vo) {
 		return map.cbtUserList(vo);
 	}
+
+	@Override
+	public int cbtUserInsert(CbtUserVO vo) {
+		return map.cbtUserInsert(vo);
+	}
 	
 	
 
