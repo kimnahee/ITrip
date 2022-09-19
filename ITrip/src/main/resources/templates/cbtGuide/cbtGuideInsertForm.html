@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>CBT 문제 제출하기</title>
+<script src="js/jquery-3.6.0.min.js"></script>
 <style>
 p {
     font-size: '1px';
@@ -29,9 +30,9 @@ p {
                                 <div class="col-md-6 mb-1">
                                     <div class="input-group mb-2" >
                                         <label class="input-group-text" for="inputGroupSelect01">유형</label>
-                                        <select class="form-select" id="inputGroupSelect01" >
+                                        <select class="form-select" id="gtpCd" name="gtpCd" onchange="mySel(this.value)">
                                             <option selected >==== 유형 선택 ====</option>
-                                            <option th:each="gtp : ${gtpCdList}" th:value="${gtp.cdIni}" th:utext="${gtp.cdName}"></option>
+                                            <option th:each="gtp : ${gtpCdList}" th:value="${gtp.cdNo}" th:utext="${gtp.cdName}"></option>
                                         </select>
                                      </div>
                                 </div>
@@ -40,31 +41,24 @@ p {
                                 <div class="col-md-6 mb-1">
                                     <div class="input-group mb-2">
                                         <label class="input-group-text" for="inputGroupSelect02">언어</label>
-                                        <select class="form-select" id="inputGroupSelect02">
+                                        <select class="form-select"  id="langCd" name="langCd">
                                             <option selected>==== 언어 선택 ====</option>
-                                            <option th:each="lang : ${langCdList}" th:value="${lang.cdIni}" th:utext="${lang.cdName}"></option>
+                                            <option th:each="lang : ${langCdList}" th:value="${lang.cdNo}" th:utext="${lang.cdName}"></option>
                                         </select>
                                     </div>
                                 </div>
                             </div>
-                            <!-- 서술형 -->
-                            <div class="form-group mb-3">
+                            <!-- 문제 내는 곳-->
+                            <div class="form-group mb-3" id="exList">
                                 <label for="exampleFormControlTextarea1" class="form-label">문제</label>
                                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="출제할 문제를 입력하세요."></textarea>
                             </div>
-                            <div class="form-group mb-3">
-                                <label for="exampleFormControlTextarea2" class="form-label">답안</label>
-                                <textarea class="form-control" id="exampleFormControlTextarea2" rows="3" placeholder="문제의 답을 입력하세요."></textarea>
+                            <!-- 유형에 따라 변경 될 곳-->
+                            <div id ="dynamicArea">
+                            <div class="form-group mb-3" id="answer">
                             </div>
-                            <div class="col-sm-6">
-	                                <div class="form-group position-relative has-icon-right">
-	                                    <input type="text" class="form-control" 
-	                                        placeholder="정답 키워드를 입력해주세요. 키워드로 채점이 진행됩니다.">
-	                                    <div class="form-control-icon">
-	                                        <i data-feather="edit"></i>+
-	                                    </div>
-	                                </div>
-                                </div>
+                            
+                             <!-- 유향에 따라 변경 될 곳 끝 -->
                              <div class="form-group mb-3">
                                 <label for="exampleFormControlTextarea3" class="form-label">풀이</label>
                                 <textarea class="form-control" id="exampleFormControlTextarea3" rows="3" placeholder="문제 풀이 내용을 입력하는 곳입니다."></textarea>
@@ -93,6 +87,58 @@ p {
                 </div>
     </section>
     <!-- Bootstrap Select end -->
+    <script type="text/javascript">
+        function mySel(key){
+        console.log(key);
+        //let frmInsert = $("#dynamicArea");
+     	let answer = document.getElementById("answer");
+        let frmInsert =   document.getElementById("dynamicArea");
+        
+        switch(key) {
+		  case '1': //객관식
+			  answer.innerHTML="";
+			  answer.innerHTML+=`<label for="ex1" class="form-label">보기①</label>
+				<textarea class="form-control" id="ex1" name="ex1" rows="1"></textarea>
+				<label for="ex3" class="form-label">보기②</label>
+				<textarea class="form-control" id="ex2" name="ex2" rows="1"></textarea>
+				<label for="ex4" class="form-label">보기③</label>
+				<textarea class="form-control" id="ex3" name="ex3" rows="1"></textarea>
+				<label for="ex5" class="form-label">보기④</label>
+				<textarea class="form-control" id="ex4" name="ex4" rows="1"></textarea> <br>
+				<select class="form-select">
+				<option selected >==== 정답 선택 ====</option>
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+				<option value="4">4</option>
+				</select>
+				
+				`;
+		    break;
+		  case '2':  //단답형
+		      answer.innerHTML="";
+			  answer.innerHTML+=`<label for="exampleFormControlTextarea2" class="form-label">답안</label>
+			  <input class="form-control form-control-sm" type="text" placeholder="정답을 입력하세요">`;
+		    break;
+		  case '3': //서술형
+		      answer.innerHTML="";
+			  answer.innerHTML+=` <label for="exampleFormControlTextarea2" class="form-label">답안</label>
+                                <textarea class="form-control" id="exampleFormControlTextarea2" rows="3" placeholder="문제의 답을 입력하세요."></textarea>
+                                <div class="col-sm-6">
+	                                <div class="form-group position-relative has-icon-right">
+	                                    <input type="text" class="form-control" 
+	                                        placeholder="정답 키워드를 입력해주세요. 키워드로 채점이 진행됩니다.">
+	                                        <div class="form-control-icon"><h1>+</h1>
+	                                    </div>
+	                                </div>
+                                </div>
+                             </div>`;
+		    break;
+		}
+        }
+        
+    
+    </script>
 </div>
 </body>
 </html>
