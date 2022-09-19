@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>메인화면</title>
+<link rel="stylesheet" href="bootstrap/voler/assets/css/bootstrap.css">
+<link rel="stylesheet"
+	href="bootstrap/voler/assets/vendors/chartjs/Chart.min.css">
+<link rel="stylesheet"
+	href="bootstrap/voler/assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
+<link rel="stylesheet" href="bootstrap/voler/assets/css/app.css">
+<link rel="shortcut icon"
+	href="bootstrap/voler/assets/images/favicon.svg" type="image/x-icon">
+</head>
+<body>
+	<div id="app">
+		<div id="sidebar" class='active'>
+			<div class="sidebar-wrapper active">
+				<div class="sidebar-header">
+				<!-- 로고 -->
+					<a href="/"><img src="bootstrap/voler/assets/images/logo.svg" alt="" srcset=""></a>	
+				</div>
+				<div class="sidebar-menu">
+					<ul class="menu">
+						<li class='sidebar-title'>메뉴</li>
+						<li class="sidebar-item active "><a href="/"
+							class='sidebar-link'> <i data-feather="home" width="20"></i>
+								<span>Main</span>
+						</a></li>
+						
+						<!-- 1:1 상담 탭 -->				
+						<li class="sidebar-item  has-sub"><a href="/"
+							class='sidebar-link'> <i data-feather="triangle" width="20"></i>
+								<span>1:1 상담</span>
+						</a>
+ 							<ul class="submenu">
+								<li><a href="consultList.do">웹개발</a></li>
+								<li><a href="consultList.do">프론트엔드</a></li>
+								<li><a href="consultList.do">백엔드</a></li>
+								<li><a href="consultList.do">풀스택</a></li>
+								<li><a href="consultList.do">데이터베이스</a></li>
+								<li><a href="consultList.do">자격증</a></li>
+								<li><a href="consultList.do">개발도구</a></li>
+								<li><a href="consultList.do">취업.이직</a></li>
+								<li><a href="consultList.do">기타</a></li>
+							</ul>	
+						</li>
+
+						<!-- I-CLASS 탭 -->
+						<li class="sidebar-item  has-sub"><a href="#"
+							class='sidebar-link'> <i data-feather="briefcase" width="20"></i>
+								<span>I-CLASS</span>
+						</a>
+							<ul class="submenu">
+								<li><a href="component-tooltips.html">웹개발</a></li>
+								<li><a href="component-tooltips.html">프론트엔드</a></li>
+								<li><a href="component-tooltips.html">백엔드</a></li>
+								<li><a href="component-tooltips.html">풀스택</a></li>
+								<li><a href="component-tooltips.html">데이터베이스</a></li>
+								<li><a href="component-tooltips.html">자격증</a></li>
+								<li><a href="component-tooltips.html">개발도구</a></li>
+								<li><a href="component-tooltips.html">취업.이직</a></li>
+								<li><a href="component-tooltips.html">기타</a></li>
+							</ul>	
+						</li>
+						
+						<!-- 커뮤니티 탭 -->
+						<li class="sidebar-item  has-sub"><a href="#"
+							class='sidebar-link'> <i data-feather="file-text" width="20"></i>
+								<span>커뮤니티</span>
+						</a>
+							<ul class="submenu">
+								<li><a href="timeline">실시간 타임라인</a></li>
+								<li><a href="study.do">스터디게시판</a></li>
+								<li><a href="component-tooltips.html">자유게시판</a></li>
+							</ul>	
+						</li>
+						
+						<!-- CBT 탭 -->						
+						<li class='sidebar-title'>CBT</li>
+						<li class="sidebar-item  has-sub"><a href="#"
+							class='sidebar-link'> <i data-feather="file-text" width="20"></i>
+								<span>멘토 CBT</span>
+						</a>
+							<ul class="submenu ">
+								<li><a href="form-element-input.html">Input</a></li>
+								<li><a href="form-element-input-group.html">Input Group</a></li>
+								<li><a href="form-element-select.html">Select</a></li>
+								<li><a href="form-element-radio.html">Radio</a></li>
+								<li><a href="form-element-checkbox.html">Checkbox</a></li>
+								<li><a href="form-element-textarea.html">Textarea</a></li>
+							</ul></li>
+
+						<li class="sidebar-item  "><a href="/langCdList"
+							class='sidebar-link'> <i data-feather="layout" width="20"></i>
+								<span>멘티 CBT</span>
+						</a></li>
+						<li class="sidebar-item  "><a href="form-editor.html"
+							class='sidebar-link'> <i data-feather="layers" width="20"></i>
+								<span>나만의 노트</span>
+						</a></li>
+						<li class="sidebar-item  "><a href="table.html"
+							class='sidebar-link'> <i data-feather="grid" width="20"></i>
+								<span>나만의 CBT</span>
+						</a></li>
+						
+						<!-- 고객센터 탭 -->
+						<li class='sidebar-title'>고객센터</li>
+						<li class="sidebar-item"><a href="#"
+							class='sidebar-link'> <i data-feather="user" width="20"></i>
+								<span>공지사항</span>
+						</a>
+						</li>
+
+						<li class="sidebar-item"><a href="#"
+							class='sidebar-link'> <i data-feather="trending-up"
+								width="20"></i> <span>Q&A</span>
+						</a>
+						</li>
+
+						<!-- 관리자 페이지 : 권한에 따라 보이게? -->
+						<li class='sidebar-title'>관리자 페이지</li>
+						<li class="sidebar-item  has-sub"><a href="#"
+							class='sidebar-link'> <i data-feather="user" width="20"></i>
+								<span>관리자</span>
+						</a>
+							<ul class="submenu ">
+								<li><a href="auth-login.html">멘토신청 목록</a></li>
+								<li><a href="auth-register.html">회원목록</a></li>
+								<li><a href="auth-forgot-password.html">클래스 승인</a></li>							
+								<li><a href="auth-forgot-password.html">회원 승인</a></li>
+							</ul></li>
+
+					</ul>
+				</div>
+				<button class="sidebar-toggler btn x">
+					<i data-feather="x"></i>
+				</button>
+			</div>
+		</div>
+		<div id="main">
+			<nav class="navbar navbar-header navbar-expand navbar-light">
+				<a class="sidebar-toggler" href="#"><span
+					class="navbar-toggler-icon"></span></a>
+				<button class="btn navbar-toggler" type="button"
+					data-toggle="collapse" data-target="#navbarSupportedContent"
+					aria-controls="navbarSupportedContent" aria-expanded="false"
+					aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav d-flex align-items-center navbar-light ml-auto">
+						
+						<li class="dropdown">
+						<!-- <a href="loginForm.do" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user"> -->
+							<a href="loginForm.do" class="d-none d-md-block d-lg-inline-block">로그인</a>
+						</li>
+						
+						<li class="dropdown"><a href="#" data-toggle="dropdown"
+							class="nav-link dropdown-toggle nav-link-lg nav-link-user">
+							<!-- 로그인한 사람 -> session 사용 -->
+								<a href="signupForm.do" class="d-none d-md-block d-lg-inline-block">회원가입</a>
+						</a>
+						</li>
+						
+						<li class="dropdown nav-icon">
+							<a href="#" data-toggle="dropdown" class="nav-link  dropdown-toggle nav-link-lg nav-link-user">
+								<div class="d-lg-inline-block">
+									<i data-feather="bell"></i>
+								</div>
+							</a>
+						
+						
+							<div
+								class="dropdown-menu dropdown-menu-right dropdown-menu-large">
+								<h6 class='py-2 px-4'>Notifications</h6>
+								<ul class="list-group rounded-none">
+									<li class="list-group-item border-0 align-items-start">
+										<div class="avatar bg-success mr-3">
+											<span class="avatar-content"><i
+												data-feather="shopping-cart"></i></span>
+										</div>
+										<div>
+											<h6 class='text-bold'>New Order</h6>
+											<p class='text-xs'>An order made by Ahmad Saugi for
+												product Samsung Galaxy S69</p>
+										</div>
+									</li>
+								</ul>
+							</div>
+						</li>
+
+						<li class="dropdown nav-icon mr-2"><a href="#"
+							data-toggle="dropdown"
+							class="nav-link  dropdown-toggle nav-link-lg nav-link-user">
+								<div class="d-lg-inline-block">
+									<i data-feather="mail"></i>
+								</div>
+						</a>
+						
+							<div class="dropdown-menu dropdown-menu-right">
+								<a class="dropdown-item" href="#"><i data-feather="user"></i>
+									Account</a> <a class="dropdown-item active" href="#"><i
+									data-feather="mail"></i> Messages</a> <a class="dropdown-item"
+									href="#"><i data-feather="settings"></i> Settings</a>
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item" href="#"><i data-feather="log-out"></i>
+									Logout</a>
+							</div></li>
+						<!-- <li class="dropdown"><a href="#" data-toggle="dropdown"
+							class="nav-link dropdown-toggle nav-link-lg nav-link-user">
+							로그인한 사람 -> session 사용
+								<div class="d-none d-md-block d-lg-inline-block">ㅎㅇ</div>
+						</a>
+							<div class="dropdown-menu dropdown-menu-right">
+								<a class="dropdown-item" href="#"><i data-feather="user"></i>
+									Account</a> <a class="dropdown-item active" href="#"><i
+									data-feather="mail"></i> Messages</a> <a class="dropdown-item"
+									href="#"><i data-feather="settings"></i> Settings</a>
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item" href="#"><i data-feather="log-out"></i>
+									Logout
+								</a>
+							</div>
+						</li> -->
+					</ul>
+				</div>
+			</nav>
+
+			<!-- Contents -->
+			<div class="main-content container-fluid" layout:fragment="content">
+			
+			</div>
+			
+			<!-- Footer -->
+			<footer>
+				<div class="footer clearfix mb-0 text-muted">
+					<div class="float-left">
+						<p>2020 &copy; Voler</p>
+					</div>
+					<div class="float-right">
+						<p>
+							Crafted with <span class='text-danger'><i
+								data-feather="heart"></i></span> by <a href="http://ahmadsaugi.com">Ahmad
+								Saugi</a>
+						</p>
+					</div>
+				</div>
+			</footer>
+		</div>
+	</div>
+	
+	<script src="bootstrap/voler/assets/js/feather-icons/feather.min.js"></script>
+	<script src="bootstrap/voler/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+	<script src="bootstrap/voler/assets/js/app.js"></script>
+
+	<script src="bootstrap/voler/assets/vendors/chartjs/Chart.min.js"></script>
+	<script src="bootstrap/voler/assets/vendors/apexcharts/apexcharts.min.js"></script>
+	<script src="bootstrap/voler/assets/js/pages/dashboard.js"></script>
+
+	<script src="bootstrap/voler/assets/js/main.js"></script>
+</body>
+</html>

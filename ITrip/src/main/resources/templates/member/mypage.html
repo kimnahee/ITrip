@@ -55,7 +55,7 @@
                             <div class="col-sm-6 wow fadeIn" data-wow-delay="0.1s">
                                 <div class="d-flex align-items-center">
                                     <div class="ms-4">
-                                        <a href="" class=" rounded-pill "><img class="img-fluid" src="bootstrap/securex/img/icon/icon-1.png" alt="Icon"></a>
+                                        <a href="mmFollow" class=" rounded-pill "><img class="img-fluid" src="bootstrap/securex/img/icon/icon-1.png" alt="Icon"></a>
                                     </div>
                                     <div class="btn-square " style="width: 64px; height: 64px;"> 
                                         <h2 class="mb-1" data-toggle="counter-up">3</h2>
@@ -105,7 +105,7 @@
                         </div>
                         <h4 class="mb-3">My Writer</h4>
                         <p class="mb-4">작성한 게시물을 보는 곳 입니다.</p>
-                        <a class="btn" href=""><i class="fa fa-arrow-right text-white me-3"></i>write</a>
+                        <a class="btn" href="myWriter"><i class="fa fa-arrow-right text-white me-3"></i>write</a>
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.7s">
@@ -120,8 +120,41 @@
                 </div>
             </div><br><br>
             <div class="text-center">
-                <a class="btn" href="">회원탈퇴</a>/<a class="btn" href="">회원수정</a>
+                <a class="btn block" data-toggle="modal" data-backdrop="false"
+                    data-target="#backdrop">회원탈퇴</a>/<a class="btn" href="">회원수정</a>
             </div>
+             <!--Disabled Backdrop Modal -->
+                    <div class="modal fade text-left" id="backdrop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel4"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="myModalLabel4">회원 탈퇴</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <i data-feather="x"></i>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>
+                            가입된 회원정보 모두 삭제 됩니다. 작성하신 게시물은 삭제되지 않습니다.
+							탈퇴 후 같은 계정으로 재가입시 기존에 가직 있던 적립금은 복원되지 않습니다.
+							회원탈퇴를 진행하시겠습니까?
+                            </p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-light-secondary" data-dismiss="modal">
+                            <i class="bx bx-x d-block d-sm-none"></i>
+                            <span class="d-none d-sm-block">취소</span>
+                            </button>
+                            <button type="button" class="btn btn-primary ml-1" data-dismiss="modal">
+                            <i class="bx bx-check d-block d-sm-none"></i>
+                            <span class="d-none d-sm-block">탈퇴하기</span>
+                            </button>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+              
             
         </div>
     </div>
@@ -140,5 +173,6 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+    
 </body>
 </html>
