@@ -17,7 +17,6 @@
 		 <if test="gtpCd!=4">
 			WHERE GTP_CD=#{gtpCd} AND LANG_CD=#{langCd}
 		</if>
-	     
 	</select>
 	
 	<!-- public CbtGuideVO ajaxExplnaList(CbtGuideVO VO); // 풀이 단건 리스트 -->
@@ -31,7 +30,27 @@
 	</select>
 	
 	<!-- public int cbtGuideInsert(CbtGuideVO VO); //등록(C) -->
-	<insert id="cbtGuideInsert">
+	<insert id="cbtGuideInsert" parameterType="java.util.List" >
+	
+	   <selectKey keyProperty="cbtNo" order="BEFORE" resultType="int">
+			SELECT CASE WHEN MAX(CBT_NO) IS NULL THEN 1 
+				   ELSE  MAX(CBT_NO)+1 END ID 
+			FROM CBT_GUIDE
+		</selectKey>
+		insert into cbt_guide values(#{cbtNo},#{ques},#{cnsr, jdbcType=VARCHAR},#{ex1, jdbcType=VARCHAR},
+		            #{ex2, jdbcType=VARCHAR},#{ex3, jdbcType=VARCHAR},#{ex4, jdbcType=VARCHAR},
+                    #{attach, jdbcType=VARCHAR},#{attachDir, jdbcType=VARCHAR},0,0,#{explna},#{gtpCd},#{langCd},#{memberId , jdbcType=VARCHAR})
+	</insert>
+	
+	<insert id="KeywordInsert" parameterType="java.util.List">
+	    <selectKey keyProperty="kyNo" order="BEFORE" resultType="int">
+			SELECT CASE WHEN MAX(KY_NO) IS NULL THEN 1 
+				   ELSE  MAX(KY_NO)+1 END ID 
+			FROM CBT_KEYWORD
+		</selectKey>
+	    insert into cbt_keyword(<foreach collection="list" item="item" separator=",">
+        #{item.kyNo} , #{item.cKwrd} , ${cbtNo})
+    </foreach>)
 	</insert>
 	
 	<!-- public int cbtGuideUpdate(CbtGuideVO VO); //수정(U) -->
@@ -41,6 +60,8 @@
 	<!-- public int cbutGuideDelet(CbtGuideVO VO);//삭제(D) -->
 	<delete id="cbutGuideDelet">
 	</delete>
+	<!-- public int KeywordInsert(); -->
+	<!-- public int KeywordList(); -->
 	
 	
 </mapper>
