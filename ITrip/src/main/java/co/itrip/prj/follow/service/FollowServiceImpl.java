@@ -32,7 +32,7 @@ public class FollowServiceImpl implements FollowService {
 	}
 
 	@Override
-	public int followCount() {
+	public FollowVO followCount() {
 		// TODO Auto-generated method stub
 		return map.followCount();
 	}
