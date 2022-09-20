@@ -2,7 +2,6 @@ package co.itrip.prj.cbtGuide.web;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,22 +17,17 @@ import co.itrip.prj.cbtGuide.mapper.CbtGuideMapper;
 import co.itrip.prj.cbtGuide.service.CbtGuideService;
 import co.itrip.prj.cbtGuide.service.CbtGuideVO;
 import co.itrip.prj.cbtGuide.service.CbtKeywordVO;
-import co.itrip.prj.gtpcd.mapper.GtpCdMapper;
-import co.itrip.prj.langcd.mapper.LangCdMapper;
+import co.itrip.prj.gtpcd.service.GtpCdService;
+import co.itrip.prj.langcd.service.LangCdService;
 
 @Controller
 public class CbtGuideController {
 	@Autowired
 	private CbtGuideMapper cgDao;
 	@Autowired
-	private GtpCdMapper gtpDao;
+	private GtpCdService gtpDao;
 	@Autowired
-	private LangCdMapper langDao;
-	
-	@Autowired
-	private CbtGuideService cgService;
-	
-	
+	private LangCdService langDao;
 	
 	//메인화면
 	@RequestMapping("/cbtGuideMain.do")
@@ -44,11 +38,6 @@ public class CbtGuideController {
 	    return "cbtGuide/cbtGuideMain";
 	}
 	
-	/*@RequestMapping("/cbtGuideList")
-	public String cbtGuideList(CbtGuideVO vo, Model model) {
-		model.addAttribute("cbtList", cgDao.cbtGuideList());
-		return "cbtGuide/cbtGuideList";
-	}*/
 	//유형, 언어별로 리스트 문제 출력
 	@PostMapping("/cbtGuideListTab.do")
 	public String cbtGuideListTab(CbtGuideVO vo, Model model) {
@@ -67,19 +56,20 @@ public class CbtGuideController {
 	public String cbtGuideInsert(CbtGuideVO vo, CbtKeywordVO kvo, Model model,
 			@RequestParam("file") MultipartFile file) throws IllegalStateException, IOException {
 		//파일 처리
-		String saveFolder = "c://fileUpload"; //저장할 공간 폴더 명
-		String originalFileName= file.getOriginalFilename(); //넘어온 파일명
+		String projectPath = System.getProperty("user.dir")+"/src/main/resources/static/files"; //프로젝트 경로
+		UUID uuid = UUID.randomUUID();
 		
 		if(!file.isEmpty()) {
 			//파일명 충돌방지를 위한 파일별명만듦
-			String saveFileName = UUID.randomUUID().toString() + originalFileName.substring(originalFileName.lastIndexOf('.'));
+			String filename= uuid +"_"+file.getOriginalFilename();
+			File saveFile = new File(projectPath, filename);
 			//파일 물리적 위치에 저장
-			file.transferTo(new File(saveFolder, saveFileName));
-			
-			vo.setAttach(originalFileName);
-			vo.setAttachDir(saveFolder + File.separator + saveFileName);
+			file.transferTo(saveFile);
+			vo.setAttach(filename);
+			String path ="/files/"+filename;
+			vo.setAttachDir(path);
 		}
-		cgService.cbtGuideInsert(vo);
+		cgDao.cbtGuideInsert(vo);
 
 		return "redirect:/cbtGuideMain.do";
 	}

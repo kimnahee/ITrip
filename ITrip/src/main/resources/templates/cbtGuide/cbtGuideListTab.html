@@ -15,14 +15,106 @@
 		<!-- Section -->
 		<!-- Basic Vertical form layout section start -->
 		<div class="row match-height">
-			<div class="col-md-6 col-12 cbtNoSelc" >
+			<div class="col-md-10 col-12 cbtNoSelc" >
 				<div class="card">
 					<div class="card-header" >
 						<h4 class="card-title">문제</h4>
 					</div>
 					<div class="card-content" >
 						<div><h5 th:if="${#lists.isEmpty(cbtList)}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;문제가 없습니다...</h5></div> 
+						<!-- gtpCd에 따른 처리 -->
 						<div class="card-body" th:each="cbt:${cbtList}">
+						<!-- ctpCd == '1' -->
+						<div th:if="${cbt.gtpCd} == '1'">
+							<form class="form form-vertical" >
+								<div class="form-body">
+									<div class="row">
+										<div class="col-12">
+											<div class="form-group">
+												<h3 >문제 <span th:text="${cbt.cbtNo}"></span><i data-feather='star'  onclick="bookmark()" style="cursor: pointer;"></i></h3>
+												<br>
+												<span id="QUES" th:text="${cbt.ques}">문제</span>
+												<a>&nbsp;&nbsp;[ 출제자 : <span th:text="${cbt.memberId}"></span> ]</a>
+											</div>
+										</div>
+										<!-- 정답 입력칸 -->
+                                    	<!--<div class="col-sm-4 mb-1">
+	                                        <span class="input-group-text" id="inputGroup-sizing-sm">정답</span>
+	                                        <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+	                                    </div>-->
+										<!--라디오 -->
+										<div class="form-check">
+				                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+				                            <label class="form-check-label" for="flexRadioDefault1" th:text="${cbt.ex1}" >
+				                            </label>
+				                        </div>
+				                        <div class="form-check">
+				                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+				                            <label class="form-check-label" for="flexRadioDefault2" th:text="${cbt.ex2}" >
+				                            </label>
+				                        </div>
+				                        <div class="form-check">
+				                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3">
+				                            <label class="form-check-label" for="flexRadioDefault3" th:text="${cbt.ex3}" >
+				                            </label>
+				                        </div>
+				                        <div class="form-check">
+				                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault4">
+				                            <label class="form-check-label" for="flexRadioDefault4" th:text="${cbt.ex4}" >
+				                            </label>
+				                        </div>
+				                        <!--라디오 끝 -->
+										<!-- 풀이 ajax : 정답보기 버튼을 누르면 해당 문제 풀이글 활성화 -->
+										<div class="explnaArea">
+										</div>
+										<!-- 풀이 끝 -->
+										<!--<div class="col-12 d-flex justify-content-end">
+										    <input type="hidden" id ="cbtNo" name="cbtNo" th:value="${cbt.cbtNo}">
+										    <input type="hidden" id ="explna" name="explna" th:value="${cbt.explna}">
+											<button type="button" class="btn btn-outline-primary check" data-toggle="modal" data-target="#primary">정답보기</button>
+											<button type="reset" class="btn btn-light-secondary mr-1 mb-1">초기화</button>
+										</div>-->
+									</div>
+								
+								</div>
+							</form>
+						</div>
+						<!-- gtpCd=='2'끝 -->
+						<!-- ctpCd == '2' -->
+						<div th:if="${cbt.gtpCd} == '2'">
+							<form class="form form-vertical" >
+								<div class="form-body">
+									<div class="row">
+										<div class="col-12">
+											<div class="form-group">
+												<h3 >문제 <span th:text="${cbt.cbtNo}"></span><i data-feather='star'  onclick="bookmark()" style="cursor: pointer;"></i></h3>
+												<br>
+												<span id="QUES" th:text="${cbt.ques}">문제</span>
+												<a>&nbsp;&nbsp;[ 출제자 : <span th:text="${cbt.memberId}"></span> ]</a>
+											</div>
+										</div>
+										<div class="col-sm-4">
+		                                    <input class="form-control form-control-sm" type="text" id="inputCNSR" placeholder="↵">
+		                                </div>
+											<!--<textarea class="form-control" id="inputCNSR" rows="3"
+												placeholder="답을 입력하세요."></textarea>
+										</div>-->
+										<!-- 풀이 ajax : 정답보기 버튼을 누르면 해당 문제 풀이글 활성화 -->
+										<div class="explnaArea">
+										</div>
+										<!-- 풀이 끝 -->
+										<!--<div class="col-12 d-flex justify-content-end">
+										    <input type="hidden" id ="cbtNo" name="cbtNo" th:value="${cbt.cbtNo}">
+										    <input type="hidden" id ="explna" name="explna" th:value="${cbt.explna}">
+											<button type="button" class="btn btn-outline-primary check" data-toggle="modal" data-target="#primary">정답보기</button>
+										</div>-->
+									</div>
+								
+								</div>
+							</form>
+						</div>
+						<!-- gtpCd=='2'끝 -->
+						<!-- ctpCd == '3' -->
 						<div th:if="${cbt.gtpCd} == '3'">
 							<form class="form form-vertical" >
 								<div class="form-body">
@@ -39,7 +131,7 @@
 										<div class="col-12">
 											<textarea class="form-control" id="inputCNSR" rows="3"
 												placeholder="문제에 대한 답을 서술하세요."></textarea>
-										</div>
+										</div><br><br>
 										<!-- 풀이 ajax : 정답보기 버튼을 누르면 해당 문제 풀이글 활성화 -->
 										<div class="explnaArea">
 										</div>
@@ -48,19 +140,18 @@
 										    <input type="hidden" id ="cbtNo" name="cbtNo" th:value="${cbt.cbtNo}">
 										    <input type="hidden" id ="explna" name="explna" th:value="${cbt.explna}">
 											<button type="button" class="btn btn-outline-primary check" data-toggle="modal" data-target="#primary">정답보기</button>
-											<!--  <button type="button" class="btn btn-primary mr-1 mb-1 check">정답보기</button>-->
-											<button type="reset" class="btn btn-light-secondary mr-1 mb-1">초기화</button>
 										</div>
 									</div>
 								
 								</div>
 							</form>
-							
 						</div>
+						<!-- gtpCd=='3'끝 -->
 						</div>
+						<a><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-outline-primary">제출하기</button><br><br></a>
 					</div>
-
 				</div>
+			
 			</div>
 		</div>
 		<!-- 히든frm -->
@@ -80,8 +171,8 @@
             <i data-feather="x"></i>
         </button>
         </div>
-        <div class="modal-body" th:each="cbt:${cbtList}" th:text="${cbt.cnsr}">
-        정답 내용입니다.
+        <div class="modal-body" th:each="cbt:${cbtList}">
+        <span th:text="${cbt.cnsr}"> </sapn>
         </div>
         <div class="modal-body">
         키워드 들어갈 공간입니다.
@@ -99,6 +190,7 @@
     </div>
     </div>
 </div>
+
 <!-- 모달창 끝 -->
 		
 		<script>
