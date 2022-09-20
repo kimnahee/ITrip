@@ -3,6 +3,7 @@
 <head>
  <meta charset="utf-8">
     <title>Securex - CCTV Camera Website Template</title>
+    <script src="js/jquery-3.6.0.min.js"></script>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -64,7 +65,7 @@
                                 <div class="d-flex align-items-center">
                                     <div class="ms-4">
                                         <a class=" btn-outline-success" data-toggle="modal"
-                                          data-target="#exampleModalScrollable">
+                                          data-target="#exampleModalScrollable" href="followSelectList.do">
                                           <img class="img-fluid" src="bootstrap/securex/img/icon/icon-1.png" alt="Icon"></a>
                                     </div>
                                     <!-- modal -->
@@ -83,24 +84,15 @@
                     <table class='form-group' >                   
                     <thead>
                         <tr>
+                            <th class='col-md-5'>guide ID</th>
                             <th class='col-md-5'>guide nickname</th>
-                            <th class='col-md-5'>go guide</th>
                         </tr>
                     </thead> 
                     <tbody>
-                        <tr>
-                            <td >Graiden</td>
-                            <td >aliquet@semcon</td>
-                        </tr>
-                        <tr>
-                            <td >Graiden</td>
-                            <td >aliquet@semcon</td>
-                        </tr>
-                        <tr>
-                            <td >Graiden</td>
-                            <td >aliquet@semcon</td>
-                        </tr>
-                                                                   
+                        <tr th:each="foll : ${follows}">
+                            <td th:text="${foll.guideId}"></td>
+                            <td ><a class="btn" href="">unfollow</a></td>
+                        </tr>                                                            
                     </tbody>
                     </table>
                         </div>
@@ -108,18 +100,14 @@
                             <button type="button" class="btn btn-light-secondary" data-dismiss="modal">
                             <i class="bx bx-x d-block d-sm-none"></i>
                             <span class="d-none d-sm-block">Close</span>
-                            </button>
-                            <button type="button" class="btn btn-primary ml-1" data-dismiss="modal">
-                            <i class="bx bx-check d-block d-sm-none"></i>
-                            <span class="d-none d-sm-block">Accept</span>
-                            </button>
+                            </button>                       
                         </div>
                         </div>
                     </div>
                     </div>
                                     
-                                    <div class="btn-square " style="width: 64px; height: 64px;"> 
-                                        <h2 class="mb-1" data-toggle="counter-up">3</h2>
+                                    <div th:if="${count.guideId != 0}" class="btn-square " style="width: 64px; height: 64px;"> 
+                                        <h2 th:text=${count.guideId}></h2>
                                     </div>
                                     
                                 </div>
@@ -234,6 +222,8 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+    
+  
     
 </body>
 </html>

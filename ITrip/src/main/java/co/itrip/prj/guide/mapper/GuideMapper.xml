@@ -11,7 +11,7 @@
 </select>
 
 <insert id="guideInsert" parameterType="co.itrip.prj.guide.service.GuideVO">
-	INSERT INTO GUIDE VALUES(#{guideId, jdbcType=VARCHAR},#{career, jdbcType=VARCHAR},#{dc, jdbcType=VARCHAR},#{duty, jdbcType=VARCHAR},#{attach, jdbcType=VARCHAR},#{attachDir, jdbcType=VARCHAR},'S1',sysdate,0)
+	INSERT INTO GUIDE VALUES(#{guideId},#{career},#{dc},#{duty},#{attach},#{attachDir},'S1',sysdate,0)
 </insert>
 
 <update id="guideUpdate"></update>
