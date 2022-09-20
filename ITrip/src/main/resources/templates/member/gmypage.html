@@ -39,13 +39,16 @@
         <div class="bg-primary mb-3 mx-auto" style="width: 60px; height: 2px;"></div>
         <h1 class="display-5 mb-5">가이드 마이페이지</h1>
     </div>
+               <div align="center">
+                <span th:each="i : ${id}" th:text="${i.name}"></span>
+               </div>
     <div class="container-fluid bg-light overflow-hidden my-5 px-lg-0">
         <div class="container about px-lg-0">
             <div class="row g-0 mx-lg-0" style="height: 250px; ">
                 <div class="col-lg-6 ps-lg-0" style="min-height: 400px;">
                     <div class="position-relative h-100" style="margin: 25px 150px 30px">
                         <img class="position-absolute img-fluid w-40 h-50" src="bootstrap/securex/img/about.jpg" style="object-fit: cover;" alt="">
-                    </div>
+                    </div> 
                 </div>
                 <div class="col-lg-6 about-text py-5 wow fadeIn" data-wow-delay="0.5s" >
                     <div class="pe-lg-0" style="margin-left: 450px;">

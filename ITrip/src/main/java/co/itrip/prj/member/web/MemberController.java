@@ -4,9 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-
 import co.itrip.prj.community.service.CommunityService;
-
+import co.itrip.prj.member.service.MemberService;
+import co.itrip.prj.member.service.MemberVO;
 
 
 @Controller
@@ -14,6 +14,9 @@ public class MemberController {
 	
 	@Autowired
 	private CommunityService com;
+	
+	@Autowired
+	private MemberService dao;
 	
 	@GetMapping("/myPage")
 	public String myPage() {
@@ -57,5 +60,16 @@ public class MemberController {
 		return "member/cstart";
 	}
 	
+	// 가이드 마이페이지
+	@GetMapping("/gmyPage.do")
+	public String gmyPage(Model model, MemberVO vo) {
+		String guideId = "enji";
+		vo.setMemberId(guideId);
+		System.out.println(vo.getMemberId());
+		model.addAttribute("id", dao.memberSelect(vo));
+		vo = dao.memberSelect(vo);
+		System.out.println("========"+vo.getName());
+		return "member/gmypage";
+	}
 	
 }

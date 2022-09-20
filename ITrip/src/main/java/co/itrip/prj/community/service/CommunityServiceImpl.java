@@ -5,6 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+
 import co.itrip.prj.community.mapper.CommunityMapper;
 
 @Service
@@ -41,6 +44,16 @@ public class CommunityServiceImpl implements CommunityService {
 	@Override
 	public int studyDelete(CommunityVO vo) {
 		return map.studyDelete(vo);
+	}
+
+	@Override
+	public List<CommunityVO> findAll() {
+		return map.findAll();
+	}
+
+	@Override
+	public List<CommunityVO> findStudy() {
+		return map.findStudy();
 	}
 
 }

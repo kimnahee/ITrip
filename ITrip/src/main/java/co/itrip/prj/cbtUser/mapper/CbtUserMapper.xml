@@ -12,15 +12,20 @@
 </select>
 
 <insert id="cbtUserInsert">
-<selectKey keyProperty="cbtNo" order="BEFORE" resultType="int">
-			SELECT CASE WHEN MAX(cbt_no) IS NULL THEN 1 
-				ELSE  MAX(cbt_no)+1 END ID 
-			    FROM cbt_user
-		</selectKey>
+	<selectKey keyProperty="cbtNo" order="BEFORE" resultType="int">
+		SELECT CASE WHEN MAX(cbt_no) IS NULL THEN 1 
+			ELSE  MAX(cbt_no)+1 END ID 
+		    FROM cbt_user
+	</selectKey>
 		insert into cbt_user values(#{cbtNo},#{ques},#{cnsr, jdbcType=VARCHAR},#{ex1, jdbcType=VARCHAR},#{ex2, jdbcType=VARCHAR},#{ex3, jdbcType=VARCHAR},#{ex4, jdbcType=VARCHAR},
 #{attach, jdbcType=VARCHAR},#{attachDir, jdbcType=VARCHAR},0,0,#{explna},#{utpCd},#{langCd},#{memberId})
 		
 		
 
 </insert>
+
+<select id="cbtUserSelectOne" parameterType="co.itrip.prj.cbtUser.service.CbtUserVO"
+	resultType="co.itrip.prj.cbtUser.service.CbtUserVO">
+
+</select>
 </mapper>

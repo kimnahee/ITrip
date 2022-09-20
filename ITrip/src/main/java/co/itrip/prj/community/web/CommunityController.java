@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+
 import co.itrip.prj.community.service.CommunityService;
 import co.itrip.prj.community.service.CommunityVO;
 
@@ -43,12 +46,12 @@ public class CommunityController {
 		return "community/selectCommunity";
 	}
 
-	// 스터디게시판
-	@GetMapping("/study.do")
-	public String study(Model model) {
-		model.addAttribute("studyList", dao.studyList());
-		return "community/study";
-	}
+//	// 스터디게시판
+//	@GetMapping("/study.do")
+//	public String study(Model model) {
+//		model.addAttribute("studyList", dao.studyList());
+//		return "community/study";
+//	}
 
 	// 스터디게시판 글쓰기 폼
 	@GetMapping("/studyInsertForm.do")
@@ -62,6 +65,7 @@ public class CommunityController {
 		String projectPath = System.getProperty("user.dir")+"/src/main/resources/static/files"; //프로젝트 경로
 		UUID uuid = UUID.randomUUID();
 		String filename = uuid + "_" + file.getOriginalFilename();
+
 		File saveFile = new File(projectPath, filename);
 		file.transferTo(saveFile);
 		vo.setAttach(filename);
@@ -85,7 +89,6 @@ public class CommunityController {
 	public String studyUpdate(CommunityVO vo, Model model, HttpServletRequest request) {
 		System.out.println(request.getParameter("comNo")); // 글번호 확인
 		vo.setComNo(Integer.parseInt(request.getParameter("comNo")));
-		
 		return "redirect:study.do";
 	}
 	
@@ -94,8 +97,26 @@ public class CommunityController {
 	public String studyDelete(CommunityVO vo, Model model, HttpServletRequest request) {
 		System.out.println(request.getParameter("comNo")); // 글번호 확인
 		vo.setComNo(Integer.parseInt(request.getParameter("comNo")));
-		dao.studyUpdate(vo);
+		dao.studyDelete(vo);
 		return "redirect:study.do";
 	}
+	
+	//페이징 처리
+	@GetMapping("/pageTest.do")
+	public String findPage(Model model, HttpServletRequest request, @RequestParam(required = false, defaultValue = "1") int pageNum, 
+																	@RequestParam(required = false, defaultValue = "10") int pageSize){
+		PageHelper.startPage(pageNum, pageSize);
+		model.addAttribute("pageInfo", PageInfo.of(dao.findAll()));
+		return "community/timeline";
+	}
+	
+	@GetMapping("/study.do")
+	public String findStudyPage(Model model, HttpServletRequest request, @RequestParam(required = false, defaultValue = "1") int pageNum, 
+																	     @RequestParam(required = false, defaultValue = "10") int pageSize){
+		PageHelper.startPage(pageNum, pageSize);
+		model.addAttribute("pageInfo", PageInfo.of(dao.findStudy()));
+		return "community/study";
+	}
+	
 	
 }

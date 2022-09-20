@@ -24,10 +24,12 @@
 }
 </style>
 </head>
-<body layout:fragment="content">
-	<h4>전체 게시글</h4>
+<body>
 	<!-- 카드 템플릿 찾아서 옮기기 -->
-	<div class="table-responsive">
+	<div class="table-responsive" layout:fragment="content">
+		[[${pageInfo.hasNextPage}]]
+		<h4>전체 게시글</h4>
+		<!-- page 수(total) -->
 		<table class="table mb-0">
 			<thead>
 				<tr>
@@ -39,7 +41,7 @@
 				</tr>
 			</thead>
 			<tbody id="comList">
-				<tr th:each="com : ${communityList}">
+				<tr th:each="com : ${pageInfo.list}">
 					<td th:text="${com.comNo}" class="text-bold-500"></td>
 					<td th:text="${com.title}" class="text-bold-500"></td>
 					<td th:text="${com.memberId}" class="text-bold-500"></td>
@@ -48,12 +50,42 @@
 				</tr>
 			</tbody>
 		</table>
+		<br>
+		<!-- 페이지네이션 / hasNextPage 버튼 나중에 보고 수정 -->
+		<nav aria-label="Page navigation example">
+			<ul class="pagination pagination-info  justify-content-center">
+				<li class="page-item disabled" th:if="${pageInfo.isIsFirstPage()}"><span
+					class="page-link">«</span></li>
+				<li class="page-item"
+					th:if="${!pageInfo.isIsFirstPage() && pageInfo.getList().size() > 0}"><a
+					class="page-link"
+					th:href="|javascript:gopage([[${pageInfo.getPrePage()}]])|"
+					rel="prev">«</a></li>
+				<li
+					th:class="|page-item ${(pageInfo.pageNum eq page) ? 'active': ''} |"
+					th:each="page:${pageInfo.navigatepageNums}"><span
+					class="page-link" th:if="${pageInfo.pageNum eq page}"
+					th:text="${page}"></span> <a class="page-link"
+					th:unless="${pageInfo.pageNum eq page}"
+					th:href="|javascript:gopage(${page})|" th:text="${page}">{{$page
+						}}</a></li>
+				<li class="page-item" th:if="${pageInfo.hasNextPage}"><a
+					class="page-link"
+					th:href="|javascript:gopage([[${pageInfo.getNextPage()}]])|"
+					rel="next">»</a></li>
+				<li class="page-item disabled" th:unless="${pageInfo.hasNextPage}"><span
+					class="page-link">»</span></li>
+			</ul>
+		</nav>
+		<script>
+			function gopage(p) {
+				location.href = '/pageTest.do?pageNum=' + p;
+			}
+			$("#comList").on("click", function(e) {
+				let comNo = $(e.target).prev().html();
+				location.href = "/selectCommunity.do?comNo=" + comNo;
+			})
+		</script>
 	</div>
-	<script>
-		$("#comList").on("click", function(e){
-			let comNo = $(e.target).prev().html();
-			location.href="/selectCommunity.do?comNo=" + comNo;
-		})
-	</script>
 </body>
 </html>
