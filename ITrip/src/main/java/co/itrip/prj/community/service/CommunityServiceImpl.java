@@ -9,6 +9,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 
 import co.itrip.prj.community.mapper.CommunityMapper;
+import co.itrip.prj.community.service.ReplyVO;
 
 @Service
 public class CommunityServiceImpl implements CommunityService {
@@ -54,6 +55,21 @@ public class CommunityServiceImpl implements CommunityService {
 	@Override
 	public List<CommunityVO> findStudy() {
 		return map.findStudy();
+	}
+
+	@Override
+	public List<ReplyVO> replyList(ReplyVO vo) {
+		return map.replyList(vo);
+	}
+
+	@Override
+	public int replyInsert() {
+		return map.replyInsert();
+	}
+
+	@Override
+	public int replyDelete() {
+		return map.replyDelete();
 	}
 
 }
