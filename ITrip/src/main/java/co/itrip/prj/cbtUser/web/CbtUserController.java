@@ -35,12 +35,17 @@ public class CbtUserController {
 	@Autowired
 	LangCdService langDao;
 	
-	int r=0;
+	
 	
 	@RequestMapping("/cbtUserList.do")
 	public String cbtUserList(CbtUserVO vo, Model model) {
-		model.addAttribute("cbtList",cuDao.cbtUserList(vo));
-		
+		//model.addAttribute("cbtList",cuDao.cbtUserList(vo));
+		return "cbtUser/cbtUserList";
+	}
+	
+	@RequestMapping("/cbtUserSelectOne.do")
+	public String cbtUserSelectOne(CbtUserVO vo,Model model) {
+		model.addAttribute("cbtOne", cuDao.cbtUserSelectOne(vo));
 		return "cbtUser/cbtUserList";
 	}
 	

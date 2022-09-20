@@ -63,25 +63,25 @@
 <p class="card-text" th:text="${cbt.explna}"></p>
 <img th:src="@{*{attachDir}}" style="width: 100px;  height: 100px;"> 
 -->
-
-<div th:if="${#lists.isEmpty(cbtList)}">문제가없습니다.</div>
-<div th:unless="${#lists.isEmpty(cbtList)}">
+<div th:text="${cbtOne.langCd}"  id="langBadge"></div>
+<div th:if="${#lists.isEmpty(cbtOne)}">문제가없습니다.</div>
+<div th:unless="${#lists.isEmpty(cbtOne)}">
 
 	<div class="content" style="margin: 0 auto;">
 		<div class="col-xl-4 col-md-6 col-sm-12 slides">
-			<div class="card slide_item" th:each="cbt: ${cbtList}">
+			<div class="card slide_item ontheSlide"><!-- th:each="cbt: ${cbtList}" -->
 				<div class="card-content">
 					<div class="card-header">
-						<h3 th:text="Q.+${cbt.ques}"></h3> <!--  class="card-title" -->
+						<h3 th:text="Q.+${cbtOne.ques}"></h3> <!--  class="card-title" -->
 					</div>
 					<div class="card-body"> 
-						<div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem" th:text="${cbt.langCd}"> </div>
+						<div  class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem" th:text="${cbtOne.langCd}"> </div>
 						<br>
 						<div class="form-check">
-							① <a href="" th:text="${cbt.ex1}" id="ex1"></a><br> 
-							② <a href="" th:text="${cbt.ex2}"></a><br> 
-							③ <a href="" th:text="${cbt.ex3}"></a><br>
-							④ <a href="" th:text="${cbt.ex4}"></a>
+							① <a href="" th:text="${cbtOne.ex1}"></a><br> 
+							② <a href="" th:text="${cbtOne.ex2}"></a><br> 
+							③ <a href="" th:text="${cbtOne.ex3}"></a><br>
+							④ <a href="" th:text="${cbtOne.ex4}"></a>
 						</div>
 					</div>
 					<div class="card-footer d-flex justify-content-between">
@@ -99,18 +99,26 @@
 	
 </div><!-- end of th:enless  -->
 
+<form id="frm" method="post">
+	<input type="hidden" id="langCd" name="langCd">
+	<input type="hidden" id="rownum" name="rownum">
+</form> 
+
 <script type="text/javascript">
 	const slides = document.querySelector('.slides'); // 슬라이드뼈대 감지
-	const item = slides.getElementsByClassName('slide_item'); // 슬라이드 아이템 획득
+	//const item = slides.getElementsByClassName('slide_item'); // 슬라이드 아이템 획득
 
-	let my = document.getElementsByClassName('ontheSlide')
+	let langBadge = document.getElementById('langBadge').innerHTML
+	
+	
+	
 	function sliderOn() {
 
 		const firstEle = item[0]; // 첫번째 슬라이드 아이템
 		firstEle.classList.add('ontheSlide'); //첫번째 슬라이드 아이템에 ontheSlide 클래스 추가
 
 	}
-	sliderOn();
+	//sliderOn();
 
 	//const gogogo = setInterval(sliderGo, 4000); // 4초마다 함수 sliderGo 함수 발동시키기
 	function sliderGo(isThat) {//isThat을 받아오기
@@ -127,7 +135,6 @@
 		if (nextOr === 'next') { // 다음버튼을 눌렀다면
 			if (!currentItem.nextElementSibling) {//마지막 아이템일 경우
 				alert("마지막문제입니다. ")
-
 				item[item.length - 1].classList.add('ontheSlide') //마지막  슬라이드아이템 
 			} else { //그 외의 경우
 				currentItem.nextElementSibling.classList.add('ontheSlide') //다음으로 슬라이드 아이템 이동
@@ -145,12 +152,15 @@
 	const nextButton = document.querySelector('.nextButton');//다음버튼 감지
 	const prevButton = document.querySelector('.prevButton');//이전버튼 감지
 	nextButton.addEventListener('click', function() {//다음 버튼을 누른다면
-		//clearInterval(gogogo)//자동이동을 중지하고
-		sliderGo();//수동으로 다음이동
+		//sliderGo();
+		frm.action ="cbtUserSelectOne.do"
+		frm.langCd.value = langBadge
+		frm.rownum.value = 2;
+		frm.submit()
+		//location.href = "cbtUserSelectOne.do"
 	})
 	prevButton.addEventListener('click', function() {//이전 버튼을 누른다면
-		//clearInterval(gogogo)//자동이동을 중지하고
-		sliderGo('1');//수동으로 이전 이동
+		//sliderGo('1');
 	})
 </script>
 
