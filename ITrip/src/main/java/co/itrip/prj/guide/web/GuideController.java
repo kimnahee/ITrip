@@ -29,13 +29,14 @@ import co.itrip.prj.member.service.MemberVO;
 public class GuideController {
 	
 	@Autowired
-
 	private GuideService gudao;
-	//GuideMapper gudao;
+  
 	@Autowired
 	private MemberService dao;
+
 	@Autowired
 	private CmmnCdService cd;
+	
 	
 	int r = 0;
 	
