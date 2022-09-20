@@ -37,6 +37,7 @@ public class GuideController {
 	@Autowired
 	private CmmnCdService cd;
 	
+	
 	int r = 0;
 	
 	// 가이드 insert & 파일처리
