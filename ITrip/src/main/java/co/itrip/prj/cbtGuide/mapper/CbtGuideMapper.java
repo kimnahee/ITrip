@@ -14,5 +14,6 @@ public interface CbtGuideMapper {
 		public int cbutGuideDelet(CbtGuideVO vo);//삭제(D)
 		//정답률
 		public CbtGuideVO ajaxExplnaList(CbtGuideVO vo); // 풀이 단건 리스트
-
+		public int KeywordInsert();
+		public int KeywordList();
 }

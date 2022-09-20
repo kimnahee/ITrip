@@ -13,6 +13,7 @@ public interface CbtGuideService {
 	//정답률
 	public CbtGuideVO ajaxExplnaList(CbtGuideVO vo); // 풀이 단건 리스트
 	
-	
+	public int KeywordInsert(CbtGuideVO vo);
+	public int KeywordList(CbtGuideVO vo);
 
 }

@@ -25,9 +25,11 @@ p {
                         <h4 class="card-title">CBT 문제 출제하기</h4>
                     </div>
                     <div class="card-content">
+                    <form id="frm" action="cbtGuideInsert.do" method="post" enctype="multipart/form-data">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-6 mb-1">
+                                <input type="hidden" id="memberId" name="memberId" value="han">
                                     <div class="input-group mb-2" >
                                         <label class="input-group-text" for="inputGroupSelect01">유형</label>
                                         <select class="form-select" id="gtpCd" name="gtpCd" onchange="mySel(this.value)">
@@ -51,27 +53,27 @@ p {
                             <!-- 문제 내는 곳-->
                             <div class="form-group mb-3" id="exList">
                                 <label for="exampleFormControlTextarea1" class="form-label">문제</label>
-                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="출제할 문제를 입력하세요."></textarea>
+                                <textarea class="form-control" id="ques" name="ques"rows="3" placeholder="출제할 문제를 입력하세요."></textarea>
                             </div>
                             <!-- 유형에 따라 변경 될 곳-->
                             <div id ="dynamicArea">
                             <div class="form-group mb-3" id="answer">
                             </div>
                             
-                             <!-- 유향에 따라 변경 될 곳 끝 -->
+                             <!-- 유형에 따라 변경 될 곳 끝 -->
                              <div class="form-group mb-3">
                                 <label for="exampleFormControlTextarea3" class="form-label">풀이</label>
-                                <textarea class="form-control" id="exampleFormControlTextarea3" rows="3" placeholder="문제 풀이 내용을 입력하는 곳입니다."></textarea>
+                                <textarea class="form-control" id="explna" name="explna" rows="3" placeholder="문제 풀이 내용을 입력하는 곳입니다."></textarea>
                             </div>
                             <div class="col-md-6 mb-1">
                                     <div class="input-group mb-8">
                                         <span class="input-group-text" id="inputGroupFileAddon01"><i data-feather="upload"></i></span>
                                         <div class="form-file">
-                                            <input type="file" class="form-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
-                                            <label class="form-file-label" for="inputGroupFile01">
+                                            <input type="file" class="form-file-input" id="attach" name="file" aria-describedby="attach">
+                                            <!-- <label class="form-file-label" for="inputGroupFile01">
                                                 <span class="form-file-text"></span>
                                                 <span class="form-file-button">Upload File</span>
-                                            </label>
+                                            </label> -->
                                         </div>
                                     </div>
                                 </div>
@@ -82,9 +84,11 @@ p {
                                 <button type="reset" class="btn btn-light-secondary mr-1 mb-1">초기화</button>
                             </div>
                              </div>
+                            </form>
                         </div>
                     </div>
                 </div>
+         </div>
     </section>
     <!-- Bootstrap Select end -->
     <script type="text/javascript">
@@ -92,7 +96,7 @@ p {
         console.log(key);
         //let frmInsert = $("#dynamicArea");
      	let answer = document.getElementById("answer");
-        let frmInsert =   document.getElementById("dynamicArea");
+        let frmInsert = document.getElementById("dynamicArea");
         
         switch(key) {
 		  case '1': //객관식
@@ -106,7 +110,7 @@ p {
 				<label for="ex5" class="form-label">보기④</label>
 				<textarea class="form-control" id="ex4" name="ex4" rows="1"></textarea> <br>
 				<select class="form-select">
-				<option selected >==== 정답 선택 ====</option>
+				<option selected id="cnsr" name="cnsr" >==== 정답 선택 ====</option>
 				<option value="1">1</option>
 				<option value="2">2</option>
 				<option value="3">3</option>
@@ -123,12 +127,12 @@ p {
 		  case '3': //서술형
 		      answer.innerHTML="";
 			  answer.innerHTML+=` <label for="exampleFormControlTextarea2" class="form-label">답안</label>
-                                <textarea class="form-control" id="exampleFormControlTextarea2" rows="3" placeholder="문제의 답을 입력하세요."></textarea>
+                                <textarea class="form-control" id="cnsr" name="cnsr" rows="3" placeholder="문제의 답을 입력하세요."></textarea>
                                 <div class="col-sm-6">
 	                                <div class="form-group position-relative has-icon-right">
-	                                    <input type="text" class="form-control" 
+	                                    <input type="text" class="form-control"  id="keyword" name="keyword"
 	                                        placeholder="정답 키워드를 입력해주세요. 키워드로 채점이 진행됩니다.">
-	                                        <div class="form-control-icon"><h1>+</h1>
+	                                        <div class="form-control-icon"><a style="cursor: pointer;" onclick="add()"><h1>+</h1></a>
 	                                    </div>
 	                                </div>
                                 </div>
@@ -137,6 +141,18 @@ p {
 		}
         }
         
+        function add(){
+        	answer.innerHTML+=`
+        	<div class="col-sm-6">
+            <div class="form-group position-relative has-icon-right">
+                <input type="text" class="form-control" 
+                    placeholder="정답 키워드를 입력해주세요. 키워드로 채점이 진행됩니다.">
+                    <div class="form-control-icon"><a style="cursor: pointer;" onclick="add()"><h1>+</h1></a>
+                </div>
+            </div>
+        </div>`;
+        	
+        }
     
     </script>
 </div>

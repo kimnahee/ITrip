@@ -1,5 +1,7 @@
 package co.itrip.prj.cbtGuide.service;
 
+import java.util.List;
+
 import lombok.Data;
 
 @Data
@@ -19,6 +21,7 @@ public class CbtGuideVO {
 	private String gtpCd; // cbt유형코드
 	private String langCd; // cbt언어코드
 	private String memberId; // 출제자
+	List<String> keyword; // 여러건 받을 키워드
 	
 
 }
