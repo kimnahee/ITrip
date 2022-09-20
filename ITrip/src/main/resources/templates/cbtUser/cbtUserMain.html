@@ -51,24 +51,23 @@ layout:decorate="~{layout/layout}">
 
 <form id="frm" method="post">
 	<input type="hidden" id="langCd" name="langCd">
+	<input type="hidden" id="rownum" name="rownum">
 </form> 
     
 <script type="text/javascript">
 $("#quesList").on("click",".question",function(e){
-	let code = event.target.nextElementSibling.innerHTML
-	frm.action = "cbtUserList.do"
+	let code = event.target.nextElementSibling.innerHTML 
+	//frm.action = "cbtUserList.do"
+	frm.action ="cbtUserSelectOne.do"
 	frm.langCd.value = code
+	frm.rownum.value = 3;
 	frm.submit()
 }) 
 $("#addCbt").on("click",function(){
 	location.href = "cbtUserInsertForm.do"
 	
 })
-/*if("${r}==1"){
-	alert("문제등록이 정상적으로 완료되었습니다.");
-}else{
-	alert("문제등록에 오류가 발생하였습니다.");
-}*/
+
 
 
 

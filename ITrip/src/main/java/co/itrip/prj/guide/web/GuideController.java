@@ -30,7 +30,7 @@ public class GuideController {
 	
 	@Autowired
 	private GuideService gudao;
-
+  
 	@Autowired
 	private MemberService dao;
 
