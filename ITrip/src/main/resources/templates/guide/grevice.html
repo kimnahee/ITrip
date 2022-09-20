@@ -68,22 +68,21 @@
                             <div class="col-12">
                                 <div class="form-group mb-3">
                                 <label for="email-id-vertical">경력</label> <br>
-                                <select>
+                                <select  style="width:250px;height:22px;">
                                 	<option selected>-- 경력 선택 --</option>
-                                	<option th:each="career : ${careerCdList}" th:value="${career.cdIni}" th:utext="${career.cdName}"></option>
+                                	<option th:each="career : ${careerCdList}" th:value="${career.cdNo}" th:utext="${career.cdName}"></option>
                                 </select>
-                                    <!-- <label for="exampleFormControlTextarea1" class="form-label">경력</label>
-                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Career"></textarea> -->
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="form-group">
-                                <label for="email-id-vertical">직무</label> <br>
-                                <select>
+                                <label>직무</label> <br>
+                                <select colspan="3" rows="3" style="width:250px;height:22px;">
                                 	<option selected>-- 직무 선택 --</option>
-                                	<option th:each="duty : ${dutyCdList}" th:value="{duty.cdIni}" th:utext="${duty.cdName}"></option>
+                                	<option th:each="dut : ${dutyCdList}" th:value="${dut.cdNo}" th:utext="${dut.cdName}"></option>
                                 </select>
                                 </div>
+                            </div>    
                                 <div class="col-12">
                                 <div class="form-group">
                                 <label for="email-id-vertical">현직</label> <br>
