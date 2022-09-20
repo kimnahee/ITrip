@@ -11,12 +11,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.multipart.MultipartFile;
+import co.itrip.prj.guide.service.GuideService;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import co.itrip.prj.cmmncd.service.CmmnCdService;
 import co.itrip.prj.guide.mapper.GuideMapper;
+
 import co.itrip.prj.guide.service.GuideVO;
 import co.itrip.prj.member.service.MemberService;
 import co.itrip.prj.member.service.MemberVO;
@@ -25,40 +29,31 @@ import co.itrip.prj.member.service.MemberVO;
 public class GuideController {
 	
 	@Autowired
-	GuideMapper gudao;
 
+	private GuideService gudao;
+	GuideMapper gudao;
 	@Autowired
 	private MemberService dao;
-	
 	@Autowired
 	private CmmnCdService cd;
 	
 	int r = 0;
 	
+	// 가이드 insert & 파일처리
 	@PostMapping("/guideInsert.do")
-	public String guideInsert(GuideVO vo, Model model, @RequestParam("file") MultipartFile file) throws IllegalStateException, IOException {
-		
-		String saveFolder = "c://fileUpload"; // 저장할 공간 폴더명
-		
-		String orignalFileName = file.getOriginalFilename(); // 넘어온 파일명
-		
-		if(!orignalFileName.isEmpty()) {
-			
-			// 파일명 충돌방지를 위해서 랜덤 파일명 돌리기
-			String saveFileName = UUID.randomUUID().toString() + orignalFileName.substring(orignalFileName.lastIndexOf('.'));
-			
-			// 파일을 물리적 위치에 저장
-			file.transferTo(new File(saveFolder, saveFileName));
-			
-			vo.setAttach(orignalFileName);
-			vo.setAttachDir(saveFolder + File.separator + saveFileName);
-			
+	public String guideInsert(GuideVO vo, Model model, MultipartFile file) throws IllegalStateException, IOException {
+		if(!file.getOriginalFilename().isEmpty()) {
+			String projectpath = System.getProperty("user.dir")+"/src/main/resources/static/files"; // user.dir은 프로젝트 경로를 담아주게 된다. 
+			UUID uuid = UUID.randomUUID(); // 랜덤으로 이름생성
+			String filename = uuid+"_"+file.getOriginalFilename(); // 파일이름은 UUID에 있는 랜덤값 + 원래 파일이름으로 설정된다.
+			File saveFile = new File(projectpath,filename);
+			file.transferTo(saveFile);
+			vo.setAttach(filename);
+			vo.setAttachDir("/files/"+filename);
 		}
-		r = gudao.guideInsert(vo);
-		if(r>0) {
-			r++;
-		}
-		model.addAttribute("r", r);
+		
+		    gudao.guideInsert(vo);
+					
 		return "member/mypage";
 	}
 	

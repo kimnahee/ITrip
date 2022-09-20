@@ -4,13 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-
 import co.itrip.prj.community.service.CommunityService;
 import co.itrip.prj.member.service.MemberService;
 import co.itrip.prj.member.service.MemberVO;
 
+
 @Controller
 public class MemberController {
+	
 	@Autowired
 	private CommunityService com;
 	
@@ -70,6 +71,5 @@ public class MemberController {
 		System.out.println("========"+vo.getName());
 		return "member/gmypage";
 	}
-	
 	
 }
