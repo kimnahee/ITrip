@@ -32,30 +32,34 @@
 		order by com_no desc
 	</select>
 
-	<insert id="studyInsert" parameterType="co.itrip.prj.community.service.CommunityVO">
-		<selectKey keyProperty="comNo" order="BEFORE" resultType="int">
+	<insert id="studyInsert"
+		parameterType="co.itrip.prj.community.service.CommunityVO">
+		<selectKey keyProperty="comNo" order="BEFORE"
+			resultType="int">
 			select
 			case when max(com_no) is null then 1
-			else max(com_no) + 1 end as id
+			else max(com_no)
+			+ 1 end as id
 			from comboard
 		</selectKey>
 		insert into comboard
-		values(#{comNo}, #{title}, #{content}, #{memberId}, sysdate, 0, #{attach}, #{attachDir}, '스터디')
+		values(#{comNo}, #{title}, #{content},
+		#{memberId}, sysdate, 0, #{attach}, #{attachDir}, '스터디')
 	</insert>
-	
+
 	<update id="studyUpdate">
 		update comboard
-			<set>
-				<if test="title != null">title = #{title},</if>
-				<if test="content != null">content = #{content},</if>
-				<if test="attach != null">attach = #{attach},</if>
-				<if test="attach != null">attach_dir = #{attachDir},</if>
-			</set>
-			where com_no = #{comNo}
+		<set>
+			<if test="title != null">title = #{title},</if>
+			<if test="content != null">content = #{content},</if>
+			<if test="attach != null">attach = #{attach},</if>
+			<if test="attach != null">attach_dir = #{attachDir}</if>
+		</set>
+		where com_no = #{comNo}
 	</update>
-	
+
 	<delete id="studyDelete">
-		delete 
+		delete
 		from comboard
 		where com_no=#{comNo}
 	</delete>

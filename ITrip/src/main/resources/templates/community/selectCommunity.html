@@ -56,7 +56,7 @@
 </head>
 <body layout:fragment="content">
 
-<!-- 템플릿변경 -->
+<!-- 템플릿수정하기 -->
 	<div class="row" th:object="${selectCommunity}">
 		<div class="col-12">
 			<div class="card my-4">
@@ -74,14 +74,16 @@
                   	<!-- 글제목 -->
                     <h6 class="mb-3 text-lg" th:text=*{title}></h6>
                     <!-- 글내용 -->
-                    <span class="mb-2 text-md"><span class="text-dark ms-sm-2 font-weight-bold" th:text=*{content}></span></span>
+                    <span class="text-dark ms-sm-2 font-weight-bold">내용 : <span class="text-dark ms-sm-2 font-weight-bold" th:text=*{content}></span></span>
                     <!-- 작성자 -->
-                    <span class="mb-2 text-md"><span class="text-dark ms-sm-2 font-weight-bold" th:text=*{memberId}></span></span>
+                    <span class="text-dark ms-sm-2 font-weight-bold">작성자 : <span class="text-dark ms-sm-2 font-weight-bold" th:text=*{memberId}></span></span>
                     <!-- 글작성일 -->
-                    <span class="mb-2 text-md"><span class="text-dark ms-sm-2" th:text=*{dt}></span></span>
+                    <span class="text-dark ms-sm-2 font-weight-bold">작성일자 : <span class="text-dark ms-sm-2" th:text=*{dt}></span></span>
                     <!-- 이미지(첨부파일) -->
                     <!-- 이미지 없으면 안뜨게 수정 -->
-                   <span class="mb-2 text-md"><img th:src="@{*{attachDir}}" style="width: 500px;  height: 500px;"></span>
+                    <div id="atch">
+                    	<span class="mb-2 text-md"><img th:src="@{*{attachDir}}" style="width: 500px;  height: 500px;"></span>
+                    </div>
                     <!-- <span class="mb-2 text-md"><span class="text-dark ms-sm-2" th:text=*{attachDir}></span></span> -->
                   </div>
                 </li>
@@ -93,6 +95,7 @@
 			</div>
 		</div>
 	</div>
+	<!-- 삭제버튼에 모달 추가 : 삭제하시겠습니까? -->
 	<!-- 댓글 추가 -->
 		
 	<script>
