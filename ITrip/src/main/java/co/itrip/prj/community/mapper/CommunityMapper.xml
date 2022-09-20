@@ -64,4 +64,14 @@
 		where com_no=#{comNo}
 	</delete>
 	
+	<!-- 댓글 서비스 -->
+	<select id="replyList" resultType="co.itrip.prj.community.service.ReplyVO">
+		select re_no,
+			   com_no,
+			   content,
+			   member_id,
+			   dt
+		from reply
+		where com_no = #{comNo}
+	</select>
 </mapper>

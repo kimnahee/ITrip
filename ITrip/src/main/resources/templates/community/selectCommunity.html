@@ -3,113 +3,172 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layout/layout}">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>스터디게시판 글 작성하기</title>
 <script src="js/jquery-3.6.0.min.js"></script>
-<link rel="apple-touch-icon" sizes="76x76"
-	href="bootstrap/material/assets/img/apple-icon.png">
-<link rel="icon" type="image/png"
-	href="bootstrap/material/assets/img/favicon.png">
-<title>스터디게시판</title>
-<!--     Fonts and icons     -->
-<link rel="stylesheet" type="text/css"
-	href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
-<!-- Nucleo Icons -->
-<link href="bootstrap/material/assets/css/nucleo-icons.css"
-	rel="stylesheet" />
-<link href="bootstrap/material/assets/css/nucleo-svg.css"
-	rel="stylesheet" />
-<!-- Font Awesome Icons -->
-<script src="https://kit.fontawesome.com/42d5adcbca.js"
-	crossorigin="anonymous"></script>
-<!-- Material Icons -->
-<link
-	href="https://fonts.googleapis.com/icon?family=Material+Icons+Round"
-	rel="stylesheet">
-<!-- CSS Files -->
-<link id="pagestyle" href="bootstrap/material/assets/css/material-dashboard.css?v=3.0.0" rel="stylesheet" />
+<link rel="stylesheet" href="bootstrap/voler/assets/css/bootstrap.css">
+<link rel="stylesheet"
+	href="bootstrap/voler/assets/vendors/quill/quill.bubble.css">
+<link rel="stylesheet"
+	href="bootstrap/voler/assets/vendors/quill/quill.snow.css">
+<link rel="stylesheet"
+	href="bootstrap/voler/assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
+<link rel="stylesheet" href="bootstrap/voler/assets/css/app.css">
+<link rel="shortcut icon"
+	href="bootstrap/voler/assets/images/favicon.svg" type="image/x-icon">
 <style>
-.table {
-	margin-top: 10px;
-	margin-left: auto;
-	margin-right: auto;
-	text-align: center;
-	width: 90%;
+#exampleFormControlTextarea1 {
+	min-height: 250px;
 }
 
-.row {
-	margin-top: 50px;
-	width: 90%;
-	margin-left: auto;
-	margin-right: auto;
+#btn {
+	margin-top: 10px;
 }
-.card-body {
-	width: 90%;
-	margin-left: auto;
-	margin-right: auto;
-}
-.list-group-item{
-	min-height: 100px;
+
+#commentList {
+	margin-bottom: 20px;
 }
 </style>
 </head>
-<body layout:fragment="content">
+<body>
+	<!-- 스터디게시판 글 상세조회 -->
+	<div layout:fragment="content">
+		<div class="card">
+			<div class="card-header">
+				<h4 class="card-title">게시글 상세보기</h4>
+			</div>
+			<div class="card-content">
+				<div class="card-body">
+					<form action="" method="post" id="frm" class="form form-horizontal"
+						th:object="${selectCommunity}">
+						<div class="form-body">
+							<div class="row">
+								<div class="form-group" style="display: none;">
+									<label for="basicInput">글번호</label> <input type="text"
+										class="form-control" id="comNo" name="comNo" th:field=*{comNo}
+										readonly="readonly">
+								</div>
+								<div class="form-group">
+									<label for="basicInput">제목</label> <input type="text"
+										class="form-control" id="title" name="title" th:field=*{title}
+										readonly="readonly">
+								</div>
+								<div class="form-group mb-3">
+									<label for="basicInput">작성자</label> <input type="text"
+										id="memberId" class="form-control" name="memberId"
+										th:field=*{memberId} readonly="readonly">
+								</div>
+								<div class="form-group mb-3">
+									<label for="exampleFormControlTextarea1" class="form-label">내용</label>
+									<textarea class="form-control" id="exampleFormControlTextarea1"
+										name="content" rows="3" th:field=*{content}
+										readonly="readonly"></textarea>
+								</div>
+								<div id="atch" class="form-group"
+									th:if="${not #strings.isEmpty(selectCommunity.attach)}">
+									<span class="mb-2 text-md"><img th:src="@{*{attachDir}}"
+										style="width: 917px; height: 500px; margin-bottom: 10px;"></span>
+									<label for="basicInput">첨부파일(이미지)</label>
+									<div class="form-group mb-3">
+										<input type="text" id="file" class="form-control" name="file"
+											th:field=*{attach} readonly="readonly">
+									</div>
+								</div>
 
-<!-- 템플릿수정하기 -->
-	<div class="row" th:object="${selectCommunity}">
-		<div class="col-12">
-			<div class="card my-4">
-				<div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-					<div
-						class="bg-gradient-info shadow-info border-radius-lg pt-4 pb-3">
-						<h6 class="text-white text-capitalize ps-3">단일 게시글 확인 페이지</h6>
-					</div>
-				</div>
-				<div class="card-body pt-4 p-3">
-				<li class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg">
-                  <div class="d-flex flex-column">
-                  	<!-- 글번호(hidden) -->
-                    <span class="mb-2 text-md" style="display: none;"><span id="comNo" class="text-dark ms-sm-2 font-weight-bold" th:text=*{comNo}></span></span>
-                  	<!-- 글제목 -->
-                    <h6 class="mb-3 text-lg" th:text=*{title}></h6>
-                    <!-- 글내용 -->
-                    <span class="text-dark ms-sm-2 font-weight-bold">내용 : <span class="text-dark ms-sm-2 font-weight-bold" th:text=*{content}></span></span>
-                    <!-- 작성자 -->
-                    <span class="text-dark ms-sm-2 font-weight-bold">작성자 : <span class="text-dark ms-sm-2 font-weight-bold" th:text=*{memberId}></span></span>
-                    <!-- 글작성일 -->
-                    <span class="text-dark ms-sm-2 font-weight-bold">작성일자 : <span class="text-dark ms-sm-2" th:text=*{dt}></span></span>
-                    <!-- 이미지(첨부파일) -->
-                    <!-- 이미지 없으면 안뜨게 수정 -->
-                    <div id="atch">
-                    	<span class="mb-2 text-md"><img th:src="@{*{attachDir}}" style="width: 500px;  height: 500px;"></span>
-                    </div>
-                    <!-- <span class="mb-2 text-md"><span class="text-dark ms-sm-2" th:text=*{attachDir}></span></span> -->
-                  </div>
-                </li>
-				<div class="ms-auto text-end">
-                    <a class="btn btn-link text-danger text-gradient px-3 mb-0" href="javascript:;" id="deleteBtn"><i class="material-icons text-md me-2">delete</i>삭제하기</a>
-                    <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;" id="updateBtn"><i class="material-icons text-md me-2">edit</i>수정하기</a>
-                 </div>
+								<!-- 수정&삭제 권한 : 세션값이 작성자와 같으면 보이게 -->
+								<div class="col-sm-12 d-flex justify-content-end" id="btn">
+									<button type="button" id="updateBtn"
+										class="btn btn-primary btn-md mb-0">수정하기</button>
+									&nbsp;&nbsp;
+									<button type="button"
+										class="btn btn-outline-primary btn-md mb-0"
+										data-toggle="modal" data-target="#border-less">삭제하기</button>
+								</div>
+								<!-- 삭제버튼 누르면 모달창 뜸 -->
+
+								<!--BorderLess Modal Modal -->
+								<div class="modal fade text-left modal-borderless"
+									id="border-less" tabindex="-1" role="dialog"
+									aria-labelledby="myModalLabel1" aria-hidden="true">
+									<div class="modal-dialog modal-dialog-scrollable"
+										role="document">
+										<div class="modal-content">
+											<div class="modal-body">
+												<p>게시글을 삭제하시겠습니까?</p>
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-primary ml-1"
+													data-dismiss="modal" id="deleteBtn">
+													<i class="bx bx-check d-block d-sm-none"></i> <span
+														class="d-none d-sm-block">확인</span>
+												</button>
+												<button type="button" class="btn btn-light-primary"
+													data-dismiss="modal">
+													<i class="bx bx-x d-block d-sm-none"></i> <span
+														class="d-none d-sm-block">취소</span>
+												</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
 				</div>
 			</div>
 		</div>
+		<div class="card">
+			<div class="card-header">
+				<h4 class="card-title">댓글</h4>
+			</div>
+			<div class="card-body">
+				<div id="replyList">
+					댓글리스트출력
+					<table class="table">
+						<tr th:each="re : ${replyList}">
+							<td th:text="${re.reNo}" class="text-bold-500"></td>
+							<td th:text="${re.memberId}" class="text-bold-500"></td>
+							<td th:text="${re.content}" class="text-bold-500"></td>
+							<td th:text="${re.dt}" class="text-bold-500"></td>
+						</tr>
+					</table>
+				</div>
+				<form action="" method="post" id="frm" class="form form-horizontal">
+					<div class="form-group">
+						<div>
+							<input type="text" class="form-control" id="comment"
+								name="comment"> <input type="submit" id="commentBtn"
+								class="btn btn-primary btn-sm mb-0" value="댓글작성"
+								style="margin-top: 10px; float: right;">
+							</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		<!-- 삭제버튼에 모달 추가 : 삭제하시겠습니까? -->
+
+		<script>
+			$("#deleteBtn").on("click", function(e) {
+				let comNo = $("#comNo").val();
+				console.log(comNo);
+				location.href = "/studyDelete.do?comNo=" + comNo;
+			})
+
+			$("#updateBtn").on("click", function(e) {
+				let comNo = $("#comNo").val();
+				console.log(comNo);
+				location.href = "/studyUpdateForm.do?comNo=" + comNo;
+			})
+		</script>
 	</div>
-	<!-- 삭제버튼에 모달 추가 : 삭제하시겠습니까? -->
-	<!-- 댓글 추가 -->
-		
-	<script>
-		$("#deleteBtn").on("click", function(e){
-			let comNo = $("#comNo").html();
-			console.log(comNo);
-			location.href="/studyDelete.do?comNo=" + comNo;
-		})
-		
-		$("#updateBtn").on("click", function(e){
-			let comNo = $("#comNo").html();
-			console.log(comNo);
-			location.href="/studyUpdateForm.do?comNo=" + comNo;
-		})
-	</script>
+	<script src="bootstrap/voler/assets/js/feather-icons/feather.min.js"></script>
+	<script
+		src="bootstrap/voler/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+	<script src="bootstrap/voler/assets/js/app.js"></script>
+	<script src="bootstrap/voler/assets/vendors/quill/quill.min.js"></script>
+	<script src="bootstrap/voler/assets/js/pages/form-editor.js"></script>
+	<script src="bootstrap/voler/assets/js/main.js"></script>
 </body>
 </html>
