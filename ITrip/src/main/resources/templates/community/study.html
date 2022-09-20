@@ -46,18 +46,16 @@
 	margin-left: auto;
 	margin-right: auto;
 }
-
-#insert{
-	margin-left: auto;
-	margin-right: auto;
-	position: relative;
-	left: 100px;
+#insertBtn{
+	float: right;
+	margin-right: 50px;
 }
 </style>
 </head>
 
-<body layout:fragment="content">
-	<div class="row">
+<body>
+	<div class="row" layout:fragment="content">
+		[[${pageInfo.getPrePage()}]]
 		<div class="col-12">
 			<div class="card my-4">
 				<div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
@@ -71,40 +69,80 @@
 						<table class="table align-items-center mb-0">
 							<thead>
 								<tr>
-									<th
-										class="text-uppercase text-secondary text-md font-weight-bolder opacity-7">글번호</th>
-									<th
-										class="text-uppercase text-secondary text-md font-weight-bolder opacity-7 ps-2">글제목</th>
-									<th
-										class="text-center text-uppercase text-secondary text-md font-weight-bolder opacity-7">작성자</th>
-									<th
-										class="text-center text-uppercase text-secondary text-md font-weight-bolder opacity-7">작성일자</th>
-									<th
-										class="text-center text-uppercase text-secondary text-md font-weight-bolder opacity-7">조회수</th>
+									<th class="text-uppercase text-secondary text-md font-weight-bolder opacity-7">글번호</th>
+									<th class="text-uppercase text-secondary text-md font-weight-bolder opacity-7 ps-2">글제목</th>
+									<th class="text-center text-uppercase text-secondary text-md font-weight-bolder opacity-7">작성자</th>
+									<th class="text-center text-uppercase text-secondary text-md font-weight-bolder opacity-7">작성일자</th>
+									<th class="text-center text-uppercase text-secondary text-md font-weight-bolder opacity-7">조회수</th>
 								</tr>
 							</thead>
 							<tbody id="studyList">
-								<tr th:each="study : ${studyList}">
-									<td><p class="text-md text-secondary mb-0"
-											th:text="${study.comNo}">글번호</p></td>
-									<td><p class="text-md text-secondary mb-0"
-											th:text="${study.title}">글제목</p></td>
-									<td><p class="text-md text-secondary mb-0"
-											th:text="${study.memberId}">작성자</p></td>
-									<td><p class="text-md text-secondary mb-0"
-											th:text="${study.dt}">작성일자</p></td>
-									<td><p class="text-md text-secondary mb-0"
-											th:text="${study.hit}">조회수</p></td>
+								<tr th:each="study : ${pageInfo.list}">
+									<td><p class="text-md text-secondary mb-0" th:text="${study.comNo}">글번호</p></td>
+									<td><p class="text-md text-secondary mb-0" th:text="${study.title}">글제목</p></td>
+									<td><p class="text-md text-secondary mb-0" th:text="${study.memberId}">작성자</p></td>
+									<td><p class="text-md text-secondary mb-0" th:text="${study.dt}">작성일자</p></td>
+									<td><p class="text-md text-secondary mb-0" th:text="${study.hit}">조회수</p></td>
 								</tr>
 							</tbody>
 						</table>
+						<br>
+						<button id="insertBtn" class="btn bg-gradient-info btn-md mb-0">글쓰기</button>
+						<br>
 					</div>
+						<!-- 페이지네이션 -->
+						<nav aria-label="Page navigation example">
+							<ul class="pagination pagination-info  justify-content-center">
+								<li class="page-item disabled"
+									th:if="${pageInfo.isIsFirstPage()}"><span
+									class="page-link">«</span></li>
+								<li class="page-item"
+									th:if="${!pageInfo.isIsFirstPage() && pageInfo.getList().size() > 0}"><a
+									class="page-link"
+									th:href="|javascript:gopage([[${pageInfo.getPrePage()}]])|"
+									rel="prev">«</a></li>
+								<li
+									th:class="|page-item ${(pageInfo.pageNum eq page) ? 'active': ''} |"
+									th:each="page:${pageInfo.navigatepageNums}"><span
+									class="page-link" th:if="${pageInfo.pageNum eq page}"
+									th:text="${page}"></span> <a class="page-link"
+									th:unless="${pageInfo.pageNum eq page}"
+									th:href="|javascript:gopage(${page})|" th:text="${page}">{{$page
+										}}</a></li>
+								<li class="page-item" th:if="${pageInfo.hasNextPage}"><a
+									class="page-link"
+									th:href="|javascript:gopage([[${pageInfo.getNextPage()}]])|"
+									rel="next">»</a></li>
+								<li class="page-item disabled"
+									th:unless="${pageInfo.hasNextPage}"><span
+									class="page-link">»</span></li>
+							</ul>
+						</nav>
 				</div>
 			</div>
 		</div>
-	</div>
-	<div>
-		<button id="insert" class="btn bg-gradient-info btn-md mb-0">글쓰기</button>
+		<script>
+			function gopage(p) {
+				location.href = '/study.do?pageNum=' + p;
+			}
+
+			$("#comList").on("click", function(e) {
+				let comNo = $(e.target).prev().html();
+				location.href = "/selectCommunity.do?comNo=" + comNo;
+			})
+
+			$("#studyList").on(
+					"click",
+					function(e) {
+						let comNo = $(e.target).closest("tr").children(1)
+								.children(1).html();
+						location.href = "/selectCommunity.do?comNo=" + comNo;
+					})
+
+			$("#insertBtn").on("click", function(e) {
+				location.href = "/studyInsertForm.do";
+			})
+		</script>
 	</div>
 
 	<!--   Core JS Files   -->
@@ -127,16 +165,7 @@
 	<!-- Github buttons -->
 	<script async defer src="https://buttons.github.io/buttons.js"></script>
 	<!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
-	<script src="bootstrap/material/assets/js/material-dashboard.min.js?v=3.0.0"></script>
-	<script>
-		$("#studyList").on("click", function(e){
-			let comNo = $(e.target).closest("tr").children(1).children(1).html();
-			location.href="/selectCommunity.do?comNo=" + comNo;
-		})
-		
-		$("#insert").on("click", function(e){
-			location.href="/studyInsertForm.do";
-		})
-	</script>
+	<script
+		src="bootstrap/material/assets/js/material-dashboard.min.js?v=3.0.0"></script>
 </body>
 </html>
