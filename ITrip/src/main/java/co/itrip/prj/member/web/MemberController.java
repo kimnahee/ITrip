@@ -1,24 +1,21 @@
 package co.itrip.prj.member.web;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-
 import co.itrip.prj.community.service.CommunityService;
-
-import org.springframework.web.bind.annotation.RequestMapping;
-
-
-
+import co.itrip.prj.member.service.MemberService;
+import co.itrip.prj.member.service.MemberVO;
 
 @Controller
 public class MemberController {
 	@Autowired
 	private CommunityService com;
+	
+	@Autowired
+	private MemberService dao;
 	
 	@GetMapping("/myPage")
 	public String myPage() {
@@ -64,28 +61,15 @@ public class MemberController {
 	
 	// 가이드 마이페이지
 	@GetMapping("/gmyPage.do")
-	public String gmyPage() {
+	public String gmyPage(Model model, MemberVO vo) {
+		String guideId = "enji";
+		vo.setMemberId(guideId);
+		System.out.println(vo.getMemberId());
+		model.addAttribute("id", dao.memberSelect(vo));
+		vo = dao.memberSelect(vo);
+		System.out.println("========"+vo.getName());
 		return "member/gmypage";
 	}
 	
-	// 가이드 마이페이지 가이드가 개설한 컨설턴트
-	@GetMapping("/gconsult.do")
-	public String gconsult() {
-		return "member/gconsult";
-	}
-	
-	// 가이드 마이페이지 가이드가 개설한 클래스
-	@GetMapping("/gclass.do")
-	public String gclass() {
-		return "member/gclass";
-	}
-	
-	// 가이드 마이페이지 가이드가 개설한 클래스
-	@RequestMapping("/grevice.do")
-	public String grevice(HttpServletRequest request) {
-		request.getSession().setAttribute("id", "eunji");
-		return "member/grevice";
-	}
-
 	
 }
