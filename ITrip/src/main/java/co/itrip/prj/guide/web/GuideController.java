@@ -31,7 +31,7 @@ public class GuideController {
 	@Autowired
 
 	private GuideService gudao;
-	GuideMapper gudao;
+//	GuideMapper gudao;
 	@Autowired
 	private MemberService dao;
 	@Autowired

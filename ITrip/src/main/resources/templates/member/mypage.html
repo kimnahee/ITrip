@@ -63,9 +63,9 @@
                         <div class="row g-4 mb-4 pb-3">
                             <div class="col-sm-6 wow fadeIn" data-wow-delay="0.1s">
                                 <div class="d-flex align-items-center">
-                                    <div class="ms-4">
-                                        <a class=" btn-outline-success" data-toggle="modal"
-                                          data-target="#exampleModalScrollable" href="followSelectList.do">
+                                    <div class="ms-4"  >
+                                        <a  class=" btn-outline-success" 
+                                        data-toggle="modal" data-target="#exampleModalScrollable">
                                           <img class="img-fluid" src="bootstrap/securex/img/icon/icon-1.png" alt="Icon"></a>
                                     </div>
                                     <!-- modal -->
@@ -91,7 +91,7 @@
                     <tbody>
                         <tr th:each="foll : ${follows}">
                             <td th:text="${foll.guideId}"></td>
-                            <td ><a class="btn" href="">unfollow</a></td>
+                            <td><a class="btn" href="">unfollow</a></td>
                         </tr>                                                            
                     </tbody>
                     </table>
@@ -106,8 +106,8 @@
                     </div>
                     </div>
                                     
-                                    <div th:if="${count.guideId != 0}" class="btn-square " style="width: 64px; height: 64px;"> 
-                                        <h2 th:text=${count.guideId}></h2>
+                                    <div class="btn-square " style="width: 64px; height: 64px;"> 
+                                        <h2 class="mb-1" data-toggle="counter-up">${count}</h2>
                                     </div>
                                     
                                 </div>
