@@ -27,6 +27,7 @@
 	
 	<!-- CbtGuideVO cbtGuideListOne(CbtGuideVO VO);//단건조회(R) -->
 	<select id="cbtGuideListOne" parameterType="co.itrip.prj.cbtGuide.service.CbtGuideVO" resultType="co.itrip.prj.cbtGuide.service.CbtGuideVO">
+	    SELECT * FROM CBT_GUIDE WHERE CBT_NO = ${cbtNo}
 	</select>
 	
 	<!-- public int cbtGuideInsert(CbtGuideVO VO); //등록(C) -->
