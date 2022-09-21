@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import co.itrip.prj.cmmncd.service.CmmnCdService;
 import co.itrip.prj.community.service.CommunityService;
 import co.itrip.prj.follow.service.FollowService;
+import co.itrip.prj.follow.service.FollowVO;
 import co.itrip.prj.member.service.MemberService;
 import co.itrip.prj.member.service.MemberVO;
 
@@ -37,11 +38,11 @@ public class MemberController { //Principal
 	
 	// 마이페이지
 	@GetMapping("/myPage")
-	public String myPage(Model model, HttpServletRequest request) {
-		String memberId = request.getParameter("memberId");
+	public String myPage(Model model, FollowVO vo, HttpServletRequest request) {
+//		String memberId = request.getParameter("memberId");
 		//System.out.println(memberId);
 		model.addAttribute("count", fService.followCount());
-		model.addAttribute("follows", fService.followSelectList());
+//		model.addAttribute("follows", fService.followSelectList(vo));
 		return "member/mypage";
 	}	
 	
