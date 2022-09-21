@@ -58,10 +58,11 @@ public class SecurityConfig {
 				.exceptionHandling()
 					     .accessDeniedHandler(accessDeniedHandler())
 					     .and()
-				// .csrf().disable()
+					     //.csrf().disable()
 				.userDetailsService(memberService());
+				
+				return http.build();
 
-		return http.build();
 	}
      //시큐리티 처리 안할 부분
 	@Bean

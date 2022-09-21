@@ -60,14 +60,16 @@ public class CbtUserController {
 	
 	@PostMapping("/cbtUserInsert.do")
 	public String cbtUserInsert(CbtUserVO vo, Model  model, MultipartFile file) throws IllegalStateException, IOException {
-		String projectPath = System.getProperty("user.dir")+"/src/main/resources/static/files"; //프로젝트 경로
-		UUID uuid = UUID.randomUUID();
-		String filename = uuid + "_" + file.getOriginalFilename();
-		File saveFile = new File(projectPath, filename);
-		file.transferTo(saveFile);
-		vo.setAttach(filename);
-		String path = "/files/" + filename;
-		vo.setAttachDir(path);
+		if (!file.getOriginalFilename().isEmpty()) {
+			String projectPath = System.getProperty("user.dir")+"/src/main/resources/static/files"; //프로젝트 경로
+			UUID uuid = UUID.randomUUID();
+			String filename = uuid + "_" + file.getOriginalFilename();
+			File saveFile = new File(projectPath, filename);
+			file.transferTo(saveFile);
+			vo.setAttach(filename);
+			String path = "/files/" + filename;
+			vo.setAttachDir(path);
+		}
 		cuDao.cbtUserInsert(vo);
 	
 		model.addAttribute("langCdList",langDao.langCdList());

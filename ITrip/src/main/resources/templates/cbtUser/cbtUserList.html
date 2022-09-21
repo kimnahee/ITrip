@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{layout/layout}">
+	layout:decorate="~{layout/layout}" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="UTF-8">
+<meta name="_csrf" th:content="${_csrf.token}"/>
+<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
 <title>Insert title here</title>
 <script src="js/jquery-3.6.0.min.js"></script>
 <style type="text/css">
@@ -82,22 +84,25 @@
 	</div>
 </div>
 <div th:unless="${#lists.isEmpty(cbtOne)}">
-	<div class="content" style="margin: 0 auto;" th:if="${cbtOne.utpCd==1}">
+	<div class="content" style="margin: 0 auto;position:absolute; z-index: 1;" th:if="${cbtOne.utpCd=='1'}">
+	<div id="imgArea"></div>
+	
 		<div class="col-xl-4 col-md-6 col-sm-12 slides">
 			<div class="card slide_item ontheSlide"><!-- th:each="cbt: ${cbtList}" -->
 				<div class="card-content">
 				<div  id="langBadge" class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem" th:text="${cbtOne.langCd}"> </div>
 					<div id="cardContent">
 						<div class="card-header">
-							<br><h3 th:text="Q.+${cbtOne.ques}"></h3> <!--  class="card-title" -->
+							<br><h3 th:text="Q.+${cbtOne.ques}"></h3> 
 						</div>
 						<div class="card-body"> 
 							<br>
+							<img th:src="@{*{cbtOne.attachDir}}"style="margin-bottom: 10px;">
 							<div class="form-check">
-								① <a href="" class="ex" th:text="${cbtOne.ex1}"></a><br> 
-								② <a href="" class="ex" th:text="${cbtOne.ex2}"></a><br> 
-								③ <a href="" class="ex" th:text="${cbtOne.ex3}"></a><br>
-								④ <a href="" class="ex" th:text="${cbtOne.ex4}"></a>
+								<b>1</b> <a href="#" class="ex" th:text="${cbtOne.ex1}"></a><br> 
+								<b>2</b> <a href="#" class="ex" th:text="${cbtOne.ex2}"></a><br> 
+								<b>3</b> <a href="#" class="ex" th:text="${cbtOne.ex3}"></a><br>
+								<b>4</b> <a href="#" class="ex" th:text="${cbtOne.ex4}"></a>
 							</div>
 						</div>
 					</div>
@@ -110,11 +115,11 @@
 			<button type="button" class="nextButton btn btn-primary">▶</button>
 		</div>
 	</div><!-- end of content  -->
-	<div class="content" style="margin: 0 auto;" th:unless="${cbtOne.utpCd==2}">
+	<div class="content" style="margin: 0 auto;" th:if="${cbtOne.utpCd=='2'}">
 		<div class="col-xl-4 col-md-6 col-sm-12 slides">
 			<div class="card slide_item ontheSlide"><!-- th:each="cbt: ${cbtList}" -->
 				<div class="card-content">
-				<div  id="langBadge" class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem" th:text="${cbtOne.langCd}"> </div>
+				<div  id="langBadge" class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem;" th:text="${cbtOne.langCd}"> </div>
 					<div id="card-content">
 						<div class="card-header">
 							<br><h3 th:text="Q.+${cbtOne.ques}"></h3> <!--  class="card-title" -->
@@ -137,16 +142,60 @@
 			style="width: 100%;">
 			<button type="button" class="prevButton btn btn-primary">◀</button>
 			<button type="button" class="nextButton btn btn-primary">▶</button>
+			
 		</div>
 	</div>
 </div><!-- end of th:enless  -->
 <div id="pageNum"></div>
 
+
+
+
+
+
+
+
+
+
+
 <script type="text/javascript">
+	let csrfHeaderName = $("meta[name='_csrf']").attr("content");
+	let csrfTokenValue = $("meta[name='_csrf_header']").attr("content");
+	
+	//prev,next버튼 누르면 다음문제 ajax로 가져오기
+	let langBadge = document.getElementById('langBadge').innerHTML
+	const nextButton = document.querySelector('.nextButton');//다음버튼 
+	const prevButton = document.querySelector('.prevButton');//이전버튼 
+	let savePage = document.getElementById("pageNum").innerHTML;
+	let page = 1;
+
 	//보기 중 하나를 누르면 정답,오답표시
 	//객관식문제
 	$(".ex").click(function(){
-		console.log(this)
+		console.log(this.innerText)
+		let myChoice = this.previousElementSibling.innerText
+		console.log(myChoice)
+		
+		savePage = page;
+		
+		$.ajax({
+			url:'/ajaxQuestion.do',
+			type:'get',
+	 		beforeSend:function(xhr){
+				xhr.setRequestHeader(csrfHeaderName,csrfTokenValue);
+			}, 
+			dataType:'json',
+			data:{'langCd':langBadge,'rownum':savePage},
+			success:function newQ(res){
+				if(res.cnsr == myChoice){
+					alert("정답입니다.다시풀기버튼만들기")
+					imgArea.innerHTML+=`<img alt="" src="images/O.png" style="position:absolute; z-index:2;width: 200px;">`
+				}else{
+					alert("오답입니다.다시풀기버튼만들기")
+					imgArea.innerHTML+=`<img alt="" src="images/X.png" style="position:absolute; z-index:2;width: 200px;">`
+				}
+			}
+		})
 	})
 	
 	//OX문제
@@ -154,15 +203,16 @@
 		console.log(this.value)
 	})
 
-	//prev,next버튼 누르면 다음문제 ajax로 가져오기
-	let langBadge = document.getElementById('langBadge').innerHTML
-	const nextButton = document.querySelector('.nextButton');//다음버튼 
-	const prevButton = document.querySelector('.prevButton');//이전버튼 
-	let savePage = document.getElementById("pageNum").innerHTML;
-	let page = 1;
+	
+	//let csrfHeaderName = $("meta[name='_csrf']").attr("content");
+	//let csrfTokenValue = $("meta[name='_csrf_header']").attr("content");
 	
 	//다음 버튼을 누른다면
 	nextButton.addEventListener('click', function() {
+		
+		let csrfHeaderName = $("meta[name='_csrf']").attr("content");
+		let csrfTokenValue = $("meta[name='_csrf_header']").attr("content");
+		
 		page ++; 
 		savePage = page;
 		console.log(page)
@@ -171,20 +221,23 @@
 
 		 $.ajax({
 			url:'/ajaxQuestion.do',
-			type:'post',
+			type:'get',
+	 		beforeSend:function(xhr){
+				xhr.setRequestHeader(csrfHeaderName,csrfTokenValue);
+			}, 
 			dataType:'json',
-			data:{langCd:langBadge,rownum:savePage},
+			data:{'langCd':langBadge,'rownum':savePage},
 			success:function newQ(res){
 				cardContent.innerHTML ="";
 				if(res.utpCd==1){
 					cardContent.innerHTML += 
 						`<div class="card-header"><br><h3>Q.${res.ques}</h3></div>
-						<div class="card-body"> <br>
+						 <div class="card-body"><br>
 							<div class="form-check">
-								① <a href="">${res.ex1}</a><br> 
-								② <a href="">${res.ex2}</a><br> 
-								③ <a href="">${res.ex3}</a><br>
-								④ <a href="">${res.ex4}</a>
+								<b>1</b> <a href="#" class="ex">${res.ex1}</a><br> 
+								<b>2</b> <a href="#" class="ex">${res.ex2}</a><br> 
+								<b>3</b> <a href="#" class="ex">${res.ex3}</a><br>
+								<b>4</b> <a href="#" class="ex">${res.ex4}</a>
 							</div>
 						</div>`
 				}
@@ -212,30 +265,38 @@
 	
 	//이전 버튼을 누른다면
 	prevButton.addEventListener('click', function() {
+		let csrfHeaderName = $("meta[name='_csrf']").attr("content");
+		let csrfTokenValue = $("meta[name='_csrf_header']").attr("content");
+		
 		page --; 
 		savePage = page;
 		console.log(page)
 		console.log(savePage)
-		let cardContent = document.getElementById("card-content")
+		let cardContent = document.getElementById("cardContent")
 
 		 $.ajax({
 			url:'/ajaxQuestion.do',
-			type:'post',
+			type:'get',
+	 		beforeSend:function(xhr){
+				xhr.setRequestHeader(csrfHeaderName,csrfTokenValue);
+			}, 
 			dataType:'json',
-			data:{langCd:langBadge,rownum:savePage},
+			data:{'langCd':langBadge,'rownum':savePage},
 			success:function newQ(res){
 				cardContent.innerHTML ="";
 				if(res.utpCd==1){
-					cardContent.innerHTML += 
+ 					cardContent.innerHTML += 
 						`<div class="card-header"><br><h3>Q.${res.ques}</h3></div>
 						<div class="card-body"><br>
 							<div class="form-check">
-								① <a href="">${res.ex1}</a><br> 
-								② <a href="">${res.ex2}</a><br> 
-								③ <a href="">${res.ex3}</a><br>
-								④ <a href="">${res.ex4}</a>
+								① <a href="#" class="ex">${res.ex1}</a><br> 
+								② <a href="#" class="ex">${res.ex2}</a><br> 
+								③ <a href="#" class="ex">${res.ex3}</a><br>
+								④ <a href="#" class="ex">${res.ex4}</a>
 							</div>
-						</div>`
+						</div>` 
+						
+						
 				}
 				if(res.utpCd==2){
 					cardContent.innerHTML += 
