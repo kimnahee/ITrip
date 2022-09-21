@@ -72,4 +72,9 @@ public class CommunityServiceImpl implements CommunityService {
 		return map.replyDelete(vo);
 	}
 
+	@Override
+	public int replyUpdate(ReplyVO vo) {
+		return map.replyUpdate(vo);
+	}
+
 }
