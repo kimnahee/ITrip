@@ -35,16 +35,16 @@ public class MemberController { //Principal
 	private CmmnCdService cdService;
 	
 	
-	
-	
 	// 마이페이지
 	@GetMapping("/myPage")
-	public String myPage(Model model) {
+	public String myPage(Model model, HttpServletRequest request) {
+		String memberId = request.getParameter("memberId");
+		//System.out.println(memberId);
 		model.addAttribute("count", fService.followCount());
 		model.addAttribute("follows", fService.followSelectList());
 		return "member/mypage";
 	}	
-
+	
 	// 마이페이지-클래스
 	@GetMapping("/mClass")
 	public String mClass() {
