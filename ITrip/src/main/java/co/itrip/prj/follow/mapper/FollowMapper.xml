@@ -5,6 +5,7 @@
 	<select id="followSelectList" parameterType="co.itrip.prj.follow.service.FollowVO"  resultType="co.itrip.prj.follow.service.FollowVO">
 		SELECT GUIDE_ID 
 		FROM FOLLOW 
+		WHERE MEMBER_ID = #{memberId}
 	</select>
 	
 	<select id="followCount" resultType="int">

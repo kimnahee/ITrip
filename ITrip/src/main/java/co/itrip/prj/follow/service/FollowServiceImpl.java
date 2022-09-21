@@ -14,9 +14,9 @@ public class FollowServiceImpl implements FollowService {
 	private FollowMapper map;
 
 	@Override
-	public List<FollowVO> followSelectList() {
+	public List<FollowVO> followSelectList(FollowVO vo) {
 		// TODO Auto-generated method stub
-		return map.followSelectList();
+		return map.followSelectList(vo);
 	}
 
 	@Override

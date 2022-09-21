@@ -63,10 +63,9 @@
                         <div class="row g-4 mb-4 pb-3">
                             <div class="col-sm-6 wow fadeIn" data-wow-delay="0.1s">
                                 <div class="d-flex align-items-center">
-                                    <div class="ms-4"  >
-                                        <a  class=" btn-outline-success" 
-                                        data-toggle="modal" data-target="#exampleModalScrollable">
-                                          <img class="img-fluid" src="bootstrap/securex/img/icon/icon-1.png" alt="Icon"></a>
+                                    <div class="ms-4" id="gfollow">
+                                        <a  class=" btn-outline-success" data-toggle="modal" data-target="#exampleModalScrollable">
+                                          <img src="bootstrap/securex/img/icon/icon-1.png" alt="Icon"></a>
                                     </div>
                                     <!-- modal -->
                                     <div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog"
@@ -89,8 +88,8 @@
                         </tr>
                     </thead> 
                     <tbody>
-                        <tr th:each="foll : ${follows}">
-                            <td th:text="${foll.guideId}"></td>
+                        <tr th:each="gui : ${guides}">
+                            <td th:text="${gui.guideId}"></td>
                             <td><a class="btn" href="">unfollow</a></td>
                         </tr>                                                            
                     </tbody>
@@ -207,15 +206,21 @@
             
         </div>
     </div>
-    	<input id="memberId" th:value="${#authentication.principal.member.memberId}">
+    	<input type="hidden" id="memberId" th:value="${#authentication.principal.member.memberId}">
 
     <!-- Service End -->
     
     <script type="text/javascript">
     	$("#gapply").on("click", function() {
     		let memberId = $("#memberId").val();
-    		console.log(memberId);
+    	//	console.log(memberId);
     		location.href = "/gApply?memberId=" + memberId;
+    	})
+    	
+    	$("#gfollow").on("click", function() {
+    		let memberId = $("#memberId").val();
+    		console.log(memberId);
+    		location.href = "/followList?memberId=" + memberId;
     	})
     	
     	
