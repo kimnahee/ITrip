@@ -42,6 +42,8 @@
 				<div class="card-body">
 					<form action="" method="post" id="frm" class="form form-horizontal"
 						th:object="${selectCommunity}">
+						<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+						<input type="text" id="myId" class="form-control" name="myId" th:value=${#authentication.principal.member.memberId} readonly="readonly">
 						<div class="form-body">
 							<div class="row">
 								<div class="form-group" style="display: none;">
@@ -126,20 +128,17 @@
 				<div id="replyList">
 					댓글
 					<table class="table">
-						<tr th:each="re : ${replyList}">
-							<td th:text="${re.reNo}" class="text-bold-500"></td>
-							<td th:text="${re.memberId}" class="text-bold-500"></td>
-							<td th:text="${re.content}" class="text-bold-500"></td>
-							<td th:text="${re.dt}" class="text-bold-500"></td>
-						</tr>
+
+						<tbody id="replyBody">
+						
+						</tbody>
 					</table>
 				</div>
 				<form id="frm" class="form form-horizontal">
 					<div class="form-group" th:object="${selectCommunity}">
 						<div>
-							<input style="display: none;" type="text" class="form-control" id="reComNo" name="reComNo" th:field=*{comNo}>
 							<input type="text" class="form-control" id="comment" name="comment"> 
-							<input type="submit" id="commentBtn" class="btn btn-primary btn-sm mb-0" value="댓글작성" style="margin-top: 10px; float: right;">
+							<input type="button" id="commentBtn" class="btn btn-primary btn-sm mb-0" value="댓글작성" style="margin-top: 10px; float: right;">
 							</button>
 						</div>
 					</div>
@@ -150,11 +149,35 @@
 
 		<script>
 			let comNo = $("#comNo").val();
+			let csrfHeaderName = "${_csrf.headerName}";
+			let csrfToken=$("input[name=_csrf]").val();
+			let memberId = $("#myId").val();
 			
 			function replyList(){
-				/* $.ajax({
-					
-				}) */
+				$.ajax({ 
+					url : "/replyList.do",
+					type : "get",
+					data : {'comNo' : comNo},
+					beforeSend: function(xhr){
+						xhr.setRequestHeader("AJAX", true);
+					    xhr.setRequestHeader("X-CSRF-TOKEN", csrfToken);
+					},
+					success : function(data){
+						console.log(data);
+						data.forEach(element=>{
+							$("#replyBody").append(makeTr(element));
+						})
+					}
+				})
+			}
+			
+			function makeTr(data){
+				let tr = $("<tr>").append($("<td>").addClass("text-center").html(data.reNo))
+								  .append($("<td>").addClass("text-center").html(data.comNo))
+								  .append($("<td>").addClass("text-center").html(data.memberId))
+								  .append($("<td>").addClass("text-center").html(data.content))
+								  .append($("<td>").addClass("text-center").html(data.dt))
+				return tr;
 			}
 			
 			$("#deleteBtn").on("click", function(e) {
@@ -168,17 +191,32 @@
 			})
 			
 			$("#commentBtn").on("click", function(e) {
-				console.log(comNo);
-				
-				 $.ajax({
+				let content = $("#comment").val();
+				/* console.log(comNo);
+				console.log(content);
+				console.log(memberId); */
+				$.ajax({ 
 					url : "/replyInsert.do",
 					type : "post",
-					data : comNo,
+					data : {"comNo" : comNo, "content" : content, "memberId" : memberId},
+					beforeSend: function(xhr){
+						xhr.setRequestHeader("AJAX", true);
+					    xhr.setRequestHeader("X-CSRF-TOKEN", csrfToken);
+					},
 					success : function(data){
-						console.log("ajax");
+						console.log(data);
+						if(data == 1) {
+							$("#replyBody").empty();
+							replyList();
+							content = '';
+						}
 					}
-				}) 
+				})
 			})
+			
+			$(document).ready(function(){    
+				replyList(); //페이지 로딩시 댓글 목록 출력 
+			});
 		</script>
 	</div>
 	<script src="bootstrap/voler/assets/js/feather-icons/feather.min.js"></script>
