@@ -28,4 +28,10 @@ public class CmmnCdServiceImpl implements CmmnCdService {
 		return map.dutyCdList();
 	}
 
+	@Override
+	public List<CmmnCdVO> jobCdList() {
+		// 업무 공통코드 리스트
+		return map.jobCdList();
+	}
+
 }
