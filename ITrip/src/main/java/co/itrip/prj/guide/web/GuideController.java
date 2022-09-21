@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.security.Principal;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -67,10 +69,12 @@ public class GuideController {
 
 	// 가이드 수정페이지
 	@RequestMapping("/grevice.do")
-	public String grevice(Model model, GuideVO vo, Principal princ) {
+	public String grevice(Model model, GuideVO vo, HttpServletRequest request) {
+		//request.getParameter("guideId");
+		System.out.println(request.getParameter("guideId"));
 		/* request.getSession().setAttribute("id", "eunji"); */
-		String guideId = "junga";
-		vo.setGuideId(guideId);
+		//String guideId = "junga";
+		vo.setGuideId(request.getParameter("guideId"));
 		model.addAttribute("guide", guService.guideSelect(vo));
 		/* vo = mService.memberSelect(vo); */
 		/* System.out.println("========"+vo.getName()); */

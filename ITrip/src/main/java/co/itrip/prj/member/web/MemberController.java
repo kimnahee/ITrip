@@ -1,6 +1,7 @@
 package co.itrip.prj.member.web;
 
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 
@@ -91,13 +92,16 @@ public class MemberController { //Principal
 	
 	// 가이드 마이페이지
 	@GetMapping("/gmyPage.do")
-	public String gmyPage(Model model, MemberVO vo) {
-		String guideId = "enji";
-		vo.setMemberId(guideId);
-		System.out.println(vo.getMemberId());
-		model.addAttribute("id", mService.memberSelect(vo));
-		vo = mService.memberSelect(vo);
-		System.out.println("========"+vo.getName());
+	public String gmyPage(Model model, MemberVO vo, HttpServletRequest request) {
+		
+		/*
+		 * request.getParameter("guideId");
+		 * System.out.println(request.getParameter("guideId"));
+		 * 
+		 * vo.setMemberId(guideId); System.out.println(vo.getMemberId());
+		 * model.addAttribute("id", mService.memberSelect(vo)); vo =
+		 * mService.memberSelect(vo); System.out.println("========"+vo.getName());
+		 */
 		return "member/gmypage";
 	}	
 
