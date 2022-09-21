@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.github.pagehelper.PageHelper;
@@ -44,7 +45,6 @@ public class CommunityController {
 	public String selectCommunity(CommunityVO vo, ReplyVO rvo, Model model, HttpServletRequest request) {
 		//System.out.println(request.getParameter("comNo")); // 글번호 확인
 		vo.setComNo(Integer.parseInt(request.getParameter("comNo")));
-		rvo.setComNo(Integer.parseInt(request.getParameter("comNo")));
 		model.addAttribute("selectCommunity", dao.selectCommunity(vo));
 		return "community/selectCommunity";
 	}
@@ -127,17 +127,28 @@ public class CommunityController {
 	}
 	
 	//댓글 리스트
-	@GetMapping("replyList.do")
-	public List<ReplyVO> replyList(){
-		return dao.replyList();
+	@GetMapping("/replyList.do")
+	@ResponseBody
+	public List<ReplyVO> replyList(ReplyVO vo, HttpServletRequest request, Model model){
+		String comNo = request.getParameter("comNo");
+		//System.out.println("===============원글번호" + comNo);
+		vo.setComNo(Integer.parseInt(comNo));
+		return dao.replyList(vo);
 	}
 	
 	//댓글입력
 	@PostMapping("/replyInsert.do")
-	public String replyInsert(ReplyVO vo, HttpServletRequest request) {
-		System.out.println(request.getParameter("reComNo"));
-		//ajax
-		return null;
+	@ResponseBody
+	public int replyInsert(ReplyVO vo, HttpServletRequest request) {
+		String comNo = request.getParameter("comNo");
+		String content = request.getParameter("content");
+		String memberId = request.getParameter("memberId");
+		System.out.println("댓글insert확인" + comNo + "내용확인" + content + memberId);
+		vo.setComNo(Integer.parseInt(comNo));
+		vo.setContent(content);
+		vo.setMemberId(memberId);
+		
+		return dao.replyInsert(vo);
 	}
 
 }

@@ -59,12 +59,12 @@ public class SecurityConfig {
 				.exceptionHandling()
 					     .accessDeniedHandler(accessDeniedHandler())
 					     .and()
-				// .csrf().disable()
+					     //.csrf().disable()
 				.userDetailsService(memberService());
-		
+
 		//http.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());// 모든 요청에 대해 CSRF Token생성
 
-		return http.build();
+
 	}
      //시큐리티 처리 안할 부분
 	@Bean
