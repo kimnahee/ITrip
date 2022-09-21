@@ -32,7 +32,7 @@
 									<div class="row">
 										<div class="col-12">
 											<div class="form-group">
-												<h3 >문제 <span th:text="${cbt.cbtNo}"></span><i data-feather='star'  onclick="bookmark()" style="cursor: pointer;"></i></h3>
+												<h3 >문제 <span th:text="${cbt.cbtNo}" id="cbtNo1" name ="cbtNo1"></span><i data-feather='star'  onclick="bookmark()" style="cursor: pointer;"></i></h3>
 												<br>
 												<span id="QUES" th:text="${cbt.ques}">문제</span>
 												<a>&nbsp;&nbsp;[ 출제자 : <span th:text="${cbt.memberId}"></span> ]</a>
@@ -45,23 +45,22 @@
 	                                    </div>-->
 										<!--라디오 -->
 										<div class="form-check">
-				                            <input class="form-check-input" type="radio" name="chk" id="flexRadioDefault1">
-				                            <label class="form-check-label" for="flexRadioDefault1" th:text="${cbt.ex1}" >
+				                            <input class="form-check-input" type="radio" id="choice" name="choice" value="1">
+				                            <label class="form-check-label" for="choice" th:text="${cbt.ex1}" ></label>
+				                        </div>
+				                        <div class="form-check">
+				                            <input class="form-check-input" type="radio" id="choice" name="choice"  value="2">
+				                            <label class="form-check-label" for="choice" th:text="${cbt.ex2}" > </label>
 				                            </label>
 				                        </div>
 				                        <div class="form-check">
-				                            <input class="form-check-input" type="radio" name="chk" id="flexRadioDefault2">
-				                            <label class="form-check-label" for="flexRadioDefault2" th:text="${cbt.ex2}" >
+				                            <input class="form-check-input" type="radio" id="choice" name="choice"  value="3">
+				                            <label class="form-check-label" for="choice" th:text="${cbt.ex3}" >
 				                            </label>
 				                        </div>
 				                        <div class="form-check">
-				                            <input class="form-check-input" type="radio" name="chk" id="flexRadioDefault3">
-				                            <label class="form-check-label" for="flexRadioDefault3" th:text="${cbt.ex3}" >
-				                            </label>
-				                        </div>
-				                        <div class="form-check">
-				                            <input class="form-check-input" type="radio" name="chk" id="flexRadioDefault4">
-				                            <label class="form-check-label" for="flexRadioDefault4" th:text="${cbt.ex4}" >
+				                            <input class="form-check-input" type="radio" id="choice" name="choice"  value="4">
+				                            <label class="form-check-label" for="choice" th:text="${cbt.ex4}" >
 				                            </label>
 				                        </div>
 				                        <!--라디오 끝 -->
@@ -246,18 +245,59 @@
 		function bookmark(){
 			console.log("일단 실행됨");
 		}
-		//라디오 값 받아오기
-		$(document).ready(function() {
+		// 객관식 라디오 값 받아오기
 		    $('.myCbtCall').click(function() {
-		        var value = $("input[type=radio][name=chk]:checked").val();
-		        if (value) {
-		            alert(value);
-		        }
-		        else {
-		            alert('Nothing is selected');
-		        }
-		    })
-		});
+		      var rArry = []; // cbtNo 넣을 배열
+		      var rObj = {}; // object
+		      var checkArray = document.getElementsByName("choice");
+		      var cbtNos = document.getElementsByName("cbtNo1");
+		      
+              var a="";
+		      var flag = true;
+		      choice_f = false;
+		     //라디오 박스 유효성 검사
+		      var choiceCnt = 0;
+		      //유효성 검사
+			    /* if(choiceCnt != cbtNos.length){
+			       console.log("풀지 않은 문제가 있습니다.");
+			       choice_f=false;
+			       
+			   } else{
+			       console.log("문제를 다 풀었습니다.");
+			       choice_f = true;
+			       break;
+			   } */
+		     
+		     //라디오 타입의 네임이 choice를 for문 돌면서 checked value값 담음    
+             for (var i = 0; i < choice.length; i++)  {
+			    if (checkArray[i].checked) {
+				    a += checkArray[i].value + " ";
+				    choiceCnt++
+				    flag = false;
+			       console.log("choiceCnt", choiceCnt);
+			       //유효성 검사
+			       if(choiceCnt == cbtNos.length){
+			       console.log("문제를 다 풀었습니다..");
+			       choice_f=true;
+			       } 
+			    }
+		    }//유효성 검사2
+		    if(choiceCnt < cbtNos.length){
+			       console.log("덜 푼 문제가 있습니다.");
+			       choice_f = false;
+			       //continue;
+			   }
+			   
+             console.log("정답입력값: ", a);
+            
+            //문제 번호 리스트 
+            for (var cbtNo of cbtNos) {
+                console.log("문제번호 : ",cbtNo.innerHTML);
+            }
+            
+             
+             
+		    });
 		
 		</script>
 	</div>
