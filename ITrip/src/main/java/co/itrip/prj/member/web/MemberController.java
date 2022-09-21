@@ -1,6 +1,7 @@
 package co.itrip.prj.member.web;
 
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 
@@ -10,6 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import org.springframework.web.bind.annotation.PostMapping;
+
+import co.itrip.prj.cmmncd.service.CmmnCdService;
 import co.itrip.prj.community.service.CommunityService;
 import co.itrip.prj.follow.service.FollowService;
 import co.itrip.prj.member.service.MemberService;
@@ -89,13 +92,16 @@ public class MemberController { //Principal
 	
 	// 가이드 마이페이지
 	@GetMapping("/gmyPage.do")
-	public String gmyPage(Model model, MemberVO vo) {
-		String guideId = "enji";
-		vo.setMemberId(guideId);
-		System.out.println(vo.getMemberId());
-		model.addAttribute("id", mService.memberSelect(vo));
-		vo = mService.memberSelect(vo);
-		System.out.println("========"+vo.getName());
+	public String gmyPage(Model model, MemberVO vo, HttpServletRequest request) {
+		
+		/*
+		 * request.getParameter("guideId");
+		 * System.out.println(request.getParameter("guideId"));
+		 * 
+		 * vo.setMemberId(guideId); System.out.println(vo.getMemberId());
+		 * model.addAttribute("id", mService.memberSelect(vo)); vo =
+		 * mService.memberSelect(vo); System.out.println("========"+vo.getName());
+		 */
 		return "member/gmypage";
 	}	
 
