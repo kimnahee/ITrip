@@ -50,6 +50,8 @@ layout:decorate="~{layout/layout}">
 
 
 <form id="frm" method="post">
+	<!-- 로그인 시큐리티 
+	<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">-->
 	<input type="hidden" id="langCd" name="langCd">
 	<input type="hidden" id="rownum" name="rownum">
 </form> 
@@ -60,7 +62,7 @@ $("#quesList").on("click",".question",function(e){
 	//frm.action = "cbtUserList.do"
 	frm.action ="cbtUserSelectOne.do"
 	frm.langCd.value = code
-	frm.rownum.value = 3;
+	frm.rownum.value = 1;
 	frm.submit()
 }) 
 $("#addCbt").on("click",function(){

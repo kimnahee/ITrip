@@ -6,8 +6,18 @@
 	
 </select>
 
-<select id="guideSelect" >
-
+<select id="guideSelect" resultType="co.itrip.prj.guide.service.GuideVO">
+			select guide_id
+				,career
+				,dc
+				,duty
+				,attach
+				,attach_dir
+				,state_cd
+				,dt
+				,star
+				from guide
+				where guide_id = #{guideId}
 </select>
 
 <insert id="guideInsert" parameterType="co.itrip.prj.guide.service.GuideVO">

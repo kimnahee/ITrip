@@ -40,7 +40,7 @@ public interface CommunityMapper {
 	List<CommunityVO> findStudy();
 	
 	//댓글
-	List<ReplyVO> replyList(ReplyVO vo);//한 게시글의 댓글 목록 출력
+	List<ReplyVO> replyList();//댓글 목록
 	int replyInsert();//댓글 등록
 	int replyDelete();//댓글 삭제
 }

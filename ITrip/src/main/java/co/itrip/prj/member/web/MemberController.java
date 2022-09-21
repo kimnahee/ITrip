@@ -93,4 +93,14 @@ public class MemberController { //Principal
 		return "member/gmypage";
 	}
 	
+	// 회원정보수정
+	@GetMapping("/mrecive.do")
+	public String mrecive() {
+		return "member/mrecive";
+	}
+
+	
+	
+	
 }
+

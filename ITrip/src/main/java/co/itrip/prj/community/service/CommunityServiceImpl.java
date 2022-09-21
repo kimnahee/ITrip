@@ -58,8 +58,8 @@ public class CommunityServiceImpl implements CommunityService {
 	}
 
 	@Override
-	public List<ReplyVO> replyList(ReplyVO vo) {
-		return map.replyList(vo);
+	public List<ReplyVO> replyList() {
+		return map.replyList();
 	}
 
 	@Override
