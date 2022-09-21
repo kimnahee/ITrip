@@ -87,4 +87,20 @@
 		insert into reply
 		values(#{reNo}, #{comNo}, #{content}, #{memberId}, sysdate)
 	</insert>
+	
+	<!-- 댓글 수정 -->
+	<update id="replyUpdate">
+		update reply
+		<set>
+			<if test="content != null">content = #{content}</if>
+		</set>
+		where re_no = #{reNo}
+	</update>
+	
+	<!-- 댓글 삭제 -->
+	<delete id="replyDelete">
+		delete 
+		from reply
+		where re_no=#{reNo}
+	</delete>
 </mapper>

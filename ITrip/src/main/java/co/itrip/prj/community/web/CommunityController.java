@@ -48,14 +48,8 @@ public class CommunityController {
 		model.addAttribute("selectCommunity", dao.selectCommunity(vo));
 		return "community/selectCommunity";
 	}
-
-//	// 스터디게시판
-//	@GetMapping("/study.do")
-//	public String study(Model model) {
-//		model.addAttribute("studyList", dao.studyList());
-//		return "community/study";
-//	}
-
+	
+	//스터디게시판
 	// 스터디게시판 글쓰기 폼
 	@GetMapping("/studyInsertForm.do")
 	public String studyInsertForm() {
@@ -106,6 +100,7 @@ public class CommunityController {
 		return "redirect:study.do";
 	}
 
+	//페이징
 	//페이징 처리(전체게시판)
 	@GetMapping("/pageTest.do")
 	public String findPage(Model model, HttpServletRequest request,
@@ -126,6 +121,7 @@ public class CommunityController {
 		return "community/study";
 	}
 	
+	//댓글
 	//댓글 리스트
 	@GetMapping("/replyList.do")
 	@ResponseBody
@@ -147,8 +143,26 @@ public class CommunityController {
 		vo.setComNo(Integer.parseInt(comNo));
 		vo.setContent(content);
 		vo.setMemberId(memberId);
-		
 		return dao.replyInsert(vo);
 	}
-
+	
+	//댓글삭제
+	@PostMapping("/replyDelete.do")
+	@ResponseBody
+	public int replyDelete(ReplyVO vo, HttpServletRequest request) {
+		String reNo = request.getParameter("reNo");
+		vo.setReNo(Integer.parseInt(reNo));
+		return dao.replyDelete(vo);
+	}
+	
+	//댓글수정
+	@PostMapping("/replyUpdate.do")
+	@ResponseBody
+	public int replyUpdate(ReplyVO vo, HttpServletRequest request) {
+		String reNo = request.getParameter("reNo");
+		String content = request.getParameter("content");
+		vo.setReNo(Integer.parseInt(reNo));
+		vo.setContent(content);
+		return dao.replyUpdate(vo);
+	}
 }

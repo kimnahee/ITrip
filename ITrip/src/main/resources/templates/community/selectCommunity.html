@@ -26,6 +26,14 @@
 	margin-top: 10px;
 }
 
+.btn {
+	margin-right: 5px;
+}
+
+.divBtn {
+	text-align: center;
+}
+
 #commentList {
 	margin-bottom: 20px;
 }
@@ -42,8 +50,11 @@
 				<div class="card-body">
 					<form action="" method="post" id="frm" class="form form-horizontal"
 						th:object="${selectCommunity}">
-						<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-						<input type="text" id="myId" class="form-control" name="myId" th:value=${#authentication.principal.member.memberId} readonly="readonly">
+						<input type="hidden" th:name="${_csrf.parameterName}"
+							th:value="${_csrf.token}"> <input type="text" id="myId"
+							class="form-control" name="myId"
+							th:value=${#authentication.principal.member.memberId}
+							readonly="readonly">
 						<div class="form-body">
 							<div class="row">
 								<div class="form-group" style="display: none;">
@@ -69,12 +80,13 @@
 								</div>
 								<div id="atch" class="form-group"
 									th:if="${not #strings.isEmpty(selectCommunity.attach)}">
-									<span class="mb-2 text-md"><div style="text-align:center;"><img th:src="@{*{attachDir}}"
-										style="margin-bottom: 10px;"></div></span>
+									<span class="mb-2 text-md"><div style="text-align: center;">
+											<img th:src="@{*{attachDir}}" style="margin-bottom: 10px;">
+										</div></span>
 									<div class="form-group mb-3">
-									<label for="basicInput">첨부파일(이미지)</label>
-										<input type="text" id="file" class="form-control" name="file"
-											th:field=*{attach} readonly="readonly">
+										<label for="basicInput">첨부파일(이미지)</label> <input type="text"
+											id="file" class="form-control" name="file" th:field=*{attach}
+											readonly="readonly">
 									</div>
 								</div>
 
@@ -96,9 +108,7 @@
 									<div class="modal-dialog modal-dialog-scrollable"
 										role="document">
 										<div class="modal-content">
-											<div class="modal-body">
-												게시글을 삭제하시겠습니까?
-											</div>
+											<div class="modal-body">게시글을 삭제하시겠습니까?</div>
 											<div class="modal-footer">
 												<button type="button" class="btn btn-primary ml-1"
 													data-dismiss="modal" id="deleteBtn">
@@ -130,28 +140,29 @@
 					<table class="table">
 
 						<tbody id="replyBody">
-						
+
 						</tbody>
 					</table>
 				</div>
 				<form id="frm" class="form form-horizontal">
 					<div class="form-group" th:object="${selectCommunity}">
 						<div>
-							<input type="text" class="form-control" id="comment" name="comment"> 
-							<input type="button" id="commentBtn" class="btn btn-primary btn-sm mb-0" value="댓글작성" style="margin-top: 10px; float: right;">
+							<input type="text" class="form-control" id="comment"
+								name="comment"> <input type="button" id="commentBtn"
+								class="btn btn-primary btn-sm mb-0" value="댓글작성"
+								style="margin-top: 10px; float: right;">
 							</button>
 						</div>
 					</div>
 				</form>
 			</div>
 		</div>
-		<!-- 삭제버튼에 모달 추가 : 삭제하시겠습니까? -->
 
 		<script>
 			let comNo = $("#comNo").val();
 			let csrfHeaderName = "${_csrf.headerName}";
 			let csrfToken=$("input[name=_csrf]").val();
-			let memberId = $("#myId").val();
+			let id = $("#myId").val();
 			
 			function replyList(){
 				$.ajax({ 
@@ -163,7 +174,7 @@
 					    xhr.setRequestHeader("X-CSRF-TOKEN", csrfToken);
 					},
 					success : function(data){
-						console.log(data);
+						//console.log(data);
 						data.forEach(element=>{
 							$("#replyBody").append(makeTr(element));
 						})
@@ -177,6 +188,9 @@
 								  .append($("<td>").addClass("text-center").html(data.memberId))
 								  .append($("<td>").addClass("text-center").html(data.content))
 								  .append($("<td>").addClass("text-center").html(data.dt))
+								  .append($("<td>").append($("<div>").addClass("divBtn").append($("<button>").addClass("btn").addClass("btn-outline-primary").addClass("btn-sm").addClass("updateReply").html("수정하기"))
+										  							 .append($("<button>").addClass("btn").addClass("btn-outline-danger").addClass("btn-sm").addClass("deleteReply").html("삭제하기"))))
+									/* 권한 부여 => 로그인한 사람이랑 댓글 작성자가 같으면 => 버튼 표시 => append 가능함?? */
 				return tr;
 			}
 			
@@ -184,10 +198,71 @@
 				console.log(comNo);
 				location.href = "/studyDelete.do?comNo=" + comNo;
 			})
+			
+			/* 댓글 삭제 버튼 */
+			$(document).on("click",".deleteReply", function(e){
+				let reNo = $(e.target).closest("tr").children(1).html();
+				console.log(reNo);
+				$.ajax({ 
+					url : "/replyDelete.do",
+					type : "post",
+					data : {"reNo" : reNo},
+					beforeSend: function(xhr){
+						xhr.setRequestHeader("AJAX", true);
+					    xhr.setRequestHeader("X-CSRF-TOKEN", csrfToken);
+					},
+					success : function(data){
+						console.log(data);
+						if(data == 1) {
+							$("#replyBody").empty();
+							replyList();
+						}
+					}
+				})
+			})
 
 			$("#updateBtn").on("click", function(e) {
 				console.log(comNo);
 				location.href = "/studyUpdateForm.do?comNo=" + comNo;
+			})
+			
+			/* 댓글 수정 버튼 => 추가수정필요함 */
+			$(document).on("click",".updateReply", function(e){
+				let reNo = $(e.target).closest("tr").children(1).html();
+				let tr =  $(e.target).closest("tr");
+				
+				let a = '';
+				a += '<tr>';
+				a += '<td colspan="6">';
+				a += '<input type="text" class="form-control" id="updateRep" name="updateRep">';
+				a += '<input type="button" id="updateCommentBtn" class="btn btn-primary btn-sm mb-0" value="댓글수정" style="margin-top: 10px; float: right;">';
+				a += '</td>'
+				a += '</tr>'
+				//console.log(reNo);
+				tr.after(a);
+			})
+			
+			$(document).on("click","#updateCommentBtn", function(e){
+				let reNo = $(e.target).closest("tr").prev("tr").children(1).html();
+				console.log(reNo); //댓글번호
+				let content = $("#updateRep").val();
+				console.log(content);
+				$.ajax({ 
+					url : "/replyUpdate.do",
+					type : "post",
+					data : {"reNo" : reNo, "content" : content},
+					beforeSend: function(xhr){
+						xhr.setRequestHeader("AJAX", true);
+					    xhr.setRequestHeader("X-CSRF-TOKEN", csrfToken);
+					},
+					success : function(data){
+						console.log(data);
+						if(data == 1) {
+							$("#replyBody").empty();
+							replyList();
+						}
+					}
+				})
 			})
 			
 			$("#commentBtn").on("click", function(e) {
@@ -198,7 +273,7 @@
 				$.ajax({ 
 					url : "/replyInsert.do",
 					type : "post",
-					data : {"comNo" : comNo, "content" : content, "memberId" : memberId},
+					data : {"comNo" : comNo, "content" : content, "memberId" : id},
 					beforeSend: function(xhr){
 						xhr.setRequestHeader("AJAX", true);
 					    xhr.setRequestHeader("X-CSRF-TOKEN", csrfToken);
@@ -220,7 +295,8 @@
 		</script>
 	</div>
 	<script src="bootstrap/voler/assets/js/feather-icons/feather.min.js"></script>
-	<script src="bootstrap/voler/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+	<script
+		src="bootstrap/voler/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 	<script src="bootstrap/voler/assets/js/app.js"></script>
 	<script src="bootstrap/voler/assets/vendors/quill/quill.min.js"></script>
 	<script src="bootstrap/voler/assets/js/pages/form-editor.js"></script>
