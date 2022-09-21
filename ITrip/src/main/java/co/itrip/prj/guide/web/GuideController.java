@@ -64,7 +64,8 @@ public class GuideController {
 		return "guide/gclass";
 	}
 	
-	// 가이드 마이페이지 가이드 정보 수정
+
+	// 가이드 수정페이지
 	@RequestMapping("/grevice.do")
 	public String grevice(Model model, GuideVO vo, Principal princ) {
 		/* request.getSession().setAttribute("id", "eunji"); */

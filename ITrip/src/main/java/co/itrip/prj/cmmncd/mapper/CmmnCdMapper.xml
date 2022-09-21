@@ -10,4 +10,8 @@
 		SELECT * FROM CMMNCD WHERE CD_NO BETWEEN 1 AND 25 AND CD_INI='D' ORDER BY CD_SN
 	</select>
 	
+	<select id="jobCdList" resultType="co.itrip.prj.cmmncd.service.CmmnCdVO">
+		SELECT * FROM CMMNCD WHERE CD_NO BETWEEN 1 AND 9 AND CD_INI='J' ORDER BY CD_NO
+	</select>
+	
 </mapper>

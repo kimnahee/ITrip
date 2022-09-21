@@ -37,16 +37,9 @@
                     </div>
                     <div class="col-md-8 form-group">
                         <select class="form-select" id="basicSelect">
-                                            <option>웹개발</option>
-                                            <option>프론트엔드</option>
-                                            <option>백엔드</option>
-                                            <option>풀스텍</option>
-                                            <option>데이터베이스</option>
-                                            <option>자격증</option>
-                                            <option>개발도구</option>
-                                            <option>취업.이직</option>
-                                            <option>기타</option>
-                                        </select>
+                        		<option selected>-- 카테고리 선택 --</option>
+                                <option th:each="job : ${joblist}" th:value="${job.cdNo}" th:utext="${job.cdName}"></option>
+                        </select> 
                     </div>
                     <div class="col-md-4">
                         <label>클래스 이름</label>
