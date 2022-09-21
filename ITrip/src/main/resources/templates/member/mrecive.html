@@ -3,7 +3,7 @@
 <head>
  <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form Layout - Voler Admin Dashboard</title>
+    <title>회원정보수정</title>
     
     <link rel="stylesheet" href="assets/css/bootstrap.css">
     
@@ -20,12 +20,12 @@
 </head>
 <body layout:fragment="content">
 <div class="text-center">
-        <h1 class="display-5 mb-5">Start Guide</h1>
+        <h1 class="display-5 mb-5"></h1>
     </div>
 <div class="col-md-6 col-12" id="testDiv">
                 <div class="card">
                     <div class="card-header">
-                    <h4 class="card-title">Guide 신청폼</h4>
+                    <h4 class="card-title">회원정보수정</h4>
                     </div>
                     <div class="card-content">
                     <div class="card-body">
@@ -41,40 +41,27 @@
 								</div>
 								<div class="col-12">
 									<div class="form-group">
-										<label>이름</label> <input type="email"
-											id="name" class="form-control" name="name" value="큐큐큐" readonly="readonly"
+										<label>이름</label> <input type="text"
+											id="name" class="form-control" name="name" value=""
 											placeholder="Name">
 									</div>
 								</div>
 								<div class="col-12">
-									<div class="form-group mb-3">
-										<label class="form-label">소개(설명)</label>
-										<textarea class="form-control"
-											id="dc" rows="3" name="dc"
-											placeholder="introduce yourself"></textarea>
-									</div>
-								</div>
-								<div class="col-12">
-									<div class="form-group mb-3">
-										<label class="form-label">경력</label>
-										<textarea class="form-control"
-											id="career" rows="3" name="career"
-											placeholder="Career"></textarea>
+									<div class="form-group">
+										<label>닉네임</label> <input type="text"
+											id="name" class="form-control" name="name" value=""
+											placeholder="Nick">
 									</div>
 								</div>
 								<div class="col-12">
 									<div class="form-group">
-										<label>직무</label> <input type="text"
-											id="duty" class="form-control" name="duty"
-											placeholder="Duty">
+										<label>이메일</label> <input type="email"
+											id="name" class="form-control" name="name" value="" 
+											placeholder="e-mail">
 									</div>
 								</div>
-								<div class="col-12">
-									<div class="form-group">
-										<label>첨부파일</label> <input type="file"
-											id="file" class="form-control" name="file">
-									</div>
-								</div>
+
+								
 
 								<div class="col-12 d-flex justify-content-end">
 									<button type="submit" class="btn btn-primary mr-1 mb-1" >제출하기</button>
