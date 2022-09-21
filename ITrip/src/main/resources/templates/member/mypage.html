@@ -164,7 +164,7 @@
                         </div>
                         <h4 class="mb-3">Start Guide</h4>
                         <p class="mb-4">가이드를 신청하는 곳 입니다.</p>
-                        <a class="btn" href="gApply"><i class="fa fa-arrow-right text-white me-3"></i>guide</a>
+                        <a class="btn" id="gapply"><i class="fa fa-arrow-right text-white me-3"></i>guide</a>
                     </div>
                 </div>
             </div><br><br>
@@ -207,7 +207,19 @@
             
         </div>
     </div>
+    	<input id="memberId" th:value="${#authentication.principal.member.memberId}">
+
     <!-- Service End -->
+    
+    <script type="text/javascript">
+    	$("#gapply").on("click", function() {
+    		let memberId = $("#memberId").val();
+    		console.log(memberId);
+    		location.href = "/gApply?memberId=" + memberId;
+    	})
+    	
+    	
+    </script>
     
     <!-- JavaScript bootstrap/securex/libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>

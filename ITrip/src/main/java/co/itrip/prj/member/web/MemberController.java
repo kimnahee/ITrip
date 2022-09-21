@@ -1,6 +1,7 @@
 package co.itrip.prj.member.web;
 
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 
@@ -10,6 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import org.springframework.web.bind.annotation.PostMapping;
+
+import co.itrip.prj.cmmncd.service.CmmnCdService;
 import co.itrip.prj.community.service.CommunityService;
 import co.itrip.prj.follow.service.FollowService;
 import co.itrip.prj.member.service.MemberService;
@@ -56,10 +59,11 @@ public class MemberController { //Principal
 	
 	// 가이드 신청폼
 	@GetMapping("/gApply")
-	public String gApply(Model model, MemberVO vo) {
+	public String gApply(Model model, MemberVO vo, HttpServletRequest request) {
 		// 가이드 신청폼에 member테이블 id,name 가져옴
-		String guideId = "qwe";
-		vo.setMemberId(guideId);
+		System.out.println(request.getParameter("memberId"));
+	//	String guideId = "asd";
+		vo.setMemberId(request.getParameter("memberId"));
 		model.addAttribute("guides", mService.memberSelect(vo));
 		// 가이드 신청폼 select 태그
 		model.addAttribute("careerCdList", cdService.careerCdList());
