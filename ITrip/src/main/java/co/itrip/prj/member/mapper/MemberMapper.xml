@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="co.itrip.prj.member.mapper.MemberMapper">
 
-	<select id="memberSelect" resultType="co.itrip.prj.member.service.MemberVO">
+	<select id="memberSelect" parameterType="co.itrip.prj.member.service.MemberVO" resultType="co.itrip.prj.member.service.MemberVO">
 		select member_id
 				,nick
 				,pw
@@ -10,9 +10,13 @@
 				,email
 				,attach
 				,attach_dir
-				,auth
+				,'ROLE_' || auth as auth
 				from member
 				where member_id = #{memberId}
+				<!-- 로그인 체크 -->
+		<if test="pw != null">
+		and pw= #{pw}
+		</if>
 	</select>
 
 
