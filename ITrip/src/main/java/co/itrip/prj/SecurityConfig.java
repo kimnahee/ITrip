@@ -9,12 +9,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
-
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 import co.itrip.prj.member.service.MemberDetailService;
 
 @Configuration
-@EnableWebSecurity
+@EnableWebSecurity //CsrfRequestDataValueProcessor가 적용되어 form 에 CSRF 토큰이 자동적으로 들어감
 public class SecurityConfig {
 
 	@Bean
@@ -49,6 +49,7 @@ public class SecurityConfig {
 							.passwordParameter("pw")
 							.successHandler(loginHandler())
 							.defaultSuccessUrl("/")
+							//.failureUrl(null) 로그인 실패했을 때 이동하는 페이지 주소
 							.and()
 				.logout()//.logoutUrl("/logout")
 					      .logoutSuccessUrl("/")
@@ -60,8 +61,9 @@ public class SecurityConfig {
 					     .and()
 					     //.csrf().disable()
 				.userDetailsService(memberService());
-				
-				return http.build();
+
+		//http.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());// 모든 요청에 대해 CSRF Token생성
+
 
 	}
      //시큐리티 처리 안할 부분

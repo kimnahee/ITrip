@@ -23,5 +23,6 @@ public class CbtGuideVO {
 	private String memberId; // 출제자
 	List<String> keyword; // 여러건 받을 키워드
 	
+	
 
 }

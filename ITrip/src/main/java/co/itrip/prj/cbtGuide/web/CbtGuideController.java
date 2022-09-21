@@ -73,5 +73,4 @@ public class CbtGuideController {
 
 		return "redirect:/cbtGuideMain.do";
 	}
-
 }
