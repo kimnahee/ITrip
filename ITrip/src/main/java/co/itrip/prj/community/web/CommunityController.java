@@ -2,6 +2,7 @@ package co.itrip.prj.community.web;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.ServletContext;
@@ -45,8 +46,6 @@ public class CommunityController {
 		vo.setComNo(Integer.parseInt(request.getParameter("comNo")));
 		rvo.setComNo(Integer.parseInt(request.getParameter("comNo")));
 		model.addAttribute("selectCommunity", dao.selectCommunity(vo));
-		//댓글추가
-		model.addAttribute("replyList", dao.replyList(rvo));
 		return "community/selectCommunity";
 	}
 
@@ -125,6 +124,20 @@ public class CommunityController {
 		PageHelper.startPage(pageNum, pageSize);
 		model.addAttribute("pageInfo", PageInfo.of(dao.findStudy()));
 		return "community/study";
+	}
+	
+	//댓글 리스트
+	@GetMapping("replyList.do")
+	public List<ReplyVO> replyList(){
+		return dao.replyList();
+	}
+	
+	//댓글입력
+	@PostMapping("/replyInsert.do")
+	public String replyInsert(ReplyVO vo, HttpServletRequest request) {
+		System.out.println(request.getParameter("reComNo"));
+		//ajax
+		return null;
 	}
 
 }
