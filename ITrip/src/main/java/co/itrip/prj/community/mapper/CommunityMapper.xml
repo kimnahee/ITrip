@@ -74,4 +74,17 @@
 		from reply
 		where com_no = #{comNo}
 	</select>
+	
+	<!-- 댓글 입력 -->
+	<insert id="replyInsert" parameterType="co.itrip.prj.community.service.ReplyVO">
+		<selectKey keyProperty="reNo" order="BEFORE" resultType="int">
+			select
+			case when max(re_no) is null then 1
+			else max(re_no)
+			+ 1 end as id
+			from reply
+		</selectKey>
+		insert into reply
+		values(#{reNo}, #{comNo}, #{content}, #{memberId}, sysdate)
+	</insert>
 </mapper>

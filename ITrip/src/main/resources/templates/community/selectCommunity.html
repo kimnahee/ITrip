@@ -67,10 +67,10 @@
 								</div>
 								<div id="atch" class="form-group"
 									th:if="${not #strings.isEmpty(selectCommunity.attach)}">
-									<span class="mb-2 text-md"><img th:src="@{*{attachDir}}"
-										style="width: 917px; height: 500px; margin-bottom: 10px;"></span>
-									<label for="basicInput">첨부파일(이미지)</label>
+									<span class="mb-2 text-md"><div style="text-align:center;"><img th:src="@{*{attachDir}}"
+										style="margin-bottom: 10px;"></div></span>
 									<div class="form-group mb-3">
+									<label for="basicInput">첨부파일(이미지)</label>
 										<input type="text" id="file" class="form-control" name="file"
 											th:field=*{attach} readonly="readonly">
 									</div>
@@ -95,7 +95,7 @@
 										role="document">
 										<div class="modal-content">
 											<div class="modal-body">
-												<p>게시글을 삭제하시겠습니까?</p>
+												게시글을 삭제하시겠습니까?
 											</div>
 											<div class="modal-footer">
 												<button type="button" class="btn btn-primary ml-1"
@@ -124,7 +124,7 @@
 			</div>
 			<div class="card-body">
 				<div id="replyList">
-					댓글리스트출력
+					댓글
 					<table class="table">
 						<tr th:each="re : ${replyList}">
 							<td th:text="${re.reNo}" class="text-bold-500"></td>
@@ -134,13 +134,12 @@
 						</tr>
 					</table>
 				</div>
-				<form action="" method="post" id="frm" class="form form-horizontal">
-					<div class="form-group">
+				<form id="frm" class="form form-horizontal">
+					<div class="form-group" th:object="${selectCommunity}">
 						<div>
-							<input type="text" class="form-control" id="comment"
-								name="comment"> <input type="submit" id="commentBtn"
-								class="btn btn-primary btn-sm mb-0" value="댓글작성"
-								style="margin-top: 10px; float: right;">
+							<input style="display: none;" type="text" class="form-control" id="reComNo" name="reComNo" th:field=*{comNo}>
+							<input type="text" class="form-control" id="comment" name="comment"> 
+							<input type="submit" id="commentBtn" class="btn btn-primary btn-sm mb-0" value="댓글작성" style="margin-top: 10px; float: right;">
 							</button>
 						</div>
 					</div>
@@ -150,22 +149,40 @@
 		<!-- 삭제버튼에 모달 추가 : 삭제하시겠습니까? -->
 
 		<script>
+			let comNo = $("#comNo").val();
+			
+			function replyList(){
+				/* $.ajax({
+					
+				}) */
+			}
+			
 			$("#deleteBtn").on("click", function(e) {
-				let comNo = $("#comNo").val();
 				console.log(comNo);
 				location.href = "/studyDelete.do?comNo=" + comNo;
 			})
 
 			$("#updateBtn").on("click", function(e) {
-				let comNo = $("#comNo").val();
 				console.log(comNo);
 				location.href = "/studyUpdateForm.do?comNo=" + comNo;
+			})
+			
+			$("#commentBtn").on("click", function(e) {
+				console.log(comNo);
+				
+				 $.ajax({
+					url : "/replyInsert.do",
+					type : "post",
+					data : comNo,
+					success : function(data){
+						console.log("ajax");
+					}
+				}) 
 			})
 		</script>
 	</div>
 	<script src="bootstrap/voler/assets/js/feather-icons/feather.min.js"></script>
-	<script
-		src="bootstrap/voler/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+	<script src="bootstrap/voler/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 	<script src="bootstrap/voler/assets/js/app.js"></script>
 	<script src="bootstrap/voler/assets/vendors/quill/quill.min.js"></script>
 	<script src="bootstrap/voler/assets/js/pages/form-editor.js"></script>
