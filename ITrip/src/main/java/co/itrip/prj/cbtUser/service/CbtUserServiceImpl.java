@@ -26,6 +26,11 @@ public class CbtUserServiceImpl implements CbtUserService {
 	public CbtUserVO cbtUserSelectOne(CbtUserVO vo) {
 		return map.cbtUserSelectOne(vo);
 	}
+
+	@Override
+	public CbtUserVO ajaxQuestion(CbtUserVO vo) {
+		return map.ajaxQuestion(vo);
+	}
 	
 	
 

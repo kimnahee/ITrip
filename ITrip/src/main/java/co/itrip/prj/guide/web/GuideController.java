@@ -2,25 +2,19 @@ package co.itrip.prj.guide.web;
 
 import java.io.File;
 import java.io.IOException;
+import java.security.Principal;
 import java.util.UUID;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.multipart.MultipartFile;
-import co.itrip.prj.guide.service.GuideService;
-
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import co.itrip.prj.cmmncd.service.CmmnCdService;
-import co.itrip.prj.guide.mapper.GuideMapper;
-
+import co.itrip.prj.guide.service.GuideService;
 import co.itrip.prj.guide.service.GuideVO;
 import co.itrip.prj.member.service.MemberService;
 import co.itrip.prj.member.service.MemberVO;
@@ -29,13 +23,13 @@ import co.itrip.prj.member.service.MemberVO;
 public class GuideController {
 	
 	@Autowired
-	private GuideService gudao;
+	private GuideService guService;
   
 	@Autowired
-	private MemberService dao;
+	private MemberService mService;
 
 	@Autowired
-	private CmmnCdService cd;
+	private CmmnCdService cdService;
 	
 	
 	int r = 0;
@@ -53,7 +47,7 @@ public class GuideController {
 			vo.setAttachDir("/files/"+filename);
 		}
 		
-		    gudao.guideInsert(vo);
+		guService.guideInsert(vo);
 					
 		return "member/mypage";
 	}
@@ -70,18 +64,18 @@ public class GuideController {
 		return "guide/gclass";
 	}
 	
-	// 가이드 마이페이지 가이드가 개설한 클래스
+
+	// 가이드 수정페이지
 	@RequestMapping("/grevice.do")
-	public String grevice(Model model, MemberVO vo, HttpServletRequest request) {
+	public String grevice(Model model, GuideVO vo, Principal princ) {
 		/* request.getSession().setAttribute("id", "eunji"); */
-		String guideId = "enji";
-		vo.setMemberId(guideId);
-		/* System.out.println(vo.getMemberId()); */
-		model.addAttribute("id", dao.memberSelect(vo));
-		vo = dao.memberSelect(vo);
+		String guideId = "junga";
+		vo.setGuideId(guideId);
+		model.addAttribute("guide", guService.guideSelect(vo));
+		/* vo = mService.memberSelect(vo); */
 		/* System.out.println("========"+vo.getName()); */
-		model.addAttribute("careerCdList", cd.careerCdList());
-		model.addAttribute("dutyCdList", cd.dutyCdList());
+		model.addAttribute("careerCdList", cdService.careerCdList());
+		model.addAttribute("dutyCdList", cdService.dutyCdList());
 		return "guide/grevice";
 	}
 

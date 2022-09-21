@@ -63,29 +63,43 @@
 <p class="card-text" th:text="${cbt.explna}"></p>
 <img th:src="@{*{attachDir}}" style="width: 100px;  height: 100px;"> 
 -->
-<div th:text="${cbtOne.langCd}"  id="langBadge"></div>
-<div th:if="${#lists.isEmpty(cbtOne)}">문제가없습니다.</div>
-<div th:unless="${#lists.isEmpty(cbtOne)}">
-
+<!-- <div th:text="${cbtOne.langCd}" ></div> -->
+<div th:if="${#lists.isEmpty(cbtOne)}">
 	<div class="content" style="margin: 0 auto;">
+		<div class="col-xl-4 col-md-6 col-sm-12 slides">
+			<div class="card slide_item ontheSlide">
+				<div class="card-content">
+					<div class="card-header"></div>
+					<div class="card-body">
+						<h4 class="form-check" style="padding-top: 20%;">아직 등록된 문제가 없습니다. 문제를 등록해주세요.</h4><br><br>
+						<div class="buttons" style="text-align: center;">
+							<a href="cbtUserInsertForm.do" class="btn btn-primary">문제출제하기</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div th:unless="${#lists.isEmpty(cbtOne)}">
+	<div class="content" style="margin: 0 auto;" th:if="${cbtOne.utpCd==1}">
 		<div class="col-xl-4 col-md-6 col-sm-12 slides">
 			<div class="card slide_item ontheSlide"><!-- th:each="cbt: ${cbtList}" -->
 				<div class="card-content">
-					<div class="card-header">
-						<h3 th:text="Q.+${cbtOne.ques}"></h3> <!--  class="card-title" -->
-					</div>
-					<div class="card-body"> 
-						<div  class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem" th:text="${cbtOne.langCd}"> </div>
-						<br>
-						<div class="form-check">
-							① <a href="" th:text="${cbtOne.ex1}"></a><br> 
-							② <a href="" th:text="${cbtOne.ex2}"></a><br> 
-							③ <a href="" th:text="${cbtOne.ex3}"></a><br>
-							④ <a href="" th:text="${cbtOne.ex4}"></a>
+				<div  id="langBadge" class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem" th:text="${cbtOne.langCd}"> </div>
+					<div id="cardContent">
+						<div class="card-header">
+							<br><h3 th:text="Q.+${cbtOne.ques}"></h3> <!--  class="card-title" -->
 						</div>
-					</div>
-					<div class="card-footer d-flex justify-content-between">
-						<button class="btn btn-light-primary">Read More</button>
+						<div class="card-body"> 
+							<br>
+							<div class="form-check">
+								① <a href="" class="ex" th:text="${cbtOne.ex1}"></a><br> 
+								② <a href="" class="ex" th:text="${cbtOne.ex2}"></a><br> 
+								③ <a href="" class="ex" th:text="${cbtOne.ex3}"></a><br>
+								④ <a href="" class="ex" th:text="${cbtOne.ex4}"></a>
+							</div>
+						</div>
 					</div>
 				</div><!-- end if card-content -->
 			</div><!-- end of slide_item -->
@@ -96,72 +110,157 @@
 			<button type="button" class="nextButton btn btn-primary">▶</button>
 		</div>
 	</div><!-- end of content  -->
-	
+	<div class="content" style="margin: 0 auto;" th:unless="${cbtOne.utpCd==2}">
+		<div class="col-xl-4 col-md-6 col-sm-12 slides">
+			<div class="card slide_item ontheSlide"><!-- th:each="cbt: ${cbtList}" -->
+				<div class="card-content">
+				<div  id="langBadge" class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem" th:text="${cbtOne.langCd}"> </div>
+					<div id="card-content">
+						<div class="card-header">
+							<br><h3 th:text="Q.+${cbtOne.ques}"></h3> <!--  class="card-title" -->
+						</div>
+						<div class="card-body"> 
+							<br>
+							<label for="cnsr" class="form-label">정답</label>
+							<div class="form-check">
+								<input class="form-check-input" type="radio" name="cnsr" id="cnsrO" value="O"> O
+							</div>
+							<div class="form-check">
+								<input class="form-check-input" type="radio" name="cnsr" id="cnsrX" value="X"> X
+							</div>
+						</div>
+					</div>
+				</div><!-- end if card-content -->
+			</div><!-- end of slide_item -->
+		</div><!-- end of slides  -->
+		<div class="buttons btn-group btn-group-lg" role="group"
+			style="width: 100%;">
+			<button type="button" class="prevButton btn btn-primary">◀</button>
+			<button type="button" class="nextButton btn btn-primary">▶</button>
+		</div>
+	</div>
 </div><!-- end of th:enless  -->
-
-<form id="frm" method="post">
-	<input type="hidden" id="langCd" name="langCd">
-	<input type="hidden" id="rownum" name="rownum">
-</form> 
+<div id="pageNum"></div>
 
 <script type="text/javascript">
-	const slides = document.querySelector('.slides'); // 슬라이드뼈대 감지
-	//const item = slides.getElementsByClassName('slide_item'); // 슬라이드 아이템 획득
+	//보기 중 하나를 누르면 정답,오답표시
+	//객관식문제
+	$(".ex").click(function(){
+		console.log(this)
+	})
+	
+	//OX문제
+	$('input:radio[name=cnsr]').click(function(){
+		console.log(this.value)
+	})
 
+	//prev,next버튼 누르면 다음문제 ajax로 가져오기
 	let langBadge = document.getElementById('langBadge').innerHTML
+	const nextButton = document.querySelector('.nextButton');//다음버튼 
+	const prevButton = document.querySelector('.prevButton');//이전버튼 
+	let savePage = document.getElementById("pageNum").innerHTML;
+	let page = 1;
 	
-	
-	
-	function sliderOn() {
+	//다음 버튼을 누른다면
+	nextButton.addEventListener('click', function() {
+		page ++; 
+		savePage = page;
+		console.log(page)
+		console.log(savePage)
+		let cardContent = document.getElementById("cardContent")
 
-		const firstEle = item[0]; // 첫번째 슬라이드 아이템
-		firstEle.classList.add('ontheSlide'); //첫번째 슬라이드 아이템에 ontheSlide 클래스 추가
-
-	}
-	//sliderOn();
-
-	//const gogogo = setInterval(sliderGo, 4000); // 4초마다 함수 sliderGo 함수 발동시키기
-	function sliderGo(isThat) {//isThat을 받아오기
-
-		if (isThat) {//isThat이 지정되어 있다면
-			var nextOr = 'previous'; //이전 버튼을 누른 것.
-		} else { //isThat이 지정되지 않았다면
-			var nextOr = 'next'; //다음 버튼을 누른 것.
-		}
-
-		const currentItem = document.querySelector('.ontheSlide');
-		currentItem.classList.remove('ontheSlide')
-
-		if (nextOr === 'next') { // 다음버튼을 눌렀다면
-			if (!currentItem.nextElementSibling) {//마지막 아이템일 경우
+		 $.ajax({
+			url:'/ajaxQuestion.do',
+			type:'post',
+			dataType:'json',
+			data:{langCd:langBadge,rownum:savePage},
+			success:function newQ(res){
+				cardContent.innerHTML ="";
+				if(res.utpCd==1){
+					cardContent.innerHTML += 
+						`<div class="card-header"><br><h3>Q.${res.ques}</h3></div>
+						<div class="card-body"> <br>
+							<div class="form-check">
+								① <a href="">${res.ex1}</a><br> 
+								② <a href="">${res.ex2}</a><br> 
+								③ <a href="">${res.ex3}</a><br>
+								④ <a href="">${res.ex4}</a>
+							</div>
+						</div>`
+				}
+				if(res.utpCd==2){
+					cardContent.innerHTML += 
+						`<div class="card-header"><br><h3>Q.${res.ques}</h3></div>
+						 <div class="card-body"> <br>
+							<label for="cnsr" class="form-label">정답</label>
+							<div class="form-check">
+								<input class="form-check-input" type="radio" name="cnsr" id="cnsrO" value="O"> O
+							</div>
+							<div class="form-check">
+								<input class="form-check-input" type="radio" name="cnsr" id="cnsrX" value="X"> X
+							</div>
+						 </div>`
+				}
+			},
+			error:function err(xhr,err){
 				alert("마지막문제입니다. ")
-				item[item.length - 1].classList.add('ontheSlide') //마지막  슬라이드아이템 
-			} else { //그 외의 경우
-				currentItem.nextElementSibling.classList.add('ontheSlide') //다음으로 슬라이드 아이템 이동
+				page--
+				console.log(page)
 			}
-		} else if (nextOr === 'previous') { // 이전 버튼을 눌렀다면
-			if (!currentItem.previousElementSibling) { //첫번재 아이템일 경우
-				alert("처음문제입니다. ")
-				item[0].classList.add('ontheSlide') //터음  슬라이드로 
-			} else { //다른 경우
-				currentItem.previousElementSibling.classList.add('ontheSlide') //이전 슬라이드 아이템으로 이동
-			}
-		}
+		}) 
+	})
+	
+	//이전 버튼을 누른다면
+	prevButton.addEventListener('click', function() {
+		page --; 
+		savePage = page;
+		console.log(page)
+		console.log(savePage)
+		let cardContent = document.getElementById("card-content")
 
-	}
-	const nextButton = document.querySelector('.nextButton');//다음버튼 감지
-	const prevButton = document.querySelector('.prevButton');//이전버튼 감지
-	nextButton.addEventListener('click', function() {//다음 버튼을 누른다면
-		//sliderGo();
-		frm.action ="cbtUserSelectOne.do"
-		frm.langCd.value = langBadge
-		frm.rownum.value = 2;
-		frm.submit()
-		//location.href = "cbtUserSelectOne.do"
+		 $.ajax({
+			url:'/ajaxQuestion.do',
+			type:'post',
+			dataType:'json',
+			data:{langCd:langBadge,rownum:savePage},
+			success:function newQ(res){
+				cardContent.innerHTML ="";
+				if(res.utpCd==1){
+					cardContent.innerHTML += 
+						`<div class="card-header"><br><h3>Q.${res.ques}</h3></div>
+						<div class="card-body"><br>
+							<div class="form-check">
+								① <a href="">${res.ex1}</a><br> 
+								② <a href="">${res.ex2}</a><br> 
+								③ <a href="">${res.ex3}</a><br>
+								④ <a href="">${res.ex4}</a>
+							</div>
+						</div>`
+				}
+				if(res.utpCd==2){
+					cardContent.innerHTML += 
+						`<div class="card-header"><br><h3>Q.${res.ques}</h3></div>
+						 <div class="card-body"> <br>
+							<label for="cnsr" class="form-label">정답</label>
+							<div class="form-check">
+								<input class="form-check-input" type="radio" name="cnsr" id="cnsrO" value="O"> O
+							</div>
+							<div class="form-check">
+								<input class="form-check-input" type="radio" name="cnsr" id="cnsrX" value="X"> X
+							</div>
+						 </div>`
+				}
+				
+			},
+			error:function err(xhr,err){
+				alert("첫번째 문제입니다. ")
+				page++
+				console.log(page)
+			}
+		}) 
 	})
-	prevButton.addEventListener('click', function() {//이전 버튼을 누른다면
-		//sliderGo('1');
-	})
+	
+	
 </script>
 
 </div>

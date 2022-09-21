@@ -6,7 +6,7 @@
 		SELECT GUIDE_ID FROM FOLLOW
 	</select>
 	
-	<select id="followCount" resultType="co.itrip.prj.follow.service.FollowVO">
+	<select id="followCount" resultType="int">
 		SELECT COUNT(*) FROM FOLLOW
 	</select>
 
