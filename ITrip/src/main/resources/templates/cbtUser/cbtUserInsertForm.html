@@ -25,6 +25,8 @@ p {
 						</div>
 						<div class="card-content">
 							<form id="Frm" action="cbtUserInsert.do" method="post" enctype="multipart/form-data">
+							<!-- 로그인 시큐리티 
+							<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">-->
 							<div class="card-body">
 							
 							
@@ -86,7 +88,7 @@ p {
 											<i data-feather="upload"></i>
 										</span>
 										<div class="form-file">
-											<input type="file" id="file" name="file" aria-describedby="attach"> <!--  class="form-file-input" -->
+											<input type="file" id="attach" name="file" aria-describedby="attach"> <!--  class="form-file-input" -->
 											<!-- <label class="form-file-label" for="attach"> 
 											<span class="form-file-text"></span> 
 											<span class="form-file-button">Upload File</span>

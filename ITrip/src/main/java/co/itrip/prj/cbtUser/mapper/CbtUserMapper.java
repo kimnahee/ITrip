@@ -8,4 +8,5 @@ public interface CbtUserMapper {
 	List<CbtUserVO> cbtUserList(CbtUserVO vo);
 	CbtUserVO cbtUserSelectOne(CbtUserVO vo);
 	int cbtUserInsert(CbtUserVO vo);
+	CbtUserVO ajaxQuestion(CbtUserVO vo);
 }
