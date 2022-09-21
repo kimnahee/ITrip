@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{layout/layout}">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
 <head>
 <meta charset="UTF-8">
+<meta name="_csrf" th:content="${_csrf.token}"/>
+<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
 <title>CBT 문제 목록</title>
 <script src="js/jquery-3.6.0.min.js"></script>
 <style>
@@ -26,7 +26,8 @@
 						<div class="card-body" th:each="cbt:${cbtList}">
 						<!-- ctpCd == '1' -->
 						<div th:if="${cbt.gtpCd} == '1'">
-							<form class="form form-vertical" >
+							<form class="form form-vertical">
+							    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 								<div class="form-body">
 									<div class="row">
 										<div class="col-12">
@@ -44,22 +45,22 @@
 	                                    </div>-->
 										<!--라디오 -->
 										<div class="form-check">
-				                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+				                            <input class="form-check-input" type="radio" name="chk" id="flexRadioDefault1">
 				                            <label class="form-check-label" for="flexRadioDefault1" th:text="${cbt.ex1}" >
 				                            </label>
 				                        </div>
 				                        <div class="form-check">
-				                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+				                            <input class="form-check-input" type="radio" name="chk" id="flexRadioDefault2">
 				                            <label class="form-check-label" for="flexRadioDefault2" th:text="${cbt.ex2}" >
 				                            </label>
 				                        </div>
 				                        <div class="form-check">
-				                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3">
+				                            <input class="form-check-input" type="radio" name="chk" id="flexRadioDefault3">
 				                            <label class="form-check-label" for="flexRadioDefault3" th:text="${cbt.ex3}" >
 				                            </label>
 				                        </div>
 				                        <div class="form-check">
-				                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault4">
+				                            <input class="form-check-input" type="radio" name="chk" id="flexRadioDefault4">
 				                            <label class="form-check-label" for="flexRadioDefault4" th:text="${cbt.ex4}" >
 				                            </label>
 				                        </div>
@@ -139,7 +140,7 @@
 										<div class="col-12 d-flex justify-content-end">
 										    <input type="hidden" id ="cbtNo" name="cbtNo" th:value="${cbt.cbtNo}">
 										    <input type="hidden" id ="explna" name="explna" th:value="${cbt.explna}">
-											<button type="button" class="btn btn-outline-primary check" data-toggle="modal" data-target="#primary">정답보기</button>
+											<button type="button" class="btn btn-outline-primary check"  data-target="#primary">정답보기</button><!--data-toggle="modal"  -->
 										</div>
 									</div>
 								
@@ -148,7 +149,7 @@
 						</div>
 						<!-- gtpCd=='3'끝 -->
 						</div>
-						<a><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-outline-primary">제출하기</button><br><br></a>
+						<a><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-outline-primary myCbtCall">제출하기</button><br><br></a>
 					</div>
 				</div>
 			
@@ -158,11 +159,19 @@
 		<div>
 			<form id="frm" method="post">
 				<input type="hidden" id="cbtNo" name="cbtNo"></input>
-				
 			</form>
 		</div>
-<!-- 모달창으로 정답과 키워드 띄어야함...-->
-<div class="modal fade text-left" id="primary" tabindex="-1" role="dialog" aria-labelledby="myModalLabel160" aria-hidden="true">
+		<!-- 히든frm2 -->
+		<div>
+		    <form id="myFrm" method="post">
+		        <input type="hidden" id="cbtNo" name="cbtNo">
+		        <input type="hidden" id="choice" name="choice">
+		        <!-- cbtNo값과 내가 입력한 값이 넘어가면 정답유무를 알려줌 -->
+		    </form>
+		</div>
+
+		<!-- 모달창으로 정답과 키워드 띄어야함...-->
+<!-- <div class="modal fade text-left" id="primary" tabindex="-1" role="dialog" aria-labelledby="myModalLabel160" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
         <div class="modal-header bg-primary">
@@ -171,7 +180,7 @@
             <i data-feather="x"></i>
         </button>
         </div>
-        <div class="modal-body" th:each="cbt:${cbtList}">
+        <div class="modal-body">
         <span th:text="${cbt.cnsr}"> </sapn>
         </div>
         <div class="modal-body">
@@ -189,10 +198,9 @@
         </div>
     </div>
     </div>
-</div>
+</div> -->
 
 <!-- 모달창 끝 -->
-		
 		<script>
 		$(".cbtNoSelc").on("click", ".check", function(e) {
 			let tg = e.currentTarget;
@@ -200,18 +208,33 @@
 			let cbtExplna = $(tg).prev().val();  // 해당 번호의 풀이
 			let explnaInsert = $(tg).closest("div").prev(); // 클릭한 버튼의 조상 div
 			
+			//var csrHeaderName = "${_csrf.headerName}";
+			//var csrfTokenValue = "${_csrf.token}";
+			var token = $("meta[name='_csrf']").attr("content");
+	        var header = $("meta[name='_csrf_header']").attr("content");
+			
 		$.ajax({
 		    url: '/ajaxExplnaList.do',
 		    type:'post',
-		    data: {cbtNo : cbtNum, explna : cbtExplna},
+		    dataType: 'json',
+		    //contentType: false,
+            //processData: false,
+		    data: {'cbtNo' : cbtNum},
+		    beforeSend: function(xhr){
+		    	//xhr.setRequestHeader(csrHeaderName, csrfTokenValue);
+		    	xhr.setRequestHeader(header, token);
+		    },
 		    success: function explnaSuccess(resp) {
+		    	console.log(resp)
 		           let explna_html = `<div class='alert alert-light-primary color-primary'>
       					&nbsp;<i data-feather='star'></i>
-     					 <a>[ 풀이 ]<br><span>${resp}</span></a>
-     				</div>`;
+      					 <a>[ 정답 ]<br><span>${resp.cnsr}</span></a><br><br>&nbsp;
+     					 <a>[ 풀이 ]<br><span>${resp.explna}</span></a>
+     				</div> `;
      				
+     				$(tg).attr("disabled", true); //정답보기 한 번 클릭하면 비활성화처리
      				$(explnaInsert).append(explna_html);
-     				$(tg).attr("disabled", true);
+     				
 		     },
 		    error: function searchError(xhr, err) {
 		           console.error("Error on ajax call: " + err);
@@ -219,11 +242,22 @@
 		}
 		});
 		})
-		
+		//북마크
 		function bookmark(){
 			console.log("일단 실행됨");
 		}
-		
+		//라디오 값 받아오기
+		$(document).ready(function() {
+		    $('.myCbtCall').click(function() {
+		        var value = $("input[type=radio][name=chk]:checked").val();
+		        if (value) {
+		            alert(value);
+		        }
+		        else {
+		            alert('Nothing is selected');
+		        }
+		    })
+		});
 		
 		</script>
 	</div>

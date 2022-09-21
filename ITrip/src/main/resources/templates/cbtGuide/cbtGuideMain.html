@@ -211,7 +211,8 @@ hr {
 
 		<!-- 히든frm -->
 		<div>
-			<form id="frm" method="post">
+			<form id="frm" method="post" action="/cbtGuideListTab.do">
+			 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 				<input type="hidden" id="gtpCd" name="gtpCd"></input> <input
 					type="hidden" id="langCd" name="langCd"></input>
 			</form>
@@ -232,11 +233,11 @@ hr {
 				if (gNo == '4') {
 					$("#gtpCd").val('4');
 					$("#langCd").val(lNo);
-					$("#frm").attr("action", "/cbtGuideListTab.do").submit();
+					$("#frm").submit();
 				} else {
 					$("#gtpCd").val(gNo);
 					$("#langCd").val(lNo);
-					$("#frm").attr("action", "/cbtGuideListTab.do").submit();
+					$("#frm").submit();
 				}
 			})
 		</script>
