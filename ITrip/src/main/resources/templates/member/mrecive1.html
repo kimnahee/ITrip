@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>회원정보수정</title>
     
-    <link rel="stylesheet" href="assets/css/bootstrap.css">
+    <link rel="stylesheet" href="bootstrap/voler/assets/css/bootstrap.css">
     
-    <link rel="stylesheet" href="assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
-    <link rel="stylesheet" href="assets/css/app.css">
-    <link rel="shortcut icon" href="assets/images/favicon.svg" type="image/x-icon">
+    <link rel="stylesheet" href="bootstrap/voler/assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" href="bootstrap/voler/assets/css/app.css">
+    <link rel="shortcut icon" href="bootstrap/voler/assets/images/favicon.svg" type="image/x-icon">
 <style>
 
 #testDiv{
@@ -29,7 +29,7 @@
                     </div>
                     <div class="card-content">
                     <div class="card-body">
-                        <form class="form form-vertical" action="mreviceUpdate.do"  method="post" onsubmit="message()">
+                        <form class="form form-vertical" action="mreviceUpdate1.do"  method="post" onsubmit="message()">
 						<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 						<div class="form-body">
 							<div class="row">
@@ -58,7 +58,7 @@
 									</div>
 								</div>
 								<div class="col-12 d-flex justify-content-end">
-									<button type="submit" class="btn btn-primary mr-1 mb-1" >저장</button>
+									<button type="submit" class="btn btn-primary mr-1 mb-1" >제출하기</button>
 									<button type="reset" class="btn btn-light-secondary mr-1 mb-1">취소</button>
 								</div>
 							</div>

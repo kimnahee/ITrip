@@ -18,7 +18,17 @@
 		and pw= #{pw}
 		</if>
 	</select>
-
+	
+	<!-- 유저 회원정보수정 [박은지] -->
+	<update id="memberUpdate">
+		update member
+		<set>
+			<if test="nick != null">nick = #{nick},</if>
+			<if test="name != null">name = #{name},</if>
+			<if test="email != null">email = #{email}</if>
+		</set>
+		where member_id = #{memberId}
+	</update>
 
 
 

@@ -6,6 +6,7 @@
 	
 </select>
 
+<!-- 가이드 마이페이지 들어갈때 단건조회 [박은지]-->
 <select id="guideSelect" resultType="co.itrip.prj.guide.service.GuideVO">
 			select guide_id
 				,career
@@ -19,12 +20,21 @@
 				from guide
 				where guide_id = #{guideId}
 </select>
-
+<!-- 유저 가이드 신청 [권소정] -->
 <insert id="guideInsert" parameterType="co.itrip.prj.guide.service.GuideVO">
 	INSERT INTO GUIDE VALUES(#{guideId},#{career},#{dc},#{duty},#{attach},#{attachDir},'S1',sysdate,0)
 </insert>
 
-<update id="guideUpdate"></update>
+<!-- 가이드 정보수정 [박은지] -->
+<update id="guideUpdate"> 
+	update guide
+	<set>
+		<if test="career != null ">career = #{career},</if>
+		<if test="dc != null">dc = #{dc},</if>
+		<if test="duty != null">duty = #{duty}</if>
+	</set>
+	where guide_id = #{guideId}
+</update>
 
 <delete id="guideDelete"></delete>
 </mapper>
