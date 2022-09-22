@@ -22,38 +22,49 @@
 	text-align: center;
 	width: 80%;
 }
+.card {
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+	width: 80%;
+}
 </style>
 </head>
-<body layout:fragment="content">
-	<h4>전체 게시글</h4>
-	<!-- 카드 템플릿 찾아서 옮기기 -->
-	<div class="table-responsive">
-		<table class="table mb-0">
-			<thead>
-				<tr>
-					<th>글번호</th>
-					<th>글제목</th>
-					<th>작성자</th>
-					<th>작성일자</th>
-					<th>조회수</th>
-				</tr>
-			</thead>
-			<tbody id="comList">
-				<tr th:each="com : ${communityList}">
-					<td th:text="${com.comNo}" class="text-bold-500"></td>
-					<td th:text="${com.title}" class="text-bold-500"></td>
-					<td th:text="${com.memberId}" class="text-bold-500"></td>
-					<td th:text="${com.dt}" class="text-bold-500"></td>
-					<td th:text="${com.hit}" class="text-bold-500"></td>
-				</tr>
-			</tbody>
-		</table>
+<body>
+	<div class="table-responsive" layout:fragment="content">
+		<div th:each="com: ${pageInfo.list}">
+			<div class="card">
+				<div class="card-content">
+					<div class="card-body">
+						<h6 class="card-title" th:text=${com.title}>글제목</h6>
+					</div>
+				</div>
+				<ul class="list-group list-group-flush">
+					<li class="list-group-item">글작성자(카테고리: 스터디면 보이고 자유면 안보임)</li>
+					<li class="list-group-item">글내용</li>
+					<li class="list-group-item">작성일자</li>
+				</ul>
+			</div>
+		</div>
+		<br>
+		<!-- 페이지네이션 / hasNextPage 버튼 나중에 보고 수정 -->
+		<nav aria-label="Page navigation example">
+			<ul class="pagination pagination-info  justify-content-center" th:if="${pageInfo.hasNextPage}">
+				<li class="page-item" th:if="${pageInfo.hasNextPage}">
+					<a class="page-link" th:href="|javascript:gopage([[${pageInfo.getNextPage()}]])|" rel="next">더보기</a>
+				</li>
+			</ul>
+		</nav>
+		
+		<script>
+			function gopage(p) {
+				location.href = '/pageTest.do?pageNum=' + p;
+			}
+			$("#comList").on("click", function(e) {
+				let comNo = $(e.target).prev().html();
+				location.href = "/selectCommunity.do?comNo=" + comNo;
+			})
+		</script>
 	</div>
-	<script>
-		$("#comList").on("click", function(e){
-			let comNo = $(e.target).prev().html();
-			location.href="/selectCommunity.do?comNo=" + comNo;
-		})
-	</script>
 </body>
 </html>

@@ -5,7 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+
 import co.itrip.prj.community.mapper.CommunityMapper;
+import co.itrip.prj.community.service.ReplyVO;
 
 @Service
 public class CommunityServiceImpl implements CommunityService {
@@ -41,6 +45,62 @@ public class CommunityServiceImpl implements CommunityService {
 	@Override
 	public int studyDelete(CommunityVO vo) {
 		return map.studyDelete(vo);
+	}
+
+	@Override
+	public List<CommunityVO> findAll() {
+		return map.findAll();
+	}
+
+	@Override
+	public List<CommunityVO> findStudy() {
+		return map.findStudy();
+	}
+
+	@Override
+	public List<ReplyVO> replyList(ReplyVO vo) {
+		return map.replyList(vo);
+	}
+
+	@Override
+	public int replyInsert(ReplyVO vo) {
+		return map.replyInsert(vo);
+	}
+
+	@Override
+	public int replyDelete(ReplyVO vo) {
+		return map.replyDelete(vo);
+	}
+
+	@Override
+	public int replyUpdate(ReplyVO vo) {
+		return map.replyUpdate(vo);
+	}
+
+	@Override
+	public List<CommunityVO> freeList() {
+		return map.freeList();
+	}
+
+	@Override
+	public int freeInsert(CommunityVO vo) {
+		return map.freeInsert(vo);
+	}
+
+
+	@Override
+	public List<CommunityVO> findFree() {
+		return map.findFree();
+	}
+
+	@Override
+	public int freeUpdate(CommunityVO vo) {
+		return map.freeUpdate(vo);
+	}
+
+	@Override
+	public int commHitUpdate(CommunityVO vo) {
+		return map.commHitUpdate(vo);
 	}
 
 }

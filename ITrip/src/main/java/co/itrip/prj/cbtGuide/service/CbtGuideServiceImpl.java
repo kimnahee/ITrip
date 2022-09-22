@@ -1,5 +1,6 @@
 package co.itrip.prj.cbtGuide.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,19 @@ public class CbtGuideServiceImpl implements CbtGuideService {
 
 	@Override
 	public int cbtGuideInsert(CbtGuideVO vo) {
+		// cbt등록
+		
+		//키워드 등록
+		String[] kLists = new String[vo.getKeyword().size()];
+		String kList = "";
+		
+		System.out.println(kLists);
+		
+		/*
+		 * for(int i=0; i < vo.getKeyword().size(); i++) { kLists[i] =
+		 * vo.KeywordInsert(vo.getKeyword().get(i)); }
+		 */
+		
 		return map.cbtGuideInsert(vo);
 	}
 
@@ -45,8 +59,22 @@ public class CbtGuideServiceImpl implements CbtGuideService {
 
 	@Override
 	public CbtGuideVO ajaxExplnaList(CbtGuideVO vo) {
-		// TODO Auto-generated method stub
 		return map.ajaxExplnaList(vo);
+	}
+
+	@Override
+	public int KeywordInsert(CbtGuideVO vo) {
+		return 0;
+	}
+
+	@Override
+	public int KeywordList(CbtGuideVO vo) {
+		return 0;
+	}
+
+	@Override
+	public int myCbtHderInsert(MyCbtHderVO vo) {
+		return map.myCbtHderInsert(vo);
 	}
 
 }

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.itrip.prj.cmmncd.mapper.CmmnCdMapper">
+	
+	<select id="careerCdList" resultType="co.itrip.prj.cmmncd.service.CmmnCdVO"> <!-- 가이드 경력 -->
+		SELECT * FROM CMMNCD WHERE CD_NO BETWEEN 1 AND 5 AND CD_INI='R'
+	</select>
+	
+	<select id="dutyCdList" resultType="co.itrip.prj.cmmncd.service.CmmnCdVO"> <!-- 가이드 직무 -->
+		SELECT * FROM CMMNCD WHERE CD_NO BETWEEN 1 AND 25 AND CD_INI='D' ORDER BY CD_SN
+	</select>
+	
+	<select id="jobCdList" resultType="co.itrip.prj.cmmncd.service.CmmnCdVO">
+		SELECT * FROM CMMNCD WHERE CD_NO BETWEEN 1 AND 9 AND CD_INI='J' ORDER BY CD_NO
+	</select>
+	
+</mapper>

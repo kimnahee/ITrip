@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>스터디게시판 글 작성하기</title>
+<script src="js/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" href="bootstrap/voler/assets/css/bootstrap.css">
+<link rel="stylesheet"
+	href="bootstrap/voler/assets/vendors/quill/quill.bubble.css">
+<link rel="stylesheet"
+	href="bootstrap/voler/assets/vendors/quill/quill.snow.css">
+<link rel="stylesheet"
+	href="bootstrap/voler/assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
+<link rel="stylesheet" href="bootstrap/voler/assets/css/app.css">
+<link rel="shortcut icon"
+	href="bootstrap/voler/assets/images/favicon.svg" type="image/x-icon">
+<style>
+#exampleFormControlTextarea1 {
+	min-height: 500px;
+}
+#btn{
+	margin-top: 10px;
+}
+</style>
+</head>
+<body>
+	<!-- 스터디게시판 글 작성 -->
+	<div layout:fragment="content">
+        <div class="card">
+            <div class="card-header">
+            <h4 class="card-title">게시글 작성하기</h4>
+            </div>
+            <div class="card-content">
+            <div class="card-body">
+                <form action="studyInsert.do" method="post" id="frm" class="form form-horizontal" enctype="multipart/form-data">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                <div class="form-body">
+                    <div class="row">
+	                    <div class="form-group">
+                            <label for="basicInput">제목</label>
+                            <input type="text" class="form-control" id="title" name="title" placeholder="제목">
+                        </div>
+	                    <div class="form-group mb-3">
+                            <label for="exampleFormControlTextarea1" class="form-label">내용</label>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" name="content" rows="3" placeholder="내용"></textarea>
+                        </div>
+                        <div class="form-group mb-3">
+                   			<input type="text" id="memberId" class="form-control" name="memberId" th:value=${#authentication.principal.member.memberId} readonly="readonly">
+                   		</div>
+                   		<div class="form-group mb-3">
+                   			<input type="file" id="file" class="form-control" name="file" placeholder="파일명">
+                   		</div>
+                    	<div class="col-sm-12 d-flex justify-content-end" id="btn">
+                        	<button type="submit" class="btn btn-primary btn-md mb-0">작성하기</button>&nbsp;&nbsp;
+                        	<button type="reset" class="btn btn-outline-primary btn-md mb-0">취소</button>
+                    	</div>
+                    </div>
+                </div>
+                </form>
+            </div>
+            </div>
+            
+        </div>
+        </div>
+		<script src="bootstrap/voler/assets/js/feather-icons/feather.min.js"></script>
+		<script
+			src="bootstrap/voler/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+		<script src="bootstrap/voler/assets/js/app.js"></script>
+
+		<script src="bootstrap/voler/assets/vendors/quill/quill.min.js"></script>
+		<script src="bootstrap/voler/assets/js/pages/form-editor.js"></script>
+
+		<script src="bootstrap/voler/assets/js/main.js"></script>
+</body>
+</html>

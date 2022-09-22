@@ -1,0 +1,54 @@
+1. maven-archetype-webapp
+2. 소스 폴더
+	source
+		src/main/java
+			/resources
+		   /test/java
+			/resources
+	   
+3. pom.xml
+	jackson	-> json
+	tiles	-> layout
+	servlet,jstl,jsp -> 서버프로그램
+	junit 	-> test
+	ojdbc	-> 오라클 드라이버
+	lombok	-> 기본적인 코드 추가(set/get/...)
+	
+4. 버전
+   project facet
+	java 			-> 11	
+	dynamic web module 	-> 3.1  
+   web.xml
+
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+	id="WebApp_ID" version="3.1">
+
+
+5. update 
+	maven -> update project
+	run as -> maven install
+
+
+
+
+
+
+
+
+
+fullcalendar
+toast grid
+
+
+
+
+
+
+
+
+
+
+

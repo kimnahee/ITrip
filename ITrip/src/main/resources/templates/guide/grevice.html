@@ -26,63 +26,58 @@
 </style>
 </head>
 <body layout:fragment="content">
-[[${session.id}]]
+<!-- [[${session.id}]] -->
 <div class="text-center">
         <h1 class="display-5 mb-5">가이드 정보 수정</h1>
     </div>
 <div class="col-md-6 col-12" id="form">
-                <div class="card">
+                <div class="card" >
                     <div class="card-header">
-<!--                     <h4 class="card-title">가이드 정보 수정</h4> -->
+                     <h4 class="card-title">1:1상담 등록 시 내용이 들어가는 곳입니다.</h4>
                     </div>
                     <div class="card-content">
                     <div class="card-body">
-                        <form class="form form-vertical">
+                        <form class="form form-vertical" action="greviceUpdate.do" method="post" onsubmit="message()">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
                         <div class="form-body">
                             <div class="row">
                             <div class="col-12">
-                                <div class="form-group">
+                                <div class="form-group" >
                                 <label for="first-name-vertical">아이디</label>
-                                <input type="text" id="first-name-vertical" class="form-control" name="fname" placeholder="Id" th:value=${session.id} readOnly>
+                                <input type="text" class="form-control" id="guideId" name="guideId"  th:value="${#authentication.principal.member.memberId}" readOnly>
                                 </div>
                             </div>
-<!--                             <div class="col-12">
-                                <div class="form-group">
-                                <label for="first-name-vertical">이름</label>
-                                <input type="text" id="first-name-vertical" class="form-control" name="fname" placeholder="Id">
-                            </div> -->
                             </div>
                             <div class="col-12">
                                 <div class="form-group">
                                 <label for="email-id-vertical">닉네임</label>
-                                <input type="email" id="email-id-vertical" class="form-control" name="email-id"y>
-                                </div>
+                                <input type="email"class="form-control"  id="nick" name="nick"  th:value="${#authentication.principal.member.nick}" readOnly>
+                             </div>
                             </div>
                             
                             <div class="col-12">
                                 <div class="form-group mb-3">
-                                    <label for="exampleFormControlTextarea1" class="form-label">소개(설명)</label>
-                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="introduce yourself"></textarea>
+                                    <label for="dc" class="form-label">소개(설명)</label>
+                                    <textarea class="form-control" id="dc" name="dc" rows="3" placeholder="introduce yourself">[[${guide.dc}]]</textarea>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="form-group mb-3">
                                 <label for="email-id-vertical">경력</label> <br>
-                                <select>
-                                	<option value='' selected>-- 선택 --</option>
-                                	<option value='C'>신입(1년이하)</option>
-                                	<option value='B'>주니어(1~3년)</option>
-                                	<option value='A'>미들(4~8년)</option>
-                               		<option value='S'>시니어(9년~)</option>
+                                <select class="form-select" id="career" name="career">
+                                	<option th:each="career : ${careerCdList}" th:value="${career.cdNo}" th:utext="${career.cdName}" th:selected="${career.cdName==guide.career}"></option>
                                 </select>
-                                    <!-- <label for="exampleFormControlTextarea1" class="form-label">경력</label>
-                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Career"></textarea> -->
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="form-group">
-                                <label for="email-id-vertical">직무</label>
-                                <input type="email" id="email-id-vertical" class="form-control" name="email-id" placeholder="Duty">
+                                <label>직무</label> <br>
+                                <select class="form-select" id="duty" name="duty">
+                                	<option th:each="duty : ${dutyCdList}" th:value="${duty.cdNo}" th:utext="${duty.cdName}" th:selected="${duty.cdNo==guide.duty}"></option>
+                                </select>
+                                </div>
+                            </div>    
+
                                 </div>
 <!--                                 상담 가능 날짜 <br>
                                 <input class="datepicker">
@@ -153,8 +148,6 @@
 								  })
 								</script>
 								<input> <br>
-
-								
 								
                             </div> -->
                             <div class="col-12 d-flex justify-content-end">
@@ -162,18 +155,21 @@
                                 <button type="button" onclick="cancle()" class="btn btn-primary mr-1 mb-1">취소</button>
                                 <button type="reset" class="btn btn-light-secondary mr-1 mb-1">초기화</button>
                             </div>
+                        </form>
                             </div>
                         </div>
-                        </form>
                     </div>
                     </div>
-                </div>
-                </div>
+            
                 
-    <script src="assets/js/feather-icons/feather.min.js"></script>
-    <script src="assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-    <script src="assets/js/app.js"></script>
-    
-    <script src="assets/js/main.js"></script>
+    <script src="bootstrap/voler/assets/js/feather-icons/feather.min.js"></script>
+    <script src="bootstrap/voler/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="bootstrap/voler/assets/js/app.js"></script>
+    <script src="bootstrap/voler/assets/js/main.js"></script>
+    <script type="text/javascript">
+    	function message() {
+    		alert("가이드정보수정이 완료되었습니다.");
+    	}
+    </script>
 </body>
 </html>

@@ -17,15 +17,33 @@
 			ELSE  MAX(cbt_no)+1 END ID 
 		    FROM cbt_user
 	</selectKey>
-		insert into cbt_user values(#{cbtNo},#{ques},#{cnsr, jdbcType=VARCHAR},#{ex1, jdbcType=VARCHAR},#{ex2, jdbcType=VARCHAR},#{ex3, jdbcType=VARCHAR},#{ex4, jdbcType=VARCHAR},
-#{attach, jdbcType=VARCHAR},#{attachDir, jdbcType=VARCHAR},0,0,#{explna},#{utpCd},#{langCd},#{memberId})
-		
-		
-
+		insert into cbt_user values(#{cbtNo},#{ques},#{cnsr},#{ex1},#{ex2},#{ex3},#{ex4},
+#{attach},#{attachDir},0,0,#{explna},#{utpCd},#{langCd},#{memberId})
 </insert>
 
 <select id="cbtUserSelectOne" parameterType="co.itrip.prj.cbtUser.service.CbtUserVO"
 	resultType="co.itrip.prj.cbtUser.service.CbtUserVO">
-
+	SELECT U.cbt_no,U.ques,U.lang_cd, U.cnsr, U.ex1, U.ex2,
+			U.ex3, U.ex4, U.attach, U.attach_dir, U.cnsr_cnt, U.call,
+			U.explna, U.utp_cd, U.member_id 
+FROM (SELECT ROWNUM AS rowno, 
+cbt_no, ques, lang_cd, cnsr, ex1, ex2,
+			ex3, ex4, attach, attach_dir, cnsr_cnt, call,
+			explna, utp_cd, member_id  FROM cbt_user where lang_cd=#{langCd}) U
+WHERE U.rowno = #{rownum}
 </select>
+
+<select id="ajaxQuestion" parameterType="co.itrip.prj.cbtUser.service.CbtUserVO"
+	resultType="co.itrip.prj.cbtUser.service.CbtUserVO">
+		SELECT U.cbt_no,U.ques,U.lang_cd, U.cnsr, U.ex1, U.ex2,
+			U.ex3, U.ex4, U.attach, U.attach_dir, U.cnsr_cnt, U.call,
+			U.explna, U.utp_cd, U.member_id 
+FROM (SELECT ROWNUM AS rowno, 
+cbt_no, ques, lang_cd, cnsr, ex1, ex2,
+			ex3, ex4, attach, attach_dir, cnsr_cnt, call,
+			explna, utp_cd, member_id  FROM cbt_user where lang_cd=#{langCd}) U
+WHERE U.rowno = #{rownum}
+</select>
+
+
 </mapper>

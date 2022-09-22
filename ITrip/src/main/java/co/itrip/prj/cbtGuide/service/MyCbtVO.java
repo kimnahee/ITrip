@@ -4,8 +4,16 @@ import lombok.Data;
 
 @Data
 public class MyCbtVO {
-	private int cbtNo; // cbt번호
-	private int mcNo; // 응시번호
-	private int choice; // 유저가 선택한 답
-	private int cnsrEnnc; // 정답유무 0(틀림), 1(맞음)
+	private int mc_no; // cbt번호
+	private int cbtNo1; //문제1번
+	private int cbtNo2; //문제2번
+	private int cbtNo3; //문제3번
+	private int cbtNo4; //문제4번
+	private int cbtNo5; //문제5번
+	// 정답유무체크 0(틀림), 1(맞음)
+	private int chk1; //정답체크1번
+	private int chk2; //정답체크2번
+	private int chk3; //정답체크3번
+	private int chk4; //정답체크4번
+	private int chk5; //정답체크5번
 }
