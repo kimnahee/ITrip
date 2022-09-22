@@ -1,10 +1,13 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+<html xmlns:th="http://www.thymeleaf.org" 
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+layout:decorate="~{layout/layout}"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
  <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Form Layout - Voler Admin Dashboard</title>
-    
+    <script src="js/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="bootstrap/voler/assets/css/bootstrap.css">
     
     <link rel="stylesheet" href="bootstrap/voler/assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
@@ -29,9 +32,22 @@
             </div>
             <div class="card-content">
             <div class="card-body">
-                <form class="form form-horizontal">
+                <form class="form form-horizontal" action="classInsert.do" method="post">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
                 <div class="form-body">
                     <div class="row">
+                    <div class="col-md-4" >
+                        <label>가이드 아이디</label>
+                    </div>
+                    <div class="col-md-8 form-group" th:each="gui: ${members}">
+                        <input type="text" id="guideId" class="form-control" name="guideId" readonly="readonly" th:value=${gui.memberId}>
+                    </div>
+                    <div class="col-md-4">
+                        <label>클래스 이름</label>
+                    </div>
+                    <div class="col-md-8 form-group">
+                        <input type="text" id="title" class="form-control" name="title" placeholder="class name">
+                    </div>
                     <div class="col-md-4">
                         <label>클래스 카테고리</label>
                     </div>
@@ -40,12 +56,6 @@
                         		<option selected>-- 카테고리 선택 --</option>
                                 <option th:each="job : ${joblist}" th:value="${job.cdNo}" th:utext="${job.cdName}"></option>
                         </select> 
-                    </div>
-                    <div class="col-md-4">
-                        <label>클래스 이름</label>
-                    </div>
-                    <div class="col-md-8 form-group">
-                        <input type="text" id="title" class="form-control" name="title" placeholder="class name">
                     </div>
                     <div class="col-md-4">
                         <label>클래스 설명</label>
@@ -63,12 +73,7 @@
                                     <textarea class="form-control" id="crclm" name="crclm" rows="3" placeholder="introduce yourself"></textarea>
                                 </div>
                             </div>
-                    <div class="col-md-4">
-                        <label>가이드 아이디</label>
-                    </div>
-                    <div class="col-md-8 form-group">
-                        <input type="text" id="guideId" class="form-control" name="guideId" placeholder="guideId">
-                    </div>
+                    
                     <div class="col-md-4">
                         <label>수업시간</label>
                     </div>
@@ -149,17 +154,23 @@
 
                     <!-- 수업시간 폼 1 end -->
                     <div class="col-md-4">
-                        <label>첨부파일</label>
-                    </div>
-                    <div class="col-md-8">
-                        <input type="file" id="file" class="form-control form-group" name="file" >
-                    </div>
-                    <div class="col-md-4">
                         <label>금액</label>
                     </div>
                     <div class="col-md-8">
                         <input type="number" min="0" id="price" class="form-control form-group" name="price" placeholder="price">
 
+                    </div>
+                     <div class="col-md-4">
+                        <label>정원</label>
+                    </div>
+                    <div class="col-md-8">
+                        <input type="number" min="1" max="20" id="psncpa" class="form-control form-group" name="psncpa" placeholder="20명까지 가능합니다.">
+                    </div>
+                    <div class="col-md-4">
+                        <label>첨부파일</label>
+                    </div>
+                    <div class="col-md-8">
+                        <input type="file" id="file" class="form-control form-group" name="file" >
                     </div>
                     <div class="col-sm-12 d-flex justify-content-end">
                         <button type="submit" class="btn btn-primary mr-1 mb-1">제출</button>
@@ -173,6 +184,9 @@
         </div>
         </div>
         
+         
+        
+         
          <script src="bootstrap/voler/assets/js/feather-icons/feather.min.js"></script>
     <script src="bootstrap/voler/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
     <script src="bootstrap/voler/assets/js/app.js"></script>

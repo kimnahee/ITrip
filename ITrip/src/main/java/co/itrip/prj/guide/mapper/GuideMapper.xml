@@ -20,6 +20,7 @@
 				from guide
 				where guide_id = #{guideId}
 </select>
+
 <!-- 유저 가이드 신청 [권소정] -->
 <insert id="guideInsert" parameterType="co.itrip.prj.guide.service.GuideVO">
 	INSERT INTO GUIDE VALUES(#{guideId},#{career},#{dc},#{duty},#{attach},#{attachDir},'S1',sysdate,0)
