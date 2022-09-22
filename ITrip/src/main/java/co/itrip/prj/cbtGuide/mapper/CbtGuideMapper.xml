@@ -90,7 +90,17 @@
 	</insert>
 	<!-- public int KeywordInsert(); -->
 	<!-- public int KeywordList(); -->
+	<!--  public List<HashMap<String,String>> myCbtHerMapList (); //myCbtHerList에 담긴 cnt_no와 cnsr 출력-->
+	<select id="myCbtHerMapList">
+	    select cbt_no1, cnsr1 from mycbt_hder where mc_no=15;
+	</select>
+	<!--public List<HashMap<String,String>> cbtGuideMapList (); //cbtGuideList에 담긴 cnt_no와 cnsr 출력-->
+	<select id="cbtGuideMapList">
+	    SELECT cbt_no, cnsr FROM cbt_guide WHERE cbt_no IN (SELECT cbt_no1 FROM mycbt_hder  WHERE mc_no = 15)
+	</select>
 	
+	<!--public int myCbtchekInsert (); // myCbt에 cnt_no와 정답유무 담기-->
+	<!--public List<HashMap<String, String>> myCbtchekList (); // myCbt에 cnt_no와 정답유무 출력-->
 	
 	
 	
