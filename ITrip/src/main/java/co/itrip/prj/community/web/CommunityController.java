@@ -40,20 +40,31 @@ public class CommunityController {
 		return "community/timeLine";
 	}
 
-	// 게시글 단일출력
+	// 게시글 단일출력(스터디게시판 : 작동 O)
 	@GetMapping("/selectCommunity.do")
 	public String selectCommunity(CommunityVO vo, ReplyVO rvo, Model model, HttpServletRequest request) {
-		//System.out.println(request.getParameter("comNo")); // 글번호 확인
+		// System.out.println(request.getParameter("comNo")); // 글번호 확인
 		vo.setComNo(Integer.parseInt(request.getParameter("comNo")));
 		model.addAttribute("selectCommunity", dao.selectCommunity(vo));
-		return "community/selectCommunity";
+		dao.commHitUpdate(vo);
+		return "community/study/selectStudy";
 	}
-	
-	//스터디게시판
+
+	// 게시글 단일출력(자유게시판)
+	@GetMapping("/selectFree.do")
+	public String selectFree(CommunityVO vo, ReplyVO rvo, Model model, HttpServletRequest request) {
+		// System.out.println(request.getParameter("comNo")); // 글번호 확인
+		vo.setComNo(Integer.parseInt(request.getParameter("comNo")));
+		model.addAttribute("selectCommunity", dao.selectCommunity(vo));
+		dao.commHitUpdate(vo);
+		return "community/free/selectFree";
+	}
+
+	// 스터디게시판
 	// 스터디게시판 글쓰기 폼
 	@GetMapping("/studyInsertForm.do")
 	public String studyInsertForm() {
-		return "community/studyInsertForm";
+		return "community/study/studyInsertForm";
 	}
 
 	// 스터디게시판 글 작성(파일업로드)
@@ -63,7 +74,6 @@ public class CommunityController {
 			String projectPath = System.getProperty("user.dir") + "/src/main/resources/static/files"; // 프로젝트 경로
 			UUID uuid = UUID.randomUUID();
 			String filename = uuid + "_" + file.getOriginalFilename();
-
 			File saveFile = new File(projectPath, filename);
 			file.transferTo(saveFile);
 			vo.setAttach(filename);
@@ -80,14 +90,26 @@ public class CommunityController {
 		System.out.println(request.getParameter("comNo")); // 글번호 확인
 		vo.setComNo(Integer.parseInt(request.getParameter("comNo")));
 		model.addAttribute("selectStudy", dao.selectCommunity(vo));
-		return "community/studyUpdateForm";
+		return "community/study/studyUpdateForm";
 	}
 
 	// 스터디게시판 글 수정
-	@GetMapping("/studyUpdate.do")
-	public String studyUpdate(CommunityVO vo, Model model, HttpServletRequest request) {
-		System.out.println(request.getParameter("comNo")); // 글번호 확인
+	@PostMapping("/studyUpdate.do")
+	public String studyUpdate(CommunityVO vo, MultipartFile file, HttpServletRequest request)
+			throws IllegalStateException, IOException {
+		System.out.println("==============" + request.getParameter("comNo")); // 글번호 확인
 		vo.setComNo(Integer.parseInt(request.getParameter("comNo")));
+		if (!file.getOriginalFilename().isEmpty()) {
+			String projectPath = System.getProperty("user.dir") + "/src/main/resources/static/files"; // 프로젝트 경로
+			UUID uuid = UUID.randomUUID();
+			String filename = uuid + "_" + file.getOriginalFilename();
+			File saveFile = new File(projectPath, filename);
+			file.transferTo(saveFile);
+			vo.setAttach(filename);
+			String path = "/files/" + filename;
+			vo.setAttachDir(path);
+		}
+		dao.studyUpdate(vo);
 		return "redirect:study.do";
 	}
 
@@ -100,8 +122,61 @@ public class CommunityController {
 		return "redirect:study.do";
 	}
 
-	//페이징
-	//페이징 처리(전체게시판)
+	// 자유게시판
+	// 자유게시판 글쓰기 폼
+	@GetMapping("/freeInsertForm.do")
+	public String freeInsertForm() {
+		return "community/free/freeInsertForm";
+	}
+
+	// 자유게시판 글 작성(파일업로드)
+	@PostMapping("/freeInsert.do")
+	public String freeInsert(CommunityVO vo, MultipartFile file) throws IllegalStateException, IOException {
+		if (!file.getOriginalFilename().isEmpty()) {
+			String projectPath = System.getProperty("user.dir") + "/src/main/resources/static/files"; // 프로젝트 경로
+			UUID uuid = UUID.randomUUID();
+			String filename = uuid + "_" + file.getOriginalFilename();
+
+			File saveFile = new File(projectPath, filename);
+			file.transferTo(saveFile);
+			vo.setAttach(filename);
+			String path = "/files/" + filename;
+			vo.setAttachDir(path);
+		}
+		dao.freeInsert(vo);
+		return "redirect:free.do";
+	}
+
+	//자유게시판 글 수정 폼
+	@GetMapping("/freeUpdateForm.do")
+	public String freeUpdateForm(CommunityVO vo, Model model, HttpServletRequest request) {
+		System.out.println(request.getParameter("comNo")); // 글번호 확인
+		vo.setComNo(Integer.parseInt(request.getParameter("comNo")));
+		model.addAttribute("selectStudy", dao.selectCommunity(vo));
+		return "community/free/freeUpdateForm";
+	}
+
+	// 자유게시판 글 수정
+	@PostMapping("/freeUpdate.do")
+	public String freeUpdate(CommunityVO vo, MultipartFile file, HttpServletRequest request)
+			throws IllegalStateException, IOException {
+		vo.setComNo(Integer.parseInt(request.getParameter("comNo")));
+		if (!file.getOriginalFilename().isEmpty()) {
+			String projectPath = System.getProperty("user.dir") + "/src/main/resources/static/files"; // 프로젝트 경로
+			UUID uuid = UUID.randomUUID();
+			String filename = uuid + "_" + file.getOriginalFilename();
+			File saveFile = new File(projectPath, filename);
+			file.transferTo(saveFile);
+			vo.setAttach(filename);
+			String path = "/files/" + filename;
+			vo.setAttachDir(path);
+		}
+		dao.freeUpdate(vo);
+		return "redirect:free.do";
+	}
+
+	// 페이징
+	// 페이징 처리(전체게시판)
 	@GetMapping("/pageTest.do")
 	public String findPage(Model model, HttpServletRequest request,
 			@RequestParam(required = false, defaultValue = "1") int pageNum,
@@ -111,42 +186,52 @@ public class CommunityController {
 		return "community/timeline";
 	}
 
-	//페이징 처리(스터디게시판)
+	// 페이징 처리(스터디게시판)
 	@GetMapping("/study.do")
 	public String findStudyPage(Model model, HttpServletRequest request,
 			@RequestParam(required = false, defaultValue = "1") int pageNum,
 			@RequestParam(required = false, defaultValue = "10") int pageSize) {
 		PageHelper.startPage(pageNum, pageSize);
 		model.addAttribute("pageInfo", PageInfo.of(dao.findStudy()));
-		return "community/study";
+		return "community/study/study";
 	}
-	
-	//댓글
-	//댓글 리스트
+
+	// 페이징 처리(자유게시판)
+	@GetMapping("/free.do")
+	public String findFreePage(Model model, HttpServletRequest request,
+			@RequestParam(required = false, defaultValue = "1") int pageNum,
+			@RequestParam(required = false, defaultValue = "10") int pageSize) {
+		PageHelper.startPage(pageNum, pageSize);
+		model.addAttribute("pageInfo", PageInfo.of(dao.findFree()));
+		return "community/free/free";
+	}
+
+	// 댓글
+	// 댓글 리스트
 	@GetMapping("/replyList.do")
 	@ResponseBody
-	public List<ReplyVO> replyList(ReplyVO vo, HttpServletRequest request, Model model){
+	public List<ReplyVO> replyList(ReplyVO vo, HttpServletRequest request, Model model) {
 		String comNo = request.getParameter("comNo");
-		//System.out.println("===============원글번호" + comNo);
+		// System.out.println("===============원글번호" + comNo);
 		vo.setComNo(Integer.parseInt(comNo));
 		return dao.replyList(vo);
 	}
-	
-	//댓글입력
+
+	// 댓글입력
 	@PostMapping("/replyInsert.do")
 	@ResponseBody
 	public int replyInsert(ReplyVO vo, HttpServletRequest request) {
 		String comNo = request.getParameter("comNo");
 		String content = request.getParameter("content");
 		String memberId = request.getParameter("memberId");
-		System.out.println("댓글insert확인" + comNo + "내용확인" + content + memberId);
+		//System.out.println("댓글insert확인" + comNo + "내용확인" + content + memberId);
 		vo.setComNo(Integer.parseInt(comNo));
 		vo.setContent(content);
 		vo.setMemberId(memberId);
 		return dao.replyInsert(vo);
 	}
-	
-	//댓글삭제
+
+	// 댓글삭제
 	@PostMapping("/replyDelete.do")
 	@ResponseBody
 	public int replyDelete(ReplyVO vo, HttpServletRequest request) {
@@ -154,8 +239,8 @@ public class CommunityController {
 		vo.setReNo(Integer.parseInt(reNo));
 		return dao.replyDelete(vo);
 	}
-	
-	//댓글수정
+
+	// 댓글수정
 	@PostMapping("/replyUpdate.do")
 	@ResponseBody
 	public int replyUpdate(ReplyVO vo, HttpServletRequest request) {
