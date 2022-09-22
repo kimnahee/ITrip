@@ -7,16 +7,28 @@
 	    SELECT * FROM CBT_GUIDE
 	</select>
 	
-	
 	<!-- List<CbtGuideVO> cbtGuideListTab(CbtGuideVO vo); //탭 클릭시 유형별, 언어별로 조회 -->
 	<select id="cbtGuideListTab" parameterType="co.itrip.prj.cbtGuide.service.CbtGuideVO" resultType="co.itrip.prj.cbtGuide.service.CbtGuideVO">
-	    SELECT * FROM CBT_GUIDE 
-	     <if test="gtpCd==4">
-			WHERE GTP_CD IN('1','2') AND LANG_CD='${langCd}'
+        <if test="gtpCd==4">
+	        SELECT G.CBT_NO,G.QUES,G.LANG_CD, G.CNSR, G.EX1, G.EX2, 
+		    	   G.EX3, G.EX4, G.ATTACH, G.ATTACH_DIR, G.CNSR_CNT, G.CALL, 
+		    	   G.EXPLNA, G.GTP_CD, G.MEMBER_ID
+			FROM (SELECT ROWNUM AS ROWNO, CBT_NO,QUES,LANG_CD, CNSR, 
+			             EX1, EX2, EX3, EX4, ATTACH, ATTACH_DIR, CNSR_CNT, 
+			             CALL, EXPLNA, GTP_CD, MEMBER_ID  
+			      FROM CBT_GUIDE WHERE GTP_CD IN('1','2') AND LANG_CD=#{langCd}) G
+			WHERE G.ROWNO BETWEEN 1 and 5
 		</if>
-		 <if test="gtpCd!=4">
-			WHERE GTP_CD=#{gtpCd} AND LANG_CD=#{langCd}
-		</if>
+		<if test="gtpCd!=4">
+			SELECT G.CBT_NO,G.QUES,G.LANG_CD, G.CNSR, G.EX1, G.EX2, 
+		    	   G.EX3, G.EX4, G.ATTACH, G.ATTACH_DIR, G.CNSR_CNT, G.CALL, 
+		    	   G.EXPLNA, G.GTP_CD, G.MEMBER_ID
+			FROM (SELECT ROWNUM AS ROWNO, CBT_NO,QUES,LANG_CD, CNSR, 
+			             EX1, EX2, EX3, EX4, ATTACH, ATTACH_DIR, CNSR_CNT, 
+			             CALL, EXPLNA, GTP_CD, MEMBER_ID  
+			      FROM CBT_GUIDE WHERE  GTP_CD=#{gtpCd} AND LANG_CD=#{langCd}) G
+			WHERE G.ROWNO BETWEEN 1 and 5
+	    </if>
 	</select>
 	
 	<!-- public CbtGuideVO ajaxExplnaList(CbtGuideVO VO); // 풀이 단건 리스트 -->
@@ -61,8 +73,25 @@
 	<!-- public int cbutGuideDelet(CbtGuideVO VO);//삭제(D) -->
 	<delete id="cbutGuideDelet">
 	</delete>
+	<!-- public MyCbtHderVO myCbtHderInsert(MyCbtHderVO vo); // myCBtHder에 담기 -->
+	<insert id="myCbtHderInsert" parameterType="co.itrip.prj.cbtGuide.service.MyCbtHderVO">
+	    <selectKey keyProperty="mcNo" order="BEFORE" resultType="int">
+			SELECT CASE WHEN MAX(MC_NO) IS NULL THEN 1 
+				   ELSE  MAX(MC_NO)+1 END MC_NO
+			FROM MYCBT_HDER
+		</selectKey>
+		INSERT INTO MYCBT_HDER (MC_NO, MEMBER_ID, DT, GTP_CD, LANG_CD,
+							CBT_NO1, CBT_NO2, CBT_NO3, CBT_NO4, CBT_NO5,    
+							CNSR1, CNSR2, CNSR3, CNSR4, CNSR5)
+		VALUES(#{mcNo},#{memberId},SYSDATE,#{gtpCd},#{langCd},
+		       #{cbtNo1}, #{cbtNo2}, #{cbtNo3}, #{cbtNo4}, #{cbtNo5},    
+			   #{cnsr1}, #{cnsr2}, #{cnsr3}, #{cnsr4}, #{cnsr5})
+		
+	</insert>
 	<!-- public int KeywordInsert(); -->
 	<!-- public int KeywordList(); -->
+	
+	
 	
 	
 </mapper>

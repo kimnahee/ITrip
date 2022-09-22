@@ -3,6 +3,7 @@ package co.itrip.prj.cbtGuide.mapper;
 import java.util.List;
 
 import co.itrip.prj.cbtGuide.service.CbtGuideVO;
+import co.itrip.prj.cbtGuide.service.MyCbtHderVO;
 
 public interface CbtGuideMapper {
 	// 가이드가 등록한 문제 CRUD
@@ -14,6 +15,7 @@ public interface CbtGuideMapper {
 		public int cbutGuideDelet(CbtGuideVO vo);//삭제(D)
 		//정답률
 		public CbtGuideVO ajaxExplnaList(CbtGuideVO vo); // 풀이 단건 리스트
+		public int myCbtHderInsert(MyCbtHderVO vo); // myCBtHder에 담기
 		public int KeywordInsert();
 		public int KeywordList();
 }

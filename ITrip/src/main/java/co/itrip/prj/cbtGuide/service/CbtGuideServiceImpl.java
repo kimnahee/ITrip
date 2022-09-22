@@ -72,4 +72,9 @@ public class CbtGuideServiceImpl implements CbtGuideService {
 		return 0;
 	}
 
+	@Override
+	public int myCbtHderInsert(MyCbtHderVO vo) {
+		return map.myCbtHderInsert(vo);
+	}
+
 }
