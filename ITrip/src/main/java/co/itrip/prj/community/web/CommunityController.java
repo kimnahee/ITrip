@@ -33,14 +33,7 @@ public class CommunityController {
 	@Autowired
 	private ServletContext servletContext;
 
-	// 실시간 타임라인 게시판(일단 출력만)
-	@GetMapping("/timeline")
-	public String timeLine(Model model) {
-		model.addAttribute("communityList", dao.communityList());
-		return "community/timeLine";
-	}
-
-	// 게시글 단일출력(스터디게시판 : 작동 O)
+	// 게시글 단일출력(스터디게시판)
 	@GetMapping("/selectCommunity.do")
 	public String selectCommunity(CommunityVO vo, ReplyVO rvo, Model model, HttpServletRequest request) {
 		// System.out.println(request.getParameter("comNo")); // 글번호 확인
