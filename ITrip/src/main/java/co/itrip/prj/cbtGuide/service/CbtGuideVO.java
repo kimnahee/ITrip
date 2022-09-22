@@ -22,6 +22,7 @@ public class CbtGuideVO {
 	private String langCd; // cbt언어코드
 	private String memberId; // 출제자
 	List<String> keyword; // 여러건 받을 키워드
+	private int rownum; //가상의 순번 
 	
 	
 

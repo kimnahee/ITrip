@@ -23,7 +23,7 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 		session.setAttribute("name", userDetails.getUsername());
 		//request.getSession().setAttribute("name", userDetails.getUsername());
 			String cpath = request.getContextPath();
-			
+			//th:text="${session.name}"
 			response.sendRedirect("/");		
 	}
 

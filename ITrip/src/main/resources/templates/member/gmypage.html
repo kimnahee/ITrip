@@ -78,10 +78,9 @@
 
 
     <!-- Service Start -->
-    <div class="container-xxl py-5">
+    <div class="container-xxl py-5"></div>
         <div class="container">
-           
-            <div class="row g-0 service-row">
+            <div class="row g-0 service-row" >
                 <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.1s">
                     <div class="service-item border h-100 p-5">
                         <div class="btn-square bg-light rounded-circle mb-4" style="width: 64px; height: 64px;">
@@ -109,18 +108,22 @@
                         </div>
                         <h4 class="mb-3">가이드수정</h4>
                         <p class="mb-4">가이드 정보를 수정하는 곳 입니다.</p>
+                        
                         <a class="btn" id="grevice"><i class="fa fa-arrow-right text-white me-3"></i>수정하러가기</a>
                     </div>
                 </div>
+
                    <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.7s">
                     <div class="service-item border h-100 p-5">
                         <div class="btn-square bg-light rounded-circle mb-4" style="width: 64px; height: 64px;">
                             <img class="img-fluid" src="bootstrap/securex/img/icon/icon-3.png" alt="Icon">
                         </div>
-                        <h4 class="mb-3">서비스를 준비중입니다.</h4>
+                        <h4 class="mb-3">여행자 목록</h4>
+                          <p class="mb-4">수강중인 유저들을 보는 곳 입니다.</p>
                         <a class="btn" href="grevice.do"><i class="fa fa-arrow-right text-white me-3"></i>준비중입니다</a>
                     </div>
-                </div>
+                </div> 
+
               <br><br>
             <div class="text-center">
                 <a class="btn block" data-toggle="modal" data-backdrop="false"
@@ -132,7 +135,7 @@
                     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
                         <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title" id="myModalLabel4">회원 탈퇴</h4>
+                            <h4 class="modal-title" id="myModalLabel4">회원 탈퇴</h4>/
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <i data-feather="x"></i>
                             </button>
@@ -161,7 +164,6 @@
             
         </div>
     </div>
- 
     	<input type="hidden" id="guideId" th:value="${#authentication.principal.member.memberId}" />
 
     <!-- Service End -->
@@ -170,7 +172,7 @@
     	
     	$("#grevice").on("click", function(e) {
     		console.log(guideId);
-    		location.href = "/grevice.do?guideId=" + guideId;
+    		location.href = "/grevice.do"
     	})
     
     </script>
@@ -186,7 +188,7 @@
     <script src="bootstrap/securex/lib/lightbox/js/lightbox.min.js"></script>
 
     <!-- Template Javascript -->
-    <script src="js/main.js"></script>
+    <script src="bootstrap/securex/js/main.js"></script>
     
 </body>
 </html>

@@ -24,6 +24,7 @@
 		where com_no=#{comNo}
 	</select>
 
+	<!-- 스터디게시판 -->
 	<select id="studyList"
 		resultType="co.itrip.prj.community.service.CommunityVO">
 		select *
@@ -63,31 +64,73 @@
 		from comboard
 		where com_no=#{comNo}
 	</delete>
-	
-	<!-- 댓글 서비스 -->
-	<select id="replyList" resultType="co.itrip.prj.community.service.ReplyVO">
-		select re_no,
-			   com_no,
-			   content,
-			   member_id,
-			   dt
-		from reply
-		where com_no = #{comNo}
+
+	<!-- 자유게시판 -->
+	<select id="freeList"
+		resultType="co.itrip.prj.community.service.CommunityVO">
+		select *
+		from comboard
+		where ctgry='자유게시판'
+		order by com_no
+		desc
 	</select>
-	
+
+	<insert id="freeInsert"
+		parameterType="co.itrip.prj.community.service.CommunityVO">
+		<selectKey keyProperty="comNo" order="BEFORE"
+			resultType="int">
+			select
+			case when max(com_no) is null then 1
+			else max(com_no)
+			+ 1 end as id
+			from comboard
+		</selectKey>
+		insert into comboard
+		values(#{comNo}, #{title}, #{content},
+		#{memberId}, sysdate, 0, #{attach}, #{attachDir}, '자유게시판')
+	</insert>
+
+	<update id="freeUpdate">
+		update comboard
+		<set>
+			<if test="title != null">title = #{title},</if>
+			<if test="content != null">content = #{content},</if>
+			<if test="attach != null">attach = #{attach},</if>
+			<if test="attach != null">attach_dir = #{attachDir}</if>
+		</set>
+		where com_no = #{comNo}
+	</update>
+
+	<!-- 댓글 서비스 -->
+	<select id="replyList"
+		resultType="co.itrip.prj.community.service.ReplyVO">
+		select re_no,
+		com_no,
+		content,
+		member_id,
+		dt
+		from reply
+		where
+		com_no = #{comNo}
+	</select>
+
 	<!-- 댓글 입력 -->
-	<insert id="replyInsert" parameterType="co.itrip.prj.community.service.ReplyVO">
-		<selectKey keyProperty="reNo" order="BEFORE" resultType="int">
+	<insert id="replyInsert"
+		parameterType="co.itrip.prj.community.service.ReplyVO">
+		<selectKey keyProperty="reNo" order="BEFORE"
+			resultType="int">
 			select
 			case when max(re_no) is null then 1
 			else max(re_no)
-			+ 1 end as id
+			+
+			1 end as id
 			from reply
 		</selectKey>
 		insert into reply
-		values(#{reNo}, #{comNo}, #{content}, #{memberId}, sysdate)
+		values(#{reNo}, #{comNo}, #{content}, #{memberId},
+		sysdate)
 	</insert>
-	
+
 	<!-- 댓글 수정 -->
 	<update id="replyUpdate">
 		update reply
@@ -96,11 +139,23 @@
 		</set>
 		where re_no = #{reNo}
 	</update>
-	
+
 	<!-- 댓글 삭제 -->
 	<delete id="replyDelete">
-		delete 
+		delete
 		from reply
 		where re_no=#{reNo}
 	</delete>
+	
+	<!-- 조회수 처리 -->
+	<update id="commHitUpdate">
+		update comboard set hit = hit + 1 where com_no = #{comNo}
+	</update>
+	
+	<!-- 페이징 처리 -->
+	<select id="findAll" resultType="co.itrip.prj.community.service.CommunityVO">
+		select *
+		from comboard
+		order by com_no desc
+	</select>
 </mapper>

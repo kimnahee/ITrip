@@ -2,7 +2,10 @@ package co.itrip.prj.cbtGuide.web;
 
 import java.io.File;
 import java.io.IOException;
+import java.security.Principal;
 import java.util.UUID;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,9 +17,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import co.itrip.prj.cbtGuide.mapper.CbtGuideMapper;
-import co.itrip.prj.cbtGuide.service.CbtGuideService;
 import co.itrip.prj.cbtGuide.service.CbtGuideVO;
 import co.itrip.prj.cbtGuide.service.CbtKeywordVO;
+import co.itrip.prj.cbtGuide.service.MyCbtHderVO;
 import co.itrip.prj.gtpcd.service.GtpCdService;
 import co.itrip.prj.langcd.service.LangCdService;
 
@@ -40,8 +43,14 @@ public class CbtGuideController {
 	
 	//유형, 언어별로 리스트 문제 출력
 	@PostMapping("/cbtGuideListTab.do")
-	public String cbtGuideListTab(CbtGuideVO vo, Model model) {
+	public String cbtGuideListTab(CbtGuideVO vo, Model model, HttpServletRequest request) {
+		vo.setGtpCd(request.getParameter("gtpCd"));
+		vo.setLangCd(request.getParameter("langCd"));
+		String tCd =request.getParameter("gtpCd");
+		String lCd =request.getParameter("langCd");
 		model.addAttribute("cbtList", cgDao.cbtGuideListTab(vo));
+		model.addAttribute("tCd", tCd);
+		model.addAttribute("lCd", lCd);
 		return "cbtGuide/cbtGuideListTab";
 	}
 	//문제 등록 폼
@@ -73,4 +82,17 @@ public class CbtGuideController {
 
 		return "redirect:/cbtGuideMain.do";
 	}
+	@PostMapping("/myCbtHderInsert.do")
+	public String myCbtHderInsert(MyCbtHderVO vo, Model model,HttpServletRequest request, Principal prin) {
+		/*
+		 * vo.setCbtNo1(Integer.parseInt(request.getParameter("cbtNo1")));
+		 * vo.setCbtNo2(Integer.parseInt(request.getParameter("cbtNo2")));
+		 * vo.setCbtNo3(Integer.parseInt(request.getParameter("cbtNo3")));
+		 * vo.setCbtNo4(Integer.parseInt(request.getParameter("cbtNo4")));
+		 */
+		model.addAttribute("myCbtList", cgDao.myCbtHderInsert(vo));
+		
+		return "redirect:/cbtGuideMain.do";
+	};
+	
 }

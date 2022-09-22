@@ -2,23 +2,28 @@ package co.itrip.prj.community.service;
 
 import java.util.List;
 
-import com.github.pagehelper.Page;
-
-import co.itrip.prj.community.service.ReplyVO;
 
 public interface CommunityService {
-	List<CommunityVO> communityList(); //게시글 리스트 출력
+	List<CommunityVO> communityList(); //게시글 리스트 출력(사용 x)
 	CommunityVO selectCommunity(CommunityVO vo); //게시글 조회
 	
 	//스터디게시판
 	List<CommunityVO> studyList(); //스터디게시판 전체조회
 	int studyInsert(CommunityVO vo);//스터디게시판 게시글 작성
 	int studyUpdate(CommunityVO vo);//스터디게시판 게시글 수정
-	int studyDelete(CommunityVO vo);//스터디게시판 게시글 삭제
 	
-	//페이징 처리
-	List<CommunityVO> findAll();
-	List<CommunityVO> findStudy();
+	//자유게시판
+	List<CommunityVO> freeList();//자유게시판 전체조회
+	int freeInsert(CommunityVO vo);//자유게시판 게시글 작성
+	int freeUpdate(CommunityVO vo);//자유게시판 게시글 수정
+	
+	int studyDelete(CommunityVO vo);//게시글 삭제
+	int commHitUpdate(CommunityVO vo);//조회수 처리
+	
+	//페이징 처리(전체 리스트 출력)
+	List<CommunityVO> findAll(); //전체 게시판 페이징
+	List<CommunityVO> findStudy(); //스터디게시판 페이징
+	List<CommunityVO> findFree(); //자유게시판 페이징
 	
 	//댓글
 	List<ReplyVO> replyList(ReplyVO vo);//댓글 목록
