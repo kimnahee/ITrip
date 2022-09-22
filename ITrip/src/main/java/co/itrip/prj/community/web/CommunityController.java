@@ -178,31 +178,34 @@ public class CommunityController {
 	// 페이징
 	// 페이징 처리(전체게시판)
 	@GetMapping("/pageTest.do")
-	public String findPage(Model model, HttpServletRequest request,
+	public String findPage(CommunityVO vo, Model model, HttpServletRequest request,
 			@RequestParam(required = false, defaultValue = "1") int pageNum,
 			@RequestParam(required = false, defaultValue = "10") int pageSize) {
 		PageHelper.startPage(pageNum, pageSize);
-		model.addAttribute("pageInfo", PageInfo.of(dao.findAll()));
+		vo.setCtgry("''");
+		model.addAttribute("pageInfo", PageInfo.of(dao.findAll(vo)));
 		return "community/timeline";
 	}
 
 	// 페이징 처리(스터디게시판)
 	@GetMapping("/study.do")
-	public String findStudyPage(Model model, HttpServletRequest request,
+	public String findStudyPage(CommunityVO vo, Model model, HttpServletRequest request,
 			@RequestParam(required = false, defaultValue = "1") int pageNum,
 			@RequestParam(required = false, defaultValue = "10") int pageSize) {
 		PageHelper.startPage(pageNum, pageSize);
-		model.addAttribute("pageInfo", PageInfo.of(dao.findStudy()));
+		vo.setCtgry("스터디");
+		model.addAttribute("pageInfo", PageInfo.of(dao.findAll(vo)));
 		return "community/study/study";
 	}
 
 	// 페이징 처리(자유게시판)
 	@GetMapping("/free.do")
-	public String findFreePage(Model model, HttpServletRequest request,
+	public String findFreePage(CommunityVO vo, Model model, HttpServletRequest request,
 			@RequestParam(required = false, defaultValue = "1") int pageNum,
 			@RequestParam(required = false, defaultValue = "10") int pageSize) {
 		PageHelper.startPage(pageNum, pageSize);
-		model.addAttribute("pageInfo", PageInfo.of(dao.findFree()));
+		vo.setCtgry("자유게시판");
+		model.addAttribute("pageInfo", PageInfo.of(dao.findAll(vo)));
 		return "community/free/free";
 	}
 
