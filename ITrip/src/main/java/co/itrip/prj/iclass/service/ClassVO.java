@@ -10,9 +10,9 @@ public class ClassVO {
 	// 클래스 
 	private Integer classNo; // 클래스 번호
 	private String title; // 제목
-	private String content; // 내용
+	private String content; // 설명
 	private String crclm; // 상세커리큘럼
-	private Date dt; // 등록일자
+	private Date dt; // 등록일자 sysdate
 	private Integer price; // 금액
 	private String attach; // 파일
 	private String attachDir; // 파일경로
