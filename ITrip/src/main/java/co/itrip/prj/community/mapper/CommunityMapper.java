@@ -28,8 +28,21 @@ public interface CommunityMapper {
 	int commHitUpdate(CommunityVO vo);//조회수 처리
 
 	//페이징 처리
+	List<CommunityVO> findAll(CommunityVO vo);
+	
+//	//페이징 처리(스터디)
+//	@Select("select * from comboard where ctgry='스터디' order by com_no desc")
+//	@Results({
+//		@Result(property = "comNo", column = "com_no"),
+//		@Result(property = "title", column = "title"),
+//		@Result(property = "memberId", column = "member_id"),
+//		@Result(property = "dt", column = "dt"),
+//	})
+//	List<CommunityVO> findStudy();
+//	
+	//페이징 처리(자유게시판)
 	/*
-	 * @Select("select * from comboard order by com_no desc")
+	 * @Select("select * from comboard where ctgry='자유게시판' order by com_no desc")
 	 * 
 	 * @Results({
 	 * 
@@ -39,29 +52,8 @@ public interface CommunityMapper {
 	 * 
 	 * @Result(property = "memberId", column = "member_id"),
 	 * 
-	 * @Result(property = "dt", column = "dt"), })
+	 * @Result(property = "dt", column = "dt"), }) List<CommunityVO> findFree();
 	 */
-	List<CommunityVO> findAll();
-	
-	//페이징 처리(스터디)
-	@Select("select * from comboard where ctgry='스터디' order by com_no desc")
-	@Results({
-		@Result(property = "comNo", column = "com_no"),
-		@Result(property = "title", column = "title"),
-		@Result(property = "memberId", column = "member_id"),
-		@Result(property = "dt", column = "dt"),
-	})
-	List<CommunityVO> findStudy();
-	
-	//페이징 처리(자유게시판)
-	@Select("select * from comboard where ctgry='자유게시판' order by com_no desc")
-	@Results({
-		@Result(property = "comNo", column = "com_no"),
-		@Result(property = "title", column = "title"),
-		@Result(property = "memberId", column = "member_id"),
-		@Result(property = "dt", column = "dt"),
-	})
-	List<CommunityVO> findFree();
 	
 	//댓글
 	List<ReplyVO> replyList(ReplyVO vo);//댓글 목록
