@@ -11,21 +11,30 @@
 <style type="text/css">
 .content { /*컨텐츠 넓이지정*/
 	position: relative;
-	width: 600px;
+	width: 700px;
+	border:1px solid red;
+	margin: 0 auto;
+	height: 550px;
 }
-
-.slides { /*슬라이드 아이템이 나올 뼈대 지정*/
+/*
+.slides { 슬라이드 아이템이 나올 뼈대 지정
 	width: 100px;
 	height: 500px;
 	position: relative;
+	border:1px solid pink;
+}*/
+.card-content{
+	border:1px solid green;
+	padding-bottom: 50px;
 }
 
 .slide_item { /*슬라이드 아이템을 absolute로 겹쳐놓고 투명하게 하기*/
 	position: absolute;
 	width: 600px;
-	height: 500px;
-	opacity: 0;
+	height: auto;
 	transition: all 0.3s;
+	border:1px solid blue;
+	margin-left: 50px;
 }
 
 .ontheSlide { /*현재 아이템에 붙여줄 클래스*/
@@ -50,25 +59,20 @@
 .ontheSlide .form-check {
 	font-size: 1.5em;
 }
+#imgArea{
+	padding-left: 30px;
+}
+#cnsrOX{
+	border:1px solid red;
+	padding-left:30px;
+}
 </style>
 </head>
 <body>
 <div layout:fragment="content">
-
-<!--
-<p class="card-text" th:text="${cbt.cnsr}"></p>
-<p class="card-text" th:text="${cbt.memberId}"></p>
-<p class="card-text" th:text="${cbt.cbtNo}"></p>
-<p class="card-text" th:text="${cbt.cnsrCnt}"></p>
-<p class="card-text" th:text="${cbt.call}"></p>
-<p class="card-text" th:text="${cbt.utpCd}"></p>
-<p class="card-text" th:text="${cbt.explna}"></p>
-<img th:src="@{*{attachDir}}" style="width: 100px;  height: 100px;"> 
--->
-<!-- <div th:text="${cbtOne.langCd}" ></div> -->
 <div th:if="${#lists.isEmpty(cbtOne)}">
-	<div class="content" style="margin: 0 auto;">
-		<div class="col-xl-4 col-md-6 col-sm-12 slides">
+	<div class="content">
+		<div class="col-xl-4 col-md-6 col-sm-12 "><!-- slides -->
 			<div class="card slide_item ontheSlide">
 				<div class="card-content">
 					<div class="card-header"></div>
@@ -84,49 +88,108 @@
 	</div>
 </div>
 <div th:unless="${#lists.isEmpty(cbtOne)}">
-	<div class="content" style="margin: 0 auto;position:absolute; z-index: 1;" th:if="${cbtOne.utpCd=='1'}">
-	<div id="imgArea"></div>
+	<div class="content" style="z-index: 1;" th:if="${cbtOne.utpCd=='1'}">
+		<div id="imgArea"></div>
 	
-		<div class="col-xl-4 col-md-6 col-sm-12 slides">
-			<div class="card slide_item ontheSlide"><!-- th:each="cbt: ${cbtList}" -->
+		<div class="col-xl-4 col-md-6 col-sm-12 "><!-- slides -->
+			<div class="card slide_item ontheSlide">
 				<div class="card-content">
 				<div  id="langBadge" class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem" th:text="${cbtOne.langCd}"> </div>
+						
 					<div id="cardContent">
 						<div class="card-header">
 							<br><h3 th:text="Q.+${cbtOne.ques}"></h3> 
 						</div>
 						<div class="card-body"> 
-							<br>
-							<img th:src="@{*{cbtOne.attachDir}}"style="margin-bottom: 10px;">
+							<div th:if="${cbtOne.attachDir !=null}">
+								<img th:src="@{*{cbtOne.attachDir}}"style="margin-bottom: 10px;">
+							</div>
 							<div class="form-check">
-								<b>1</b> <a href="#" class="ex" th:text="${cbtOne.ex1}"></a><br> 
-								<b>2</b> <a href="#" class="ex" th:text="${cbtOne.ex2}"></a><br> 
-								<b>3</b> <a href="#" class="ex" th:text="${cbtOne.ex3}"></a><br>
-								<b>4</b> <a href="#" class="ex" th:text="${cbtOne.ex4}"></a>
+								<b>1</b>. <a href="#" class="ex" th:text="${cbtOne.ex1}"></a><br> 
+								<b>2</b>. <a href="#" class="ex" th:text="${cbtOne.ex2}"></a><br> 
+								<b>3</b>. <a href="#" class="ex" th:text="${cbtOne.ex3}"></a><br>
+								<b>4</b>. <a href="#" class="ex" th:text="${cbtOne.ex4}"></a>
 							</div>
 						</div>
+						
+						
+						
+						
+						
+						
+						
+						<!-- 댓글구현하고 moreInfo에 옮기고 지우기 -->
+						
+					 	  <div class="explna">
+							<ul class="nav nav-tabs" id="myTab" role="tablist">
+								<li class="nav-item" role="presentation">
+									<a class="nav-link active" id="home-tab" data-toggle="tab" href="#tab1" role="tab" aria-controls="home"
+									aria-selected="true">풀이</a>
+								</li>
+								<li class="nav-item" role="presentation" id="feedbackTab">
+									<a class="nav-link"data-toggle="tab" href="#tab2" role="tab"
+									aria-controls="contact" aria-selected="false">의견나누기</a>
+								</li>
+							</ul>
+							<div class="tab-content">
+								<div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="home-tab">
+									<div style="padding: 20px;" th:text="${cbtOne.explna}"></div>
+								</div>
+								<div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="contact-tab">
+									
+									<div style="padding: 20px;">
+						 				<div class="table-responsive">
+								          <table class="table table-striped mb-0">
+								            <thead>
+								              <tr>
+								                <th>번호</th>
+								                <th>내용</th>
+								                <th>이름</th>
+								              </tr>
+								            </thead>
+								            <tbody id="feedbackArea">
+								            </tbody>
+								          </table>
+								        </div> 
+									</div>
+								</div>
+							</div>
+						</div>  
+						 
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
 					</div>
 				</div><!-- end if card-content -->
+				<div class="buttons btn-group btn-group-lg" role="group" style="width: 100%;">
+					<button type="button" class="prevButton btn btn-primary">◀</button>
+					<button type="button" class="nextButton btn btn-primary">▶</button>
+				</div>
 			</div><!-- end of slide_item -->
 		</div><!-- end of slides  -->
-		<div class="buttons btn-group btn-group-lg" role="group"
-			style="width: 100%;">
-			<button type="button" class="prevButton btn btn-primary">◀</button>
-			<button type="button" class="nextButton btn btn-primary">▶</button>
-		</div>
 	</div><!-- end of content  -->
+	
 	<div class="content" style="margin: 0 auto;" th:if="${cbtOne.utpCd=='2'}">
-		<div class="col-xl-4 col-md-6 col-sm-12 slides">
-			<div class="card slide_item ontheSlide"><!-- th:each="cbt: ${cbtList}" -->
+		<div id="imgArea"></div>
+		<div class="col-xl-4 col-md-6 col-sm-12 "><!-- slides -->
+			<div class="card slide_item ontheSlide">
 				<div class="card-content">
 				<div  id="langBadge" class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem;" th:text="${cbtOne.langCd}"> </div>
-					<div id="card-content">
+					<div id="cardContent">
 						<div class="card-header">
-							<br><h3 th:text="Q.+${cbtOne.ques}"></h3> <!--  class="card-title" -->
+							<br><h3 th:text="Q.+${cbtOne.ques}"></h3>
 						</div>
-						<div class="card-body"> 
-							<br>
-							<label for="cnsr" class="form-label">정답</label>
+						<div class="card-body" id="cnsrOX"> 
+							<img th:src="@{*{cbtOne.attachDir}}"style="margin-bottom: 10px;">
+							<label for="cnsr" class="form-label">O 또는 X를 선택하세요.</label>
 							<div class="form-check">
 								<input class="form-check-input" type="radio" name="cnsr" id="cnsrO" value="O"> O
 							</div>
@@ -136,28 +199,17 @@
 						</div>
 					</div>
 				</div><!-- end if card-content -->
+				<div class="buttons btn-group btn-group-lg" role="group" style="width: 100%;">
+					<button type="button" class="prevButton btn btn-primary">◀</button>
+					<button type="button" class="nextButton btn btn-primary">▶</button> 
+				</div>
 			</div><!-- end of slide_item -->
 		</div><!-- end of slides  -->
-		<div class="buttons btn-group btn-group-lg" role="group"
-			style="width: 100%;">
-			<button type="button" class="prevButton btn btn-primary">◀</button>
-			<button type="button" class="nextButton btn btn-primary">▶</button>
-			
-		</div>
-	</div>
+	</div>			
 </div><!-- end of th:enless  -->
+
 <div id="pageNum"></div>
-
-
-
-
-
-
-
-
-
-
-
+<div id="cbtNo" th:text="${cbtOne.cbtNo}"></div>
 <script type="text/javascript">
 	let csrfHeaderName = $("meta[name='_csrf']").attr("content");
 	let csrfTokenValue = $("meta[name='_csrf_header']").attr("content");
@@ -169,56 +221,109 @@
 	let savePage = document.getElementById("pageNum").innerHTML;
 	let page = 1;
 
-	//보기 중 하나를 누르면 정답,오답표시
-	//객관식문제
-	$(".ex").click(function(){
-		console.log(this.innerText)
-		let myChoice = this.previousElementSibling.innerText
-		console.log(myChoice)
-		
-		savePage = page;
-		
+	//let imgArea = document.getElementsByClassName("imgArea")
+	
+	//chioceResult();
+	choiceResult1();
+	choiceResult2();
+	
+	function compareCnsrAjax(myChoice){
 		$.ajax({
-			url:'/ajaxQuestion.do',
-			type:'get',
-	 		beforeSend:function(xhr){
-				xhr.setRequestHeader(csrfHeaderName,csrfTokenValue);
-			}, 
-			dataType:'json',
-			data:{'langCd':langBadge,'rownum':savePage},
-			success:function newQ(res){
-				if(res.cnsr == myChoice){
-					alert("정답입니다.다시풀기버튼만들기")
-					imgArea.innerHTML+=`<img alt="" src="images/O.png" style="position:absolute; z-index:2;width: 200px;">`
-				}else{
-					alert("오답입니다.다시풀기버튼만들기")
-					imgArea.innerHTML+=`<img alt="" src="images/X.png" style="position:absolute; z-index:2;width: 200px;">`
+				url:'/ajaxQuestion.do',
+				type:'get',
+		 		beforeSend:function(xhr){
+					xhr.setRequestHeader(csrfHeaderName,csrfTokenValue);
+				}, 
+				dataType:'json',
+				data:{'langCd':langBadge,'rownum':savePage},
+				success:function result(res){
+					//choiceResult(res);
+					 if(res.cnsr == myChoice){
+						imgArea.innerHTML +=`<img alt="" src="images/O.png" style="position:absolute; z-index:2;width: 100px;">`
+						alert("정답입니다.다시풀기버튼만들기")
+						moreInfo(res);
+					}else{
+						imgArea.innerHTML +=`<img alt="" src="images/X.png" style="position:absolute; z-index:2;width: 100px">`	
+						alert("오답입니다.다시풀기버튼만들기")	
+						moreInfo(res);
+					} 
 				}
-			}
+			})
+	}
+	//객관식문제 보기 중 하나 클릭 시  정답,오답표시
+	function choiceResult1(){
+		$(".ex").click(function(){
+			let myChoice = this.previousElementSibling.innerText
+			savePage = page;
+			compareCnsrAjax(myChoice)
+			/* $.ajax({
+				url:'/ajaxQuestion.do',
+				type:'get',
+		 		beforeSend:function(xhr){
+					xhr.setRequestHeader(csrfHeaderName,csrfTokenValue);
+				}, 
+				dataType:'json',
+				data:{'langCd':langBadge,'rownum':savePage},
+				success:function result(res){
+					//choiceResult(res);
+					 if(res.cnsr == myChoice){
+						imgArea.innerHTML +=`<img alt="" src="images/O.png" style="position:absolute; z-index:2;width: 100px;">`
+						alert("정답입니다.다시풀기버튼만들기")
+						moreInfo(res);
+					}else{
+						imgArea.innerHTML +=`<img alt="" src="images/X.png" style="position:absolute; z-index:2;width: 100px">`	
+						alert("오답입니다.다시풀기버튼만들기")	
+						moreInfo(res);
+					} 
+				}
+			}) */
 		})
-	})
+	}
 	
-	//OX문제
-	$('input:radio[name=cnsr]').click(function(){
-		console.log(this.value)
-	})
-
-	
-	//let csrfHeaderName = $("meta[name='_csrf']").attr("content");
-	//let csrfTokenValue = $("meta[name='_csrf_header']").attr("content");
+	//OX문제 답 클릭 시 정답,오답표시
+	function choiceResult2(){
+		$("input[name=cnsr]").click(function(){
+			console.log(this.value)
+			let myChoice = this.value
+			savePage = page;
+			compareCnsrAjax(myChoice);
+			/* $.ajax({
+				url:'/ajaxQuestion.do',
+				type:'get',
+		 		beforeSend:function(xhr){
+					xhr.setRequestHeader(csrfHeaderName,csrfTokenValue);
+				}, 
+				dataType:'json',
+				data:{'langCd':langBadge,'rownum':savePage},
+				success:function result(res){
+					//chioceResult(res);
+					 if(res.cnsr == myChoice){
+						imgArea.innerHTML +=`<img alt="" src="images/O.png" style="position:absolute; z-index:2;width: 100px;">`
+						alert("정답입니다.다시풀기버튼만들기")
+						moreInfo(res);
+					}else{
+						imgArea.innerHTML +=`<img alt="" src="images/X.png" style="position:absolute; z-index:2;width: 100px">`	
+						alert("오답입니다.다시풀기버튼만들기")	
+						moreInfo(res);
+					} 
+				}
+			})
+			 */
+			
+		})
+	}
 	
 	//다음 버튼을 누른다면
 	nextButton.addEventListener('click', function() {
-		
-		let csrfHeaderName = $("meta[name='_csrf']").attr("content");
-		let csrfTokenValue = $("meta[name='_csrf_header']").attr("content");
+
+		//let csrfHeaderName = $("meta[name='_csrf']").attr("content");
+		//let csrfTokenValue = $("meta[name='_csrf_header']").attr("content");
 		
 		page ++; 
 		savePage = page;
-		console.log(page)
-		console.log(savePage)
 		let cardContent = document.getElementById("cardContent")
-
+ 		imgArea.innerHTML = "";
+		
 		 $.ajax({
 			url:'/ajaxQuestion.do',
 			type:'get',
@@ -227,51 +332,27 @@
 			}, 
 			dataType:'json',
 			data:{'langCd':langBadge,'rownum':savePage},
-			success:function newQ(res){
-				cardContent.innerHTML ="";
-				if(res.utpCd==1){
-					cardContent.innerHTML += 
-						`<div class="card-header"><br><h3>Q.${res.ques}</h3></div>
-						 <div class="card-body"><br>
-							<div class="form-check">
-								<b>1</b> <a href="#" class="ex">${res.ex1}</a><br> 
-								<b>2</b> <a href="#" class="ex">${res.ex2}</a><br> 
-								<b>3</b> <a href="#" class="ex">${res.ex3}</a><br>
-								<b>4</b> <a href="#" class="ex">${res.ex4}</a>
-							</div>
-						</div>`
-				}
-				if(res.utpCd==2){
-					cardContent.innerHTML += 
-						`<div class="card-header"><br><h3>Q.${res.ques}</h3></div>
-						 <div class="card-body"> <br>
-							<label for="cnsr" class="form-label">정답</label>
-							<div class="form-check">
-								<input class="form-check-input" type="radio" name="cnsr" id="cnsrO" value="O"> O
-							</div>
-							<div class="form-check">
-								<input class="form-check-input" type="radio" name="cnsr" id="cnsrX" value="X"> X
-							</div>
-						 </div>`
-				}
+			success:function result(res){
+				cardContent.innerHTML = "";
+				newQuestion(res);
+				choiceResult1();
+				choiceResult2();
 			},
 			error:function err(xhr,err){
 				alert("마지막문제입니다. ")
 				page--
-				console.log(page)
 			}
 		}) 
 	})
 	
 	//이전 버튼을 누른다면
 	prevButton.addEventListener('click', function() {
-		let csrfHeaderName = $("meta[name='_csrf']").attr("content");
-		let csrfTokenValue = $("meta[name='_csrf_header']").attr("content");
+		
+		//let csrfHeaderName = $("meta[name='_csrf']").attr("content");
+		//let csrfTokenValue = $("meta[name='_csrf_header']").attr("content");
 		
 		page --; 
 		savePage = page;
-		console.log(page)
-		console.log(savePage)
 		let cardContent = document.getElementById("cardContent")
 
 		 $.ajax({
@@ -284,42 +365,130 @@
 			data:{'langCd':langBadge,'rownum':savePage},
 			success:function newQ(res){
 				cardContent.innerHTML ="";
-				if(res.utpCd==1){
- 					cardContent.innerHTML += 
-						`<div class="card-header"><br><h3>Q.${res.ques}</h3></div>
-						<div class="card-body"><br>
-							<div class="form-check">
-								① <a href="#" class="ex">${res.ex1}</a><br> 
-								② <a href="#" class="ex">${res.ex2}</a><br> 
-								③ <a href="#" class="ex">${res.ex3}</a><br>
-								④ <a href="#" class="ex">${res.ex4}</a>
-							</div>
-						</div>` 
-						
-						
-				}
-				if(res.utpCd==2){
-					cardContent.innerHTML += 
-						`<div class="card-header"><br><h3>Q.${res.ques}</h3></div>
-						 <div class="card-body"> <br>
-							<label for="cnsr" class="form-label">정답</label>
-							<div class="form-check">
-								<input class="form-check-input" type="radio" name="cnsr" id="cnsrO" value="O"> O
-							</div>
-							<div class="form-check">
-								<input class="form-check-input" type="radio" name="cnsr" id="cnsrX" value="X"> X
-							</div>
-						 </div>`
-				}
-				
+				newQuestion(res);
+				choiceResult1();
+				choiceResult2();
 			},
 			error:function err(xhr,err){
 				alert("첫번째 문제입니다. ")
 				page++
-				console.log(page)
 			}
 		}) 
 	})
+	
+	
+	//버튼 클릭하면 새로운문제불러와서 만들어지는 HTML태그 <div class="card-body">
+	function newQuestion(res){
+		if(res.utpCd==1){
+			cardContent.innerHTML += 
+				`<div class="card-header"><br><h3>Q.${res.ques}</h3></div>
+				 	`
+					if(res.attachDir != null){
+						cardContent.innerHTML += `<img src="${res.attachDir}"style="margin-bottom: 10px;">`
+					}
+			cardContent.innerHTML += 
+					`<div class="form-check">
+						<b>1</b>. <a href="#" class="ex">${res.ex1}</a><br> 
+						<b>2</b>. <a href="#" class="ex">${res.ex2}</a><br> 
+						<b>3</b>. <a href="#" class="ex">${res.ex3}</a><br>
+						<b>4</b>. <a href="#" class="ex">${res.ex4}</a>
+					</div>
+				</div>`
+		}
+		if(res.utpCd==2){
+			cardContent.innerHTML += 
+				`<div class="card-header"><br><h3>Q.${res.ques}</h3></div>
+				 <div class="card-body"> `
+				if(res.attachDir != null){
+					cardContent.innerHTML += `<img src="${res.attachDir}"style="margin-bottom: 10px;">`
+				}
+			cardContent.innerHTML += 
+					`<label for="cnsr" class="form-label">O 또는 X를 선택하세요.</label>
+					<div class="form-check">
+						<input class="form-check-input" type="radio" name="cnsr" id="cnsrO" value="O"> O
+					</div>
+					<div class="form-check">
+						<input class="form-check-input" type="radio" name="cnsr" id="cnsrX" value="X"> X
+					</div>
+						</div>`
+		}
+	}
+	
+	//풀이 및 댓글
+	function moreInfo(res){
+
+		cardContent.innerHTML += 
+			` <div class="explna">
+				<ul class="nav nav-tabs" id="myTab" role="tablist">
+					<li class="nav-item" role="presentation">
+						<a class="nav-link active" id="home-tab" data-toggle="tab" href="#tab1" role="tab" aria-controls="home"
+						aria-selected="true">풀이</a>
+					</li>
+					<li class="nav-item" role="presentation" id="feedbackTab">
+						<a class="nav-link"data-toggle="tab" href="#tab2" role="tab"
+						aria-controls="contact" aria-selected="false">의견나누기</a>
+					</li>
+				</ul>
+				<div class="tab-content">
+					<div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="home-tab">
+						<div style="padding: 20px;">${res.explna}</div>
+					</div>
+					<div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="contact-tab">
+						
+						<div style="padding: 20px;">
+			 				<div class="table-responsive">
+					          <table class="table table-striped mb-0">
+					            <thead>
+					              <tr>
+					                <th>번호</th>
+					                <th>내용</th>
+					                <th>이름</th>
+					              </tr>
+					            </thead>
+					            <tbody id="feedbackArea">
+					            </tbody>
+					          </table>
+					        </div> 
+						</div>
+					</div>
+				</div>
+			</div>`
+			
+			
+	}
+	
+	//feedbackTab();
+	//function feedbackTab(){}
+	 	let cbtNo = document.getElementById("cbtNo").innerText;
+		let feedbackTab = document.getElementById("feedbackTab");
+		let feedbackArea = document.getElementById("feedbackArea");
+		
+		
+		feedbackTab.addEventListener("click",function(){
+			$.ajax({
+				url:'/feedbackList.do',
+				type:'get',
+		 		beforeSend:function(xhr){
+					xhr.setRequestHeader(csrfHeaderName,csrfTokenValue);
+				}, 
+				dataType:'json',
+				data:{'cbtNo':cbtNo},
+				success:function result(res){
+					res.forEach(elem=>{
+						console.log(elem.content)
+						feedbackArea.innerHTML=""
+						feedbackArea.innerHTML+= "<tr><td>"+elem.memberId+"</td><td>"+elem.content+"</td><td>"+elem.memberId+"</td></tr>"
+					})
+				},
+				error:function err(xhr,err){
+					console.log(xhr,err)
+				}
+			}) 
+
+		})
+ 
+
+
 	
 	
 </script>
