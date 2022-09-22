@@ -11,5 +11,9 @@
 	<select id="followCount" resultType="int">
 		SELECT COUNT(*) FROM FOLLOW
 	</select>
+	
+	<delete id="followDelete">
+		DELETE FOLLOW WHERE GUIDE_ID = #{guideId} and member_id = #{memberId}
+	</delete>
 
 </mapper>
