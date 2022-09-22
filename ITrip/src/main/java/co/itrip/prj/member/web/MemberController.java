@@ -78,13 +78,6 @@ public class MemberController { //Principal
 		return "member/mcreview";
 	}
 	
-	// 클래스 신청 폼
-	@GetMapping("/cStart")
-	public String cStart(Model model) {
-		model.addAttribute("joblist", cdService.jobCdList());
-		return "member/cstart";
-	}
-
 	// 유저 회원 정보 수정페이지
 	@GetMapping("/mrecive.do")
 	public String mrecive(Principal principal, MemberVO vo, Model model) {

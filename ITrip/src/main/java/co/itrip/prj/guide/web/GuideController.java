@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.security.Principal;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +20,8 @@ import co.itrip.prj.follow.service.FollowService;
 import co.itrip.prj.follow.service.FollowVO;
 import co.itrip.prj.guide.service.GuideService;
 import co.itrip.prj.guide.service.GuideVO;
+import co.itrip.prj.iclass.service.ClassDtVO;
+import co.itrip.prj.iclass.service.ClassVO;
 import co.itrip.prj.member.service.MemberService;
 import co.itrip.prj.member.service.MemberVO;
 
@@ -36,11 +40,14 @@ public class GuideController {
 	@Autowired
 	private FollowService fService; // 팔로우 서비스
 	
+
+	
 	int r = 0;
 	
 	// 가이드 insert & 파일처리
 	@PostMapping("/guideInsert.do")
 	public String guideInsert(GuideVO vo, Model model, MultipartFile file) throws IllegalStateException, IOException {
+		
 		if(!file.getOriginalFilename().isEmpty()) {
 			String projectpath = System.getProperty("user.dir")+"/src/main/resources/static/files"; // user.dir은 프로젝트 경로를 담아주게 된다. 
 			UUID uuid = UUID.randomUUID(); // 랜덤으로 이름생성
@@ -54,6 +61,38 @@ public class GuideController {
 		guService.guideInsert(vo);
 					
 		return "member/mypage";
+	}
+	
+	// Class insert & 파일처리
+	@PostMapping("/classInsert.do")
+	public String classInsert(ClassVO vo, ClassDtVO dtvo, MultipartFile file) throws IllegalStateException, IOException {
+		
+		if(!file.getOriginalFilename().isEmpty()) {
+			String projectpath = System.getProperty("user.dir")+"/src/main/resources/static/files";  
+			UUID uuid = UUID.randomUUID(); 
+			String filename = uuid+"_"+file.getOriginalFilename(); 
+			File saveFile = new File(projectpath,filename);
+			file.transferTo(saveFile);
+			vo.setAttach(filename);
+			vo.setAttachDir("/files/"+filename);
+		}
+		
+		
+		
+		return "guide/gclass";
+	}
+	
+	// 가이드 클래스 신청 폼
+	@GetMapping("/startClass.do")
+	public String startClass(Model model, MemberVO vo, HttpServletRequest request) {
+		// guideId 폼에 뿌려주기
+		System.out.println(request.getParameter("memberId"));
+		vo.setMemberId(request.getParameter("memberId"));
+		model.addAttribute("members", mService.memberSelect(vo));
+		
+		// job카테고리 뿌려주기
+		model.addAttribute("joblist", cdService.jobCdList());
+		return "member/cstart";
 	}
 	
 	// 가이드 마이페이지 
@@ -107,6 +146,7 @@ public class GuideController {
 		guService.guideUpdate(vo); // 업데이트
 		return "redirect:gmyPage.do";
 	}
+	
 	
 
 }
