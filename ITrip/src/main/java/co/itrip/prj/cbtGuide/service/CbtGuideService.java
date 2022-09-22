@@ -12,6 +12,7 @@ public interface CbtGuideService {
 	public int cbutGuideDelet(CbtGuideVO vo);//삭제(D)
 	//정답률
 	public CbtGuideVO ajaxExplnaList(CbtGuideVO vo); // 풀이 단건 리스트
+	public int myCbtHderInsert(MyCbtHderVO vo); // myCBtHder에 담기
 	
 	public int KeywordInsert(CbtGuideVO vo);
 	public int KeywordList(CbtGuideVO vo);

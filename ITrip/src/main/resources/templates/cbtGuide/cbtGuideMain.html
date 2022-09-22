@@ -211,10 +211,10 @@ hr {
 
 		<!-- 히든frm -->
 		<div>
-			<form id="frm" method="post" action="/cbtGuideListTab.do">
+			<form id="typefrm" method="post" action="/cbtGuideListTab.do">
 			 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-				<input type="hidden" id="gtpCd" name="gtpCd"></input> <input
-					type="hidden" id="langCd" name="langCd"></input>
+				<input type="hidden" id="gtpCd" name="gtpCd"></input>
+				<input type="hidden" id="langCd" name="langCd" ></input>
 			</form>
 		</div>
 		<!-- LAYOUT 안에 SCRIPT있어야함! -->
@@ -233,11 +233,11 @@ hr {
 				if (gNo == '4') {
 					$("#gtpCd").val('4');
 					$("#langCd").val(lNo);
-					$("#frm").submit();
+					$("#typefrm").submit();
 				} else {
 					$("#gtpCd").val(gNo);
 					$("#langCd").val(lNo);
-					$("#frm").submit();
+					$("#typefrm").submit();
 				}
 			})
 		</script>
