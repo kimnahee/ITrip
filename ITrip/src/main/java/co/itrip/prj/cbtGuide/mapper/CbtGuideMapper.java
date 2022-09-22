@@ -1,5 +1,6 @@
 package co.itrip.prj.cbtGuide.mapper;
 
+import java.util.HashMap;
 import java.util.List;
 
 import co.itrip.prj.cbtGuide.service.CbtGuideVO;
@@ -16,6 +17,13 @@ public interface CbtGuideMapper {
 		//정답률
 		public CbtGuideVO ajaxExplnaList(CbtGuideVO vo); // 풀이 단건 리스트
 		public int myCbtHderInsert(MyCbtHderVO vo); // myCBtHder에 담기
-		public int KeywordInsert();
-		public int KeywordList();
+		
+		public List<HashMap<String,String>> myCbtHerMapList (); //myCbtHerList에 담긴 cnt_no와 cnsr 출력
+		public List<HashMap<String,String>> cbtGuideMapList (); //cbtGuideList에 담긴 cnt_no와 cnsr 출력
+		
+		public int myCbtchekInsert (); // myCbt에 cnt_no와 정답유무 담기
+		public List<HashMap<String, String>> myCbtchekList (); // myCbt에 cnt_no와 정답유무 출력
+		
+		public int KeywordInsert(CbtGuideVO vo);
+		public int KeywordList(CbtGuideVO vo);
 }

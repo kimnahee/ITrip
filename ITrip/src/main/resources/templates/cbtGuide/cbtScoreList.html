@@ -1,10 +1,123 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
+<div layout:fragment="content">
+<!-- Responsive tables start -->
+<div class="row" id="table-responsive">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">응시과목 </h4><p>응시일자</p>
+      </div>
+      <div class="card-content">
+        <div class="card-body">
+            <div class="alert alert-primary">
+                <h4 class="alert-heading">채점 결과</h4>
+                <p>문제 중 ... <code class="highlighter-rouge">맞은 갯수</code> 몇 개인지 확인 가능한 곳</p>
+            </div>
+        </div>
+        <!-- table responsive -->
+        <div class="table-responsive">
+            <table class="table mb-0">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">문제 1</th>
+                  <th scope="col">문제 2</th>
+                  <th scope="col">문제 3</th>
+                  <th scope="col">문제 4</th>
+                  <th scope="col">문제 5</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>정답 체크</td>
+                  <td>O</td>
+                  <td>X</td>
+                  <td>O</td>
+                  <td>O</td>
+                  <td>O</td>
+                </tr>
+              </tbody>
+            </table>
+        </div>
+         <!--테이블 끝--><br><br>
+        	<button type="button" class="btn btn-primary btn-icon icon-left">
+                <i class="fas fa-plane"></i> 맞힌 문제 확인 <span class="badge bg-transparent">4</span></button>
+                
+                <!-- Basic Vertical form layout section start -->
+		<div class="row match-height">
+			<div class="col-md-10 col-12 cbtNoSelc">
+				<div class="card">
+					<div class="card-content">
+						<!-- gtpCd에 따른 처리 -->
+						<div class="card-body" >
+								<form class="form form-vertical">
+									<div class="form-body">
+										<div class="row">
+											<div class="col-12">
+												<div class="form-group">
+													<h3>문제 </h3>
+													<a>&nbsp;&nbsp;[ 출제자 : <span ></span> ]</a><br>
+													<label>문제내용</label>
+													<label>  입력한 답 :</label>
+													<label>정답</label>
+													<label>풀이<label>
+												</div>
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+							<!-- gtpCd=='1'끝 -->
+						</div><!--<div class="card-content"끝-->
+					</div>
+				</div>
+			</div>
+            <button type="button" class="btn btn-danger btn-icon icon-left">
+                <i class="fas fa-plane"></i> 틀린 문제 확인 <span class="badge bg-transparent">4</span>
+            </button><br>&nbsp;&nbsp;&nbsp; <a href="#" > > 오답노트 바로가기</a>
+       <!-- Basic Vertical form layout section start -->
+		<div class="row match-height">
+			<div class="col-md-10 col-12 cbtNoSelc">
+				<div class="card">
+					<div class="card-content">
+						<!-- gtpCd에 따른 처리 -->
+						<div class="card-body" >
+								<form class="form form-vertical">
+									<div class="form-body">
+										<div class="row">
+											<div class="col-12">
+												<div class="form-group">
+													<h3>문제 </h3>
+													<a>&nbsp;&nbsp;[ 출제자 : <span ></span> ]</a><br>
+													<label>문제내용</label>
+													<label>  입력한 답 :</label>
+													<label>정답</label>
+													<label>풀이<label>
+												</div>
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+							<!-- gtpCd=='1'끝 -->
+						</div><!--<div class="card-content"끝-->
+					</div>
+				</div>
+			</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Responsive tables end -->
+
+</div>
 
 </body>
 </html>

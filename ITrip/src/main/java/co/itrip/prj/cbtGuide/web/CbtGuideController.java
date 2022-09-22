@@ -95,4 +95,9 @@ public class CbtGuideController {
 		return "redirect:/cbtGuideMain.do";
 	};
 	
+	@RequestMapping("/cbtScoreList.do")
+	public String cbtScoreList(MyCbtHderVO vo, Model model) {
+		return "cbtGuide/cbtScoreList";
+	}
+	
 }
