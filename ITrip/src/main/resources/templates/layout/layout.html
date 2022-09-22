@@ -155,7 +155,10 @@
 							    <input id="memberId" type="hidden" th:value="${#authentication.principal.member.memberId}">
 							    <button class="btn btn-xxs btn-outline-primary">로그아웃</button>
 							</form>
-							    <button id="myPage" class="btn btn-xs btn-outline-primary">마이페이지</button>
+								<div th:switch="${#authentication.principal.member.auth}">
+								    <button th:case="ROLE_USER" id="myPage" class="btn btn-xs btn-outline-primary">마이페이지</button>
+									<button th:case="ROLE_GUIDE" id="guideMyPage" class="btn btn-xs btn-outline-primary">가이드 마이페이지</button>
+								</div>							
 							</div>
 						</li>
 
@@ -250,8 +253,13 @@
 				//console.log(memberId);
 				location.href = "/myPage?memberId" + memberId;
 			})
+			// 가이드가 로그인시 가이드 마이페이지 버튼이 생기고 세션값을 
+			$("#guideMyPage").on("click", function(){
+				//console.log(memberId);
+				location.href = "/gmyPage.do"
+			}) 
 		</script>
-	</div>
+
 
 	<script src="bootstrap/voler/assets/js/feather-icons/feather.min.js"></script>
 	<script src="bootstrap/voler/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>

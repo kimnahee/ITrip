@@ -1,15 +1,14 @@
 package co.itrip.prj.member.web;
 
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import java.security.Principal;
 
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-
 import org.springframework.web.bind.annotation.PostMapping;
 
 import co.itrip.prj.cmmncd.service.CmmnCdService;
@@ -91,27 +90,39 @@ public class MemberController { //Principal
 		model.addAttribute("joblist", cdService.jobCdList());
 		return "member/cstart";
 	}
-	
-	// 가이드 마이페이지
-	@GetMapping("/gmyPage.do")
-	public String gmyPage(Model model, MemberVO vo, HttpServletRequest request) {
-		
-		/*
-		 * request.getParameter("guideId");
-		 * System.out.println(request.getParameter("guideId"));
-		 * 
-		 * vo.setMemberId(guideId); System.out.println(vo.getMemberId());
-		 * model.addAttribute("id", mService.memberSelect(vo)); vo =
-		 * mService.memberSelect(vo); System.out.println("========"+vo.getName());
-		 */
-		return "member/gmypage";
-	}	
 
-	// 회원정보수정
+	// 유저 회원 정보 수정페이지
 	@GetMapping("/mrecive.do")
-	public String mrecive() {
+	public String mrecive(Principal principal, MemberVO vo, Model model) {
+		vo.setMemberId(principal.getName());
+		model.addAttribute("member", mService.memberSelect(vo)); 
 		return "member/mrecive";
 	}
-
+	
+	// 가이드 회원 정보 수정페이지
+	@GetMapping("/mrecive1.do")
+	public String mrecive1(Principal principal, MemberVO vo, Model model) {
+		vo.setMemberId(principal.getName());
+		model.addAttribute("member", mService.memberSelect(vo)); 
+		return "member/mrecive1";
+	}
+	
+	// 회원 정보 수정페이지에서 수정 후  form action -> DB수정 -> 수정된 정보 바로 적용
+	@PostMapping("/mreviceUpdate.do")
+	public String mreviceUpdate(MemberVO vo, Principal principal) {
+		vo.setMemberId(principal.getName());
+		mService.memberUpdate(vo);
+		return "redirect:myPage";
+	}
+	
+	// 회원 정보 수정페이지에서 수정 후  form action -> DB수정 -> 수정된 정보 바로 적용
+	@PostMapping("/mreviceUpdate1.do")
+	public String mreviceUpdate1(MemberVO vo, Principal principal) {
+		vo.setMemberId(principal.getName());
+		mService.memberUpdate(vo);
+		// principal 로 아이디값 받아올때 변경한값 담을 위치
+		return "redirect:gmyPage.do";
+	}
+	
 }
 
