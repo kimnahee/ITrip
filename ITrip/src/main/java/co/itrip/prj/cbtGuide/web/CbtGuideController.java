@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import co.itrip.prj.cbtGuide.mapper.CbtGuideMapper;
+import co.itrip.prj.cbtGuide.service.CbtGuideService;
 import co.itrip.prj.cbtGuide.service.CbtGuideVO;
 import co.itrip.prj.cbtGuide.service.CbtKeywordVO;
 import co.itrip.prj.cbtGuide.service.MyCbtHderVO;
@@ -26,7 +26,7 @@ import co.itrip.prj.langcd.service.LangCdService;
 @Controller
 public class CbtGuideController {
 	@Autowired
-	private CbtGuideMapper cgDao;
+	private CbtGuideService cgDao;
 	@Autowired
 	private GtpCdService gtpDao;
 	@Autowired
@@ -60,7 +60,7 @@ public class CbtGuideController {
 		model.addAttribute("langCdList", langDao.langCdList());
 		return "cbtGuide/cbtGuideInsertForm";
 	}
-	//등록
+	//등록 cbtGuideInsert.do
 	@PostMapping("/cbtGuideInsert.do")
 	public String cbtGuideInsert(CbtGuideVO vo, CbtKeywordVO kvo, Model model,
 			@RequestParam("file") MultipartFile file) throws IllegalStateException, IOException {
@@ -83,21 +83,23 @@ public class CbtGuideController {
 		return "redirect:/cbtGuideMain.do";
 	}
 	@PostMapping("/myCbtHderInsert.do")
-	public String myCbtHderInsert(MyCbtHderVO vo, Model model,HttpServletRequest request, Principal prin) {
-		/*
-		 * vo.setCbtNo1(Integer.parseInt(request.getParameter("cbtNo1")));
-		 * vo.setCbtNo2(Integer.parseInt(request.getParameter("cbtNo2")));
-		 * vo.setCbtNo3(Integer.parseInt(request.getParameter("cbtNo3")));
-		 * vo.setCbtNo4(Integer.parseInt(request.getParameter("cbtNo4")));
-		 */
-		model.addAttribute("myCbtList", cgDao.myCbtHderInsert(vo));
+	public String myCbtHderInsert(MyCbtHderVO mvo, CbtGuideVO vo, Model model, HttpServletRequest request, Principal prin) {
+		 
+		cgDao.myCbtHderInsert(mvo);
+		model.addAttribute("myCbtListS", cgDao.myCbtHderList(mvo));
 		
-		return "redirect:/cbtGuideMain.do";
+		/*
+		 * int cbtNo1 = Integer.parseInt(request.getParameter("cbtNo1")); int cbtNo2 =
+		 * Integer.parseInt(request.getParameter("cbtNo2")); int cbtNo3 =
+		 * Integer.parseInt(request.getParameter("cbtNo3")); int cbtNo4 =
+		 * Integer.parseInt(request.getParameter("cbtNo4"));
+		 */
+		
+		int cbtNo1 =mvo.getCbtNo1();
+		
+		model.addAttribute("cbtList", cgDao.cbtGuideListFive(vo));
+		return "cbtGuide/cbtScoreList";
 	};
 	
-	@RequestMapping("/cbtScoreList.do")
-	public String cbtScoreList(MyCbtHderVO vo, Model model) {
-		return "cbtGuide/cbtScoreList";
-	}
 	
 }
