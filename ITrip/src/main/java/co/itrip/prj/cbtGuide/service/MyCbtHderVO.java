@@ -1,7 +1,6 @@
 package co.itrip.prj.cbtGuide.service;
 
 import java.util.Date;
-import java.util.List;
 
 import lombok.Data;
 
@@ -22,4 +21,12 @@ public class MyCbtHderVO {
 	private String cnsr3; //문제1번 정답입력값
 	private String cnsr4; //문제1번 정답입력값
 	private String cnsr5; //문제1번 정답입력값
+	private int chk1; //정답체크1번
+	private int chk2; //정답체크2번
+	private int chk3; //정답체크3번
+	private int chk4; //정답체크4번
+	private int chk5; //정답체크5번
+	
+	private int chk0Cunt; // 정답카운트
+	private int chk1Cunt; // 오답카운트
 }
