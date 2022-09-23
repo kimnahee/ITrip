@@ -17,5 +17,5 @@ public class CmmnCdVO {
 	private String cdIni; // 주코드
 	private String cdNo;  // 부코드 
 	private String cdName; // 설명
-	private String cd_sn; // 순번
+	private String cdSn; // 순번
 }
