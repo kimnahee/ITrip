@@ -9,4 +9,6 @@ public interface ClassService {
 	int classInsert(ClassVO vo); // 클래스 추가
 	int classDelete(ClassVO vo); // 클래스 삭제
 
+	
+
 }

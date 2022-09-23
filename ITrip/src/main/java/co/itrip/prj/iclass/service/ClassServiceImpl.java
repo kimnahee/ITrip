@@ -27,8 +27,25 @@ public class ClassServiceImpl implements ClassService {
 
 	@Override
 	public int classInsert(ClassVO vo) {
-		// TODO Auto-generated method stub
-		return map.classInsert(vo);
+		
+		int r = map.classInsert(vo);
+		
+		ClassDtVO dtvo = new ClassDtVO();
+		dtvo.setClassNo(vo.getClassNo());
+		
+		for(int i=0; i < vo.getClassDt().size(); i++) {
+			if(vo.getClassDt().get(i) != null) {
+				dtvo.setTerm(vo.getClassDt().get(i).getTerm());
+				dtvo.setTerm(vo.getClassDt().get(i).getTerm());
+				dtvo.setCtimeNo(++i);
+				dtvo.setBeginTime(vo.getClassDt().get(i).getBeginTime());
+				dtvo.setEndTime(vo.getClassDt().get(i).getEndTime());
+				map.classDtInsert(dtvo);
+			}
+			
+		}
+		
+		return r;
 	}
 
 	@Override

@@ -2,8 +2,25 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="co.itrip.prj.iclass.mapper.ClassMapper">
 
-<insert id="classInsert" parameterType="co.itrip.prj.iclass.service.ClassVO">
-
-</insert>
+	<insert id="classInsert" >
+		<selectKey keyProperty="classNo" order="BEFORE" resultType="int">
+			SELECT CASE WHEN MAX(CLASS_NO) IS NULL THEN 1 ELSE MAX(CLASS_NO) +1 END AS ID FROM CLASS
+		</selectKey>
+		INSERT INTO CLASS VALUES (#{classNo}, #{title}, #{content}, #{crclm}, sysdate, #{price}, #{attach}, 
+		                          #{attachDir}', 'S1', '#{guideId}','#{jobCd}', #{psncpa},  #{classCnt})
+	</insert>
+	
+	<insert id="classDtInsert" >
+		insert into class_dt values (#{ctimeNo}, #{classNo}, #{term}, #{beginTime}, #{endTime})
+		<!-- <selectKey keyProperty="ctimeNo" order="BEFORE" resultType="int">
+         SELECT 
+             CASE WHEN MAX(ctime_no) IS NULL THEN 1
+             ELSE MAX(ctime_no)+1 
+             END AS NO
+         FROM class_dt
+         where class_no=#{classNo}
+      </selectKey>
+		insert into class_dt values (#{ctimeNo}, #{classNo}, #{term}, #{beginTime}, #{endTime}) -->
+	</insert>
 
 </mapper>
