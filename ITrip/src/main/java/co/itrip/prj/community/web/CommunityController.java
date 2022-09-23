@@ -177,7 +177,7 @@ public class CommunityController {
 		PageHelper.startPage(pageNum, pageSize);
 		vo.setCtgry("''");
 		model.addAttribute("pageInfo", PageInfo.of(dao.findAll(vo)));
-		return "community/timeline";
+		return "community/timeLine";
 	}
 
 	// 페이징 처리(스터디게시판)
@@ -187,6 +187,7 @@ public class CommunityController {
 			@RequestParam(required = false, defaultValue = "10") int pageSize) {
 		PageHelper.startPage(pageNum, pageSize);
 		vo.setCtgry("스터디");
+		vo.setMemberId(request.getParameter("memberId"));
 		model.addAttribute("pageInfo", PageInfo.of(dao.findAll(vo)));
 		return "community/study/study";
 	}
@@ -198,6 +199,7 @@ public class CommunityController {
 			@RequestParam(required = false, defaultValue = "10") int pageSize) {
 		PageHelper.startPage(pageNum, pageSize);
 		vo.setCtgry("자유게시판");
+		vo.setMemberId(request.getParameter("memberId"));
 		model.addAttribute("pageInfo", PageInfo.of(dao.findAll(vo)));
 		return "community/free/free";
 	}
@@ -208,7 +210,6 @@ public class CommunityController {
 	@ResponseBody
 	public List<ReplyVO> replyList(ReplyVO vo, HttpServletRequest request, Model model) {
 		String comNo = request.getParameter("comNo");
-		// System.out.println("===============원글번호" + comNo);
 		vo.setComNo(Integer.parseInt(comNo));
 		return dao.replyList(vo);
 	}
@@ -220,7 +221,9 @@ public class CommunityController {
 		String comNo = request.getParameter("comNo");
 		String content = request.getParameter("content");
 		String memberId = request.getParameter("memberId");
-		//System.out.println("댓글insert확인" + comNo + "내용확인" + content + memberId);
+		System.out.println("comNo" + comNo);
+		System.out.println("content" + content);
+		System.out.println("memberId" + memberId);
 		vo.setComNo(Integer.parseInt(comNo));
 		vo.setContent(content);
 		vo.setMemberId(memberId);
