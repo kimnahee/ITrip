@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.itrip.prj.consult.mapper.ConsultMapper">
+	
+	<select id="consultList" resultType="co.itrip.prj.consult.service.ConsultVO">
+         select c.consult_no
+	            ,c.title
+	            ,c.content
+	            ,c.dt
+	            ,c.member_id
+	            ,c.state_cd
+	            ,c.guide_id
+	            ,c.job_cd
+	            ,c.price
+	            ,c.ennc
+	            ,c.begin_date
+	            ,c.end_date
+	            ,cm.cd_name
+	            ,case  when g.career= '1' then '신입(1년 이하)'
+	                   when g.career= '2' then '주니어(1년 ~ 3년)'
+	                   when g.career= '3' then '미들(4년 ~ 8년)'
+	                   when g.career= '4' then '시니어(9년 이상)'
+	                   when g.career= '5' then 'Lead레벨(15년 이상)'
+	                else ' '
+	            end as career
+      from consult c, guide g, cmmncd cm
+      where c.guide_id=g.guide_id  
+      and g.duty= cm.cd_no
+      and cm.cd_ini='D'
+      order by consult_no desc
+	</select> 
+
+	
+	<!-- 페이징 처리 카테고리 -->
+	<select id="findAll" resultType="co.itrip.prj.consult.service.ConsultVO" parameterType="co.itrip.prj.consult.service.ConsultVO">
+	   	 select c.consult_no
+		            ,c.title
+		            ,c.content
+		            ,c.dt
+		            ,c.member_id
+		            ,c.state_cd
+		            ,c.guide_id
+		            ,c.job_cd
+		            ,c.price
+		            ,c.ennc
+		            ,c.begin_date
+		            ,c.end_date
+		            ,cm.cd_name
+		            ,case  when g.career= '1' then '신입(1년 이하)'
+		                   when g.career= '2' then '주니어(1년 ~ 3년)'
+		                   when g.career= '3' then '미들(4년 ~ 8년)'
+		                   when g.career= '4' then '시니어(9년 이상)'
+		                   when g.career= '5' then 'Lead레벨(15년 이상)'
+		                else ' '
+		            end as career
+	      from consult c, guide g, cmmncd cm
+	      <where>
+				c.guide_id=g.guide_id  
+		        and g.duty= cm.cd_no
+		        and cm.cd_ini='D'
+		       <if test="jobCd != null">
+				and job_cd = #{jobCd}
+				</if>			
+		  </where>
+        order by consult_no desc
+	
+	</select>
+
+</mapper>

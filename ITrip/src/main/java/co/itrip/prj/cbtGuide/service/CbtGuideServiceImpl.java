@@ -1,8 +1,7 @@
 package co.itrip.prj.cbtGuide.service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +13,7 @@ public class CbtGuideServiceImpl implements CbtGuideService {
 	
 	@Autowired
 	private CbtGuideMapper map;
+	
 	
 	//전체조회
 	@Override
@@ -30,20 +30,20 @@ public class CbtGuideServiceImpl implements CbtGuideService {
 	//문제 등록
 	@Override
 	public int cbtGuideInsert(CbtGuideVO vo) {
-		// cbt등록
+		//문제 등록
+		int r = map.cbtGuideInsert(vo); //keyword 등록하기위해선 cbtGuideInsert 처리가 먼저 되어야함
+		
+		CbtKeywordVO kvo = new CbtKeywordVO(); //keyword 호출
+		kvo.setCbtNo(vo.getCbtNo());
 		
 		//키워드 등록
-		String[] kLists = new String[vo.getKeyword().size()];
-		String kList = "";
-		
-		System.out.println(kLists);
-		
-		/*
-		 * for(int i=0; i < vo.getKeyword().size(); i++) { kLists[i] =
-		 * vo.KeywordInsert(vo.getKeyword().get(i)); }
-		 */
-		
-		return map.cbtGuideInsert(vo);
+		for(int i=0; i < vo.getKeyword().size(); i++) { 
+			if(vo.getKeyword().get(i) != null) {
+				kvo.setCKwrd(vo.getKeyword().get(i));
+				map.KeywordInsert(kvo); 
+			}
+		}
+		return r; 
 	}
 	
 	//문제수정
@@ -70,48 +70,34 @@ public class CbtGuideServiceImpl implements CbtGuideService {
 		return map.ajaxExplnaList(vo);
 	}
 	
-	//키워드 등록
-	@Override
-	public int KeywordInsert(CbtGuideVO vo) {
-		return 0;
-	}
-	
 	//키워드 조회
 	@Override
-	public int KeywordList(CbtGuideVO vo) {
+	public int KeywordList(CbtKeywordVO vo) {
 		return 0;
 	}
 	
 	//내 cbt에 등록
 	@Override
 	public int myCbtHderInsert(MyCbtHderVO vo) {
-		return map.myCbtHderInsert(vo);
+		int r = map.myCbtHderInsert(vo); // 먼저 내CBT에 등록한다.
+		map.myCbtHderChkUpdate(vo); // 등록된 내 CBT와 기존의 CBT를 비교하여 정답유무를 체크한다
+		map.myCbtHderList(vo);  // 리스트 출력
+		map.chkCuntUpdate(vo); // 정답과 오답 카운트 업데이트한다
+		return r;
 	}
+
+	@Override
+	public MyCbtHderVO myCbtHderList(MyCbtHderVO vo) {
+		return map.myCbtHderList(vo);
+	}
+
+	@Override
+	public List<Map<Integer, Object>> cbtGuideListFive(CbtGuideVO vo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
 	
-	//등록된 내 cbt정보와 cbt_guide의 정보 비교해서 조회
-	@Override
-	public List<HashMap<String, String>> myCbtHerMapList() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	//등록된 내 cbt정보와 cbt_guide의 정보 비교해서 조회
-	@Override
-	public List<HashMap<String, String>> cbtGuideMapList() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	//등록된 내 cbt정보와 cbt_guide의 정보 비교해서 조회한 결과 등록 
-	@Override
-	public int myCbtchekInsert() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-	
-	//채점결과 조회
-	@Override
-	public List<HashMap<String, String>> myCbtchekList() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 }

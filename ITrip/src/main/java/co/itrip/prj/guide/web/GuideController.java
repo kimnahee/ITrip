@@ -63,24 +63,6 @@ public class GuideController {
 		return "member/mypage";
 	}
 	
-	// Class insert & 파일처리
-	@PostMapping("/classInsert.do")
-	public String classInsert(ClassVO vo, ClassDtVO dtvo, MultipartFile file) throws IllegalStateException, IOException {
-		
-		if(!file.getOriginalFilename().isEmpty()) {
-			String projectpath = System.getProperty("user.dir")+"/src/main/resources/static/files";  
-			UUID uuid = UUID.randomUUID(); 
-			String filename = uuid+"_"+file.getOriginalFilename(); 
-			File saveFile = new File(projectpath,filename);
-			file.transferTo(saveFile);
-			vo.setAttach(filename);
-			vo.setAttachDir("/files/"+filename);
-		}
-		
-		
-		
-		return "guide/gclass";
-	}
 	
 	// 가이드 클래스 신청 폼
 	@GetMapping("/startClass.do")

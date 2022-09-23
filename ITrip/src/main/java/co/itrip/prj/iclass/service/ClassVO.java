@@ -1,6 +1,7 @@
 package co.itrip.prj.iclass.service;
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.Data;
 
@@ -22,5 +23,12 @@ public class ClassVO {
 	private String jobCd; // 업무카테고리 코드
 	private int psncpa; // 정원
 	private int classCnt; // 수업횟수(주 단위)
+	
+	private List<ClassDtVO> classDt; // ClassDtVO 
+	
+//	private String term;
+//	private String beginTime;
+//	private String endTime;
+	
 	
 }

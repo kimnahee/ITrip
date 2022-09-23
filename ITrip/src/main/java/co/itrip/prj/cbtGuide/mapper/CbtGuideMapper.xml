@@ -43,11 +43,10 @@
 	</select>
 	
 	<!-- public int cbtGuideInsert(CbtGuideVO VO); //등록(C) -->
-	<insert id="cbtGuideInsert" parameterType="java.util.List" >
+	<insert id="cbtGuideInsert" >
 	
 	   <selectKey keyProperty="cbtNo" order="BEFORE" resultType="int">
-			SELECT CASE WHEN MAX(CBT_NO) IS NULL THEN 1 
-				   ELSE  MAX(CBT_NO)+1 END ID 
+			SELECT NVL(MAX(CBT_NO),0) + 1
 			FROM CBT_GUIDE
 		</selectKey>
 		insert into cbt_guide values(#{cbtNo},#{ques},#{cnsr, jdbcType=VARCHAR},#{ex1, jdbcType=VARCHAR},
@@ -55,15 +54,13 @@
                     #{attach, jdbcType=VARCHAR},#{attachDir, jdbcType=VARCHAR},0,0,#{explna},#{gtpCd},#{langCd},#{memberId , jdbcType=VARCHAR})
 	</insert>
 	
-	<insert id="KeywordInsert" parameterType="java.util.List">
+	<insert id="KeywordInsert" parameterType="co.itrip.prj.cbtGuide.service.CbtKeywordVO">
 	    <selectKey keyProperty="kyNo" order="BEFORE" resultType="int">
 			SELECT CASE WHEN MAX(KY_NO) IS NULL THEN 1 
 				   ELSE  MAX(KY_NO)+1 END ID 
 			FROM CBT_KEYWORD
 		</selectKey>
-	    insert into cbt_keyword(<foreach collection="list" item="item" separator=",">
-        #{item.kyNo} , #{item.cKwrd} , ${cbtNo})
-    </foreach>)
+	    insert into cbt_keyword values( #{kyNo} , #{cKwrd} , ${cbtNo})    
 	</insert>
 	
 	<!-- public int cbtGuideUpdate(CbtGuideVO VO); //수정(U) -->
@@ -86,22 +83,30 @@
 		VALUES(#{mcNo},#{memberId},SYSDATE,#{gtpCd},#{langCd},
 		       #{cbtNo1}, #{cbtNo2}, #{cbtNo3}, #{cbtNo4}, #{cbtNo5},    
 			   #{cnsr1}, #{cnsr2}, #{cnsr3}, #{cnsr4}, #{cnsr5})
-		
 	</insert>
-	<!-- public int KeywordInsert(); -->
+	
+	<!-- public int myCbtHderChkUpdate(MyCbtHderVO vo); // myCbtHder의 내용을 비교하여 정답 체크 -->
+	<update id="myCbtHderChkUpdate">
+	    update mycbt_hder set CHK1 =  case when( SELECT cnsr FROM cbt_guide WHERE cbt_no = mycbt_hder.cbt_no1 )=(select cnsr1 from mycbt_hder where mc_no= ${mcNo}) then 1 else 0 end,
+		                      CHK2 =  case when( SELECT cnsr FROM cbt_guide WHERE cbt_no = mycbt_hder.cbt_no2 )=(select cnsr1 from mycbt_hder where mc_no= ${mcNo}) then 1 else 0 end,
+		                      CHK3 =  case when( SELECT cnsr FROM cbt_guide WHERE cbt_no = mycbt_hder.cbt_no3 )=(select cnsr1 from mycbt_hder where mc_no= ${mcNo}) then 1 else 0 end,
+		                      CHK4 =  case when( SELECT cnsr FROM cbt_guide WHERE cbt_no = mycbt_hder.cbt_no4 )=(select cnsr1 from mycbt_hder where mc_no= ${mcNo}) then 1 else 0 end,
+		                      CHK5 =  case when( SELECT cnsr FROM cbt_guide WHERE cbt_no = mycbt_hder.cbt_no5 )=(select cnsr1 from mycbt_hder where mc_no= ${mcNo}) then 1 else 0 end  where mc_no =${mcNo}
+	</update>
 	<!-- public int KeywordList(); -->
-	<!--  public List<HashMap<String,String>> myCbtHerMapList (); //myCbtHerList에 담긴 cnt_no와 cnsr 출력-->
-	<select id="myCbtHerMapList">
-	    select cbt_no1, cnsr1 from mycbt_hder where mc_no=15;
-	</select>
-	<!--public List<HashMap<String,String>> cbtGuideMapList (); //cbtGuideList에 담긴 cnt_no와 cnsr 출력-->
-	<select id="cbtGuideMapList">
-	    SELECT cbt_no, cnsr FROM cbt_guide WHERE cbt_no IN (SELECT cbt_no1 FROM mycbt_hder  WHERE mc_no = 15)
+	<!--  MyCbtHderVO myCbtHderList(MyCbtHderVO vo); //myCbtHder 단건 조회-->
+	<select id="myCbtHderList" parameterType="co.itrip.prj.cbtGuide.service.MyCbtHderVO" resultType="co.itrip.prj.cbtGuide.service.MyCbtHderVO">
+	    SELECT * FROM mycbt_hder WHERE mc_no= ${mcNo}
 	</select>
 	
-	<!--public int myCbtchekInsert (); // myCbt에 cnt_no와 정답유무 담기-->
-	<!--public List<HashMap<String, String>> myCbtchekList (); // myCbt에 cnt_no와 정답유무 출력-->
+	<!--  public int chkCuntUpdate(MyCbtHderVO vo); //맞은 카운트 조회-->
+	<update id="chkCuntUpdate">
+	    update mycbt_hder set chk0_cunt = (select 5-(chk1+chk2+chk3+chk4+chk5) from mycbt_hder where mc_no= ${mcNo}), chk1_cunt = (select chk1+chk2+chk3+chk4+chk5 from mycbt_hder where mc_no= ${mcNo}) where mc_no= ${mcNo}
+	</update>
 	
-	
+	<!-- List<Map<Integer,Object>> cbtGuideListFive(CbtGuideVO vo);//내가 푼거 5개만 한번에 찾기(채점된 문제 출력용)  -->
+	<select id="cbtGuideListFive">
+	    select * from cbt_guide where cbt_no in (${cbtNo1},${cbtNo2},${cbtNo3},${cbtNo4},${cbtNo5});
+	</select>
 	
 </mapper>
