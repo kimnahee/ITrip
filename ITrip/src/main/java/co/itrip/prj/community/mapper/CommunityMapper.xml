@@ -164,9 +164,8 @@
 				attach_dir,
 				ctgry
 		from comboard
-			<if test='ctgry.equals("스터디") or ctgry.equals("자유게시판")'>
-				where ctgry = #{ctgry}
-			</if>
+			<if test="ctgry.equals('스터디') or ctgry.equals('자유게시판')"> where ctgry = #{ctgry} </if>
+			<if test="memberId != null">and member_id = #{memberId}</if>
 		order by com_no desc
 	</select>
 </mapper>

@@ -60,7 +60,7 @@
 				<div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
 					<div
 						class="bg-gradient-info shadow-info border-radius-lg pt-4 pb-3">
-						<h6 class="text-white text-capitalize ps-3">스터디게시판</h6>
+						<h4 class="text-white text-capitalize ps-5">자유게시판</h4>
 					</div>
 				</div>
 				<div class="card-body px-0 pb-2">
@@ -70,7 +70,7 @@
 								<tr>
 									<th class="text-uppercase text-secondary text-md font-weight-bolder opacity-7">글번호</th>
 									<th class="text-uppercase text-secondary text-md font-weight-bolder opacity-7 ps-2">글제목</th>
-									<th class="text-center text-uppercase text-secondary text-md font-weight-bolder opacity-7">작성자</th>
+									<th style="display: none;" class="text-center text-uppercase text-secondary text-md font-weight-bolder opacity-7">작성자</th>
 									<th class="text-center text-uppercase text-secondary text-md font-weight-bolder opacity-7">작성일자</th>
 									<th class="text-center text-uppercase text-secondary text-md font-weight-bolder opacity-7">조회수</th>
 								</tr>
@@ -79,7 +79,7 @@
 								<tr th:each="free : ${pageInfo.list}">
 									<td><p class="text-md text-secondary mb-0" th:text="${free.comNo}">글번호</p></td>
 									<td><p class="text-md text-secondary mb-0" th:text="${free.title}">글제목</p></td>
-									<td><p class="text-md text-secondary mb-0" th:text="${free.memberId}">작성자</p></td>
+									<td style="display: none;"><p class="text-md text-secondary mb-0" th:text="${free.memberId}">작성자</p></td>
 									<td><p class="text-md text-secondary mb-0" th:text="${free.dt}">작성일자</p></td>
 									<td><p class="text-md text-secondary mb-0" th:text="${free.hit}">조회수</p></td>
 								</tr>
@@ -142,10 +142,8 @@
 	<!--   Core JS Files   -->
 	<script src="bootstrap/material/assets/js/core/popper.min.js"></script>
 	<script src="bootstrap/material/assets/js/core/bootstrap.min.js"></script>
-	<script
-		src="bootstrap/material/assets/js/plugins/perfect-scrollbar.min.js"></script>
-	<script
-		src="bootstrap/material/assets/js/plugins/smooth-scrollbar.min.js"></script>
+	<script src="bootstrap/material/assets/js/plugins/perfect-scrollbar.min.js"></script>
+	<script src="bootstrap/material/assets/js/plugins/smooth-scrollbar.min.js"></script>
 	<script>
 		var win = navigator.platform.indexOf('Win') > -1;
 		if (win && document.querySelector('#sidenav-scrollbar')) {
