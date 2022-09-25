@@ -23,4 +23,9 @@ public class FeedbackServiceImpl implements FeedbackService {
 		return map.ajaxFeedbackInsert(vo);
 	}
 
+	@Override
+	public int ajaxFeedbackDelete(FeedbackVO vo) {
+		return map.ajaxFeedbackDelete(vo);
+	}
+
 }

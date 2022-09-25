@@ -6,4 +6,5 @@ import java.util.List;
 public interface FeedbackService {
 	List<FeedbackVO> ajaxFeedbackList(FeedbackVO vo);
 	int ajaxFeedbackInsert(FeedbackVO vo);
+	int ajaxFeedbackDelete(FeedbackVO vo);
 }

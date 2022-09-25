@@ -4,12 +4,23 @@
 
 <select id="ajaxFeedbackList" resultType="co.itrip.prj.feedback.service.FeedbackVO"
  						parameterType="co.itrip.prj.feedback.service.FeedbackVO">
- 	SELECT f.feedback_no,f.cbt_no,f.content,f.member_id,m.nick 
+ 	
+ SELECT f.feedback_no,f.cbt_no,f.content,f.member_id,m.nick 
 	    from feedback f,member m 
 	    where m.member_id = f.member_id and f.cbt_no=#{cbtNo} order by f. feedback_no desc
+ 							
+ 				
  						
 </select>
 
+<select id="">
+SELECT * FROM ( 
+    SELECT ROW_NUMBER() OVER (ORDER BY A.feedback_no DESC) NUM  , A.* ,m.nick
+    FROM feedback A ,member m where m.member_id = A.member_id ORDER BY A.feedback_no DESC )
+WHERE NUM BETWEEN 1 AND 5
+and cbt_no = #{cbtNo}					
+
+</select>
 <insert id="ajaxFeedbackInsert">
 	<selectKey keyProperty="feedbackNo" order="BEFORE" resultType="int">
 		SELECT CASE WHEN MAX(feedback_no) IS NULL THEN 1 
@@ -19,4 +30,8 @@
 	INSERT INTO FEEDBACK (FEEDBACK_NO,CONTENT,CBT_NO,MEMBER_ID) 
 		VALUES(#{feedbackNo},#{content},#{cbtNo},#{memberId})
 </insert>
+
+<delete id="ajaxFeedbackDelete">
+	delete from feedback where feedback_no=#{feedbackNo}
+</delete>
 </mapper>
