@@ -15,5 +15,23 @@
 	<delete id="followDelete">
 		DELETE FOLLOW WHERE GUIDE_ID = #{guideId} and member_id = #{memberId}
 	</delete>
+	
+	
+	
+	<select id="followerSelectList" parameterType="co.itrip.prj.follow.service.FollowVO"  resultType="co.itrip.prj.follow.service.FollowVO">
+		SELECT M.MEMBER_ID , M.NICK
+		FROM FOLLOW F, MEMBER M
+		WHERE F.MEMBER_ID = M.MEMBER_ID
+		AND F.GUIDE_ID = #{guideId}
+	</select>
+	
+	<select id="followerCount" resultType="int">
+		SELECT COUNT(*) FROM FOLLOW
+	</select>
+	
+	<delete id="followerDelete">
+		DELETE FOLLOW WHERE MEMBER_ID = #{memberId} and guide_id = #{guideId}
+	</delete>
+	
 
 </mapper>
