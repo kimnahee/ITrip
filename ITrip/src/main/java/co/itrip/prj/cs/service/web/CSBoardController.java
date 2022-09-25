@@ -77,4 +77,46 @@ public class CSBoardController {
 		service.csDelete(vo);
 		return "redirect:noticeList.do";
 	}
+	
+	//Q&A 리스트
+	@GetMapping("/qnaList.do")
+	public String findQnA(CSBoardVO vo, Model model, HttpServletRequest request,
+			@RequestParam(required = false, defaultValue = "1") int pageNum,
+			@RequestParam(required = false, defaultValue = "10") int pageSize) {
+		PageHelper.startPage(pageNum, pageSize);
+		vo.setCtgry("QNA");
+		model.addAttribute("pageInfo", PageInfo.of(service.findAll(vo)));
+		return "csboard/qna/qnaList";
+	}
+	
+	//QnA 글 작성폼
+	@GetMapping("/qnaInsertForm.do")
+	public String qnaInsertForm() {
+		return "csboard/qna/qnaInsertForm";
+	}
+	
+	//QnA 글 작성
+	@PostMapping("/qnaInsert.do")
+	public String qnaInsert(CSBoardVO vo) {
+		service.csInsert(vo);
+		return "redirect:qnaList.do";
+	}
+	
+	//답글 작성 폼
+	@GetMapping("/repInsertForm.do")
+	public String repInsertForm(CSBoardVO vo, Model model, HttpServletRequest request) {
+		String title = request.getParameter("title");
+		int csNo = Integer.parseInt(request.getParameter("csNo"));
+		vo.setTitle(title);
+		vo.setCsNo(csNo);
+		model.addAttribute("rep", service.selectCs(vo));
+		return "csboard/qna/repInsertForm";
+	}
+	
+	//답글 작성
+	@PostMapping("/repInsert.do")
+	public String repInsert(CSBoardVO vo) {
+		service.repInsert(vo);
+		return "redirect:qnaList.do";
+	}
 }

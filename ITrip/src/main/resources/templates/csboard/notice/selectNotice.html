@@ -89,8 +89,20 @@
 											data-toggle="modal" data-target="#border-less">삭제하기</button>
 									</div>
 									&nbsp;
-									<button type="button" id="listBtn"
+									<button type="button" id="noticelistBtn" th:if="${csSelect.ctgry} == '공지사항'"
 										class="btn btn-primary btn-md mb-0">목록으로</button>
+									<button type="button" id="qnalistBtn" th:if="${csSelect.ctgry} == 'QNA'"
+										class="btn btn-primary btn-md mb-0">목록으로</button>
+								</div>
+
+								<!-- 답글쓰기 : 카테고리가 QNA고, 관리자만 보이게 -->
+								<div style = "display: inline-block;" class="col-sm-12 d-flex justify-content-end" id="btn"
+									th:if="${csSelect.ctgry} == 'QNA'">
+									<div
+										th:if="${#authentication.principal.member.auth} == 'ROLE_ADMIN'">
+										<button type="button" id="replyBtn"
+											class="btn btn-primary btn-md mb-0">답글쓰기</button>
+									</div>
 								</div>
 
 								<!-- 삭제버튼 누르면 모달창 뜸 -->
@@ -123,23 +135,33 @@
 				</div>
 			</div>
 		</div>
-	<script>
-	let csNo = $("#csNo").val();
-	
-	$("#deleteBtn").on("click", function(e) {
-		console.log(csNo);
-		location.href = "/noticeDelete.do?csNo=" + csNo;
-	})
-	
-	$("#updateBtn").on("click", function(e) {
-		console.log(csNo);
-		location.href = "/noticeUpdateForm.do?csNo=" + csNo;
-	})
-	
-	$("#listBtn").on("click", function(e){
-		location.href = "/noticeList.do";
-	})
-	</script>
+		<script>
+			let csNo = $("#csNo").val();
+			let title = $("#title").val();
+
+			$("#deleteBtn").on("click", function(e) {
+				console.log(csNo);
+				location.href = "/noticeDelete.do?csNo=" + csNo;
+			})
+
+			$("#updateBtn").on("click", function(e) {
+				console.log(csNo);
+				location.href = "/noticeUpdateForm.do?csNo=" + csNo;
+			})
+
+			$("#noticelistBtn").on("click", function(e) {
+				location.href = "/noticeList.do";
+			})
+			
+			$("#qnalistBtn").on("click", function(e) {
+				location.href = "/qnaList.do";
+			})
+			
+			$("#replyBtn").on("click", function(e) {
+				console.log(title);
+				location.href = "/repInsertForm.do?title=" + title +"&&csNo=" + csNo;
+			})
+		</script>
 	</div>
 </body>
 </html>
