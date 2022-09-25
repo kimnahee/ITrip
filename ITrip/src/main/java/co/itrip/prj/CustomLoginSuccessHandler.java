@@ -12,8 +12,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.ui.Model;
 
+/**
+* 시큐리티 성공했을때 처리하는 핸들러
+* @author 김하은
+* @date 2022.09.21
+* @version 1.0
+*/
 public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
-	//성공했을때 처리하는 핸들러
 
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,

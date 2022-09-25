@@ -12,6 +12,12 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 
 import co.itrip.prj.member.service.MemberDetailService;
 
+/**
+* 시큐리티 환경설정 처리
+* @author 김하은
+* @date 2022.09.21
+* @version 1.0
+*/
 @Configuration
 @EnableWebSecurity //CsrfRequestDataValueProcessor가 적용되어 form 에 CSRF 토큰이 자동적으로 들어감
 public class SecurityConfig {

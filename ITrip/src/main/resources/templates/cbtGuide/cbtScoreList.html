@@ -54,26 +54,24 @@
 			<div class="col-md-10 col-12 cbtNoSelc">
 				<div class="card">
 					<div class="card-content">
-						<!-- gtpCd에 따른 처리 -->
 						<div class="card-body" >
 								<form class="form form-vertical">
-									<div class="form-body">
+									<div class="form-body" th:each="o: ${ListO}">
 										<div class="row">
 											<div class="col-12">
-												<div class="form-group">
-													<h3>문제 </h3>
-													<a>&nbsp;&nbsp;[ 출제자 : <span ></span> ]</a><br>
-													<label>문제내용</label>
-													<label>  입력한 답 :</label>
-													<label>정답</label>
-													<label>풀이<label>
+												<div class="form-group" >
+													<h3>문제<span th:text="${o.cbtNo}"></span> </h3>
+													<a>&nbsp;&nbsp;[ 출제자 : <span th:text="${o.memberId}" ></span> ]</a><br>
+													<label th:text="${o.ques}">문제내용</label>
+													<label>[ 입력한 답 ] <span ></span></label>
+													<label>[ 정    답 ] <span th:text="${o.cnsr}"></span></label>
+													<label>[ 풀    이 ] <span th:text="${o.explna}"></span><label>
 												</div>
 											</div>
 										</div>
 									</div>
 								</form>
 							</div>
-							<!-- gtpCd=='1'끝 -->
 						</div><!--<div class="card-content"끝-->
 					</div>
 				</div>

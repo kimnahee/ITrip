@@ -44,23 +44,23 @@
 	
 	<!-- public int cbtGuideInsert(CbtGuideVO VO); //등록(C) -->
 	<insert id="cbtGuideInsert" >
-	
 	   <selectKey keyProperty="cbtNo" order="BEFORE" resultType="int">
 			SELECT NVL(MAX(CBT_NO),0) + 1
 			FROM CBT_GUIDE
 		</selectKey>
-		insert into cbt_guide values(#{cbtNo},#{ques},#{cnsr, jdbcType=VARCHAR},#{ex1, jdbcType=VARCHAR},
+		INSERT INTO CBT_GUIDE VALUES(#{cbtNo},#{ques},#{cnsr, jdbcType=VARCHAR},#{ex1, jdbcType=VARCHAR},
 		            #{ex2, jdbcType=VARCHAR},#{ex3, jdbcType=VARCHAR},#{ex4, jdbcType=VARCHAR},
                     #{attach, jdbcType=VARCHAR},#{attachDir, jdbcType=VARCHAR},0,0,#{explna},#{gtpCd},#{langCd},#{memberId , jdbcType=VARCHAR})
 	</insert>
 	
-	<insert id="KeywordInsert" parameterType="co.itrip.prj.cbtGuide.service.CbtKeywordVO">
+	<!-- public int keywordInsert(CbtKeywordVO kvo); //키워드 등록 -->
+	<insert id="keywordInsert" parameterType="co.itrip.prj.cbtGuide.service.CbtKeywordVO">
 	    <selectKey keyProperty="kyNo" order="BEFORE" resultType="int">
 			SELECT CASE WHEN MAX(KY_NO) IS NULL THEN 1 
 				   ELSE  MAX(KY_NO)+1 END ID 
 			FROM CBT_KEYWORD
 		</selectKey>
-	    insert into cbt_keyword values( #{kyNo} , #{cKwrd} , ${cbtNo})    
+	    INSERT INTO CBT_KEYWORD VALUES (#{kyNo} , #{cKwrd} , ${cbtNo})    
 	</insert>
 	
 	<!-- public int cbtGuideUpdate(CbtGuideVO VO); //수정(U) -->
@@ -70,6 +70,7 @@
 	<!-- public int cbutGuideDelet(CbtGuideVO VO);//삭제(D) -->
 	<delete id="cbutGuideDelet">
 	</delete>
+	
 	<!-- public MyCbtHderVO myCbtHderInsert(MyCbtHderVO vo); // myCBtHder에 담기 -->
 	<insert id="myCbtHderInsert" parameterType="co.itrip.prj.cbtGuide.service.MyCbtHderVO">
 	    <selectKey keyProperty="mcNo" order="BEFORE" resultType="int">
@@ -93,20 +94,39 @@
 		                      CHK4 =  case when( SELECT cnsr FROM cbt_guide WHERE cbt_no = mycbt_hder.cbt_no4 )=(select cnsr1 from mycbt_hder where mc_no= ${mcNo}) then 1 else 0 end,
 		                      CHK5 =  case when( SELECT cnsr FROM cbt_guide WHERE cbt_no = mycbt_hder.cbt_no5 )=(select cnsr1 from mycbt_hder where mc_no= ${mcNo}) then 1 else 0 end  where mc_no =${mcNo}
 	</update>
-	<!-- public int KeywordList(); -->
+	
+	<!-- public CbtKeywordVO KeywordList(CbtKeywordVO vo); -->
+	
 	<!--  MyCbtHderVO myCbtHderList(MyCbtHderVO vo); //myCbtHder 단건 조회-->
 	<select id="myCbtHderList" parameterType="co.itrip.prj.cbtGuide.service.MyCbtHderVO" resultType="co.itrip.prj.cbtGuide.service.MyCbtHderVO">
-	    SELECT * FROM mycbt_hder WHERE mc_no= ${mcNo}
+	    SELECT * FROM mycbt_hder WHERE MC_NO = ${mcNo}
 	</select>
 	
 	<!--  public int chkCuntUpdate(MyCbtHderVO vo); //맞은 카운트 조회-->
 	<update id="chkCuntUpdate">
-	    update mycbt_hder set chk0_cunt = (select 5-(chk1+chk2+chk3+chk4+chk5) from mycbt_hder where mc_no= ${mcNo}), chk1_cunt = (select chk1+chk2+chk3+chk4+chk5 from mycbt_hder where mc_no= ${mcNo}) where mc_no= ${mcNo}
+	    UPDATE MYCBT_HDER SET CHK0_CUNT = (select 5-(chk1+chk2+chk3+chk4+chk5) from mycbt_hder where mc_no= ${mcNo}), chk1_cunt = (select chk1+chk2+chk3+chk4+chk5 from mycbt_hder where mc_no= ${mcNo}) WHERE MC_NO = ${mcNo}
 	</update>
 	
 	<!-- List<Map<Integer,Object>> cbtGuideListFive(CbtGuideVO vo);//내가 푼거 5개만 한번에 찾기(채점된 문제 출력용)  -->
-	<select id="cbtGuideListFive">
-	    select * from cbt_guide where cbt_no in (${cbtNo1},${cbtNo2},${cbtNo3},${cbtNo4},${cbtNo5});
+	<select id="cbtGuideListFive" resultType="map">
+	    SELECT * FROM CBT_GUIDE WHERE CBT_NO IN (${cbtNo1},${cbtNo2},${cbtNo3},${cbtNo4},${cbtNo5})
+	</select>
+	
+	<!--List<CbtGuideVO> cbtGuideListO(CbtGuideVO vo); /* 문제 조회 : 사용자가 푼 문제 중 정답처리 된 문제조회 */ -->
+	<select id="cbtGuideListO"  resultType="map">
+	    SELECT * FROM CBT_GUIDE WHERE CBT_NO IN ((select cbt_no1 from mycbt_hder where mc_no = ${mcNo} and chk1 = 1),
+												 (select cbt_no2 from mycbt_hder where mc_no = ${mcNo} and chk2 = 1),
+												 (select cbt_no3 from mycbt_hder where mc_no = ${mcNo} and chk3 = 1),
+												 (select cbt_no4 from mycbt_hder where mc_no = ${mcNo} and chk4 = 1),
+												 (select cbt_no5 from mycbt_hder where mc_no = ${mcNo} and chk5 = 1))
+	</select>
+	<!--List<CbtGuideVO> cbtGuideListX(CbtGuideVO vo); /* 문제 조회 : 사용자가 푼 문제 중 정답처리 된 오답조회 */ -->
+	<select id="cbtGuideListX"  resultType="map">
+	    SELECT * FROM CBT_GUIDE WHERE CBT_NO IN ((select cbt_no1 from mycbt_hder where mc_no = ${mcNo} and chk1 = 0),
+												 (select cbt_no2 from mycbt_hder where mc_no = ${mcNo} and chk2 = 0),
+												 (select cbt_no3 from mycbt_hder where mc_no = ${mcNo} and chk3 = 0),
+												 (select cbt_no4 from mycbt_hder where mc_no = ${mcNo} and chk4 = 0),
+												 (select cbt_no5 from mycbt_hder where mc_no = ${mcNo} and chk5 = 0))
 	</select>
 	
 </mapper>

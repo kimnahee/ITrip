@@ -29,7 +29,7 @@ p {
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-6 mb-1">
-                                <input type="hidden" id="memberId" name="memberId" value="han">
+                                <input type="hidden" id="memberId" name="memberId" th:value="${#authentication.principal.member.nick}">
                                     <div class="input-group mb-2" >
                                         <label class="input-group-text" for="inputGroupSelect01">유형</label>
                                         <select class="form-select" id="gtpCd" name="gtpCd" onchange="mySel(this.value)">
