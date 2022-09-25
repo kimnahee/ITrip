@@ -4,6 +4,12 @@ import java.util.List;
 
 import lombok.Data;
 
+/**
+* 가이드가 등록한 문제와 관련된 변수가 담긴 클래스
+* @author 김하은
+* @date 2022.09.16
+* @version 1.0
+*/
 @Data
 public class CbtGuideVO {
 	private int cbtNo; //cbt번호

@@ -4,6 +4,12 @@ import java.util.Date;
 
 import lombok.Data;
 
+/**
+* 사용자가 문제를 풀면 생성되는 변수를 담은 클래스
+* @author 김하은
+* @date 2022.09.16 
+* @version 1.1, 2022.09.23 VO 수정 (역정규화)
+*/
 @Data
 public class MyCbtHderVO {
 	private int mcNo; // 응시번호
