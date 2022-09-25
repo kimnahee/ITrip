@@ -37,4 +37,28 @@ public class FollowServiceImpl implements FollowService {
 		return map.followCount();
 	}
 
+	@Override
+	public List<FollowVO> followerSelectList(FollowVO vo) {
+		// TODO Auto-generated method stub
+		return map.followerSelectList(vo);
+	}
+
+	@Override
+	public int followerInsert(FollowVO vo) {
+		// TODO Auto-generated method stub
+		return map.followerInsert(vo);
+	}
+
+	@Override
+	public int followerDelete(FollowVO vo) {
+		// TODO Auto-generated method stub
+		return map.followDelete(vo);
+	}
+
+	@Override
+	public int followerCount() {
+		// TODO Auto-generated method stub
+		return map.followCount();
+	}
+
 }

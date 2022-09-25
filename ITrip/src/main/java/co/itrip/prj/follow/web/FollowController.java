@@ -39,6 +39,26 @@ public class FollowController {
 			vo.setGuideId(request.getParameter("deleteF"));
 			return fService.followDelete(vo);
 		}
+		
+		// 가이드를 팔로우한 유저리스트
+		@GetMapping("/followerList.do")
+		@ResponseBody
+		public List<FollowVO> followerList(FollowVO vo, HttpServletRequest request, Model model) {
+			System.out.println(request.getParameter("guideId"));
+			vo.setMemberId(request.getParameter("guideId"));
+			return fService.followerSelectList(vo);
+		}
+		
+		// 가이드가 유저의 팔로우 취소하기 (언팔로우)
+		@GetMapping("/followerDelete.do")
+		@ResponseBody
+		public int followerDelete(FollowVO vo, HttpServletRequest request) {
+			System.out.println(request.getParameter("guideId"));
+			System.out.println(request.getParameter("deleteF"));
+			vo.setMemberId(request.getParameter("guideId"));
+			vo.setGuideId(request.getParameter("deleteF"));
+			return fService.followerDelete(vo);
+		}
 	
 
 	

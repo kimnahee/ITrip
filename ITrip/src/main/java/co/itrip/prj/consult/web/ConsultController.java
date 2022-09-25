@@ -46,7 +46,7 @@ public class ConsultController {
 			@RequestParam(required = false, defaultValue = "8") int pageSize) {
 		PageHelper.startPage(pageNum, pageSize);
 		model.addAttribute("pageInfo", PageInfo.of(conService.findAll(vo)));
-		return "consult/consultList2";
+		return "consult/consultList";
 	}
 	/*
 	 * @GetMapping("/jobCd.do") public String jobCd(Model model) {
