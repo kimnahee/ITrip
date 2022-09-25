@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+<meta charset="utf-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="js/jquery-3.6.0.min.js"></script>
+<link rel="apple-touch-icon" sizes="76x76"
+	href="bootstrap/material/assets/img/apple-icon.png">
+<link rel="icon" type="image/png"
+	href="bootstrap/material/assets/img/favicon.png">
+<title>Q&A 게시판</title>
+<!--     Fonts and icons     -->
+<link rel="stylesheet" type="text/css"
+	href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
+<!-- Nucleo Icons -->
+<link href="bootstrap/material/assets/css/nucleo-icons.css"
+	rel="stylesheet" />
+<link href="bootstrap/material/assets/css/nucleo-svg.css"
+	rel="stylesheet" />
+<!-- Font Awesome Icons -->
+<script src="https://kit.fontawesome.com/42d5adcbca.js"
+	crossorigin="anonymous"></script>
+<!-- Material Icons -->
+<link
+	href="https://fonts.googleapis.com/icon?family=Material+Icons+Round"
+	rel="stylesheet">
+<!-- CSS Files -->
+<link id="pagestyle"
+	href="bootstrap/material/assets/css/material-dashboard.css?v=3.0.0"
+	rel="stylesheet" />
+<style>
+.table {
+	margin-top: 10px;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+	width: 90%;
+}
+
+.row {
+	margin-top: 50px;
+	width: 90%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#insertBtn {
+	float: right;
+	margin-right: 50px;
+}
+</style>
+</head>
+<body>
+<!-- 맨 상단에 3개 고정할 수 있는지???? -->
+	<div layout:fragment="content">
+		<div class="col-12">
+			<div class="card my-4">
+				<div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+					<div
+						class="bg-gradient-info shadow-info border-radius-lg pt-4 pb-3">
+						<h4 class="text-white text-capitalize ps-5">Q&A</h4>
+					</div>
+				</div>
+				<div class="card-body px-0 pb-2">
+					<div class="table-responsive p-0">
+						<table class="table align-items-center mb-0">
+							<thead>
+								<tr>
+									<th class="text-uppercase text-secondary text-md font-weight-bolder opacity-7">글번호</th>
+									<th class="text-uppercase text-secondary text-md font-weight-bolder opacity-7 ps-2">글제목</th>
+									<th class="text-center text-uppercase text-secondary text-md font-weight-bolder opacity-7">작성자</th>
+									<th class="text-center text-uppercase text-secondary text-md font-weight-bolder opacity-7">작성일자</th>
+									<th class="text-center text-uppercase text-secondary text-md font-weight-bolder opacity-7">조회수</th>
+								</tr>
+							</thead>
+							<tbody id="csList">
+								<tr th:each="cs : ${pageInfo.list}">
+									<td><p class="text-md text-secondary mb-0"
+											th:text="${cs.csNo}">글번호</p></td>
+									<td><p class="text-md text-secondary mb-0 title"
+											th:text="${cs.title}">글제목</p></td>
+									<td><p class="text-md text-secondary mb-0"
+											th:text="${cs.memberId}">작성자</p></td>
+									<td><p class="text-md text-secondary mb-0"
+											th:text="${cs.dt}">작성일자</p></td>
+									<td><p class="text-md text-secondary mb-0"
+											th:text="${cs.hit}">조회수</p></td>
+								</tr>
+							</tbody>
+						</table>
+						<br>
+						<!-- 권한이 ROLE_ADMIN이면 -->
+						<div>
+							<button id="insertBtn" class="btn bg-gradient-info btn-md mb-0">글쓰기</button>
+						</div>
+						<br>
+					</div>
+					<!-- 페이지네이션 -->
+					<nav aria-label="Page navigation example">
+						<ul class="pagination pagination-info  justify-content-center">
+							<li class="page-item disabled"
+								th:if="${pageInfo.isIsFirstPage()}"><span class="page-link">«</span></li>
+							<li class="page-item"
+								th:if="${!pageInfo.isIsFirstPage() && pageInfo.getList().size() > 0}"><a
+								class="page-link"
+								th:href="|javascript:gopage([[${pageInfo.getPrePage()}]])|"
+								rel="prev">«</a></li>
+							<li
+								th:class="|page-item ${(pageInfo.pageNum eq page) ? 'active': ''} |"
+								th:each="page:${pageInfo.navigatepageNums}"><span
+								class="page-link" th:if="${pageInfo.pageNum eq page}"
+								th:text="${page}"></span> <a class="page-link"
+								th:unless="${pageInfo.pageNum eq page}"
+								th:href="|javascript:gopage(${page})|" th:text="${page}">{{$page
+									}}</a></li>
+							<li class="page-item" th:if="${pageInfo.hasNextPage}"><a
+								class="page-link"
+								th:href="|javascript:gopage([[${pageInfo.getNextPage()}]])|"
+								rel="next">»</a></li>
+							<li class="page-item disabled"
+								th:unless="${pageInfo.hasNextPage}"><span class="page-link">»</span></li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+		</div>
+		<script>
+			function gopage(p) {
+				location.href = '/noticeList.do?pageNum=' + p;
+			}
+
+			$("#csList").on("click", ".title",  function(e){
+				let csNo = $(e.target).closest("tr").children().children().html();
+				console.log(csNo); //단건조회로 넘기기
+				location.href="csSelect.do?csNo="+csNo;
+			})
+			
+			$("#insertBtn").on("click", function(e) {
+				location.href = "/qnaInsertForm.do";
+			})
+			
+		</script>
+	</div>
+</body>
+</html>

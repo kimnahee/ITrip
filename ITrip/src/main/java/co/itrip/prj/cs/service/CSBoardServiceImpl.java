@@ -38,4 +38,9 @@ public class CSBoardServiceImpl implements CSBoardService {
 		return map.csDelete(vo);
 	}
 
+	@Override
+	public int repInsert(CSBoardVO vo) {
+		return map.repInsert(vo);
+	}
+
 }
