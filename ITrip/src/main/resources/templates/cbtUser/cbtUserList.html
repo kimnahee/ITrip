@@ -19,12 +19,13 @@
 .card-content{
 	border:1px solid green;
 	padding-bottom: 50px;
-	
+	height: 500px;
+	overflow:auto;
 }
-.slide_item { /*슬라이드 아이템을 absolute로 겹쳐놓고 투명하게 하기*/
+.slide_item { /*슬라이드 아이템을 absolute로 겹쳐놓고 투명하게 하기 height: auto;*/
 	position: absolute;
 	width: 700px;
-	height: auto;
+	height: 550px;
 	transition: all 0.3s;
 	border:1px solid blue;
 }
@@ -41,9 +42,12 @@
 .prevButton {float: left;}
 .ontheSlide .form-check {font-size: 1.5em;}
 #imgArea{padding-left: 10px;}
-#cnsrOX{border:1px solid black;padding-left:20px;}
+.cnsrOX{border:1px solid black;padding-left:20px;}
 .form-check{padding-right: 1.75em;}
-
+.disabledDiv{
+	pointer-events: none;
+    opacity: 0.4;
+    }
 
 /* Table */
 .feedbackList {
@@ -65,7 +69,7 @@
 }
 .feedbackList th,
 .feedbackList td {
-    padding: 8px;
+    padding: 2px;
     text-align: center; 
 }
 .feedbackList tr th {
@@ -83,7 +87,7 @@
     color: crimson;
     font-weight: 400;
 }
-
+#fbDelete{border:0px;}
 </style>
 </head>
 <body>
@@ -107,16 +111,18 @@
 </div>
 <div th:unless="${#lists.isEmpty(cbtOne)}">
 	<div class="content" style="z-index: 1;margin: 0 auto;" th:if="${cbtOne.utpCd=='1'}">
-		<div id="imgArea"></div>
+		<div id="imgArea">
+		</div>
 	
 		<div class="col-xl-4 col-md-6 col-sm-12 "><!-- slides -->
-			<div class="card slide_item ontheSlide">
-				<div class="card-content" style="overflow:auto; ">
+			<div class="card slide_item ontheSlide" >
+				<div class="card-content">
 				<div  id="langBadge" class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem" th:text="${cbtOne.langCd}"> </div>
 						
 					<div id="cardContent">
 						<div class="card-header">
 						 	<div id="cbtNos" th:text="${cbtOne.cbtNo}" style="display:none;"></div> 
+						 	
 							<br><h3 th:text="Q.+${cbtOne.ques}"></h3> 
 						</div>
 						<div class="card-body"> 
@@ -229,10 +235,10 @@
 				<div  id="langBadge" class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem;" th:text="${cbtOne.langCd}"> </div>
 					<div id="cardContent">
 						<div class="card-header">
-							<div id="cbtNo" th:text="${cbtOne.cbtNo}"></div>
+						 	<div id="cbtNos" th:text="${cbtOne.cbtNo}" style="display:none;"></div> 
 							<br><h3 th:text="Q.+${cbtOne.ques}"></h3>
 						</div>
-						<div class="card-body" id="cnsrOX"> 
+						<div class="card-body cnsrOX"> 
 							<img th:src="@{*{cbtOne.attachDir}}"style="margin-bottom: 10px;">
 							<label for="cnsr" class="form-label">O 또는 X를 선택하세요.</label>
 							<div class="form-check">
@@ -254,15 +260,13 @@
 </div><!-- end of th:if  -->
 
 <div id="pageNum"></div>
-<input type="text" id="memberId" name="memberId" th:value="${#authentication.principal.member.memberId}">
-<input type="text" name="cbtNo" id="cbtNo" th:value="${cbtOne.cbtNo}">
+<input type="hidden" id="memberId" name="memberId" th:value="${#authentication.principal.member.memberId}">
+<input type="hidden" name="cbtNo" id="cbtNo" th:value="${cbtOne.cbtNo}">
+
 <script type="text/javascript">
 let csrfHeaderName = $("meta[name='_csrf']").attr("content");
 let csrfTokenValue = $("meta[name='_csrf_header']").attr("content");
 
-
-console.log(csrfTokenValue)
-console.log(csrfHeaderName)
 //prev,next버튼 누르면 다음문제 ajax로 가져오기
 let langBadge = document.getElementById('langBadge').innerHTML
 const nextButton = document.querySelector('.nextButton');//다음버튼 
@@ -271,7 +275,6 @@ let savePage = document.getElementById("pageNum").innerHTML;
 let page = 1;
 
 choiceResult();
-//choiceResult2();
 
 //객관식문제 보기 중 하나 클릭 시  정답,오답표시
 //OX문제 답 클릭 시 정답,오답표시
@@ -280,7 +283,6 @@ function choiceResult(){
 		let myChoice = this.previousElementSibling.innerText
 		savePage = page;
 		compareCnsrAjax(myChoice)
-		
 	})
 	
 	$("input[name=cnsr]").click(function(){
@@ -288,7 +290,6 @@ function choiceResult(){
 		savePage = page;
 		$(":radio[name='cnsr'][value='" + myChoice + "']").attr('checked', true);
 		compareCnsrAjax(myChoice);
-		
 	})
 }
 
@@ -338,6 +339,7 @@ prevButton.addEventListener('click', function() {
 		data:{'langCd':langBadge,'rownum':savePage},
 		success:function newQ(res){
 			cardContent.innerHTML ="";
+			imgArea.innerHTML="";
 			newQuestion(res);
 			choiceResult();
 		},
@@ -351,16 +353,18 @@ prevButton.addEventListener('click', function() {
 
 //버튼 클릭하면 새로운문제불러와서 만들어지는 HTML태그 <div class="card-body">
 function newQuestion(res){
-	
 	if(res.utpCd==1){
 		cardContent.innerHTML += 
-			`<div class="card-header"><br><h3>Q.${res.ques}</h3></div>
-			 <div id="cbtNos">${res.cbtNo}</div> `
-				if(res.attachDir != null){
+			`<div class="card-header"><br>
+				<h3>Q.${res.ques}</h3> 
+			 	<div id="cbtNos" style="display:none;">${res.cbtNo}</div>
+			 </div>`
+			if(res.attachDir != null){
 					cardContent.innerHTML += `<img src="${res.attachDir}"style="margin-bottom: 10px;">`
 				}
 		cardContent.innerHTML += 
-				`<div class="form-check">
+			`<div class="card-body">
+				<div class="form-check">
 					<b>1</b>. <a href="#" class="ex">${res.ex1}</a><br> 
 					<b>2</b>. <a href="#" class="ex">${res.ex2}</a><br> 
 					<b>3</b>. <a href="#" class="ex">${res.ex3}</a><br>
@@ -370,21 +374,24 @@ function newQuestion(res){
 	}
 	if(res.utpCd==2){
 		cardContent.innerHTML += 
-			`<div class="card-header"><br><h3>Q.${res.ques}</h3></div> 
-			 <div id="cbtNos" style="display:none;">${res.cbtNo}</div>
-			 <div class="card-body"> `
+			`<div class="card-header"><br>
+			 	<h3>Q.${res.ques}</h3>
+			  	<div id="cbtNos" style="display:none;">${res.cbtNo}</div>
+			 </div> 
+			 `
 			if(res.attachDir != null){
 				cardContent.innerHTML += `<img src="${res.attachDir}"style="margin-bottom: 10px;">`
 			}
 		cardContent.innerHTML += 
-				`<label for="cnsr" class="form-label">O 또는 X를 선택하세요.</label>
-				<div class="form-check">
-					<input class="form-check-input" type="radio" name="cnsr" id="cnsrO" value="O"> O
-				</div>
-				<div class="form-check">
-					<input class="form-check-input" type="radio" name="cnsr" id="cnsrX" value="X"> X
-				</div>
-					</div>`
+				`<div class="card-body cnsrOX"> 
+				 	<label for="cnsr" class="form-label">O 또는 X를 선택하세요.</label>
+					<div class="form-check">
+						<input class="form-check-input" type="radio" name="cnsr" id="cnsrO" value="O"> O
+					</div>
+					<div class="form-check">
+						<input class="form-check-input" type="radio" name="cnsr" id="cnsrX" value="X"> X
+					</div>
+				</div>`
 	}
 }
 
@@ -401,11 +408,13 @@ function compareCnsrAjax(myChoice){
 		success:function result(res){
 			 if(res.cnsr == myChoice){
 				imgArea.innerHTML +=`<img alt="" src="images/O.png" style="position:absolute; z-index:2;width: 100px;">`
-				alert("정답입니다.다시풀기버튼만들기")
+				alert("정답입니다.다시풀기버튼만들기");
+				
 			}else{
 				imgArea.innerHTML +=`<img alt="" src="images/X.png" style="position:absolute; z-index:2;width: 100px">`	
 				alert("오답입니다.다시풀기버튼만들기")	
 			} 
+			$(".form-check").addClass("disabledDiv");
 			 moreInfo(res);
 		}
 	})
@@ -414,10 +423,6 @@ function compareCnsrAjax(myChoice){
 //풀이 및 댓글
 function moreInfo(res){
 
-//	let csrfHeaderName = $("meta[name='_csrf']").attr("content");
-//	let csrfTokenValue = $("meta[name='_csrf_header']").attr("content");
-
-//let cbtNo = document.getElementById("cbtNo").innerText;
  	cardContent.innerHTML += 
 		` <div class="explna">
 			<ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -432,41 +437,42 @@ function moreInfo(res){
 			</ul>
 			<div class="tab-content">
 				<div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="home-tab">
-					<div style="padding: 20px;">${res.explna}</div>
+					<div style="padding: 20px;">정답 : ${res.cnsr} 번<br>${res.explna}</div>
 				</div>
 				<div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="contact-tab">
 					
 					<div style="padding: 20px;">
 		 				<div>
 		 					<form style="text-align: center;margin-bottom:5px;" action="" method="">
-				 				<input type="text" name="content" id="content" class="form-control" placeholder="문제에 대한 댓글등록이 가능합니다...." style="width: 550px; display:inline-block">
+				 				<input type="text" name="content" id="content" class="form-control" placeholder="문제에 대한 의견을 나누어보세요 ..." style="width: 550px; display:inline-block">
 				 				<button type="button" id="fbInsert" class="btn btn-outline-primary">등록</button>
 				 			</form>
-				          <table class="feedbackList">
+				          <table class="feedbackList" id="feedbackList">
 				            <thead>
 				              <tr>
 				                <th>번호</th>
-				                <th width="500px">내용</th>
+				                <th width="400px">내용</th>
 				                <th>닉네임</th>
+				                <th>삭제</th>
 				              </tr>
 				            </thead>
 				            <tbody id="feedbackArea">
 				            </tbody>
 				          </table>
-				        </div> 
-					</div>
+				        </div>
+				     </div>
 				</div>
 			</div>
+			<div id="pageArea"></div>
 		</div>`
 		
 
-let feedbackTab = document.getElementById("feedbackTab");
-let feedbackArea = document.getElementById("feedbackArea");
-
-
-
+	let feedbackTab = document.getElementById("feedbackTab");
+	let feedbackArea = document.getElementById("feedbackArea");
+	let pageArea = document.getElementById("pageArea");
 
 	let cbtNos = document.getElementById("cbtNos").innerText;
+	
 	feedbackTab.addEventListener("click",function(){
 		
 		$.ajax({
@@ -480,27 +486,33 @@ let feedbackArea = document.getElementById("feedbackArea");
 			success:function result(res){
 				feedbackArea.innerHTML="" 
 				res.forEach((elem,idx,arr)=>{
+					console.log("댓글정보..."+elem,idx,arr)
+					//feedbackArea.innerHTML+= "댓글이없습니당ㅇ....."
+					
+					content=""
 					feedbackArea.innerHTML+= 
-						"<tr><td>"+(idx+1)+"</td><td>"+elem.content+"</td><td>"+elem.nick+"</td></tr>"
+						"<tr><td>"+(idx+1)+"</td><td>"+elem.content+"</td><td>"
+						+elem.nick+"</td><td><button type='button' class='badge bg-warning fbDelete' id='fbDelete' value="+elem.feedbackNo+">x</button></td></tr>"
+							
 				})
 			},
 			error:function err(xhr,err){
 				console.log(xhr,err)
 			}
 		}) 
-
 	}) 
 
-
-
  }
+
 /* <input type="text" name="cbtNo" id="cbtNo" value=${res.cbtNo}> */
 
 $(document).on("click","#fbInsert", function(e){
 	let content = document.getElementById("content").value;
 	let memberId = document.getElementById("memberId").value;
 	let csrfToken=$("input[name=_csrf]").val();
-	
+	console.log(memberId)
+	console.log(content)
+	console.log(cbtNos.innerText)
 	$.ajax({ 
 		url : "/feedbackInsert.do",
 		type : "post",
@@ -509,9 +521,38 @@ $(document).on("click","#fbInsert", function(e){
 		    xhr.setRequestHeader("X-CSRF-TOKEN", csrfToken);
 		},
 		dataType:'json',
-		data : {"cbtNo":cbtNo,"content":content},
-		success : function(data){
+		data : {"cbtNo":cbtNos.innerText,"content":content},
+		success : function(data,idx,arr){
 			console.log(data);
+			if(data == 1){
+				alert("댓글이 성공적으로 등록되었습니다.")
+				
+				
+				//똑같은아작스 또 호출해야되나;? 
+				$.ajax({
+					url:'/feedbackList.do',
+					type:'get',
+			 		beforeSend:function(xhr){
+						xhr.setRequestHeader(csrfHeaderName,csrfTokenValue);
+					}, 
+					dataType:'json',
+					data:{'cbtNo':cbtNos.innerText},
+					success:function result(res){
+						feedbackArea.innerHTML="" 
+						res.forEach((elem,idx,arr)=>{
+							feedbackArea.innerHTML+= 
+								"<tr><td>"+(idx+1)+"</td><td>"+elem.content+"</td><td>"
+									+elem.nick+"</td><td><button type='button' class='badge bg-warning fbDelete' id='fbDelete' value="+elem.feedbackNo+">x</button></td></tr>"
+						})
+						content=""
+					},
+					error:function err(xhr,err){
+						console.log(xhr,err)
+					}
+				}) 
+				
+				
+			}
 		},
 		error:function err(xhr,err){
 			console.error(xhr,err)
@@ -520,6 +561,34 @@ $(document).on("click","#fbInsert", function(e){
 	
 })
 
+
+$(document).on("click",".fbDelete", function(e){
+
+	let fNo = this.value
+	let csrfToken=$("input[name=_csrf]").val();
+	
+	var $this = $(this)
+	$.ajax({
+		url:'/feedbackDelete.do', 
+		type:'post',
+ 		beforeSend:function(xhr){
+			xhr.setRequestHeader("AJAX", true);
+		    xhr.setRequestHeader("X-CSRF-TOKEN", csrfToken);
+		}, 
+		dataType:'json',
+		data:{'feedbackNo':fNo},
+		success:function result(res){
+			alert("삭제완료~~")
+			if(res==1){
+				$this.closest("tr").remove()
+			}
+		},
+		error:function err(xhr,err){
+			console.log(xhr,err)
+		}
+	}) 
+
+})
 </script>
 
 </div>

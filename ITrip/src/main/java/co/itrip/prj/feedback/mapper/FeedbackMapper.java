@@ -8,4 +8,5 @@ public interface FeedbackMapper {
 	
 	List<FeedbackVO> ajaxFeedbackList(FeedbackVO vo);
 	int ajaxFeedbackInsert(FeedbackVO vo);
+	int ajaxFeedbackDelete(FeedbackVO vo);
 }
