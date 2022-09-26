@@ -14,7 +14,7 @@ import co.itrip.prj.cbtGuide.mapper.CbtGuideMapper;
  * 
  * @author 김하은
  * @date 2022.09.16
- * @version 2.0 , 2022.09.23 가이드가 문제 제출시 테이블 두개
+ * @version 2.1 , 2022.09.23 가이드가 문제 제출시 테이블 두개
  * 
  */
 @Service
@@ -78,9 +78,35 @@ public class CbtGuideServiceImpl implements CbtGuideService {
 		return map.cbtGuideListTab(vo);
 	}
 
-	/* 객관식 문제 채점시 ajax로 정답 출력 */
+	/* 2022.09.26 객관식 문제 ajax로 전부 처리 */
 	@Override
 	public CbtGuideVO ajaxMyCbtLongList(CbtGuideVO vo) {
+		
+		/* 사용자가 입력한 값 등록*/
+		MyCbtLongVO myVo = new MyCbtLongVO(); // MyCbtLongVO 인스턴스 생성
+		map.ajaxMyCbtLongInsert(myVo); // 등록 (파라미터 값 : mcKwrd, cbtNo)
+		
+		/*사용자가 등록한 값과 키워드의 값 비교 */
+		CbtKeywordVO kvo = new CbtKeywordVO();
+		kvo.setCbtNo(vo.getCbtNo());
+		map.ajaxMyCbtLongChkList(vo); // 키워드 기준으로 사용자의 답이 있으면 0, 없으면 1 반환(복수형태)
+		// return 값이 CbtKeywordVO의 List<Integer>chklist 필드에 담김..?
+		
+		
+		Map<String, Object> param = new HashMap<>();
+		
+		for (int i = 0; i < vo.getKeyword().size(); i++) {
+			if (kvo.getChklist().get(i) != null) { // 여러값 입력 시 null이 들어갈 수 있으므로 처리
+				if (kvo.getChklist().get(i) == 0) {
+					param.put("chkOX", 0); // 오답처리
+				} else {
+					
+				    param.put("chkOX", 1); // 정답처리
+				}
+			}
+		}
+		/* 정답유무 처리 업데이트 0 또는 1*/
+		map.ajaxMyCbLongChkUpdate(myVo); 
 		return map.ajaxMyCbtLongList(vo);
 	} 
 
@@ -100,11 +126,9 @@ public class CbtGuideServiceImpl implements CbtGuideService {
 		map.myCbtHderList(vo); // 리스트 출력
 		map.chkCuntUpdate(vo); // 정답 갯수와 오답 갯수 업데이트함.
 
-		System.out.println("====serviceImpl ====  vo.getMcNo : " + vo.getMcNo());
 		/* 2022.09.26 Insert버튼 : 등록 + 출력 한꺼번에 처리 */
 		CbtGuideVO cvo = new CbtGuideVO(); // CbtGuide 호출을 위해 인스턴스 생성
 		cvo.setMcNo(vo.getMcNo()); // 사용자가 푼 문제 담기
-		System.out.println("====serviceImpl ====  cvo.getMcNo : " + cvo.getMcNo());
 		map.cbtGuideListO(cvo); // 맞은 문제 출력
 		map.cbtGuideListX(cvo); // 틀린 문제 출력
 
@@ -150,15 +174,7 @@ public class CbtGuideServiceImpl implements CbtGuideService {
 		return map.cbtGuideListX(vo);
 	}
 
-	/* 사용자가 푼 서술형 문제 등록 */
-	@Override
-	public int myCbtLongInsert(MyCbtLongVO vo) {
-		
-	    int r = map.myCbtLongInsert(vo);
-	    
-		return r;
-	}
-	
+
 	
 
 	

@@ -30,7 +30,8 @@ public class AdminController {
 	private ConsultService conService; // 1:1 상담서비스
 	
 	@Autowired
-	private AdminService dao;
+	private AdminService dao; 
+
 	
 	
 	@GetMapping("/appClass.do")
