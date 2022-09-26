@@ -36,7 +36,7 @@ public class AdminController {
 	
 	@Autowired
 	private AdminService dao;
-	
+
 	
 	@GetMapping("/appClass.do") // admin-Class 승인
 	public String appClass(ClassVO vo, Model model, HttpServletRequest request,

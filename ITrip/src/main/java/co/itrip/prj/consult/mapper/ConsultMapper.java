@@ -17,5 +17,6 @@ public interface ConsultMapper {
 	int consultInsert(ConsultVO vo); // 가이드 상담 등록
 	int consultDtInsert(ConsultDtVO vo); // 가이드 상담 시간 등록
 	
-
+	ConsultVO consultSelectOne(ConsultVO vo); // 상담 단건조회
+	List<ConsultDtVO> consultDtList(ConsultDtVO vo);
 }

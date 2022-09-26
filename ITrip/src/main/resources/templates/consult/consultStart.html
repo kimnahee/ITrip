@@ -70,9 +70,10 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
                     </div>
                     <div class="col-md-8">
                                 <div class="form-group mb-3">
-                                    <textarea class="form-control" id="dc" name="dc" rows="3"  readonly="readonly"  th:utext="${gui.dc}"></textarea>
+                                    <textarea class="form-control" id="content" name="content" rows="3"  readonly="readonly"  th:utext="${gui.dc}"></textarea>
                                 </div>
                             </div>
+                         
                     <div class="col-md-3">
                         <label>상담 타이틀</label>
                     </div>
@@ -92,13 +93,13 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
                     <div class="col-md-2"></div>
                     <div class="col-md-2  form-group">시작날짜</div>
                     <div class="col-md-2  form-group" >
-                        <input type="date" id="beginDate" class="form-control " name="consult[0].beginDate">
+                        <input type="date" id="beginDate" class="form-control " name="beginDate">
                     </div>
 
                     <div class="col-md-2"></div>
                     <div class="col-md-2  form-group">종료날짜</div>
                     <div class="col-md-2  form-group" >
-                        <input type="date" id="endDate" class="form-control " name="consult[0].endDate">
+                        <input type="date" id="endDate" class="form-control " name="endDate">
                     </div>
                     </div>
                     <!-- end -->
@@ -107,7 +108,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
                     </div>
                      <div class="col-md-1 form-group" >                    	                    	
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" value="월" id="week" name="week">
+                            <input class="form-check-input" type="radio" value="월" id="week1" name="consultDt[0].week">
                             <label class="form-check-label" for="flexRadioDefault1" >
                                 월
                             </label>                                                      
@@ -115,7 +116,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
                     </div>
                     <div class="col-md-1 form-group" >
                     <div class="form-check">
-                            <input class="form-check-input" type="radio" value="화" id="week" name="week" >
+                            <input class="form-check-input" type="radio" value="화" id="week2" name="consultDt[0].week" >
                             <label class="form-check-label" for="flexRadioDefault2" >
                                 화
                             </label>
@@ -123,7 +124,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
                     </div>
                     <div class="col-md-1 form-group" >                    	                    	
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" value="수" id="week" name="week">
+                            <input class="form-check-input" type="radio" value="수" id="week3" name="consultDt[0].week">
                             <label class="form-check-label" for="flexRadioDefault1" >
                                 수
                             </label>                                                      
@@ -131,7 +132,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
                     </div> 
                     <div class="col-md-1 form-group" >                    	                    	
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" value="목" id="week" name="week">
+                            <input class="form-check-input" type="radio" value="목" id="week4" name="consultDt[0].week">
                             <label class="form-check-label" for="flexRadioDefault1" >
                                 목
                             </label>                                                      
@@ -139,7 +140,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
                     </div> 
                     <div class="col-md-1 form-group" >                    	                    	
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" value="금" id="week" name="week">
+                            <input class="form-check-input" type="radio" value="금" id="week5" name="consultDt[0].week">
                             <label class="form-check-label" for="flexRadioDefault1" >
                                 금
                             </label>                                                      
@@ -147,7 +148,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
                     </div>
                     <div class="col-md-1 form-group" >                    	                    	
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" value="토" id="week" name="week">
+                            <input class="form-check-input" type="radio" value="토" id="week6" name="consultDt[0].week">
                             <label class="form-check-label" for="flexRadioDefault1" >
                                 토
                             </label>                                                      
@@ -155,7 +156,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
                     </div>
                     <div class="col-md-1 form-group" >                    	                    	
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" value="일" id="week" name="week">
+                            <input class="form-check-input" type="radio" value="일" id="week7" name="consultDt[0].week">
                             <label class="form-check-label" for="flexRadioDefault1" >
                                 일
                             </label>                                                      
