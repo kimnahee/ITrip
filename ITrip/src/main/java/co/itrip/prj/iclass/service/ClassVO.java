@@ -16,6 +16,7 @@ public class ClassVO {
 	private String crclm; // 상세커리큘럼
 	private Date dt; // 등록일자
 	private int price; // 금액
+	
 
 	private String attach; // 파일
 	private String attachDir; // 파일경로
@@ -24,6 +25,7 @@ public class ClassVO {
 	private String jobCd; // 업무카테고리 코드
 	private int psncpa; // 정원
 	private int classCnt; // 수업횟수(주 단위)
+	private String ennc; // 상태변화 (상담 활성화/비활성화) 
 	
 	private List<ClassDtVO> classDt; // ClassDtVO 
 	private String cdName;

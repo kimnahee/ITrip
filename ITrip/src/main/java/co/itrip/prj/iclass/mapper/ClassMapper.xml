@@ -7,7 +7,7 @@
 			SELECT CASE WHEN MAX(CLASS_NO) IS NULL THEN 1 ELSE MAX(CLASS_NO)+1 END AS ID FROM CLASS
 		</selectKey>
 		INSERT INTO CLASS VALUES (#{classNo}, #{title}, #{content}, #{crclm}, sysdate, #{price}, #{attach}, 
-		                          #{attachDir}, 'S1', #{guideId}, #{jobCd}, #{psncpa},  #{classCnt})
+		                          #{attachDir}, 'S1', #{guideId}, #{jobCd}, #{psncpa},  #{classCnt}, '비활성화' )
 	</insert>
 	
 	<insert id="classDtInsert" >

@@ -71,6 +71,7 @@ public class ClassController {
 			System.out.println("11"+vo.getClassCnt());
 			System.out.println("12"+vo.getAttach());
 			System.out.println("13"+vo.getAttachDir());
+			System.out.println("19"+vo.getEnnc());
 			
 			// ClassDtVO
 			System.out.println("14"+vo.getClassDt().get(0).getClassNo()); // 0으로나옴
