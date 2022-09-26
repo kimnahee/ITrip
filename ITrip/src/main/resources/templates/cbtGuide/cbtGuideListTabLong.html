@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+<head>
+<meta charset="UTF-8">
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+<title>CBT 문제 목록</title>
+<script src="js/jquery-3.6.0.min.js"></script>
+<style>
+</style>
+</head>
+<body>
+	<div layout:fragment="content">
+		<!-- Section -->
+		<!-- Basic Vertical form layout section start -->
+		<div class="row match-height">
+			<div class="col-md-10 col-12 cbtNoSelc">
+				<div class="card">
+					<div class="card-header">
+						<h4 class="card-title">문제</h4>
+					</div>
+					<div class="card-content">
+						<div>
+							<h5 th:if="${#lists.isEmpty(cbtList)}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;문제가
+								없습니다...</h5>
+						</div>
+						<!-- gtpCd에 따른 처리 -->
+						<div class="card-body" th:each="cbt, st:${cbtList}">
+							<!-- ctpCd == '3' -->
+							<div th:if="${cbt.gtpCd} == '3'">
+								<form class="form form-vertical">
+									<div class="form-body">
+										<div class="row">
+											<div class="col-12">
+												<div class="form-group">
+													<h3> 문제 <span th:text="${cbt.cbtNo}"></span>
+													</h3>
+													<span id="QUES" th:text="${cbt.ques}">문제</span>
+													<input type="hidden" id="cbtNo0" name="cbtNo0" th:value="${cbt.cbtNo}">
+													<input type="hidden" id="PreGtpCd" name="PreGtpCd" th:value="${tCd}">
+													<input type="hidden" id="PreLangCd" name="PreLangCd" th:value="${lCd}">
+													<a>&nbsp;&nbsp;[ 출제자 : <span th:text="${cbt.memberId}"></span> ]
+													</a>
+
+												</div>
+											</div>
+											<div class="col-12" id="KwrdArea">
+												<textarea class="form-control inputMcKwrd" id="inputMcKwrd" name="inputMcKwrd" rows="3" placeholder="문제에 대한 답을 서술하세요."></textarea>
+											</div>
+											<br>
+											<br>
+											<!-- 풀이 ajax : 정답보기 버튼을 누르면 해당 문제 풀이글 활성화 -->
+											<div class="explnaArea"></div>
+											<!-- 풀이 끝 -->
+											<div class="col-12 d-flex justify-content-end">
+												<input type="hidden" id="cbtNo0" name="cbtNo0" th:value="${cbt.cbtNo}">
+												<input type="hidden" id="explna" name="explna" th:value="${cbt.explna}">
+												<button type="button" class="btn btn-outline-primary check"
+													data-target="#primary">정답보기</button>
+												<!--data-toggle="modal"  -->
+											</div>
+										</div>
+
+									</div>
+								</form>
+							</div>
+							<!-- gtpCd=='3'끝 -->
+					</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+		<!-- 히든frm2 -->
+		<div>
+			<form class="myFrmlong" id ="myFrmlong" name="myFrmlong"method="post" >
+				<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+				<input type="text" id="memberId" name="memberId" th:value=${#authentication.principal.member.memberId}>
+				<input type="text" id="cbtNo" name="cbtNo">
+				<!-- <input type="hidden" id="gtpCd" name="gtpCd">
+				<input type="hidden" id="langCd" name="langCd"> -->
+				<input type="text" id="mcKwrd" name="mcKwrd">
+				<!-- cbtNo값과 내가 입력한 값이 넘어가면 정답유무를 알려줌 -->
+			</form>
+		</div>
+
+		<!-- 모달창으로 정답과 키워드 띄어야함...-->
+		<!-- <div class="modal fade text-left" id="primary" tabindex="-1" role="dialog" aria-labelledby="myModalLabel160" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+        <div class="modal-header bg-primary">
+        <h5 class="modal-title white" id="myModalLabel160">정답 확인</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <i data-feather="x"></i>
+        </button>
+        </div>
+        <div class="modal-body">
+        <span th:text="${cbt.cnsr}"> </sapn>
+        </div>
+        <div class="modal-body">
+        키워드 들어갈 공간입니다.
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-light-secondary" data-dismiss="modal">
+            <i class="bx bx-x d-block d-sm-none"></i>
+            <span class="d-none d-sm-block">취소</span>
+        </button>
+        <button type="button" class="btn btn-primary ml-1" data-dismiss="modal">
+            <i class="bx bx-check d-block d-sm-none"></i>
+            <span class="d-none d-sm-block">확인</span>
+        </button>
+        </div>
+    </div>
+    </div>
+</div> -->
+
+		<!-- 모달창 끝 -->
+		<script>
+		//서술형 풀이 ajax 처리
+ 		$(".cbtNoSelc").on("click", ".check", function(e) {
+			var token = $("meta[name='_csrf']").attr("content");
+	        var header = $("meta[name='_csrf_header']").attr("content");
+			
+	        let tg = e.currentTarget;
+			let cbtNum = $(tg).prev().prev().val(); // 클릭한 버튼이 있는 문제 번호
+			//let cbtExplna = $(tg).prev().val();  // 해당 번호의 풀이
+			//let explnaInsert = $(tg).closest("div").prev(); // 클릭한 버튼의 조상 div
+			let inputMcKwrd  = $(tg).closest("div").prev().prev().prev().prev()[0].children[0].value; // 클릭한 버튼의 조상 입력창 값
+	        
+			//console.log(cbtNum);
+			//console.log(inputMcKwrd);
+	         $("#cbtNo").val(cbtNum);
+	        $("#mcKwrd").val(inputMcKwrd);
+	        //console.log($("#cbtNo").val());
+	        //console.log($("#mcKwrd").val());
+	        $(".myFrmlong").attr("action","/myCbtLongInsert.do").submit();
+			
+		/* $.ajax({
+		    url: '/ajaxMyCbtLongList.do',
+		    type:'post',
+		    dataType: 'json',
+		    //contentType: false,
+            //processData: false,
+		    data: {'cbtNo' : cbtNum},
+		    beforeSend: function(xhr){
+		    	xhr.setRequestHeader(header, token);
+		    },
+		    success: function explnaSuccess(resp) {
+		    	console.log(resp)
+		    	//let chkO = confirm("정답 처리 하시겠습니까?"); // 확인 true 취소 false
+                //alert( chkO ); // 확인 버튼을 눌렀다면 true가 출력됩니다.
+                
+		           let explna_html = `<div class='alert alert-light-primary color-primary'>
+      					&nbsp;<i data-feather='star'></i>
+      					 <a>[ 정답 ]<br><span>${resp.cnsr}</span></a><br><br>&nbsp;
+     				</div> `;
+     				
+     				$(tg).attr("disabled", true); //정답보기 한 번 클릭하면 비활성화처리
+     				$(explnaInsert).append(explna_html);
+     				
+		     },
+		    error: function searchError(xhr, err) {
+		           console.error("Error on ajax call: " + err); }});*/
+		      
+		
+		
+		}) 
+	</script>
+	</div>
+
+
+
+</body>
+</html>
