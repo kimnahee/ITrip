@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.event.PublicInvocationEvent;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,6 +30,14 @@ public class AjaxFeedbackController {
 	public List<FeedbackVO> ajaxFeedbackList(FeedbackVO vo) {
 		
 		return fDao.ajaxFeedbackList(vo);
+	}
+	
+	//@RequestMapping("/feedbackList.do")
+	public PageBean<FeedbackVO> ajaxFeedbackList(int pageNum, int pageSize){
+		 PageHelper.startPage(pageNum, pageSize);
+		 PageBean<FeedbackVO> list =  this.fDao.ajaxFeedbackList(pageNum, pageSize);
+		System.out.println(pageNum+":"+pageSize);
+		 return list;
 	}
 	
 	
