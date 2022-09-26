@@ -16,8 +16,8 @@
 			FROM (SELECT ROWNUM AS ROWNO, CBT_NO,QUES,LANG_CD, CNSR, 
 			             EX1, EX2, EX3, EX4, ATTACH, ATTACH_DIR, CNSR_CNT, 
 			             CALL, EXPLNA, GTP_CD, MEMBER_ID  
-			      FROM CBT_GUIDE WHERE GTP_CD IN('1','2') AND LANG_CD=#{langCd}) G
-			WHERE G.ROWNO BETWEEN 1 and 5
+			      FROM CBT_GUIDE WHERE GTP_CD IN('1','2') AND LANG_CD=#{langCd} ORDER BY DBMS_RANDOM.VALUE) G
+			<![CDATA[WHERE ROWNUM <= 5]]>
 		</if>
 		<if test="gtpCd!=4">
 			SELECT G.CBT_NO,G.QUES,G.LANG_CD, G.CNSR, G.EX1, G.EX2, 
@@ -26,8 +26,8 @@
 			FROM (SELECT ROWNUM AS ROWNO, CBT_NO,QUES,LANG_CD, CNSR, 
 			             EX1, EX2, EX3, EX4, ATTACH, ATTACH_DIR, CNSR_CNT, 
 			             CALL, EXPLNA, GTP_CD, MEMBER_ID  
-			      FROM CBT_GUIDE WHERE  GTP_CD=#{gtpCd} AND LANG_CD=#{langCd}) G
-			WHERE G.ROWNO BETWEEN 1 and 5
+			      FROM CBT_GUIDE WHERE  GTP_CD=#{gtpCd} AND LANG_CD=#{langCd} ORDER BY DBMS_RANDOM.VALUE) G
+			<![CDATA[WHERE ROWNUM <= 5]]>
 	    </if>
 	</select>
 	
@@ -89,10 +89,10 @@
 	<!-- public int myCbtHderChkUpdate(MyCbtHderVO vo); // myCbtHder의 내용을 비교하여 정답 체크 -->
 	<update id="myCbtHderChkUpdate">
 	    update mycbt_hder set CHK1 =  case when( SELECT cnsr FROM cbt_guide WHERE cbt_no = mycbt_hder.cbt_no1 )=(select cnsr1 from mycbt_hder where mc_no= ${mcNo}) then 1 else 0 end,
-		                      CHK2 =  case when( SELECT cnsr FROM cbt_guide WHERE cbt_no = mycbt_hder.cbt_no2 )=(select cnsr1 from mycbt_hder where mc_no= ${mcNo}) then 1 else 0 end,
-		                      CHK3 =  case when( SELECT cnsr FROM cbt_guide WHERE cbt_no = mycbt_hder.cbt_no3 )=(select cnsr1 from mycbt_hder where mc_no= ${mcNo}) then 1 else 0 end,
-		                      CHK4 =  case when( SELECT cnsr FROM cbt_guide WHERE cbt_no = mycbt_hder.cbt_no4 )=(select cnsr1 from mycbt_hder where mc_no= ${mcNo}) then 1 else 0 end,
-		                      CHK5 =  case when( SELECT cnsr FROM cbt_guide WHERE cbt_no = mycbt_hder.cbt_no5 )=(select cnsr1 from mycbt_hder where mc_no= ${mcNo}) then 1 else 0 end  where mc_no =${mcNo}
+		                      CHK2 =  case when( SELECT cnsr FROM cbt_guide WHERE cbt_no = mycbt_hder.cbt_no2 )=(select cnsr2 from mycbt_hder where mc_no= ${mcNo}) then 1 else 0 end,
+		                      CHK3 =  case when( SELECT cnsr FROM cbt_guide WHERE cbt_no = mycbt_hder.cbt_no3 )=(select cnsr3 from mycbt_hder where mc_no= ${mcNo}) then 1 else 0 end,
+		                      CHK4 =  case when( SELECT cnsr FROM cbt_guide WHERE cbt_no = mycbt_hder.cbt_no4 )=(select cnsr4 from mycbt_hder where mc_no= ${mcNo}) then 1 else 0 end,
+		                      CHK5 =  case when( SELECT cnsr FROM cbt_guide WHERE cbt_no = mycbt_hder.cbt_no5 )=(select cnsr5 from mycbt_hder where mc_no= ${mcNo}) then 1 else 0 end  where mc_no =${mcNo}
 	</update>
 	
 	<!-- public CbtKeywordVO KeywordList(CbtKeywordVO vo); -->
@@ -113,7 +113,7 @@
 	</select>
 	
 	<!--List<CbtGuideVO> cbtGuideListO(CbtGuideVO vo); /* 문제 조회 : 사용자가 푼 문제 중 정답처리 된 문제조회 */ -->
-	<select id="cbtGuideListO"  resultType="map">
+	<select id="cbtGuideListO"  parameterType="co.itrip.prj.cbtGuide.service.CbtGuideVO" resultType="co.itrip.prj.cbtGuide.service.CbtGuideVO">
 	    SELECT * FROM CBT_GUIDE WHERE CBT_NO IN ((select cbt_no1 from mycbt_hder where mc_no = ${mcNo} and chk1 = 1),
 												 (select cbt_no2 from mycbt_hder where mc_no = ${mcNo} and chk2 = 1),
 												 (select cbt_no3 from mycbt_hder where mc_no = ${mcNo} and chk3 = 1),
@@ -121,7 +121,7 @@
 												 (select cbt_no5 from mycbt_hder where mc_no = ${mcNo} and chk5 = 1))
 	</select>
 	<!--List<CbtGuideVO> cbtGuideListX(CbtGuideVO vo); /* 문제 조회 : 사용자가 푼 문제 중 정답처리 된 오답조회 */ -->
-	<select id="cbtGuideListX"  resultType="map">
+	<select id="cbtGuideListX"  parameterType="co.itrip.prj.cbtGuide.service.CbtGuideVO" resultType="co.itrip.prj.cbtGuide.service.CbtGuideVO">
 	    SELECT * FROM CBT_GUIDE WHERE CBT_NO IN ((select cbt_no1 from mycbt_hder where mc_no = ${mcNo} and chk1 = 0),
 												 (select cbt_no2 from mycbt_hder where mc_no = ${mcNo} and chk2 = 0),
 												 (select cbt_no3 from mycbt_hder where mc_no = ${mcNo} and chk3 = 0),

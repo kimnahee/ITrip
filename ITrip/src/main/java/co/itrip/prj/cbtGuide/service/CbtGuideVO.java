@@ -29,6 +29,7 @@ public class CbtGuideVO {
 	private String memberId; // 출제자
 	List<String> keyword; // 여러건 받을 키워드
 	private int rownum; //가상의 순번 
+	private int mcNo; // 사용자가 푼 문제 번호
 	
 	
 

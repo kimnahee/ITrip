@@ -41,7 +41,7 @@
 														문제 <span></span><i data-feather='star'
 															onclick="bookmark()" style="cursor: pointer;"></i>
 													</h3>
-													<input type="hidden" th:text="${cbt.cbtNo}" id="cbtNo0"
+													<input type="hidden" id="cbtNo0"
 														name="cbtNo0" th:value="${cbt.cbtNo}"> <input
 														type="hidden" id="PreGtpCd" name="PreGtpCd"
 														th:value="${tCd}"> <input type="hidden"
@@ -114,7 +114,7 @@
 															style="cursor: pointer;"></i>
 													</h3>
 													<span id="QUES" th:text="${cbt.ques}">문제</span> <input
-														type="hidden" th:text="${cbt.cbtNo}" id="cbtNo0"
+														type="hidden" id="cbtNo0"
 														name="cbtNo0" th:value="${cbt.cbtNo}"> <input
 														type="hidden" id="PreGtpCd" name="PreGtpCd"
 														th:value="${tCd}"> <input type="hidden"
@@ -152,19 +152,14 @@
 										<div class="row">
 											<div class="col-12">
 												<div class="form-group">
-													<h3>
-														문제 <span th:text="${cbt.cbtNo}"></span><i
-															data-feather='star' onclick="bookmark()"
-															style="cursor: pointer;"></i>
+													<h3> 문제 <span th:text="${cbt.cbtNo}"></span>
+													<i data-feather='star' onclick="bookmark()" style="cursor: pointer;"></i>
 													</h3>
-													<span id="QUES" th:text="${cbt.ques}">문제</span> <input
-														type="hidden" th:text="${cbt.cbtNo}" id="cbtNo0"
-														name="cbtNo0" th:value="${cbt.cbtNo}"> <input
-														type="hidden" id="PreGtpCd" name="PreGtpCd"
-														th:value="${tCd}"> <input type="hidden"
-														id="PreLangCd" name="PreLangCd" th:value="${lCd}">
-													<br> <span id="QUES" th:text="${cbt.ques}">문제</span> <a>&nbsp;&nbsp;[
-														출제자 : <span th:text="${cbt.memberId}"></span> ]
+													<span id="QUES" th:text="${cbt.ques}">문제</span>
+													<input type="hidden" id="cbtNo0" name="cbtNo0" th:value="${cbt.cbtNo}">
+													<input type="hidden" id="PreGtpCd" name="PreGtpCd" th:value="${tCd}">
+													<input type="hidden" id="PreLangCd" name="PreLangCd" th:value="${lCd}">
+													<a>&nbsp;&nbsp;[ 출제자 : <span th:text="${cbt.memberId}"></span> ]
 													</a>
 
 												</div>
@@ -227,6 +222,17 @@
 				<input type="hidden" id="cnsr3" name="cnsr3">
 				<input type="hidden" id="cnsr4" name="cnsr4">
 				<input type="hidden" id="cnsr5" name="cnsr5">
+				<!-- cbtNo값과 내가 입력한 값이 넘어가면 정답유무를 알려줌 -->
+			</form>
+		</div>
+		<!-- 히든frm2 -->
+		<div>
+			<form id="myFrmlong" method="post" action="/myCbtHderInsert.do">
+				<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+				<input type="hidden" id="memberId" name="memberId" th:value=${#authentication.principal.member.memberId}>
+				<input type="hidden" id="gtpCd" name="gtpCd">
+				<input type="hidden" id="langCd" name="langCd">
+				<input type="hidden" id="cnsr" name="cnsr">
 				<!-- cbtNo값과 내가 입력한 값이 넘어가면 정답유무를 알려줌 -->
 			</form>
 		</div>
