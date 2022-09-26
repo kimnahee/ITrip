@@ -26,7 +26,7 @@ public class ClassVO {
 	private int classCnt; // 수업횟수(주 단위)
 	
 	private List<ClassDtVO> classDt; // ClassDtVO 
-	
+	private String cdName;
 //	private String term;
 //	private String beginTime;
 //	private String endTime;

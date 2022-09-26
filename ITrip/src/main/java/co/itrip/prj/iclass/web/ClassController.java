@@ -4,11 +4,19 @@ import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 
 import co.itrip.prj.cmmncd.service.CmmnCdService;
 import co.itrip.prj.iclass.service.ClassDtVO;
@@ -25,9 +33,15 @@ public class ClassController {
 	private CmmnCdService cmService; // 공통코드서비스
 	
 	
-	@GetMapping("/iClass") 
-	public String iClass() {
-		return "class/iclass";
+	@GetMapping("/iClassList.do") 
+	public String iClass(ClassVO vo, Model model, HttpServletRequest request,
+			@RequestParam(required = false, defaultValue = "1") int pageNum,
+			@RequestParam(required = false, defaultValue = "8") int pageSize) {
+		PageHelper.startPage(pageNum, pageSize);
+		
+		model.addAttribute("pageInfo", PageInfo.of(cService.classList(vo)));
+		model.addAttribute("classList", cService.classList(vo));
+		return "class/iclassList";
 	}
 	
 	// Class insert & 파일처리
@@ -68,6 +82,12 @@ public class ClassController {
 			cService.classInsert(vo);
 			
 			return "guide/gclass";
+		}
+		
+		@RequestMapping("/iClassSelectOne.do") 
+		public String iClassSelectOne(ClassVO vo, Model model) {
+			model.addAttribute("classOne", cService.classSelectOne(vo));
+			return "class/iclassSelectOne";
 		}
 
 }
