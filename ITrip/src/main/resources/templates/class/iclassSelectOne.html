@@ -18,15 +18,22 @@ layout:decorate="~{layout/layout}">
                     </div>
                     <div class="card-body">
                         <div> 
-                        	<img src="images/spring.png"alt="Image" class="img-fluid" width="500px" style="float: right;">
+                        	<!-- <img src="images/spring.png"alt="Image" class="img-fluid" width="500px" style="float: right;"> -->
+                        	<img th:src="@{*{classOne.attachDir}}"alt="Image" class="img-fluid" width="500px" style="float: right;">
                         </div>
                         <div class="divider">
                             <div class="divider-text">기본정보</div>
                         </div>
-                        <h5>일자 : <span th:text=${classOne.dt}></span></h5>
-                        <h5>정원 : <span th:text=${classOne.psncpa}></span>명</h5>
-                        <h5>주요언어 : <span th:text=${classOne.cdName}></span></h5>
-                        <h5>가격 : <span th:text=${classOne.price}></span>원</h5>
+                        <div th:each="cdt,i:${classDt}">
+	                        <b th:text=${i.count+'회차'}></b> 
+	                        <span th:text=${cdt.term}></span> &nbsp;&nbsp;&nbsp;
+	                        <span th:text=${'시작시간:'+cdt.beginTime}></span>~ 
+	                        <span th:text=${'끝나는시간:'+cdt.endTime}></span> 
+                        </div>
+	                        <br>
+                        <h5>정원 : <b th:text=${classOne.psncpa}></b>명</h5>
+                        <h5>주요언어 : <b th:text=${classOne.cdName}></b></h5>
+                        <h5>가격 : <b th:text=${classOne.price}></b>원</h5>
                         <div class="divider">
                             <div class="divider-text">커리큘럼</div>
                         </div>
@@ -36,13 +43,65 @@ layout:decorate="~{layout/layout}">
                         </div>
                         <h5 th:text=${classOne.content}></h5>
                         
-	                    <a href="#"  class="btn btn-primary py-2 px-3 classInsert" style="float: right;">클래스신청하기</a>
-					 	<div th:text="${classOne.classNo}" style="display: none"></div>
                     </div>
+                    <div style="padding:10px;">
+	                    <a href="#"  class="btn btn-primary py-2 px-3 " style="float: right;" data-toggle="modal" data-target="#inlineForm">클래스신청하기</a>
+					 	<div th:text="${classOne.classNo}" style="display: none"></div>
+					</div>
                 </div>
             </div>
         </div>
     </section>
+    
+    
+    <!--login form Modal -->
+    <div class="modal fade text-left" id="inlineForm" tabindex="-1" role="dialog"
+        aria-labelledby="myModalLabel33" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h4 class="modal-title" id="myModalLabel33">클래스신청 </h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <i data-feather="x"></i>
+            </button>
+            </div>
+            <form action="#">
+            <div class="modal-body">
+                <div class="form-group">
+                 <h5>클래스명 : <b th:text="${classOne.title}"></b></h5>
+                </div>
+                <div class="form-group" th:each="cdt,i:${classDt}">
+          	<b th:text=${i.count+'회차'}></b> : 
+           <span th:text=${cdt.term}></span> &nbsp;&nbsp;&nbsp;
+           <span th:text=${'시작시간:'+cdt.beginTime}></span>~ 
+           <span th:text=${'끝나는시간:'+cdt.endTime}></span> 
+                </div>
+                <div class="form-group">
+                 <h5>주요언어 : <b th:text="${classOne.cdName}"></b></h5>
+                </div>
+                <div class="form-group">
+               		<h5>금액: 총 <b th:text="${classOne.price}"></b>원</h5>
+                </div>
+                <div class="form-group">
+                	<h5>신청자: <b th:text="${#authentication.principal.member.memberId}"></b></h5>
+                </div>
+                <br><br>
+                <span>신청하기 버튼을 누르면 결제화면으로 넘어갑니다.</span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-secondary" data-dismiss="modal">
+                <i class="bx bx-x d-block d-sm-none"></i>
+                <span class="d-none d-sm-block">취소</span>
+                </button>
+                <button type="button" class="btn btn-primary ml-1 " data-dismiss="modal">
+                <i class="bx bx-check d-block d-sm-none"></i>
+                <span class="d-none d-sm-block">신청하기</span>
+                </button>
+            </div>
+            </form>
+        </div>
+        </div>
+    </div>
 </div>
 </body>
 </html>

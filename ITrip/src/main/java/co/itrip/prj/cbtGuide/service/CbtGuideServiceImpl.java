@@ -78,11 +78,11 @@ public class CbtGuideServiceImpl implements CbtGuideService {
 		return map.cbtGuideListTab(vo);
 	}
 
-	/* 객관식 문제 채점시 ajax로 풀이 출력 */
+	/* 객관식 문제 채점시 ajax로 정답 출력 */
 	@Override
-	public CbtGuideVO ajaxExplnaList(CbtGuideVO vo) {
-		return map.ajaxExplnaList(vo);
-	}
+	public CbtGuideVO ajaxMyCbtLongList(CbtGuideVO vo) {
+		return map.ajaxMyCbtLongList(vo);
+	} 
 
 	/* 키워드 조회 */
 	@Override
@@ -149,6 +149,17 @@ public class CbtGuideServiceImpl implements CbtGuideService {
 	public List<CbtGuideVO> cbtGuideListX(CbtGuideVO vo) {
 		return map.cbtGuideListX(vo);
 	}
+
+	/* 사용자가 푼 서술형 문제 등록 */
+	@Override
+	public int myCbtLongInsert(MyCbtLongVO vo) {
+		
+	    int r = map.myCbtLongInsert(vo);
+	    
+		return r;
+	}
+	
+	
 
 	
 	 

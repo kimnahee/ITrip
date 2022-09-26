@@ -20,6 +20,7 @@ import co.itrip.prj.cbtGuide.service.CbtGuideService;
 import co.itrip.prj.cbtGuide.service.CbtGuideVO;
 import co.itrip.prj.cbtGuide.service.CbtKeywordVO;
 import co.itrip.prj.cbtGuide.service.MyCbtHderVO;
+import co.itrip.prj.cbtGuide.service.MyCbtLongVO;
 import co.itrip.prj.gtpcd.service.GtpCdService;
 import co.itrip.prj.langcd.service.LangCdService;
 
@@ -109,6 +110,27 @@ public class CbtGuideController {
 		
 		return "cbtGuide/cbtScoreList";
 	};
+	/* 서술형 리스트 출력 */
+	@PostMapping("/cbtGuideListTabLong.do")
+	public String cbtGuideListTabLong(CbtGuideVO vo, Model model, HttpServletRequest request) {
+		vo.setGtpCd(request.getParameter("gtpCd")); // 요청된 파라미터 값 유형코드 담음
+		vo.setLangCd(request.getParameter("langCd")); // 요청된 파라미터 값 언어코드 담음
+		//변수 생성
+		String tCd = request.getParameter("gtpCd");
+		String lCd = request.getParameter("langCd");
+		
+		model.addAttribute("cbtList", cgDao.cbtGuideListTab(vo));
+		model.addAttribute("tCd", tCd); 
+		model.addAttribute("lCd", lCd);
+		return "cbtGuide/cbtGuideListTabLong";
+	}
+	@RequestMapping("/myCbtLongInsert.do")
+	public String cbtGuideListTabLong(MyCbtLongVO vo, HttpServletRequest request){
+		vo.setCbtNo(Integer.parseInt(request.getParameter("cbtNo"))); // 요청된 파라미터 값 유형코드 담음
+		System.out.println("======controller vo.getMcNo : "+vo.getCbtNo());
+		cgDao.myCbtLongInsert(vo);
+		return "main/main";
+	}
 	
 	
 }

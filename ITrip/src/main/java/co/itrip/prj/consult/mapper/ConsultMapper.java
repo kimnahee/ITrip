@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Select;
 
+import co.itrip.prj.consult.service.ConsultDtVO;
 import co.itrip.prj.consult.service.ConsultVO;
 
 public interface ConsultMapper {
@@ -13,7 +14,8 @@ public interface ConsultMapper {
 	
 	List<ConsultVO> findAll(ConsultVO vo); // 페이징처리
 	
-	int consultInsert(ConsultVO vo); // 유저 상담 신청
+	int consultInsert(ConsultVO vo); // 가이드 상담 등록
+	int consultDtInsert(ConsultDtVO vo); // 가이드 상담 시간 등록
 	
 
 }

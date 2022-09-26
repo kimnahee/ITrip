@@ -59,18 +59,20 @@ public class ConsultController {
 	}
 	
 	@RequestMapping("/consultStart.do")
-	public String consultStart(Model model, GuideVO vo, Principal principal) {
+	public String consultStart(Model model, GuideVO vo, ConsultVO cvo, Principal principal) {
 		vo.setGuideId(principal.getName());
 		model.addAttribute("guide", guService.guideSelect(vo)); // 로그인된 가이드 아이디 확인 (단건조회)
 		model.addAttribute("joblist", cdService.jobCdList()); // 카테고리 공통코드
-		model.addAttribute("careerCdList", cdService.careerCdList()); // 경력공통코드
-		model.addAttribute("dutyCdList", cdService.dutyCdList()); // 직무공통코드
+		/*
+		 * model.addAttribute("careerCdList", cdService.careerCdList()); // 경력공통코드
+		 * model.addAttribute("dutyCdList", cdService.dutyCdList()); // 직무공통코드
+		 */		
 		return "consult/consultStart";
 	}
 	
 	@PostMapping("/consultInsert.do")
 	public String consultInsert() {
-		return "redirect:consultStart.do";
+		return "redirect:gconsult.do";
 	}
 	/*
 	 * @GetMapping("/jobCd.do") public String jobCd(Model model) {

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.itrip.prj.admin.mapper.AdminMapper">
+
+<select id="memberList" resultType="co.itrip.prj.member.service.MemberVO"
+ 						parameterType="co.itrip.prj.member.service.MemberVO">
+	select * from member
+</select>
+<select id="memberAuthList" resultType="co.itrip.prj.guide.service.GuideVO"
+ 						parameterType="co.itrip.prj.guide.service.GuideVO">
+	select g.guide_id, g.career,g.dc,g.duty,g.attach,g.attach_dir,g.state_cd,cm.cd_name,m.nick,m.name,m.auth
+		from guide g,member m,cmmncd cm 
+		where g.state_cd = 1 
+		and cm.cd_ini = 'S'
+		and g.state_cd = cm.cd_no
+		and g.guide_id = m.member_id
+</select>
+
+<update id="memberAuthUpdate">
+	update guide set state_cd = #{stateCd} where guide_id=#{guideId};
+</update>
+</mapper>

@@ -6,19 +6,29 @@
 	
 </select>
 
-<!-- 가이드 마이페이지 들어갈때 단건조회 [박은지]-->
+<!-- 가이드 마이페이지 들어갈때, 가이드 상담 신청할때 단건조회 [박은지]-->
 <select id="guideSelect" resultType="co.itrip.prj.guide.service.GuideVO">
-			select guide_id
-				,career
-				,dc
-				,duty
-				,attach
-				,attach_dir
-				,state_cd
-				,dt
-				,star
-				from guide
-				where guide_id = #{guideId}
+	 select g.guide_id
+		,g.career
+		,g.dc
+		,g.duty
+		,g.attach
+		,g.attach_dir
+		,g.state_cd
+		,g.dt
+		,star
+              ,c.cd_name
+              ,case  when g.career= '1' then '신입(1년 이하)'
+                  when g.career= '2' then '주니어(1년 ~ 3년)'
+                  when g.career= '3' then '미들(4년 ~ 8년)'
+                  when g.career= '4' then '시니어(9년 이상)'
+                  when g.career= '5' then 'Lead레벨(15년 이상)'
+               else ' '
+           end as care
+		from guide g, cmmncd c 
+		where g.duty = c.cd_no
+              and c.cd_ini='D'
+              and guide_id = #{guideId}
 </select>
 
 <!-- 유저 가이드 신청 [권소정] -->

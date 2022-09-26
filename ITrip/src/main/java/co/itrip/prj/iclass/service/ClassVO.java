@@ -29,9 +29,9 @@ public class ClassVO {
 	
 	private List<ClassDtVO> classDt; // ClassDtVO 
 	private String cdName;
-//	private String term;
-//	private String beginTime;
-//	private String endTime;
+	private String term;
+	private String beginTime;
+	private String endTime;
 	
 	
 }

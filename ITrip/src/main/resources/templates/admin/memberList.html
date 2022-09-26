@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="row" id="table-head">
+			<div class="col-12">
+				<div class="card">
+					<div class="card-header">
+						<h4 class="card-title">회원정보</h4>
+					</div>
+					<div class="card-content">
+						<div class="card-body">
+							<p>회원정보입니다.</p>
+						</div>
+
+
+						<ul class="nav nav-tabs" id="myTab" role="tablist">
+							<li class="nav-item" role="presentation"><a class="nav-link active" id="home-tab" data-toggle="tab" href="#all" role="tab" aria-controls="home"
+								aria-selected="true">전체</a></li>
+							<li class="nav-item" role="presentation"><a class="nav-link" id="contact-tab" data-toggle="tab" href="#M1" role="tab"
+								aria-controls="contact" aria-selected="false">GUIDE</a></li>
+							<li class="nav-item" role="presentation"><a class="nav-link" id="contact-tab" data-toggle="tab" href="#M2" role="tab"
+								aria-controls="contact" aria-selected="false">USER</a></li>
+							<li class="nav-item" role="presentation"><a class="nav-link" id="contact-tab" data-toggle="tab" href="#M3" role="tab"
+								aria-controls="contact" aria-selected="false">ADMIN</a></li>
+						</ul>
+
+
+						<div class="tab-content" id="myTabContent">
+						
+							<!-- 전체 -->
+							<div class="tab-pane fade show active" id="all" role="tabpanel" aria-labelledby="home-tab">
+								<div class="table-responsive">
+									<table class="table table-striped mb-0">
+										<thead>
+											<tr>
+												<th>아이디</th>
+												<th>이름</th>
+												<th>닉네임</th>
+												<th>이메일</th>
+												<th>권한</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:each="m:${memberList}">
+												<th th:text=${m.memberId}></th>
+												<td th:text=${m.name}></td>
+												<td th:text=${m.nick}></td>
+												<td th:text=${m.email}></td>
+												<td th:text=${m.auth}></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						
+							<!-- GUIDE -->
+							<div class="tab-pane fade" id="M1" role="tabpanel" aria-labelledby="contact-tab">
+								<div class="table-responsive">
+									<table class="table table-striped mb-0">
+										<thead>
+											<tr>
+												<th>아이디</th>
+												<th>이름</th>
+												<th>닉네임</th>
+												<th>이메일</th>
+												<th>권한</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:each="m:${memberList}">
+											<div th:if="${m.auth}=='GUIDE'">
+												<th th:text=${m.memberId}></th>
+												<td th:text=${m.name}></td>
+												<td th:text=${m.nick}></td>
+												<td th:text=${m.email}></td>
+												<td th:text=${m.auth}></td>
+											</div>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						
+						
+							<!-- USER -->
+							<div class="tab-pane fade" id="M2" role="tabpanel" aria-labelledby="contact-tab">
+								<div class="table-responsive">
+									<table class="table table-striped mb-0">
+										<thead>
+											<tr>
+												<th>아이디</th>
+												<th>이름</th>
+												<th>닉네임</th>
+												<th>이메일</th>
+												<th>권한</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:each="m:${memberList}">
+											<div th:if="${m.auth}=='USER'">
+												<th th:text=${m.memberId}></th>
+												<td th:text=${m.name}></td>
+												<td th:text=${m.nick}></td>
+												<td th:text=${m.email}></td>
+												<td th:text=${m.auth}></td>
+											</div>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						
+						
+							<!-- ADMIN -->
+							<div class="tab-pane fade" id="M3" role="tabpanel" aria-labelledby="contact-tab">
+								<div class="table-responsive">
+									<table class="table table-striped mb-0">
+										<thead>
+											<tr>
+												<th>아이디</th>
+												<th>이름</th>
+												<th>닉네임</th>
+												<th>이메일</th>
+												<th>권한</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:each="m:${memberList}">
+											<div th:if="${m.auth}=='ADMIN'">
+												<th th:text=${m.memberId}></th>
+												<td th:text=${m.name}></td>
+												<td th:text=${m.nick}></td>
+												<td th:text=${m.email}></td>
+												<td th:text=${m.auth}></td>
+											</div>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						
+						
+						
+						
+						</div><!-- end of myTabContent -->
+					</div><!-- end of card-content -->
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
