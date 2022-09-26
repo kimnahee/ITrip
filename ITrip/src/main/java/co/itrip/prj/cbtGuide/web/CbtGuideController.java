@@ -124,13 +124,7 @@ public class CbtGuideController {
 		model.addAttribute("lCd", lCd);
 		return "cbtGuide/cbtGuideListTabLong";
 	}
-	@RequestMapping("/myCbtLongInsert.do")
-	public String cbtGuideListTabLong(MyCbtLongVO vo, HttpServletRequest request){
-		vo.setCbtNo(Integer.parseInt(request.getParameter("cbtNo"))); // 요청된 파라미터 값 유형코드 담음
-		System.out.println("======controller vo.getMcNo : "+vo.getCbtNo());
-		cgDao.myCbtLongInsert(vo);
-		return "main/main";
-	}
+	
 	
 	
 }

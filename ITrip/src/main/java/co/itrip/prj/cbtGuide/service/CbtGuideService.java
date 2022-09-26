@@ -26,12 +26,15 @@ public interface CbtGuideService {
 	
 	public int cbtGuideInsert(CbtGuideVO vo);   /* 문제 등록 */
 	public int cbtGuideUpdate(CbtGuideVO vo);   /* 문제 수정 */ //작업 아직 X
+	
 	public int cbutGuideDelet(CbtGuideVO vo);   /* 문제 삭제 */ //작업 아직 X
 	public int myCbtHderInsert(MyCbtHderVO vo); /* 사용자가 푼 문제 등록 */
-	public int myCbtLongInsert(MyCbtLongVO vo); /* 사용자가 푼 서술형 문제 등록 */
+	
+	
 
 	
 	/* 정답률 */
 	
 	public CbtGuideVO ajaxMyCbtLongList(CbtGuideVO vo); /* 객관식 문제 채점시 ajax로 정답 출력 */
+	
 }
