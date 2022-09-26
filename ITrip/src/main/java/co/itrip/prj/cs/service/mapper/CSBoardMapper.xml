@@ -53,6 +53,7 @@
 		#{memberId},
 		sysdate, 0, #{csNo}, 0, 0, #{ctgry})
 	</insert>
+	
 	<!-- 게시글 수정 -->
 	<update id="csUpdate">
 		update csboard
@@ -61,10 +62,11 @@
 		</set>
 		where cs_no = #{csNo}
 	</update>
+	
 	<!-- 게시글 삭제 -->
 	<delete id="csDelete">
 		delete from csboard
-		where cs_no = #{csNo}
+		where orgno = #{orgNo}
 	</delete>
 
 	<!-- 답글 작성 -->
@@ -80,5 +82,11 @@
 		insert into csboard
 		values(#{csNo}, 'RE:' || #{title}, #{content}, #{memberId}, sysdate, 0, #{orgNo}, #{groupOdr}+1, #{groupLyr}+1, 'QNA')
 	</insert>
+	
+	<!-- 답글 상태 수정 -->
+	<update id="repUpdate">
+		update csboard set groupodr = groupodr + 1 where orgno = #{orgNo} and groupodr > #{groupOdr}
+	</update>
 
+	
 </mapper>

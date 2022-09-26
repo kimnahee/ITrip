@@ -14,4 +14,5 @@ public interface CSBoardService {
 	int csDelete(CSBoardVO vo);//게시글 삭제
 	
 	int repInsert(CSBoardVO vo); //답글 작성
+	int repUpdate(CSBoardVO vo); //답글 상태 수정
 }
