@@ -16,6 +16,9 @@ public class GuideVO {
 	private String stateCd; // 승인코드
 	private Date dt; // 신청일자
 	private int star; // 별점
+	
+	private String cdName; // 직무 설명
+	private String care; // 경력 설명 
 
 
 }

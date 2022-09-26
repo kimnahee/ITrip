@@ -22,14 +22,38 @@ public class ConsultServiceImpl implements ConsultService{
 
 	@Override
 	public List<ConsultVO> findAll(ConsultVO vo) {
-		// TODO Auto-generated method stub
+		// 전체조회 후 페이징처리
 		return map.findAll(vo);
 	}
 
 	@Override
 	public int consultInsert(ConsultVO vo) {
-		// 상담신청
-		return map.consultInsert(vo);
+		// 가이드 상담 등록
+		
+		// consultInsert 처리가 먼저
+		int n = map.consultInsert(vo);
+		
+		ConsultDtVO dtvo = new ConsultDtVO(); // ConsultDtVO 호출
+		dtvo.setCdtNo(vo.getConsultNo()); // key 값 1번 상담의 내용
+		
+		// 상담 요일, 시간 등록
+		for(int i=0; i < vo.getConsultDt().size(); i++) {
+			if(vo.getConsultDt().get(i) != null) {
+				dtvo.setWeek(vo.getConsultDt().get(i).getWeek());
+				dtvo.setBeginTime(vo.getConsultDt().get(i).getBeginTime());
+				dtvo.setEndTime(vo.getConsultDt().get(i).getEndTime());
+				map.consultDtInsert(dtvo);
+			}
+		}
+		
+		
+		return n;
+	}
+
+	@Override
+	public int consultDtInsert(ConsultVO vo) {
+		// 상담등록 시간 테이블
+		return 0;
 	}
 
 
