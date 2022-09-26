@@ -34,7 +34,7 @@ public class ClassController {
 	
 	
 	@GetMapping("/iClassList.do") 
-	public String iClass(ClassVO vo, Model model, HttpServletRequest request,
+	public String iClass(ClassVO vo,Model model, HttpServletRequest request,
 			@RequestParam(required = false, defaultValue = "1") int pageNum,
 			@RequestParam(required = false, defaultValue = "8") int pageSize) {
 		PageHelper.startPage(pageNum, pageSize);
@@ -86,9 +86,15 @@ public class ClassController {
 		}
 		
 		@RequestMapping("/iClassSelectOne.do") 
-		public String iClassSelectOne(ClassVO vo, Model model) {
+		public String iClassSelectOne(ClassVO vo, Model model, ClassDtVO dvo) {
 			model.addAttribute("classOne", cService.classSelectOne(vo));
+			model.addAttribute("classDt", cService.classDtList(dvo));
 			return "class/iclassSelectOne";
+		}
+		
+		@GetMapping("/iClassInsert.do")
+		public String iClassInsert() {
+			return "class/iClassList";//말고 마이페이지로 넘어가야됨
 		}
 
 }

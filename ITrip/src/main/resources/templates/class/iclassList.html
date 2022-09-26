@@ -30,22 +30,21 @@ layout:decorate="~{layout/layout}">
 </head>
 <body layout:fragment="content">
  <div class="section section-properties">
-      <div class="container">
+      <div class="container" style="border:1px solid blue;">
         <div class="row" id="classList">
         
-          <div class="card col-xs-12 col-sm-6 col-md-5 col-lg-3" th:each="cList:${classList}">
+          <div class="card col-xs-12 col-sm-6 col-md-5 col-lg-3" th:each="cList:${classList}" style="border:1px solid red;">
             <div class="property-item mb-30">
               <a href="#" class="img">
                <!--  <img src="bootstrap/property/images/img_1.jpg" alt="Image" class="img-fluid" /> -->
-              <!--<img th:src="@{*{cList.attachDir}}"alt="Image" class="img-fluid">-->
-              <img src="images/라이언.jpg"alt="Image" class="img-fluid">
+              <img th:src="@{*{cList.attachDir}}"alt="Image" class="img-fluid" style="border:1px solid green;">
+              <!--<img src="images/라이언.jpg"alt="Image" class="img-fluid">-->
               </a>
-
               <div class="property-content">
                 <div class="price mb-2"><span th:text=${cList.price} class="cPrice"></span></div>
                 <div>
                      <img src="images/dt.png" width="20px;"></img>  
-                     <span class="caption badge bg-warning" th:text="${cList.dt}"></span>
+                     <span class="caption badge bg-warning" th:text="${cList.term}"></span>
                <!--    <span class="d-block mb-2 text-black-50">5232 California Fake, Ave. 21BC</span> -->
                   <span class="city d-block mb-3" th:text="${cList.title}"></span>
 
