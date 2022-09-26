@@ -56,11 +56,6 @@
 							readonly="readonly">
 						<div class="form-body">
 							<div class="row">
-								<div class="form-group" style="display: none;">
-									<label for="basicInput">글번호</label> <input type="text"
-										class="form-control" id="csNo" name="csNo" th:field=*{csNo}
-										readonly="readonly">
-								</div>
 								<div class="form-group">
 									<label for="basicInput">제목</label> <input type="text"
 										class="form-control" id="title" name="title" th:field=*{title}
@@ -78,6 +73,28 @@
 										readonly="readonly"></textarea>
 								</div>
 
+								<!-- hidden -->
+								<div class="form-group" style="display: none;">
+									<label for="basicInput">글번호</label> <input type="text"
+										class="form-control" id="csNo" name="csNo" th:field=*{csNo}
+										readonly="readonly">
+								</div>
+								<div class="form-group" style="display: none;">
+									<label for="basicInput">원글번호</label> <input type="text"
+										class="form-control" id="orgNo" name="orgNo" th:field=*{orgNo}
+										readonly="readonly">
+								</div>
+								<div class="form-group" style="display: none;">
+									<label for="basicInput">순서</label> <input type="text"
+										class="form-control" id="groupOdr" name="groupOdr"
+										th:field=*{groupOdr} readonly="readonly">
+								</div>
+								<div class="form-group" style="display: none;">
+									<label for="basicInput">계층</label> <input type="text"
+										class="form-control" id="groupLyr" name="groupLyr"
+										th:field=*{groupLyr} readonly="readonly">
+								</div>
+
 								<!-- 수정&삭제 권한 : 작성자만 보이게 -->
 								<div class="col-sm-12 d-flex justify-content-end" id="btn">
 									<div
@@ -89,14 +106,17 @@
 											data-toggle="modal" data-target="#border-less">삭제하기</button>
 									</div>
 									&nbsp;
-									<button type="button" id="noticelistBtn" th:if="${csSelect.ctgry} == '공지사항'"
+									<button type="button" id="noticelistBtn"
+										th:if="${csSelect.ctgry} == '공지사항'"
 										class="btn btn-primary btn-md mb-0">목록으로</button>
-									<button type="button" id="qnalistBtn" th:if="${csSelect.ctgry} == 'QNA'"
+									<button type="button" id="qnalistBtn"
+										th:if="${csSelect.ctgry} == 'QNA'"
 										class="btn btn-primary btn-md mb-0">목록으로</button>
 								</div>
 
 								<!-- 답글쓰기 : 카테고리가 QNA고, 관리자만 보이게 -->
-								<div style = "display: inline-block;" class="col-sm-12 d-flex justify-content-end" id="btn"
+								<div style="display: inline-block;"
+									class="col-sm-12 d-flex justify-content-end" id="btn"
 									th:if="${csSelect.ctgry} == 'QNA'">
 									<div
 										th:if="${#authentication.principal.member.auth} == 'ROLE_ADMIN'">
@@ -115,8 +135,15 @@
 										<div class="modal-content">
 											<div class="modal-body">게시글을 삭제하시겠습니까?</div>
 											<div class="modal-footer">
-												<button type="button" class="btn btn-primary ml-1"
-													data-dismiss="modal" id="deleteBtn">
+												<button type="button" th:if="${csSelect.ctgry} == '공지사항'"
+													class="btn btn-primary ml-1" data-dismiss="modal"
+													id="deleteBtn">
+													<i class="bx bx-check d-block d-sm-none"></i> <span
+														class="d-none d-sm-block">확인</span>
+												</button>
+												<button type="button" th:if="${csSelect.ctgry} == 'QNA'"
+													class="btn btn-primary ml-1" data-dismiss="modal"
+													id="deleteQNA">
 													<i class="bx bx-check d-block d-sm-none"></i> <span
 														class="d-none d-sm-block">확인</span>
 												</button>
@@ -138,10 +165,16 @@
 		<script>
 			let csNo = $("#csNo").val();
 			let title = $("#title").val();
+			let orgNo = $("#orgNo").val();
 
 			$("#deleteBtn").on("click", function(e) {
-				console.log(csNo);
-				location.href = "/noticeDelete.do?csNo=" + csNo;
+				console.log(orgNo);
+				location.href = "/noticeDelete.do?orgNo=" + orgNo;
+			})
+
+			$("#deleteQNA").on("click", function(e) {
+				console.log(orgNo);
+				location.href = "/qnaDelete.do?orgNo=" + orgNo;
 			})
 
 			$("#updateBtn").on("click", function(e) {
@@ -152,15 +185,18 @@
 			$("#noticelistBtn").on("click", function(e) {
 				location.href = "/noticeList.do";
 			})
-			
+
 			$("#qnalistBtn").on("click", function(e) {
 				location.href = "/qnaList.do";
 			})
-			
-			$("#replyBtn").on("click", function(e) {
-				console.log(title);
-				location.href = "/repInsertForm.do?title=" + title +"&&csNo=" + csNo;
-			})
+
+			$("#replyBtn").on(
+					"click",
+					function(e) {
+						console.log(title);
+						location.href = "/repInsertForm.do?title=" + title
+								+ "&&csNo=" + csNo + "&&orgNo=" + orgNo;
+					})
 		</script>
 	</div>
 </body>

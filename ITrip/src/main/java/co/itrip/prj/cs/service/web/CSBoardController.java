@@ -70,10 +70,10 @@ public class CSBoardController {
 		return "redirect:noticeList.do";
 	}
 
-	//게시글 삭제
+	//게시글 삭제(공지사항)
 	@GetMapping("/noticeDelete.do")
 	public String noticeDelete(CSBoardVO vo, HttpServletRequest request) {
-		vo.setCsNo(Integer.parseInt(request.getParameter("csNo")));
+		vo.setOrgNo(Integer.parseInt(request.getParameter("orgNo")));
 		service.csDelete(vo);
 		return "redirect:noticeList.do";
 	}
@@ -102,13 +102,23 @@ public class CSBoardController {
 		return "redirect:qnaList.do";
 	}
 	
+	//게시글 삭제(Q&A)
+	@GetMapping("/qnaDelete.do")
+	public String qnaDelete(CSBoardVO vo, HttpServletRequest request) {
+		vo.setOrgNo(Integer.parseInt(request.getParameter("orgNo")));
+		service.csDelete(vo);
+		return "redirect:qnaList.do";
+	}
+	
 	//답글 작성 폼
 	@GetMapping("/repInsertForm.do")
 	public String repInsertForm(CSBoardVO vo, Model model, HttpServletRequest request) {
 		String title = request.getParameter("title");
 		int csNo = Integer.parseInt(request.getParameter("csNo"));
+		int orgNo = Integer.parseInt(request.getParameter("orgNo"));
 		vo.setTitle(title);
 		vo.setCsNo(csNo);
+		vo.setOrgNo(orgNo);
 		model.addAttribute("rep", service.selectCs(vo));
 		return "csboard/qna/repInsertForm";
 	}
@@ -116,6 +126,7 @@ public class CSBoardController {
 	//답글 작성
 	@PostMapping("/repInsert.do")
 	public String repInsert(CSBoardVO vo) {
+		service.repUpdate(vo);
 		service.repInsert(vo);
 		return "redirect:qnaList.do";
 	}

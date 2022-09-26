@@ -43,4 +43,9 @@ public class CSBoardServiceImpl implements CSBoardService {
 		return map.repInsert(vo);
 	}
 
+	@Override
+	public int repUpdate(CSBoardVO vo) {
+		return map.repUpdate(vo);
+	}
+
 }
