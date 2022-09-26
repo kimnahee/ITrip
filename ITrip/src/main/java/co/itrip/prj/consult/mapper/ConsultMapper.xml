@@ -31,36 +31,70 @@
 	
 	<!-- 페이징 처리 카테고리 -->
 	<select id="findAll" resultType="co.itrip.prj.consult.service.ConsultVO" parameterType="co.itrip.prj.consult.service.ConsultVO">
-	   	 select c.consult_no
-		            ,c.title
-		            ,c.content
-		            ,c.dt
-		            ,c.state_cd
-		            ,c.guide_id
-		            ,c.job_cd
-		            ,c.price
-		            ,c.ennc
-		            ,c.begin_date
-		            ,c.end_date
-		            ,cm.cd_name
-		            ,case  when g.career= '1' then '신입(1년 이하)'
-		                   when g.career= '2' then '주니어(1년 ~ 3년)'
-		                   when g.career= '3' then '미들(4년 ~ 8년)'
-		                   when g.career= '4' then '시니어(9년 이상)'
-		                   when g.career= '5' then 'Lead레벨(15년 이상)'
-		                else ' '
-		            end as career
-	      from consult c, guide g, cmmncd cm
+	   	 SELECT C.CONSULT_NO
+		            ,C.TITLE
+		            ,C.CONTENT
+		            ,C.DT
+		            ,C.STATE_CD
+		            ,C.GUIDE_ID
+		            ,C.JOB_CD
+		            ,C.PRICE
+		            ,C.ENNC
+		            ,C.BEGIN_DATE
+		            ,C.END_DATE
+		            ,CM.CD_NAME
+		            ,CASE  WHEN G.CAREER= '1' THEN '신입(1년 이하)'
+		                   WHEN G.CAREER= '2' THEN '주니어(1년 ~ 3년)'
+		                   WHEN G.CAREER= '3' THEN '미들(4년 ~ 8년)'
+		                   WHEN G.CAREER= '4' THEN '시니어(9년 이상)'
+		                   WHEN G.CAREER= '5' THEN 'Lead레벨(15년 이상)'
+		                ELSE ' '
+		            END AS CAREER
+	      FROM CONSULT C, GUIDE G, CMMNCD CM
 	      <where>
-				c.guide_id=g.guide_id  
-		        and g.duty= cm.cd_no
-		        and cm.cd_ini='D'
+				C.GUIDE_ID=G.GUIDE_ID  
+		        AND G.DUTY= CM.CD_NO
+		        AND CM.CD_INI='D'
 		       <if test="jobCd != null">
-				and job_cd = #{jobCd}
+				AND JOB_CD = #{jobCd}
 				</if>			
 		  </where>
-        order by consult_no desc
+        ORDER BY CONSULT_NO DESC
 	
+	</select>
+	
+	<select id="consultSelectOne" parameterType="co.itrip.prj.consult.service.ConsultVO" resultType="co.itrip.prj.consult.service.ConsultVO">
+	SELECT C.CONSULT_NO
+	            ,C.TITLE
+	            ,C.CONTENT
+	            ,C.DT
+	            ,C.STATE_CD
+	            ,C.GUIDE_ID
+	            ,C.JOB_CD
+	            ,C.PRICE
+	            ,C.ENNC
+	            ,C.BEGIN_DATE
+	            ,C.END_DATE
+	            ,CM.CD_NAME
+	            ,CASE  WHEN G.CAREER= '1' THEN '신입(1년 이하)'
+	                   WHEN G.CAREER= '2' THEN '주니어(1년 ~ 3년)'
+	                   WHEN G.CAREER= '3' THEN '미들(4년 ~ 8년)'
+	                   WHEN G.CAREER= '4' THEN '시니어(9년 이상)'
+	                   WHEN G.CAREER= '5' THEN 'Lead레벨(15년 이상)'
+	                ELSE ' '
+	            END AS CAREER
+      FROM CONSULT C, GUIDE G, CMMNCD CM
+      WHERE C.GUIDE_ID=G.GUIDE_ID  
+      AND G.DUTY= CM.CD_NO
+      AND CM.CD_INI='D'
+      AND CONSULT_NO=#{consultNo}
+      ORDER BY CONSULT_NO DESC
+	</select>
+	
+	<select id="consultDtList">
+	SELECT CDT_NO, CONSULT_NO, WEEK, BEGIN_TIME, END_TIME
+	FROM CONSULT_DT
+	WHERE CONSULT_NO=#{consultNo}
 	</select>
 	
 
@@ -68,8 +102,8 @@
 		<selectKey keyProperty="consultNo" order="BEFORE" resultType="int">
 			SELECT CASE WHEN MAX(CONSULT_NO) IS NULL THEN 1 ELSE MAX(CONSULT_NO)+1 END FROM CONSULT
 		</selectKey>
-		INSERT (CONSULT_NO, TITLE, CONTENT, DT, STATE_CD, GUIDE_ID, JOB_ID, PRICE, ENNC, BEGIN_DATE, END_DATE) INTO CONSULT 
-		VALUES(#{consultNo}, #{title}, #{content}, sysdate, #{stateCd}, #{guideId}, #{jobId}, #{price}, 1, #{beginDate}, #{endDate})
+		INSERT INTO CONSULT 
+		VALUES(#{consultNo}, #{title}, #{content}, sysdate, '1', #{guideId}, #{jobCd}, #{price}, '비활성화', #{beginDate}, #{endDate})
 	</insert>
 	
 	<insert id="consultDtInsert">

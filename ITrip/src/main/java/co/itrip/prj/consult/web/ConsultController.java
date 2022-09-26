@@ -18,6 +18,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
 import co.itrip.prj.cmmncd.service.CmmnCdService;
+import co.itrip.prj.consult.service.ConsultDtVO;
 import co.itrip.prj.consult.service.ConsultService;
 import co.itrip.prj.consult.service.ConsultVO;
 import co.itrip.prj.guide.service.GuideService;
@@ -71,8 +72,16 @@ public class ConsultController {
 	}
 	
 	@PostMapping("/consultInsert.do")
-	public String consultInsert() {
+	public String consultInsert(ConsultVO vo) {
+		conService.consultInsert(vo);
 		return "redirect:gconsult.do";
+	}
+	
+	@RequestMapping("/consultSelectOne.do")
+	public String consultSelectOne(ConsultVO vo, Model model, ConsultDtVO dtvo) {
+		model.addAttribute("consultOne", conService.consultSelectOne(vo));
+		model.addAttribute("consultDt", conService.consultDtList(dtvo));
+		return "consult/consultSelectOne";
 	}
 	/*
 	 * @GetMapping("/jobCd.do") public String jobCd(Model model) {

@@ -32,9 +32,9 @@ public class ConsultServiceImpl implements ConsultService{
 		
 		// consultInsert 처리가 먼저
 		int n = map.consultInsert(vo);
-		
+		System.out.println(n);
 		ConsultDtVO dtvo = new ConsultDtVO(); // ConsultDtVO 호출
-		dtvo.setCdtNo(vo.getConsultNo()); // key 값 1번 상담의 내용
+		dtvo.setConsultNo(vo.getConsultNo()); // key 값 1번 상담의 내용
 		
 		// 상담 요일, 시간 등록
 		for(int i=0; i < vo.getConsultDt().size(); i++) {
@@ -51,10 +51,17 @@ public class ConsultServiceImpl implements ConsultService{
 	}
 
 	@Override
-	public int consultDtInsert(ConsultVO vo) {
-		// 상담등록 시간 테이블
-		return 0;
+	public ConsultVO consultSelectOne(ConsultVO vo) {
+		// 상담 단건조회
+		return map.consultSelectOne(vo);
 	}
+
+	@Override
+	public List<ConsultDtVO> consultDtList(ConsultDtVO vo) {
+		// TODO Auto-generated method stub
+		return map.consultDtList(vo);
+	}
+
 
 
 }
