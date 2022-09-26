@@ -31,10 +31,11 @@
 	    </if>
 	</select>
 	
-	<!-- public CbtGuideVO ajaxExplnaList(CbtGuideVO VO); // 풀이 단건 리스트 -->
-	<select id="ajaxExplnaList" parameterType="co.itrip.prj.cbtGuide.service.CbtGuideVO" resultType="co.itrip.prj.cbtGuide.service.CbtGuideVO">
+	<!-- public CbtGuideVO ajaxMyCbtLong(CbtGuideVO vo); /* 객관식 문제 채점시 ajax로 정답 출력 */ -->
+	<select id="ajaxMyCbtLongList" parameterType="co.itrip.prj.cbtGuide.service.CbtGuideVO" resultType="co.itrip.prj.cbtGuide.service.CbtGuideVO">
 	    SELECT * FROM CBT_GUIDE WHERE CBT_NO = ${cbtNo}
 	</select>
+	
 	
 	
 	<!-- CbtGuideVO cbtGuideListOne(CbtGuideVO VO);//단건조회(R) -->
@@ -128,5 +129,13 @@
 												 (select cbt_no4 from mycbt_hder where mc_no = ${mcNo} and chk4 = 0),
 												 (select cbt_no5 from mycbt_hder where mc_no = ${mcNo} and chk5 = 0))
 	</select>
+	<!-- public int myCbtLongInsert(MyCbtHderVO vo); /* 사용자가 푼 서술형 문제 등록 */ -->
+	<insert id="myCbtLongInsert">
+	    <selectKey keyProperty="mkyNo" order="BEFORE" resultType="int">
+			SELECT NVL(MAX(MKY_NO),0) + 1
+			FROM MYCBT_LONG
+		</selectKey>
+		INSERT INTO MYCBT_LONG (MKY_NO, MC_KWRD, CBT_NO) VALUES (${mkyNo}, #{mcKwrd}, ${cbtNo})
+	</insert>
 	
 </mapper>
