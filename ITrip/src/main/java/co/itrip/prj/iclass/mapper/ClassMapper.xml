@@ -4,23 +4,22 @@
 
 	<insert id="classInsert" >
 		<selectKey keyProperty="classNo" order="BEFORE" resultType="int">
-			SELECT CASE WHEN MAX(CLASS_NO) IS NULL THEN 1 ELSE MAX(CLASS_NO) +1 END AS ID FROM CLASS
+			SELECT CASE WHEN MAX(CLASS_NO) IS NULL THEN 1 ELSE MAX(CLASS_NO)+1 END AS ID FROM CLASS
 		</selectKey>
 		INSERT INTO CLASS VALUES (#{classNo}, #{title}, #{content}, #{crclm}, sysdate, #{price}, #{attach}, 
-		                          #{attachDir}', 'S1', '#{guideId}','#{jobCd}', #{psncpa},  #{classCnt})
+		                          #{attachDir}, 'S1', #{guideId}, #{jobCd}, #{psncpa},  #{classCnt})
 	</insert>
 	
 	<insert id="classDtInsert" >
-		insert into class_dt values (#{ctimeNo}, #{classNo}, #{term}, #{beginTime}, #{endTime})
-		<!-- <selectKey keyProperty="ctimeNo" order="BEFORE" resultType="int">
+		 <selectKey keyProperty="ctimeNo" order="BEFORE" resultType="int">
          SELECT 
-             CASE WHEN MAX(ctime_no) IS NULL THEN 1
-             ELSE MAX(ctime_no)+1 
+             CASE WHEN MAX(CTIME_NO) IS NULL THEN 1
+             ELSE MAX(CTIME_NO) +1 
              END AS NO
-         FROM class_dt
-         where class_no=#{classNo}
+         FROM CLASS_DT
+         WHERE CLASS_NO = #{classNo}
       </selectKey>
-		insert into class_dt values (#{ctimeNo}, #{classNo}, #{term}, #{beginTime}, #{endTime}) -->
+		insert into class_dt values (#{ctimeNo}, #{classNo}, #{term}, #{beginTime}, #{endTime}) 
 	</insert>
 
 </mapper>

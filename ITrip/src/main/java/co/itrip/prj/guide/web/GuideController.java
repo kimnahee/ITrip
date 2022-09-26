@@ -74,7 +74,7 @@ public class GuideController {
 		
 		// job카테고리 뿌려주기
 		model.addAttribute("joblist", cdService.jobCdList());
-		return "member/cstart";
+		return "guide/cstart";
 	}
 	
 	// 가이드 마이페이지 

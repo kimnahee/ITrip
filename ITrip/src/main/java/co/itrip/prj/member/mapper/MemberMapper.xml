@@ -29,6 +29,10 @@
 		</set>
 		where member_id = #{memberId}
 	</update>
+	
+	<delete id="memberDelete">
+	
+	</delete>
 
 
 

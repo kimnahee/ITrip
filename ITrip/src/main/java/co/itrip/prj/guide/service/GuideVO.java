@@ -1,9 +1,6 @@
 package co.itrip.prj.guide.service;
 
 import java.sql.Date;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 import lombok.Data;
 
 @Data

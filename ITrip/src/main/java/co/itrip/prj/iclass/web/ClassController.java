@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
 
+import co.itrip.prj.cmmncd.service.CmmnCdService;
 import co.itrip.prj.iclass.service.ClassDtVO;
 import co.itrip.prj.iclass.service.ClassService;
 import co.itrip.prj.iclass.service.ClassVO;
@@ -19,6 +20,10 @@ public class ClassController {
 	
 	@Autowired
 	private ClassService cService; // 가이드 서비스
+	
+	@Autowired
+	private CmmnCdService cmService; // 공통코드서비스
+	
 	
 	@GetMapping("/iClass") 
 	public String iClass() {
@@ -38,24 +43,27 @@ public class ClassController {
 				vo.setAttach(filename);
 				vo.setAttachDir("/files/"+filename);
 			}
-//			System.out.println("1"+vo.getTitle());
-//			System.out.println("2"+vo.getClassDt().get(0).getCtimeNo());
-//			System.out.println("3"+vo.getClassNo());
-//			System.out.println("4"+vo.getContent());
-//			System.out.println("5"+vo.getCrclm());
-//			System.out.println("6"+vo.getDt()); // 
-//			System.out.println("7"+vo.getPrice());
-//			System.out.println("8"+vo.getConfmCd()); //
-//			System.out.println("9"+vo.getGuideId());
-//			System.out.println("10"+vo.getJobCd());
-//			System.out.println("11"+vo.getPsncpa());
-//			System.out.println("12"+vo.getClassCnt());
-//			System.out.println("13"+vo.getAttach());
-//			System.out.println("14"+vo.getAttachDir());
-//			System.out.println("2"+vo.getClassDt().get(0).getClassNo());
-//			System.out.println("2"+vo.getClassDt().get(0).getTerm());
-//			System.out.println("2"+vo.getClassDt().get(0).getBeginTime());
-//			System.out.println("2"+vo.getClassDt().get(0).getEndTime());
+			// ClassVO
+			System.out.println("1"+vo.getTitle());
+			System.out.println("2"+vo.getClassNo()); // 0으로나옴
+			System.out.println("3"+vo.getContent());
+			System.out.println("4"+vo.getCrclm());
+			System.out.println("5"+vo.getDt());  // null
+			System.out.println("6"+vo.getPrice());
+			System.out.println("7"+vo.getConfmCd()); // null
+			System.out.println("8"+vo.getGuideId());
+			System.out.println("9"+vo.getJobCd());
+			System.out.println("10"+vo.getPsncpa());
+			System.out.println("11"+vo.getClassCnt());
+			System.out.println("12"+vo.getAttach());
+			System.out.println("13"+vo.getAttachDir());
+			
+			// ClassDtVO
+			System.out.println("14"+vo.getClassDt().get(0).getClassNo()); // 0으로나옴
+			System.out.println("15"+vo.getClassDt().get(0).getTerm());
+			System.out.println("16"+vo.getClassDt().get(0).getBeginTime());
+			System.out.println("17"+vo.getClassDt().get(0).getEndTime());
+			System.out.println("18"+vo.getClassDt().get(0).getCtimeNo()); // 0
 			
 			cService.classInsert(vo);
 			
