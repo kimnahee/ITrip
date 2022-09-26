@@ -17,8 +17,15 @@ public class GuideVO {
 	private Date dt; // 신청일자
 	private int star; // 별점
 	
+
+	//admin에서 추가로 필요한정보 ->경아
+	private String nick;
+	private String name;
+	private String auth;
+
 	private String cdName; // 직무 설명
 	private String care; // 경력 설명 
+
 
 
 }
