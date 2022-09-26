@@ -7,7 +7,6 @@
 	            ,c.title
 	            ,c.content
 	            ,c.dt
-	            ,c.member_id
 	            ,c.state_cd
 	            ,c.guide_id
 	            ,c.job_cd
@@ -29,7 +28,6 @@
       and cm.cd_ini='D'
       order by consult_no desc
 	</select> 
-
 	
 	<!-- 페이징 처리 카테고리 -->
 	<select id="findAll" resultType="co.itrip.prj.consult.service.ConsultVO" parameterType="co.itrip.prj.consult.service.ConsultVO">
@@ -37,7 +35,6 @@
 		            ,c.title
 		            ,c.content
 		            ,c.dt
-		            ,c.member_id
 		            ,c.state_cd
 		            ,c.guide_id
 		            ,c.job_cd
@@ -71,7 +68,20 @@
 		<selectKey keyProperty="consultNo" order="BEFORE" resultType="int">
 			SELECT CASE WHEN MAX(CONSULT_NO) IS NULL THEN 1 ELSE MAX(CONSULT_NO)+1 END FROM CONSULT
 		</selectKey>
-		<!-- INSERT (CONSULT_NO, TITLE, CONTENT, DT, MEMBER_ID, STATE_CD, GUIDE_ID, JOB_ID, PRICE, ENNC, BEGIN_DATE, END_DATE) INTO CONSULT VALUES(#{title},#{guideId},#{nick},#{career},#{duty},#{dc},) -->
+		INSERT (CONSULT_NO, TITLE, CONTENT, DT, STATE_CD, GUIDE_ID, JOB_ID, PRICE, ENNC, BEGIN_DATE, END_DATE) INTO CONSULT 
+		VALUES(#{consultNo}, #{title}, #{content}, sysdate, #{stateCd}, #{guideId}, #{jobId}, #{price}, 1, #{beginDate}, #{endDate})
+	</insert>
+	
+	<insert id="consultDtInsert">
+		<selectKey keyProperty="cdtNo" order="BEFORE" resultType="int">
+		SELECT 
+			CASE WHEN MAX(CDT_NO) IS NULL THEN 1
+			ELSE MAX(CDT_NO) +1
+			END AS NO
+		FROM CONSULT_DT
+		WHERE CONSULT_NO = #{consultNo}
+		</selectKey>
+		INSERT INTO CONSULT_DT VALUES (#{cdtNo}, #{consultNo}, #{week}, #{beginTime}, #{endTime})
 	</insert>
 	
 

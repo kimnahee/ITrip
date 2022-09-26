@@ -1,6 +1,7 @@
 package co.itrip.prj.consult.service;
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.Data;
 
@@ -12,7 +13,7 @@ public class ConsultVO {
 	private String title; // 제목
 	private String content; // 내용
 	private Date dt; // 작성일자
-	private String memberId; // 상담 신청한 유저
+	// private String memberId; // 상담 신청한 유저
 	private String stateCd; // 상담승인 여부코드
 	private String guideId; // 가이드 아이디
 	private String jobCd; // 업무카테고리코드
@@ -23,6 +24,7 @@ public class ConsultVO {
 	private String career; // 가이드 경력
 	private String cdName; // 가이드 직무 //consultMapper에서 조인구문으로 가져와서 목록에 뿌려주기
 
+	private List<ConsultDtVO> consultDt; // ConsultDtVO
 	
 	
 	
