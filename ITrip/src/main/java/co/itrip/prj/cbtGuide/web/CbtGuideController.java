@@ -100,11 +100,12 @@ public class CbtGuideController {
 	public String myCbtHderInsert(MyCbtHderVO mvo, CbtGuideVO vo, Model model, HttpServletRequest request, Principal prin) {
 		 
 		cgDao.myCbtHderInsert(mvo); // 등록 
-		int mcNo = Integer.parseInt(request.getParameter("mcNo"));
-		
+		//int mcNo = Integer.parseInt(request.getParameter("mcNo"));
 		model.addAttribute("myCbtListS", cgDao.myCbtHderList(mvo)); // 사용자가 푼 문제 출력
+		vo.setMcNo(mvo.getMcNo());
 		model.addAttribute("ListO", cgDao.cbtGuideListO(vo)); // 사용자가 푼 정답문제 출력
 		model.addAttribute("ListX", cgDao.cbtGuideListX(vo)); // 사용자가 푼 오답문제 출력
+		System.out.println("======controller vo.getMcNo : "+vo.getMcNo());
 		
 		return "cbtGuide/cbtScoreList";
 	};
