@@ -197,13 +197,20 @@
 									</div>
 								</div>
 							</div>
-						</div>   -->
+						</div>   
 						 
 						
 						
+						<div id="content" class="container" style="border:1px solid red;"></div>
+							<div class="container">
+							 <div class="panel col-sm-10 panel-default">
+							 <div class="panel-body reply-top media">
+							  <div id="page"></div>
+							 </div>
+							 </div>
+							</div>
 						
-						
-						
+						-->
 						
 						
 						
@@ -258,6 +265,11 @@
 		</div><!-- end of slides  -->
 	</div>	<!-- end of content  -->		
 </div><!-- end of th:if  -->
+
+
+
+
+
 
 <div id="pageNum"></div>
 <input type="hidden" id="memberId" name="memberId" th:value="${#authentication.principal.member.memberId}">
@@ -474,7 +486,6 @@ function moreInfo(res){
 	let cbtNos = document.getElementById("cbtNos").innerText;
 	
 	feedbackTab.addEventListener("click",function(){
-		
 		$.ajax({
 			url:'/feedbackList.do',
 			type:'get',
@@ -500,7 +511,86 @@ function moreInfo(res){
 				console.log(xhr,err)
 			}
 		}) 
+		
 	}) 
+	
+	
+	
+
+	
+	/*
+	
+	
+	//page start
+	
+	feedbackTab.addEventListener("click",function(){
+		
+pagehtml(0);
+	let pageNum = 0;
+	function pagehtml(pageNum) {
+		
+//var articleid = $("#articleNum").val();
+if (pageNum == 0){
+pageNum=1;
+} else {
+pageNum=pageNum;
+}
+$.ajax({
+ url:'/feedbackList.do',
+	type:'get',
+	beforeSend:function(xhr){
+		xhr.setRequestHeader(csrfHeaderName,csrfTokenValue);
+	}, 
+	dataType:'json',
+	data: {'pageNum' : 5, 'pageSize' : 5, 'cbtNo':cbtNos },
+success:function (data) {
+console.log(data.pageNum+": pageNum")
+console.log(data.pages+": pages")
+ var options = {
+alignment:"center",//    
+　　　　　　currentPage: data.pageNum,//    
+　　　　　　totalPages: data.pages,//           
+　　　　　　pageUrl: function(type, page, current){
+if (page==current) {
+return "javascript:void(0)";
+} else {
+return "javascript:pagehtml("+page+")";
+}
+}
+};
+var html="";
+$.each(data.list, function (i, obj) {
+html += '<div class="panel col-sm-10 panel-default">'+
+'<div class="panel-body reply-top media">'+
+'<div class="col-sm-3 col-md-2 media-left">'+
+'<img src="images/dt.png" class="img-circle img-thumbnail" />'+
+'<p class="p-css"></p>'+
+'</div>'+
+'<div class="col-sm-10">'+
+'<div class="text-right">#'+i+'</div>'+
+'<hr/>'+
+'<div class="reply-content">'+
+'<span>'+obj.content+'</span>'+
+'</div>'+
+'</div>'+
+'</div>'+
+'</div>';
+});
+$("#content").empty();
+$("#content").append(html);
+$("#page").bootstrapPaginator(options);
+},
+error:function (error) {
+alert("error");
+}
+});
+}
+	})
+	
+	
+	//page end
+	*/
+	
 
  }
 
