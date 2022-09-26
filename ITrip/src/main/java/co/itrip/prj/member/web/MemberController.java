@@ -12,10 +12,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 
 import co.itrip.prj.cmmncd.service.CmmnCdService;
 import co.itrip.prj.community.service.CommunityService;
+import co.itrip.prj.community.service.CommunityVO;
 import co.itrip.prj.community.service.ReplyVO;
 import co.itrip.prj.follow.service.FollowService;
 import co.itrip.prj.follow.service.FollowVO;
@@ -80,10 +85,15 @@ public class MemberController { //Principal
 	
 	
 
-	// 마이페이지 내가 쓴 글
+	// 마이페이지 내가 쓴 글(스터디게시판)
 		@GetMapping("/myWriter")
-		public String myWriter(Model model) {
-			model.addAttribute("communityList", cService.communityList());
+		public String myWriter(CommunityVO vo, Model model, HttpServletRequest request,
+				@RequestParam(required = false, defaultValue = "1") int pageNum,
+				@RequestParam(required = false, defaultValue = "10") int pageSize) {
+			PageHelper.startPage(pageNum, pageSize);
+			vo.setCtgry("''");
+			vo.setMemberId(request.getParameter("memberId"));
+			model.addAttribute("pageInfo", PageInfo.of(cService.findAll(vo)));
 			return "member/mywriter";
 		}
 		

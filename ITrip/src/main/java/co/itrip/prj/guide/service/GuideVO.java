@@ -17,4 +17,5 @@ public class GuideVO {
 	private Date dt; // 신청일자
 	private int star; // 별점
 
+
 }
