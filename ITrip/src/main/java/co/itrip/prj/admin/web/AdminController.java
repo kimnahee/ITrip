@@ -31,6 +31,7 @@ public class AdminController {
 	
 	@Autowired
 	private AdminService dao;
+
 	
 	@GetMapping("/appClass.do")
 	public String appClass() {

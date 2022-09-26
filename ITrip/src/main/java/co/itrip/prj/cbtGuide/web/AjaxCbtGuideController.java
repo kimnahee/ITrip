@@ -1,5 +1,6 @@
 package co.itrip.prj.cbtGuide.web;
 
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +23,24 @@ public class AjaxCbtGuideController {
 	@Autowired
 	private CbtGuideService cgDao;
 	
-	@PostMapping("/ajaxExplnaList.do")
-	public CbtGuideVO ajaxExplnaList(CbtGuideVO vo, MyCbtLongVO myVo,  Model model) {
+	@PostMapping("/ajaxMyCbtLongList.do")
+	public CbtGuideVO ajaxCbtLongAll(CbtGuideVO vo, MyCbtLongVO myVo,  Model model, HttpServletRequest request) {
+		vo.setCbtNo(Integer.parseInt(request.getParameter("cbtNo"))); // 요청된 파라미터 값 유형코드 담음 
+		System.out.println("======controller vo.getMcNo : "+vo.getCbtNo());
+		 //cgDao.ajaxMyCbtLongInsert(myVo);
+		
 		model.addAttribute("cbtList", cgDao.ajaxMyCbtLongList(vo));
-		model.addAttribute("myList", cgDao.myCbtLongInsert(myVo));
+		
+		//model.addAttribute("myList", cgDao.myCbtLongInsert(myVo));
 		return cgDao.ajaxMyCbtLongList(vo);
 	}
+	/*
+	 * @RequestMapping("/myCbtLongInsert.do") public String
+	 * cbtGuideListTabLong(MyCbtLongVO vo, HttpServletRequest request){
+	 * vo.setCbtNo(Integer.parseInt(request.getParameter("cbtNo"))); // 요청된 파라미터 값
+	 * 유형코드 담음 System.out.println("======controller vo.getMcNo : "+vo.getCbtNo());
+	 * cgDao.myCbtLongInsert(vo); return "main/main"; }
+	 */
 	
 	
 
