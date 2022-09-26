@@ -24,7 +24,7 @@
 
 	<select id="classList" resultType="co.itrip.prj.iclass.service.ClassVO"
 			 parameterType="co.itrip.prj.iclass.service.ClassVO">
-		select distinct c.class_no, c.title, c.content, c.crclm, c.dt, c.price, c.attach, c.attach_dir, c.job_cd, c.psncpa, c.class_cnt, c.ennc, cm.cd_ini, cm.cd_no, cm.cd_name, dt.term, dt.begin_time, dt.end_time
+		select distinct c.class_no, c.title, c.content, c.crclm, c.dt, c.price, c.attach, c.attach_dir, c.job_cd, c.psncpa, c.class_cnt, c.ennc, c.confm_cd, c.guide_id, cm.cd_ini, cm.cd_no, cm.cd_name, dt.term, dt.begin_time, dt.end_time
 		from class c
 		left join cmmncd cm
 		on c.job_cd = cm.cd_no

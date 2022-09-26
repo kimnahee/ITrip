@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import co.itrip.prj.admin.service.AdminService;
 import co.itrip.prj.guide.service.GuideVO;
+import co.itrip.prj.iclass.service.ClassService;
+import co.itrip.prj.iclass.service.ClassVO;
 import co.itrip.prj.member.service.MemberVO;
 
 
@@ -30,16 +32,23 @@ public class AdminController {
 	private ConsultService conService; // 1:1 상담서비스
 	
 	@Autowired
+	private ClassService clService;
+	
+	@Autowired
 	private AdminService dao;
 
 	
-	@GetMapping("/appClass.do")
-	public String appClass() {
+	@GetMapping("/appClass.do") // admin-Class 승인
+	public String appClass(ClassVO vo, Model model, HttpServletRequest request,
+			@RequestParam(required = false, defaultValue = "1") int pageNum,
+			@RequestParam(required = false, defaultValue = "8") int pageSize) {
+		PageHelper.startPage(pageNum, pageSize);
+		model.addAttribute("pageInfo", PageInfo.of(clService.classList(vo)));
 		return "admin/appclass";
 	}
 	
 
-	@GetMapping("/appConsult.do")
+	@GetMapping("/appConsult.do") // admin-Consult 승인
 	public String appConsult(ConsultVO vo, Model model, HttpServletRequest request,
 			@RequestParam(required = false, defaultValue = "1") int pageNum,
 			@RequestParam(required = false, defaultValue = "8") int pageSize) {
