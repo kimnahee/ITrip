@@ -233,10 +233,18 @@ hr {
 				if (gNo == '4') {
 					$("#gtpCd").val('4');
 					$("#langCd").val(lNo);
+					typefrm.action = '/cbtGuideListTab.do';
 					$("#typefrm").submit();
-				} else {
+				} else if (gNo == '3'){
+					$("#gtpCd").val('3');
+					$("#langCd").val(lNo);
+					typefrm.action = '/cbtGuideListTabLong.do';
+					$("#typefrm").submit();
+					
+				}else {
 					$("#gtpCd").val(gNo);
 					$("#langCd").val(lNo);
+					typefrm.action = '/cbtGuideListTab.do';
 					$("#typefrm").submit();
 				}
 			})

@@ -6,6 +6,7 @@ import java.util.Map;
 import co.itrip.prj.cbtGuide.service.CbtGuideVO;
 import co.itrip.prj.cbtGuide.service.CbtKeywordVO;
 import co.itrip.prj.cbtGuide.service.MyCbtHderVO;
+import co.itrip.prj.cbtGuide.service.MyCbtLongVO;
 
 /**
 * 가이드CBT Mapping
@@ -28,6 +29,7 @@ public interface CbtGuideMapper {
 		public int cbtGuideUpdate(CbtGuideVO vo);   /* 문제 수정 */ //작업 아직 X
 		public int cbutGuideDelet(CbtGuideVO vo);   /* 문제 삭제 */ //작업 아직 X
 		public int myCbtHderInsert(MyCbtHderVO vo); /* 사용자가 푼 문제 등록 */
+		public int myCbtLongInsert(MyCbtLongVO vo); /* 사용자가 푼 서술형 문제 등록 */
 		public int keywordInsert(CbtKeywordVO kvo); /* 키워드 등록 */ //mapper에만 있음
 		
 		public int myCbtHderChkUpdate(MyCbtHderVO vo); /* 정답 체크 등록 */ //mapper에만 있음
@@ -36,5 +38,5 @@ public interface CbtGuideMapper {
 		
 		/* 정답률 */
 		
-		public CbtGuideVO ajaxExplnaList(CbtGuideVO vo); /* 객관식 문제 채점시 ajax로 풀이 출력 */
+		public CbtGuideVO ajaxMyCbtLongList(CbtGuideVO vo); /* 객관식 문제 채점시 ajax로 정답 출력 */
 }
