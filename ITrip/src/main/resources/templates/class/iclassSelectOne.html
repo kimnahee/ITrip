@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+layout:decorate="~{layout/layout}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <section class="section" style="margin-left:100px;margin-right:100px;">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title" th:text="${classOne.title}"></h4>
+                        <h5 class="card-title" th:text="${classOne.guideId}"></h5>
+                    </div>
+                    <div class="card-body">
+                        <div> 
+                        	<img src="images/spring.png"alt="Image" class="img-fluid" width="500px" style="float: right;">
+                        </div>
+                        <div class="divider">
+                            <div class="divider-text">기본정보</div>
+                        </div>
+                        <h5>일자 : <span th:text=${classOne.dt}></span></h5>
+                        <h5>정원 : <span th:text=${classOne.psncpa}></span>명</h5>
+                        <h5>주요언어 : <span th:text=${classOne.cdName}></span></h5>
+                        <h5>가격 : <span th:text=${classOne.price}></span>원</h5>
+                        <div class="divider">
+                            <div class="divider-text">커리큘럼</div>
+                        </div>
+                        <h5 th:text=${classOne.crclm}></h5>
+                        <div class="divider">
+                            <div class="divider-text">수업상세내용</div>
+                        </div>
+                        <h5 th:text=${classOne.content}></h5>
+                        
+	                    <a href="#"  class="btn btn-primary py-2 px-3 classInsert" style="float: right;">클래스신청하기</a>
+					 	<div th:text="${classOne.classNo}" style="display: none"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+</body>
+</html>

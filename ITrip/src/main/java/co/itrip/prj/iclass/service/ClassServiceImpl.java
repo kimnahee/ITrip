@@ -14,15 +14,13 @@ public class ClassServiceImpl implements ClassService {
 	private ClassMapper map;
 
 	@Override
-	public List<ClassVO> classSelectList(ClassVO vo) {
-		// TODO Auto-generated method stub
-		return map.classSelectList(vo);
+	public List<ClassVO> classList(ClassVO vo) {
+		return map.classList(vo);
 	}
 
 	@Override
-	public ClassVO classSelect(ClassVO vo) {
-		// TODO Auto-generated method stub
-		return map.classSelect(vo);
+	public ClassVO classSelectOne(ClassVO vo) {
+		return map.classSelectOne(vo);
 	}
 
 	@Override
@@ -52,6 +50,11 @@ public class ClassServiceImpl implements ClassService {
 	public int classDelete(ClassVO vo) {
 		// TODO Auto-generated method stub
 		return map.classDelete(vo);
+	}
+
+	@Override
+	public List<ClassDtVO> classDtList(ClassDtVO vo) {
+		return map.classDtList(vo);
 	}
 
 }
