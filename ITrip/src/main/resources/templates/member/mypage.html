@@ -84,8 +84,10 @@
                     <table class='form-group' >                   
                     <thead>
                         <tr>
-                            <th class='col-md-5'>guide ID</th>
-                            <th class='col-md-5'>unfollow</th>
+                            <th class='col-md-5'>GUIDE ID</th>
+                            <th class='col-md-5'>NICK NAME</th>
+                            <th class='col-md-5'>DUTY</th>
+                            <th class='col-md-5'>UNFOLLOW</th>
                         </tr>
                     </thead> 
                     <tbody id="followBody">
@@ -249,6 +251,8 @@
         
              function makeTr(data) {
         		let tr = $("<tr>").append($("<td>").html(data.guideId))
+        						  .append($("<td>").html(data.nick))
+        						  .append($("<td>").html(data.cdName))
         						  .append($("<td>").append($("<div>").append($("<button>").addClass("btn").addClass("deletF").html("unfo"))))
        	 		return tr;
         }  

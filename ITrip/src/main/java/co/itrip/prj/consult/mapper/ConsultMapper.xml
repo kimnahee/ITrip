@@ -65,5 +65,14 @@
         order by consult_no desc
 	
 	</select>
+	
+
+	<insert id="consultInsert" parameterType="co.itrip.prj.consult.service.ConsultVO">
+		<selectKey keyProperty="consultNo" order="BEFORE" resultType="int">
+			SELECT CASE WHEN MAX(CONSULT_NO) IS NULL THEN 1 ELSE MAX(CONSULT_NO)+1 END FROM CONSULT
+		</selectKey>
+		<!-- INSERT (CONSULT_NO, TITLE, CONTENT, DT, MEMBER_ID, STATE_CD, GUIDE_ID, JOB_ID, PRICE, ENNC, BEGIN_DATE, END_DATE) INTO CONSULT VALUES(#{title},#{guideId},#{nick},#{career},#{duty},#{dc},) -->
+	</insert>
+	
 
 </mapper>
