@@ -87,16 +87,12 @@ public class GuideController {
 			 */
 		return "guide/gmypage";
 	}	
+	
 	// 가이드 마이페이지 가이드가 개설한 컨설턴트
 	@GetMapping("/gconsult.do")
 	public String gconsult(Model model) {
 		model.addAttribute("joblist", cdService.jobCdList());
 		return "guide/gconsult";
-	}
-	// 상담 등록 폼
-	@GetMapping("/consultStart.do")
-	public String consultStart() {
-		return "guide/consultStart";
 	}
 	
 	// 가이드 마이페이지 가이드가 개설한 클래스
@@ -105,7 +101,6 @@ public class GuideController {
 		return "guide/gclass";
 	}
 	
-
 	// 가이드 정보 수정페이지
 	@RequestMapping("/grevice.do")
 	public String grevice(Model model, GuideVO vo, Principal principal) {
