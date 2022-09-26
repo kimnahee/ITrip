@@ -24,6 +24,8 @@ import co.itrip.prj.community.service.CommunityVO;
 import co.itrip.prj.community.service.ReplyVO;
 import co.itrip.prj.follow.service.FollowService;
 import co.itrip.prj.follow.service.FollowVO;
+import co.itrip.prj.iclass.service.ClassService;
+import co.itrip.prj.iclass.service.ClassVO;
 import co.itrip.prj.member.service.MemberService;
 import co.itrip.prj.member.service.MemberVO;
 
@@ -32,13 +34,16 @@ import co.itrip.prj.member.service.MemberVO;
 public class MemberController { //Principal
 	
 	@Autowired
-	private CommunityService cService;
+	private CommunityService comService;
 	
 	@Autowired
 	private MemberService mService;
 	
 	@Autowired
 	private CmmnCdService cdService;
+	
+	@Autowired
+	private ClassService cService;
 
 	
 	// 마이페이지
@@ -54,7 +59,9 @@ public class MemberController { //Principal
 		
 	// 마이페이지-클래스
 	@GetMapping("/mClass")
-	public String mClass() {
+	public String mClass(ClassVO vo,Model model, HttpServletRequest request) {
+//		model.addAttribute("pageInfo", PageInfo.of(cService.classList(vo)));
+		model.addAttribute("classList", cService.classList(vo));
 		return "member/mclass";
 	}
 	
@@ -93,7 +100,7 @@ public class MemberController { //Principal
 			PageHelper.startPage(pageNum, pageSize);
 			vo.setCtgry("''");
 			vo.setMemberId(request.getParameter("memberId"));
-			model.addAttribute("pageInfo", PageInfo.of(cService.findAll(vo)));
+			model.addAttribute("pageInfo", PageInfo.of(comService.findAll(vo)));
 			return "member/mywriter";
 		}
 		

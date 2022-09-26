@@ -11,78 +11,45 @@
     <link rel="stylesheet" href="bootstrap/voler/assets/css/app.css">
     <link rel="shortcut icon" href="bootstrap/voler/assets/images/favicon.svg" type="image/x-icon">
 </head>
-<body layout:fragment="content">
+<body>
+<div  layout:fragment="content">
 <!-- Table head options start -->
 <div class="row" id="table-head">
   <div class="col-12">
     <div class="card">
       <div class="card-header">
-        <h4 class="card-title">Table head options</h4>
+        <h4 class="card-title">회원정보</h4>
       </div>
       <div class="card-content">
         <div class="card-body">
-          <p>Similar to tables and dark tables, use the modifier classes <code
-              class="highlighter-rouge">.thead-light</code> or <code class="highlighter-rouge">.thead-dark</code> to
-            make <code class="highlighter-rouge">&lt;thead&gt;</code>s appear light or dark gray.</p>
+          <p>Class를 신청한 회원입니다. 권한을 수정해주세요.</p>
         </div>
         <!-- table head dark -->
         <div class="table-responsive">
-          <table class="table mb-0">
-            <thead class="thead-dark">
+          <table class="table table-light mb-0"> 
+            <thead>
               <tr>
-                <th>NAME</th>
-                <th>RATE</th>
-                <th>SKILL</th>
-                <th>TYPE</th>
-                <th>LOCATION</th>
-                <th>ACTION</th>
+                <th>클래스제목</th>
+                <th>가이드아이디</th>
+                <th>업무 카테고리</th>
+                <th>정원/수업횟수</th>
+                <th>신청일자</th>
+                <th>승인상태</th>
+                <th>승인수정</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody th:each="classList : ${pageInfo.list}" th:if="${classList.confmCd}=='1'">
               <tr>
-                <td class="text-bold-500">Michael Right</td>
-                <td>$15/hr</td>
-                <td class="text-bold-500">UI/UX</td>
-                <td>Remote</td>
-                <td>Austin,Taxes</td>
-                <td><a href="#"><i
-                      class="badge-circle badge-circle-light-secondary font-medium-1" data-feather="mail"></i></a></td>
-              </tr>
-              <tr>
-                <td class="text-bold-500">Morgan Vanblum</td>
-                <td>$13/hr</td>
-                <td class="text-bold-500">Graphic concepts</td>
-                <td>Remote</td>
-                <td>Shangai,China</td>
-                <td><a href="#"><i
-                      class="badge-circle badge-circle-light-secondary font-medium-1" data-feather="mail"></i></a></td>
-              </tr>
-              <tr>
-                <td class="text-bold-500">Tiffani Blogz</td>
-                <td>$15/hr</td>
-                <td class="text-bold-500">Animation</td>
-                <td>Remote</td>
-                <td>Austin,Texas</td>
-                <td><a href="#"><i
-                      class="badge-circle badge-circle-light-secondary font-medium-1" data-feather="mail"></i></a></td>
-              </tr>
-              <tr>
-                <td class="text-bold-500">Ashley Boul</td>
-                <td>$15/hr</td>
-                <td class="text-bold-500">Animation</td>
-                <td>Remote</td>
-                <td>Austin,Texas</td>
-                <td><a href="#"><i
-                      class="badge-circle badge-circle-light-secondary font-medium-1" data-feather="mail"></i></a></td>
-              </tr>
-              <tr>
-                <td class="text-bold-500">Mikkey Mice</td>
-                <td>$15/hr</td>
-                <td class="text-bold-500">Animation</td>
-                <td>Remote</td>
-                <td>Austin,Texas</td>
-                <td><a href="#"><i
-                      class="badge-circle badge-circle-light-secondary font-medium-1" data-feather="mail"></i></a></td>
+                <td class="text-bold-500" th:text="${classList.title}"></td>
+                <td th:text="${classList.guideId}"></td>
+                <td class="text-bold-500" th:text="${classList.cdName}"></td>
+                <td class="text-bold-500" th:text="${classList.psncpa}+'명 / '+${classList.classCnt}+'주'"></td>
+                <td class="text-bold-500" th:text="${classList.dt}"></td>
+                <td class="text-bold-500" th:text="${classList.confmCd}"></td>
+                <td th:id="${classList.guideId}">
+                <input type="button" th:onclick="updateFnc(this.getAttribute('id'))"
+				class="btn btn-primary btn-l" value="수정" th:name="${classList.guideId}" th:id="${classList.guideId}">
+				</td>
               </tr>
             </tbody>
           </table>
@@ -92,5 +59,40 @@
   </div>
 </div>
 <!-- Table head options end -->
+<!-- 페이지네이션 -->
+			 <nav aria-label="Page navigation example">
+				<ul class="pagination pagination-info  justify-content-center">
+					<li class="page-item disabled"
+						th:if="${pageInfo.isIsFirstPage()}"><span
+						class="page-link">«</span></li>
+					<li class="page-item"
+						th:if="${!pageInfo.isIsFirstPage() && pageInfo.getList().size() > 0}"><a
+						class="page-link"
+						th:href="|javascript:gopage([[${pageInfo.getPrePage()}]])|"
+						rel="prev">«</a></li>
+					<li
+						th:class="|page-item ${(pageInfo.pageNum eq page) ? 'active': ''} |"
+						th:each="page:${pageInfo.navigatepageNums}"><span
+						class="page-link" th:if="${pageInfo.pageNum eq page}"
+						th:text="${page}"></span> <a class="page-link"
+						th:unless="${pageInfo.pageNum eq page}"
+						th:href="|javascript:gopage(${page})|" th:text="${page}">{{$page
+							}}</a></li>
+					<li class="page-item" th:if="${pageInfo.hasNextPage}"><a
+						class="page-link"
+						th:href="|javascript:gopage([[${pageInfo.getNextPage()}]])|"
+						rel="next">»</a></li>
+					<li class="page-item disabled"
+						th:unless="${pageInfo.hasNextPage}"><span
+						class="page-link">»</span></li>
+				</ul>
+			</nav> 
+			<script type="text/javascript">
+		 	function gopage(p) {
+				location.href = '/appClass.do?pageNum=' + p;
+			} 
+			
+			</script>
+			</div>
 </body>
 </html>
