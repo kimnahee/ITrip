@@ -37,7 +37,6 @@
 		            ,c.title
 		            ,c.content
 		            ,c.dt
-		            ,c.member_id
 		            ,c.state_cd
 		            ,c.guide_id
 		            ,c.job_cd

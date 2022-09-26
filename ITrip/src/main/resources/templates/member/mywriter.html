@@ -101,12 +101,12 @@
 								</tr>
 							</thead>
 							<tbody id="studyList">
-								<tr th:each="study : ${pageInfo.list}">
-									<td><p class="text-md text-secondary mb-0" th:if="${study.ctgry == '스터디' }" th:text="${study.comNo}">글번호</p></td>
-									<td><p class="text-md text-secondary mb-0" th:if="${study.ctgry == '스터디' }" th:text="${study.title}">글제목</p></td>
-									<td><p class="text-md text-secondary mb-0" th:if="${study.ctgry == '스터디' }" th:text="${study.memberId}">작성자</p></td>
-									<td><p class="text-md text-secondary mb-0" th:if="${study.ctgry == '스터디' }" th:text="${study.dt}">작성일자</p></td>
-									<td><p class="text-md text-secondary mb-0" th:if="${study.ctgry == '스터디' }" th:text="${study.hit}">조회수</p></td>
+								<tr th:each="study : ${pageInfo.list}" th:if="${study.ctgry == '스터디' }">
+									<td><p class="text-md text-secondary mb-0"  th:text="${study.comNo}">글번호</p></td>
+									<td><p class="text-md text-secondary mb-0" th:text="${study.title}">글제목</p></td>
+									<td><p class="text-md text-secondary mb-0" th:text="${study.memberId}">작성자</p></td>
+									<td><p class="text-md text-secondary mb-0" th:text="${study.dt}">작성일자</p></td>
+									<td><p class="text-md text-secondary mb-0" th:text="${study.hit}">조회수</p></td>
 								</tr>
 							</tbody>
 						</table>
@@ -204,7 +204,7 @@
                 <script type="text/javascript">
                 	
                 function gopage(p) {
-				location.href = '/study.do?pageNum=' + p;
+				location.href = '/myWriter?pageNum=' + p;
 				}
                 
             	$("#studyList").on(
@@ -226,11 +226,6 @@
     					
                 </script>
                     
-                      <script src="bootstrap/voler/assets/js/feather-icons/feather.min.js"></script>
-    <script src="bootstrap/voler/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-    <script src="bootstrap/voler/assets/js/app.js"></script>
-    
-    <script src="bootstrap/voler/assets/js/main.js"></script>
     
     <!-- 페이징 처리 -->
     <script src="bootstrap/voler/assets/js/feather-icons/feather.min.js"></script>
