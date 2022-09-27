@@ -112,7 +112,11 @@ public class CbtGuideController {
 	};
 	/* 서술형 리스트 출력 */
 	@PostMapping("/cbtGuideListTabLong.do")
+	
 	public String cbtGuideListTabLong(CbtGuideVO vo, Model model, HttpServletRequest request) {
+		
+		
+		
 		vo.setGtpCd(request.getParameter("gtpCd")); // 요청된 파라미터 값 유형코드 담음
 		vo.setLangCd(request.getParameter("langCd")); // 요청된 파라미터 값 언어코드 담음
 		//변수 생성

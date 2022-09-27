@@ -30,6 +30,8 @@ public class CbtGuideVO {
 	List<String> keyword; // 여러건 받을 키워드
 	private int rownum; //가상의 순번 
 	private int mcNo; // 사용자가 푼 문제 번호
+	private int mkyNo; // 사용자가 푼 서술형 문제 번호
+	private int chklist; // 키워드 기준올 사용자 정답여부를 체크할 임시 변수
 	
 	
 

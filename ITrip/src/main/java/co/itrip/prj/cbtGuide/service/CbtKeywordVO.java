@@ -16,6 +16,6 @@ public class CbtKeywordVO {
 	private String cKwrd; // 키워드
 	private int cbtNo; // cbt 번호
 	private int mkyNo; // 사용자가 푼 서술형 문제지번호
-	private List<Integer> chklist; // 키워드 기준올 사용자 정답여부를 체크할 임시 변수
+	private int keywordCunt; // 키워드 개수 
 
 }
