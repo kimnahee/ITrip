@@ -29,24 +29,20 @@ public class ConsultServiceImpl implements ConsultService{
 	@Override
 	public int consultInsert(ConsultVO vo) {
 		// 가이드 상담 등록
-		
+
 		// consultInsert 처리가 먼저
 		int n = map.consultInsert(vo);
 		System.out.println(n);
-		ConsultDtVO dtvo = new ConsultDtVO(); // ConsultDtVO 호출
-		dtvo.setConsultNo(vo.getConsultNo()); // key 값 1번 상담의 내용
-		
 		// 상담 요일, 시간 등록
-		for(int i=0; i < vo.getConsultDt().size(); i++) {
-			if(vo.getConsultDt().get(i) != null) {
-				dtvo.setWeek(vo.getConsultDt().get(i).getWeek());
-				dtvo.setBeginTime(vo.getConsultDt().get(i).getBeginTime());
-				dtvo.setEndTime(vo.getConsultDt().get(i).getEndTime());
-				map.consultDtInsert(dtvo);
+		System.out.println(vo.getConsultDt());
+
+		for (ConsultDtVO dtVO : vo.getConsultDt()) {
+			System.out.println(dtVO);
+			if (!dtVO.getBeginTime().isEmpty()) {
+				dtVO.setConsultNo(vo.getConsultNo());
+				map.consultDtInsert(dtVO);
 			}
 		}
-		
-		
 		return n;
 	}
 
@@ -58,7 +54,7 @@ public class ConsultServiceImpl implements ConsultService{
 
 	@Override
 	public List<ConsultDtVO> consultDtList(ConsultDtVO vo) {
-		// TODO Auto-generated method stub
+		// 시간 출력
 		return map.consultDtList(vo);
 	}
 

@@ -32,6 +32,7 @@ public class ClassServiceImpl implements ClassService {
 		ClassDtVO dtvo = new ClassDtVO(); // ClassDtVO 호출
 		dtvo.setClassNo(vo.getClassNo());
 		
+		System.out.println("===="+vo.getClassDt().size());
 		// 클래스 날짜&시간등록
 		for(int i=0; i < vo.getClassDt().size(); i++) {
 			if(vo.getClassDt().get(i) != null) {
