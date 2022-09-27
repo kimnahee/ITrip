@@ -36,11 +36,11 @@ public class ClassController {
 	@GetMapping("/iClassList.do") 
 	public String iClass(ClassVO vo,Model model, HttpServletRequest request,
 			@RequestParam(required = false, defaultValue = "1") int pageNum,
-			@RequestParam(required = false, defaultValue = "8") int pageSize) {
+			@RequestParam(required = false, defaultValue = "6") int pageSize) {
 		PageHelper.startPage(pageNum, pageSize);
 		
 		model.addAttribute("pageInfo", PageInfo.of(cService.classList(vo)));
-		model.addAttribute("classList", cService.classList(vo));
+		//model.addAttribute("classList", cService.classList(vo));
 		return "class/iclassList";
 	}
 	

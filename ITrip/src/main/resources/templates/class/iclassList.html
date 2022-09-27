@@ -30,14 +30,16 @@ layout:decorate="~{layout/layout}">
 </head>
 <body layout:fragment="content">
  <div class="section section-properties">
-      <div class="container" style="border:1px solid blue;">
+      <div class="container">
         <div class="row" id="classList">
         
-          <div class="card col-xs-12 col-sm-6 col-md-5 col-lg-4" th:each="cList:${classList}" style="border:1px solid red;">
+
+          <div class="card col-xs-12 col-sm-6 col-md-5 col-lg-4" th:each="cList:${pageInfo.list}">
+
             <div class="property-item mb-30">
               <a href="#" class="img">
                <!--  <img src="bootstrap/property/images/img_1.jpg" alt="Image" class="img-fluid" /> -->
-              <img th:src="@{*{cList.attachDir}}"alt="Image" class="img-fluid" style="border:1px solid green;">
+              <img th:src="@{*{cList.attachDir}}"alt="Image" class="img-fluid">
               <!--<img src="images/라이언.jpg"alt="Image" class="img-fluid">-->
               </a>
               <div class="property-content">

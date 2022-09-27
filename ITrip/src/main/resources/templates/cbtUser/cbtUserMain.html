@@ -37,7 +37,7 @@ layout:decorate="~{layout/layout}" xmlns:sec="http://www.thymeleaf.org/extras/sp
 		                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
 		                            <div class="text-center question">
 		                            	<a class="btn btn-outline-dark mt-auto" href="#">문제풀기</a>
-				 						<div th:text="${cbt.cdName}" style="display: none"></div>
+				 						<div th:text="${cbt.cdNo}" style="display: none"></div>
 		                           	</div>
 		                        </div>
 		                    </div>
@@ -55,7 +55,7 @@ layout:decorate="~{layout/layout}" xmlns:sec="http://www.thymeleaf.org/extras/sp
 	<!-- 로그인 시큐리티 -->
 	<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 	<input type="hidden" id="langCd" name="langCd">
-	<input type="hidden" id="rownum" name="rownum">
+	<!-- <input type="hidden" id="rownum" name="rownum"> -->
 </form> 
     
 <script type="text/javascript">
@@ -64,7 +64,7 @@ $("#quesList").on("click",".question",function(e){
 	//frm.action = "cbtUserList.do"
 	frm.action ="cbtUserSelectOne.do"
 	frm.langCd.value = code
-	frm.rownum.value = 1;
+	//frm.rownum.value = 1;
 	frm.submit()
 }) 
 $("#addCbt").on("click",function(){

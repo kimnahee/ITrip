@@ -4,6 +4,8 @@
 	layout:decorate="~{layout/layout}">
 <head>
 <meta charset="UTF-8">
+<meta name="_csrf" th:content="${_csrf.token}"/>
+<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
 <title>Insert title here</title>
 </head>
 <body>
@@ -32,7 +34,7 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr th:each="g:${memberList}">
+									<tr th:each="g:${pageInfo.list}">
 										<th th:text=${g.guideId}></th>
 										<td th:text=${g.nick}></td>
 										<td th:text=${g.duty}></td>
@@ -48,23 +50,58 @@
 							</table>
 						</div>
 					</div>
+					
+					<br>
+					<!-- 페이지네이션 -->
+						<nav aria-label="Page navigation example">
+							<ul class="pagination pagination-info  justify-content-center">
+								<li class="page-item disabled"
+									th:if="${pageInfo.isIsFirstPage()}"><span
+									class="page-link">«</span></li>
+								<li class="page-item"
+									th:if="${!pageInfo.isIsFirstPage() && pageInfo.getList().size() > 0}"><a
+									class="page-link"
+									th:href="|javascript:gopage([[${pageInfo.getPrePage()}]])|"
+									rel="prev">«</a></li>
+								<li
+									th:class="|page-item ${(pageInfo.pageNum eq page) ? 'active': ''} |"
+									th:each="page:${pageInfo.navigatepageNums}"><span
+									class="page-link" th:if="${pageInfo.pageNum eq page}"
+									th:text="${page}"></span> <a class="page-link"
+									th:unless="${pageInfo.pageNum eq page}"
+									th:href="|javascript:gopage(${page})|" th:text="${page}">{{$page
+										}}</a></li>
+								<li class="page-item" th:if="${pageInfo.hasNextPage}"><a
+									class="page-link"
+									th:href="|javascript:gopage([[${pageInfo.getNextPage()}]])|"
+									rel="next">»</a></li>
+								<li class="page-item disabled"
+									th:unless="${pageInfo.hasNextPage}"><span
+									class="page-link">»</span></li>
+							</ul>
+						</nav>
+					
 				</div>
 			</div>
 		</div>
-		
 		<script type="text/javascript">
-
+		function gopage(p) {
+			location.href = '/memberAuthList.do?pageNum=' + p;
+		}
+		
+		let csrfToken=$("input[name=_csrf]").val();
+		
 		function updateFnc(memId){
-			console.log("zz"+memId);
+			
 			let modifyTd = document.getElementById(memId);
-			//console.log(modifyTd.previousElementSibling.innerText)
-			//console.log(modifyTd.firstElementChild )
 			modifyTd.previousElementSibling.innerText="";
 			
 			let td = modifyTd.previousElementSibling
 			let select =  document.createElement('select');
 			select.setAttribute('id','sel');
-			let author = ['=====','승인요청','승인수락','승인거절'];
+			select.setAttribute('class','form-select');
+			select.setAttribute('style','width:100px');
+			let author = ['========','승인대기','승인수락','승인거절'];
 			
 			let option = "";
 			author.forEach(function (ath,idx) {
@@ -83,29 +120,27 @@
 				console.log("선택값:"+$(this).val())
 			})
 			
-			
 			btn.addEventListener('click',function(e){
 				e.preventDefault();
-				fetch('memberAuthUpdate.do',{
-					method:'post',
-					headers: {
-						'Content-type': 'application/x-www-form-urlencoded'
+
+				$.ajax({
+					url:'/memberAuthUpdate.do',
+					type:'post',
+			 		beforeSend:function(xhr){
+			 			xhr.setRequestHeader("AJAX", true);
+					    xhr.setRequestHeader("X-CSRF-TOKEN", csrfToken);
+					}, 
+					dataType:'json',
+					data:{'guideId':memId,'stateCd':opVal},
+					success:function result(res){
+						alert('수정완료')
+						location.href="memberAuthList.do"
 					},
-					body:{"guideId":memId,"stateCd":opVal}
-				})
-				.then(function(result) {
-					return result.json();
-				})
-				.then(function(result) {
-					console.log(result);
-					alert('수정완료')
-					location.href="memberAuthList.do"
-				})
-				.catch(function(err) {
-					console.error(err);
-					alert('수정에러')
-					location.href="memberAuthList.do"
-				})
+					error:function err(xhr,err){
+						alert('수정에러')
+						//location.href="memberAuthList.do"
+					}
+				}) 
 			})
 			
 			

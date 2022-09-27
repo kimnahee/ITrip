@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -17,6 +18,7 @@ import co.itrip.prj.consult.service.ConsultService;
 import co.itrip.prj.consult.service.ConsultVO;
 
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import co.itrip.prj.admin.service.AdminService;
 import co.itrip.prj.guide.service.GuideVO;
@@ -57,21 +59,38 @@ public class AdminController {
 	
 	
 	@GetMapping("/memberAuthList.do")
-	public String memberAuthList(GuideVO vo,Model model) {
-		model.addAttribute("memberList", dao.memberAuthList(vo));
+	public String memberAuthList(GuideVO vo,Model model, HttpServletRequest request,
+			@RequestParam(required = false, defaultValue = "1") int pageNum,
+			@RequestParam(required = false, defaultValue = "10") int pageSize) {
+		PageHelper.startPage(pageNum, pageSize);
+		model.addAttribute("pageInfo", PageInfo.of(dao.memberAuthList(vo)));
+		//model.addAttribute("memberList", dao.memberAuthList(vo));
 		return "admin/memberAuthList";
 	}
 
 
 	@GetMapping("/memberList.do")
-	public String memberList(MemberVO vo,Model model) {
-		model.addAttribute("memberList", dao.memberList(vo));
+	public String memberList(MemberVO vo,Model model, HttpServletRequest request,
+			@RequestParam(required = false, defaultValue = "1") int pageNum,
+			@RequestParam(required = false, defaultValue = "10") int pageSize) {
+		PageHelper.startPage(pageNum, pageSize);
+		model.addAttribute("pageInfo", PageInfo.of(dao.memberList(vo)));
 		return "admin/memberList";
+	}
+
+
+	@GetMapping("/memberListOf.do")
+	@ResponseBody
+	public PageInfo<MemberVO> memberListOf(MemberVO vo,Model model, HttpServletRequest request,
+			@RequestParam(required = false, defaultValue = "1") int pageNum,
+			@RequestParam(required = false, defaultValue = "10") int pageSize) {
+		PageHelper.startPage(pageNum, pageSize);
+		return  PageInfo.of(dao.memberListOf(vo));
 	}
 	
 	@PostMapping("/memberAuthUpdate.do")
-	public String memberAuthUpdate(GuideVO vo) {
-		dao.memberAuthUpdate(vo);
-		return "admin/memberAuthList";
+	@ResponseBody
+	public int memberAuthUpdate(GuideVO vo) {
+		return dao.memberAuthUpdate(vo);
 	}
 }
