@@ -31,10 +31,7 @@ import co.itrip.prj.member.service.MemberVO;
 public class AdminController {
 	
 	@Autowired
-	private ConsultService conService; // 1:1 상담서비스
-	
-	@Autowired
-	private ClassService clService;
+	private AdminService adminService; // 1:1 상담서비스
 	
 	@Autowired
 	private AdminService dao;
@@ -43,9 +40,9 @@ public class AdminController {
 	@GetMapping("/appClass.do") // admin-Class 승인
 	public String appClass(ClassVO vo, Model model, HttpServletRequest request,
 			@RequestParam(required = false, defaultValue = "1") int pageNum,
-			@RequestParam(required = false, defaultValue = "8") int pageSize) {
+			@RequestParam(required = false, defaultValue = "5") int pageSize) {
 		PageHelper.startPage(pageNum, pageSize);
-		model.addAttribute("pageInfo", PageInfo.of(clService.classList(vo)));
+		model.addAttribute("pageInfo", PageInfo.of(adminService.classList(vo)));
 		return "admin/appclass";
 	}
 	
@@ -53,9 +50,10 @@ public class AdminController {
 	@GetMapping("/appConsult.do") // admin-Consult 승인
 	public String appConsult(ConsultVO vo, Model model, HttpServletRequest request,
 			@RequestParam(required = false, defaultValue = "1") int pageNum,
-			@RequestParam(required = false, defaultValue = "8") int pageSize) {
+			@RequestParam(required = false, defaultValue = "5") int pageSize) {
 		PageHelper.startPage(pageNum, pageSize);
-		model.addAttribute("pageInfo", PageInfo.of(conService.findAll(vo)));
+		// vo.setStateCd("1");
+		model.addAttribute("pageInfo", PageInfo.of(adminService.ConsultList(vo)));
 		return "admin/appconsult";
 	}
 	

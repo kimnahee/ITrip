@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import co.itrip.prj.admin.mapper.AdminMapper;
+import co.itrip.prj.consult.service.ConsultVO;
 import co.itrip.prj.guide.service.GuideVO;
+import co.itrip.prj.iclass.service.ClassVO;
 import co.itrip.prj.member.service.MemberVO;
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -32,6 +34,29 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public List<MemberVO> memberListOf(MemberVO vo) {
 		return map.memberListOf(vo);
+
+	public List<ClassVO> classList(ClassVO vo) {
+		// Class 전체조회
+		return map.classList(vo);
+	}
+
+	@Override
+	public List<ConsultVO> ConsultList(ConsultVO vo) {
+		// 상담 전체조회
+		return map.ConsultList(vo);
+	}
+
+	@Override
+	public int classUpdate(ClassVO vo) {
+		// 클래스 업데이트
+		return map.classUpdate(vo);
+	}
+
+	@Override
+	public int consultUpdate(ConsultVO vo) {
+		// 상담 업데이트
+		return map.consultUpdate(vo);
+
 	}
 
 	

@@ -22,6 +22,10 @@ import co.itrip.prj.cmmncd.service.CmmnCdService;
 import co.itrip.prj.community.service.CommunityService;
 import co.itrip.prj.community.service.CommunityVO;
 import co.itrip.prj.community.service.ReplyVO;
+import co.itrip.prj.consult.service.ConsultService;
+import co.itrip.prj.consult.service.ConsultVO;
+import co.itrip.prj.cs.service.CSBoardService;
+import co.itrip.prj.cs.service.CSBoardVO;
 import co.itrip.prj.follow.service.FollowService;
 import co.itrip.prj.follow.service.FollowVO;
 import co.itrip.prj.iclass.service.ClassService;
@@ -44,6 +48,12 @@ public class MemberController { //Principal
 	
 	@Autowired
 	private ClassService cService;
+	
+	@Autowired
+	private CSBoardService csService;
+	
+	@Autowired
+	private ConsultService conService;
 
 	
 	// 마이페이지
@@ -67,7 +77,8 @@ public class MemberController { //Principal
 	
 	// 마이페이지 1:1상담
 	@GetMapping("/mConsult")
-	public String mConsult() {
+	public String mConsult(ConsultVO vo, Model model, HttpServletRequest request) {
+		model.addAttribute("consultList", conService.findAll(vo));
 		return "member/mconsult";
 	}
 	
@@ -94,12 +105,15 @@ public class MemberController { //Principal
 
 	// 마이페이지 내가 쓴 글(스터디게시판)
 		@GetMapping("/myWriter")
-		public String myWriter(CommunityVO vo, Model model, HttpServletRequest request,
+		public String myWriter(CommunityVO vo,CSBoardVO csvo, Model model, HttpServletRequest request,
 				@RequestParam(required = false, defaultValue = "1") int pageNum,
-				@RequestParam(required = false, defaultValue = "10") int pageSize) {
+				@RequestParam(required = false, defaultValue = "5") int pageSize) {
 			PageHelper.startPage(pageNum, pageSize);
 			vo.setCtgry("''");
 			vo.setMemberId(request.getParameter("memberId"));
+			csvo.setMemberId(request.getParameter("memberId"));
+			csvo.setCtgry("QNA");
+			model.addAttribute("pageOutfo", PageInfo.of(csService.findAll(csvo)));
 			model.addAttribute("pageInfo", PageInfo.of(comService.findAll(vo)));
 			return "member/mywriter";
 		}

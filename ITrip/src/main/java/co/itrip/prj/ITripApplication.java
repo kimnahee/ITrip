@@ -42,5 +42,6 @@ public class ITripApplication {
 	public String signupForm() {
 		return "main/signupForm";
 	}
+	
 
 }

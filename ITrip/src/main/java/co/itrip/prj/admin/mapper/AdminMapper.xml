@@ -25,4 +25,59 @@
 <update id="memberAuthUpdate" parameterType="co.itrip.prj.guide.service.GuideVO">
 	update guide set state_cd = #{stateCd} where guide_id = #{guideId}
 </update>
+
+<!-- classList뿌리기 -->
+<select id="classList" resultType="co.itrip.prj.iclass.service.ClassVO" parameterType="co.itrip.prj.iclass.service.ClassVO">
+	SELECT DISTINCT C.CLASS_NO, C.TITLE, C.CONTENT, C.CRCLM, C.DT, C.PRICE, C.ATTACH, C.ATTACH_DIR, C.JOB_CD, C.PSNCPA, C.CLASS_CNT, C.ENNC, C.GUIDE_ID, CM.CD_INI, CM.CD_NO, CM.CD_NAME, DT.TERM, DT.BEGIN_TIME, DT.END_TIME,
+        CASE WHEN C.CONFM_CD = '1' THEN '승인대기' ELSE ' '
+               END AS CONFMCD
+		FROM CLASS C
+		LEFT JOIN CMMNCD CM
+		ON C.JOB_CD = CM.CD_NO
+		LEFT JOIN CLASS_DT DT
+		ON C.CLASS_NO = DT.CLASS_NO
+		<where>
+		CM.CD_INI = 'J' 
+		AND DT.CTIME_NO = 1 
+        AND C.CONFM_CD = '1'
+        </where>
+        ORDER BY C.DT
+</select>
+
+<!-- consultList뿌리기 -->
+<select id="ConsultList" resultType="co.itrip.prj.consult.service.ConsultVO" parameterType="co.itrip.prj.consult.service.ConsultVO">
+        SELECT C.CONSULT_NO, C.TITLE, C.CONTENT, C.DT, G.GUIDE_ID, C.JOB_CD, C.ENNC, C.BEGIN_DATE, C.END_DATE, CM.CD_NAME	 
+		,CASE  WHEN G.CAREER= '1' THEN '신입(1년 이하)'
+		                   WHEN G.CAREER= '2' THEN '주니어(1년 ~ 3년)'
+		                   WHEN G.CAREER= '3' THEN '미들(4년 ~ 8년)'
+		                   WHEN G.CAREER= '4' THEN '시니어(9년 이상)'
+		                   WHEN G.CAREER= '5' THEN 'Lead레벨(15년 이상)'
+		                ELSE ' '
+		            END AS CAREER
+          ,CASE WHEN C.STATE_CD = '1' THEN '승인대기' ELSE ' '
+               END AS STATECD
+	      FROM CONSULT C, GUIDE G, CMMNCD CM
+          <where>
+				C.GUIDE_ID=G.GUIDE_ID 
+		        AND G.DUTY= CM.CD_NO
+		        AND CM.CD_INI='D'
+				AND C.STATE_CD = '1'
+		  </where>
+		   ORDER BY C.DT 
+</select>
+
+<!-- class 승인상태변경 -->
+<update id="classUpdate">
+	update class set confm_cd = 2, ennc = '활성화'
+	where confm_cd = '1'
+	and class_no = #{classNo}; 
+</update>
+
+<!-- consult 승인상태변경 -->
+<update id="consultUpdate">
+	update consult set state_cd = 2, ennc = '활성화'
+	where state_cd = '1'
+	and consult_no = #{consultNo}; 
+</update>
+
 </mapper>

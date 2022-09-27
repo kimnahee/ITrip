@@ -37,6 +37,10 @@
 	.property-item .property-content .specs .caption {
     font-size: 15px; 
 	}
+	.tns-horizontal.tns-subpixel>.tns-item {
+     vertical-align: bottom;
+    }
+    
     </style>
 </head>
 <body  layout:fragment="content">
@@ -63,18 +67,19 @@
         <div class="row">
           <div class="col-12">
             <div class="property-slider-wrap">
-              <div class="property-slider">
+              <div class="property-slider" >
               
+              <div class="card col-xs-12 col-sm-6 col-md-5 col-lg-3" th:each="con : ${consultList}" >
                <!-- .item -->
                 <div class="property-item">
                   <div class="property-content">
-                    <div class="price mb-2"><span>Web개발 고민</span></div>
+                    <div class="price mb-2"><span th:text="${con.title}" class="cTitle">Web개발 고민</span></div>
                     <div>                     
                       <span class="city d-block mb-3">Nahi</span>
                       <div class="specs d-flex mb-4">
                         <span class="d-block d-flex align-items-center me-3">        
-                          <span class="caption">직무 / 프론트앤드</span><br>        
-                            <span class="caption">경력 / 미들(4~8년)</span>
+                          <span class="caption" th:text="'직무   '+${con.cdName}">직무 / 프론트앤드</span><br>        
+                            <span class="caption" th:text="'경력   '+${con.career}">경력 / 미들(4~8년)</span>
                         </span>  
                       </div>
                       <span><a href="property-single.html"class="btn btn-primary py-2 px-1">리뷰</a></span>&nbsp;&nbsp;
@@ -82,150 +87,8 @@
                     </div>
                   </div>
                 </div>
-                
-                 <!-- .item -->
-                <div class="property-item">
-                  <div class="property-content">
-                    <div class="price mb-2"><span>Web개발 고민</span></div>
-                    <div>                      
-                      <span class="city d-block mb-3">Nahi</span>
-                      <div class="specs d-flex mb-4">
-                        <span class="d-block d-flex align-items-center me-3">        
-                          <span class="caption">직무 / 프론트앤드</span><br>        
-                            <span class="caption">경력 / 미들(4~8년)</span>
-                        </span>  
-                      </div>
-                      <span><a href="property-single.html"class="btn btn-primary py-2 px-1">리뷰쓰기</a></span>&nbsp;&nbsp;
-                      <span><a href="property-single.html"class="btn btn-primary py-2 px-1">채팅방</a></span>
-                    </div>
-                  </div>
                 </div>
-                
-                <!-- .item -->
-                <div class="property-item">
-                  <div class="property-content">
-                    <div class="price mb-2"><span>Web개발 고민</span></div>
-                    <div>                      
-                      <span class="city d-block mb-3">Nahi</span>
-                      <div class="specs d-flex mb-4">
-                        <span class="d-block d-flex align-items-center me-3">        
-                          <span class="caption">직무 / 프론트앤드</span><br>        
-                            <span class="caption">경력 / 미들(4~8년)</span>
-                        </span>  
-                      </div>
-                      <span><a href="property-single.html"class="btn btn-primary py-2 px-1">리뷰쓰기</a></span>&nbsp;&nbsp;
-                      <span><a href="property-single.html"class="btn btn-primary py-2 px-1">채팅방</a></span>
-                    </div>
-                  </div>
-                </div>
-                
-                <!-- .item -->
-                <div class="property-item">
-                  <div class="property-content">
-                    <div class="price mb-2"><span>Web개발 고민</span></div>
-                    <div>                      
-                      <span class="city d-block mb-3">Nahi</span>
-                      <div class="specs d-flex mb-4">
-                        <span class="d-block d-flex align-items-center me-3">        
-                          <span class="caption">직무 / 프론트앤드</span><br>        
-                            <span class="caption">경력 / 미들(4~8년)</span>
-                        </span>  
-                      </div>
-                      <span><a href="property-single.html"class="btn btn-primary py-2 px-1">리뷰쓰기</a></span>&nbsp;&nbsp;
-                      <span><a href="property-single.html"class="btn btn-primary py-2 px-1">채팅방</a></span>
-                    </div>
-                  </div>
-                </div>
-                
-                <!-- .item -->
-                <div class="property-item">
-                  <div class="property-content">
-                    <div class="price mb-2"><span>Web개발 고민</span></div>
-                    <div>                      
-                      <span class="city d-block mb-3">Nahi</span>
-                      <div class="specs d-flex mb-4">
-                        <span class="d-block d-flex align-items-center me-3">        
-                          <span class="caption">직무 / 프론트앤드</span><br>        
-                            <span class="caption">경력 / 미들(4~8년)</span>
-                        </span>  
-                      </div>
-                      <span><a href="property-single.html"class="btn btn-primary py-2 px-1">리뷰쓰기</a></span>&nbsp;&nbsp;
-                      <span><a href="property-single.html"class="btn btn-primary py-2 px-1">채팅방</a></span>
-                    </div>
-                  </div>
-                </div>
-                
-                <!-- .item -->
-                <div class="property-item">
-                  <div class="property-content">
-                    <div class="price mb-2"><span>Web개발 고민</span></div>
-                    <div>                      
-                      <span class="city d-block mb-3">Nahi</span>
-                      <div class="specs d-flex mb-4">
-                        <span class="d-block d-flex align-items-center me-3">        
-                          <span class="caption">직무 / 프론트앤드</span><br>        
-                            <span class="caption">경력 / 미들(4~8년)</span>
-                        </span>  
-                      </div>
-                      <span><a href="property-single.html"class="btn btn-primary py-2 px-1">리뷰쓰기</a></span>&nbsp;&nbsp;
-                      <span><a href="property-single.html"class="btn btn-primary py-2 px-1">채팅방</a></span>
-                    </div>
-                  </div>
-                </div>
-                
-                <!-- .item -->
-                <div class="property-item">
-                  <div class="property-content">
-                    <div class="price mb-2"><span>Web개발 고민</span></div>
-                    <div>                      
-                      <span class="city d-block mb-3">Nahi</span>
-                      <div class="specs d-flex mb-4">
-                        <span class="d-block d-flex align-items-center me-3">        
-                          <span class="caption">직무 / 프론트앤드</span><br>        
-                            <span class="caption">경력 / 미들(4~8년)</span>
-                        </span>  
-                      </div>
-                      <span><a href="property-single.html"class="btn btn-primary py-2 px-1">리뷰쓰기</a></span>&nbsp;&nbsp;
-                      <span><a href="property-single.html"class="btn btn-primary py-2 px-1">채팅방</a></span>
-                    </div>
-                  </div>
-                </div>
-                
-                <!-- .item -->
-                <div class="property-item">
-                  <div class="property-content">
-                    <div class="price mb-2"><span>Web개발 고민</span></div>
-                    <div>                      
-                      <span class="city d-block mb-3">Nahi</span>
-                      <div class="specs d-flex mb-4">
-                        <span class="d-block d-flex align-items-center me-3">        
-                          <span class="caption">직무 / 프론트앤드</span><br>        
-                            <span class="caption">경력 / 미들(4~8년)</span>
-                        </span>  
-                      </div>
-                      <span><a href="property-single.html"class="btn btn-primary py-2 px-1">리뷰쓰기</a></span>&nbsp;&nbsp;
-                      <span><a href="property-single.html"class="btn btn-primary py-2 px-1">채팅방</a></span>
-                    </div>
-                  </div>
-                </div>
-                
-                <!-- .item -->
-                <div class="property-item">
-                  <div class="property-content">
-                    <div class="price mb-2"><span>Web개발 고민</span></div>
-                    <div>                      
-                      <span class="city d-block mb-3">Nahi</span>
-                      <div class="specs d-flex mb-4">
-                        <span class="d-block d-flex align-items-center me-3">        
-                          <span class="caption">직무 / 프론트앤드</span><br>        
-                            <span class="caption">경력 / 미들(4~8년)</span>
-                        </span>  
-                      </div>
-                      <span><a href="property-single.html"class="btn btn-primary py-2 px-1">리뷰쓰기</a></span>&nbsp;&nbsp;
-                      <span><a href="property-single.html"class="btn btn-primary py-2 px-1">채팅방</a></span>
-                    </div>
-                  </div>
-                </div>
+                 
                 
                
                 <!-- .item -->
@@ -266,7 +129,13 @@
     <script src="bootstrap/property/js/navbar.js"></script>
     <script src="bootstrap/property/js/counter.js"></script>
     <script src="bootstrap/property/js/custom.js"></script>
-            
+    <script type="text/javascript">
+    	let cTitle = document.getElementsByClassName("cTitle");
+    	for (let i=0; i < cTitle.length; i++) {
+    		console.log(cTitle[i].innerText);
+    		cTitle[i].innerText = cTitle[i].innerText.toString().replace(/\B(?<!\.\d*)(?=(\d{10})+(?!\d))/g) ,'/n')
+    	}
+    </script>        
         </div>
     </div>
     <!-- Projects End -->

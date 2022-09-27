@@ -55,6 +55,7 @@ public class ConsultController {
 			@RequestParam(required = false, defaultValue = "1") int pageNum,
 			@RequestParam(required = false, defaultValue = "8") int pageSize) {
 		PageHelper.startPage(pageNum, pageSize);
+		vo.setEnnc("활성화");
 		model.addAttribute("pageInfo", PageInfo.of(conService.findAll(vo)));
 		return "consult/consultList";
 	}
@@ -64,6 +65,7 @@ public class ConsultController {
 		vo.setGuideId(principal.getName());
 		model.addAttribute("guide", guService.guideSelect(vo)); // 로그인된 가이드 아이디 확인 (단건조회)
 		model.addAttribute("joblist", cdService.jobCdList()); // 카테고리 공통코드
+		System.out.println(cdService.jobCdList());
 		/*
 		 * model.addAttribute("careerCdList", cdService.careerCdList()); // 경력공통코드
 		 * model.addAttribute("dutyCdList", cdService.dutyCdList()); // 직무공통코드

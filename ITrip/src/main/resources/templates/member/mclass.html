@@ -34,12 +34,14 @@
     .property-item .property-content {
        margin-top: 0px;
     }
-    img {
-    width: 300px;
-    height: 300px;
-    }
+    .img-fluid {
+    max-width: none;
+     height: 200px; 
+}
 
 	
+
+
     </style>
     
 </head>
@@ -65,26 +67,33 @@
           <div class="col-12">
             <div class="property-slider-wrap">
               <div class="property-slider">
-              <div class="card col-xs-12 col-sm-6 col-md-5 col-lg-3" th:each="cList:${classList}" style="border:1px solid;">
+              <div class="card col-xs-12 col-sm-6 col-md-5 col-lg-3" th:each="cList:${classList}" >
               
                 <!-- .item -->
-                <div class="property-item ">
+                <div class="property-item mb-30">
                   <a href="#" class="img">
-                    <img th:src="@{*{cList.attachDir}}" alt="Image" class="img-fluid" />
+                    <img th:src="@{*{cList.attachDir}}" alt="Image" class="img-fluid"  />
                   </a>
                   <div class="property-content">
-                    <div class="price mb-2"><span th:text=${cList.price}></span></div>
-                    <div>                     
-                      <span class="city d-block mb-3" th:text="${cList.term}"></span>
-                      <div class="specs d-flex mb-4">
-                        <span class="d-block d-flex align-items-center me-3">                                                 
-                          <span class="caption" th:text="${cList.cdName}"></span><br>        
-                            <span class="caption" th:text="${cList.psncpa}+명"></span>
-                        </span>                     
-                      </div>
-                       <span><a href="mcReview"class="btn btn-primary py-2 px-1">리뷰</a></span>&nbsp;&nbsp;
-                        <span><a href="property-single.html"class="btn btn-primary py-2 px-1">링크</a></span>&nbsp;&nbsp;
-                         <span><a href="property-single.html"class="btn btn-primary py-2 px-1">수료증</a></span>
+                    <div class="price mb-2"><span th:text=${cList.price} class="cPrice"></span></div>
+                    <div>  
+                      <span class="caption badge bg-warning" th:text="${cList.term}"></span>
+                      <span class="city d-block mb-3" th:text="${cList.title}" style="font-size: 18px;"></span>
+                      
+                      <div class="">
+                        <span class="">주요기능</span>
+                        <h5 class="card-title" th:text="${cList.cdName}"></h5>  
+                      </div>                                               
+                      <div class="">
+                      	<span class="">정원 </span>
+                      	<h5 class="card-title" th:text="${cList.psncpa}+명"></h5>
+                      </div>                    
+                     
+                       <a href="mcReview"class="btn btn-primary py-2 px-3 classInfo">리뷰</a>
+                        <a href="property-single.html"class="btn btn-primary py-2 px-3 classInfo">링크</a>
+                         <a href="property-single.html"class="btn btn-primary py-2 px-3 classInfo">수료증</a>
+                          <a href="#"  class="btn btn-primary py-2 px-3 classInfo">더보기</a>
+                         <div th:text="${cList.classNo}" style="display: none"></div>
                     </div>
                   </div>
                 </div>
@@ -133,6 +142,19 @@
     <!-- Projects End -->
     
     
-
+	<script type="text/javascript">
+	let cPrice = document.getElementsByClassName("cPrice")
+    for (let i = 0; i < cPrice.length; i++){
+    	cPrice[i].innerText=cPrice[i].innerText.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")
+    }
+	
+	$("#classList").on("click",".classInfo",function(){
+    	let no =  event.target.nextElementSibling.innerHTML
+    	frm.action ="iClassSelectOne.do"
+    	frm.classNo.value = no
+    	frm.submit()
+    }) 
+    
+	</script>
 </body>
 </html>

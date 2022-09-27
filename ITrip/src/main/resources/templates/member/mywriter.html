@@ -87,6 +87,8 @@
                             </li>
                         </ul>
                         <div class="tab-content" id="myTabContent">
+                        
+                        <!-- 스터디게시판 -->
                             <div class="tab-pane fade show active"  id="home" role="tabpanel" aria-labelledby="home-tab">
                                 <div class="card-body px-0 pb-2">
 					<div class="table-responsive p-0">
@@ -141,6 +143,8 @@
 						</nav>
 				</div>
                             </div>
+                            
+                            <!-- 자유게시판 -->
                             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                                  <div class="card-body px-0 pb-2">
 					<div class="table-responsive p-0">
@@ -155,12 +159,12 @@
 								</tr>
 							</thead>
 							<tbody id="freeList">
-								<tr th:each="study : ${pageInfo.list}">
-									<td><p class="text-md text-secondary mb-0" th:if="${study.ctgry == '자유게시판' }" th:text="${study.comNo}">글번호</p></td>
-									<td><p class="text-md text-secondary mb-0" th:if="${study.ctgry == '자유게시판' }" th:text="${study.title}">글제목</p></td>
-									<td><p class="text-md text-secondary mb-0" th:if="${study.ctgry == '자유게시판' }" th:text="${study.memberId}">작성자</p></td>
-									<td><p class="text-md text-secondary mb-0" th:if="${study.ctgry == '자유게시판' }" th:text="${study.dt}">작성일자</p></td>
-									<td><p class="text-md text-secondary mb-0" th:if="${study.ctgry == '자유게시판' }" th:text="${study.hit}">조회수</p></td>
+								<tr th:each="study : ${pageInfo.list}" th:if="${study.ctgry == '자유게시판' }">
+									<td><p class="text-md text-secondary mb-0" th:text="${study.comNo}">글번호</p></td>
+									<td><p class="text-md text-secondary mb-0" th:text="${study.title}">글제목</p></td>
+									<td><p class="text-md text-secondary mb-0" th:text="${study.memberId}">작성자</p></td>
+									<td><p class="text-md text-secondary mb-0" th:text="${study.dt}">작성일자</p></td>
+									<td><p class="text-md text-secondary mb-0" th:text="${study.hit}">조회수</p></td>
 								</tr>
 							</tbody>
 						</table>
@@ -195,8 +199,61 @@
 						</nav>
 				</div>
                             </div>
+                            
+                            <!-- Q&A 게시판 -->
                             <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-                                <p class='my-2'>Q&A게시판에 내가 작성한 게시글이없습니다.</p>
+                                 <div class="card-body px-0 pb-2">
+					<div class="table-responsive p-0">
+						<table class="table align-items-center mb-0">
+							<thead>
+								<tr>
+									<th class="text-uppercase text-secondary text-md font-weight-bolder opacity-7">글번호</th>
+									<th class="text-uppercase text-secondary text-md font-weight-bolder opacity-7 ps-2">글제목</th>
+									<th class="text-center text-uppercase text-secondary text-md font-weight-bolder opacity-7">작성자</th>
+									<th class="text-center text-uppercase text-secondary text-md font-weight-bolder opacity-7">작성일자</th>
+									<th class="text-center text-uppercase text-secondary text-md font-weight-bolder opacity-7">조회수</th>
+								</tr>
+							</thead>
+							<tbody id="csList">
+								<tr th:each="cs : ${pageOutfo.list}">
+									<td><p class="text-md text-secondary mb-0" th:text="${cs.csNo}">글번호</p></td>
+									<td><p class="text-md text-secondary mb-0 title" th:text="${cs.title}">글제목</p></td>
+									<td><p class="text-md text-secondary mb-0" th:text="${cs.memberId}">작성자</p></td>
+									<td><p class="text-md text-secondary mb-0" th:text="${cs.dt}">작성일자</p></td>
+									<td><p class="text-md text-secondary mb-0" th:text="${cs.hit}">조회수</p></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+						<!-- 페이지네이션 -->
+						<nav aria-label="Page navigation example">
+							<ul class="pagination pagination-info  justify-content-center">
+								<li class="page-item disabled"
+									th:if="${pageOutfo.isIsFirstPage()}"><span
+									class="page-link">«</span></li>
+								<li class="page-item"
+									th:if="${!pageOutfo.isIsFirstPage() && pageOutfo.getList().size() > 0}"><a
+									class="page-link"
+									th:href="|javascript:gopage([[${pageOutfo.getPrePage()}]])|"
+									rel="prev">«</a></li>
+								<li
+									th:class="|page-item ${(pageOutfo.pageNum eq page) ? 'active': ''} |"
+									th:each="page:${pageOutfo.navigatepageNums}"><span
+									class="page-link" th:if="${pageOutfo.pageNum eq page}"
+									th:text="${page}"></span> <a class="page-link"
+									th:unless="${pageOutfo.pageNum eq page}"
+									th:href="|javascript:gopage(${page})|" th:text="${page}">{{$page
+										}}</a></li>
+								<li class="page-item" th:if="${pageOutfo.hasNextPage}"><a
+									class="page-link"
+									th:href="|javascript:gopage([[${pageOutfo.getNextPage()}]])|"
+									rel="next">»</a></li>
+								<li class="page-item disabled"
+									th:unless="${pageOutfo.hasNextPage}"><span
+									class="page-link">»</span></li>
+							</ul>
+						</nav>
+				</div>
                             </div>
                         </div>
                     </div>
@@ -223,7 +280,13 @@
 						location.href = "/selectFree.do?comNo=" + comNo;
 					})	
     					
-    					
+
+				$("#csList").on("click", ".title",  function(e){
+					let csNo = $(e.target).closest("tr").children().children().html();
+					console.log(csNo); //단건조회로 넘기기
+					location.href="csSelect.do?csNo="+csNo;
+				})		
+				
                 </script>
                     
     
