@@ -69,7 +69,7 @@
             <div class="property-slider-wrap">
               <div class="property-slider" >
               
-              <div class="card col-xs-12 col-sm-6 col-md-5 col-lg-3" th:each="con : ${consultList}" >
+              <div class="card col-xs-12 col-sm-6 col-md-5 col-lg-3" th:each="con : ${consultList}" th:if="${con.stateCd == '2' }">
                <!-- .item -->
                 <div class="property-item">
                   <div class="property-content">
@@ -129,13 +129,7 @@
     <script src="bootstrap/property/js/navbar.js"></script>
     <script src="bootstrap/property/js/counter.js"></script>
     <script src="bootstrap/property/js/custom.js"></script>
-    <script type="text/javascript">
-    	let cTitle = document.getElementsByClassName("cTitle");
-    	for (let i=0; i < cTitle.length; i++) {
-    		console.log(cTitle[i].innerText);
-    		cTitle[i].innerText = cTitle[i].innerText.toString().replace(/\B(?<!\.\d*)(?=(\d{10})+(?!\d))/g) ,'/n')
-    	}
-    </script>        
+           
         </div>
     </div>
     <!-- Projects End -->

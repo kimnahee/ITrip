@@ -36,6 +36,8 @@ public class AdminServiceImpl implements AdminService {
 		return map.memberListOf(vo);
 	}
 
+	}
+	
 	public List<ClassVO> classList(ClassVO vo) {
 		// Class 전체조회
 		return map.classList(vo);
