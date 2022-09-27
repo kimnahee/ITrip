@@ -1,7 +1,9 @@
 package co.itrip.prj.feedback.web;
 
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -26,18 +28,14 @@ public class AjaxFeedbackController {
 	@Autowired
 	FeedbackService fDao;
 	
-	@RequestMapping("/feedbackList.do")
-	public List<FeedbackVO> ajaxFeedbackList(FeedbackVO vo) {
-		
-		return fDao.ajaxFeedbackList(vo);
-	}
 	
-	//@RequestMapping("/feedbackList.do")
-	public PageBean<FeedbackVO> ajaxFeedbackList(int pageNum, int pageSize){
-		 PageHelper.startPage(pageNum, pageSize);
-		 PageBean<FeedbackVO> list =  this.fDao.ajaxFeedbackList(pageNum, pageSize);
-		System.out.println(pageNum+":"+pageSize);
-		 return list;
+	@RequestMapping("/feedbackList.do")
+	public PageInfo<FeedbackVO> ajaxFeedbackList(FeedbackVO vo, HttpServletRequest request,
+			@RequestParam(required = false, defaultValue = "1") int pageNum,
+			@RequestParam(required = false, defaultValue = "5") int pageSize) {
+		PageHelper.startPage(pageNum, pageSize);
+		
+		return PageInfo.of(fDao.ajaxFeedbackList(vo));
 	}
 	
 	

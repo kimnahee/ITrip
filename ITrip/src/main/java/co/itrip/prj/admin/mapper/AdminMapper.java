@@ -7,6 +7,7 @@ import co.itrip.prj.member.service.MemberVO;
 
 public interface AdminMapper {
 	List<MemberVO> memberList(MemberVO vo);
+	List<MemberVO> memberListOf(MemberVO vo);
 	List<GuideVO> memberAuthList(GuideVO vo);
 	int memberAuthUpdate(GuideVO vo);
 }

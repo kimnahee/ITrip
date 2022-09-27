@@ -19,21 +19,19 @@
 							<p>회원정보입니다.</p>
 						</div>
 
-
 						<ul class="nav nav-tabs" id="myTab" role="tablist">
 							<li class="nav-item" role="presentation"><a class="nav-link active" id="home-tab" data-toggle="tab" href="#all" role="tab" aria-controls="home"
-								aria-selected="true">전체</a></li>
-							<li class="nav-item" role="presentation"><a class="nav-link" id="contact-tab" data-toggle="tab" href="#M1" role="tab"
-								aria-controls="contact" aria-selected="false">GUIDE</a></li>
-							<li class="nav-item" role="presentation"><a class="nav-link" id="contact-tab" data-toggle="tab" href="#M2" role="tab"
-								aria-controls="contact" aria-selected="false">USER</a></li>
-							<li class="nav-item" role="presentation"><a class="nav-link" id="contact-tab" data-toggle="tab" href="#M3" role="tab"
-								aria-controls="contact" aria-selected="false">ADMIN</a></li>
+								aria-selected="true"><b>전체</b></a></li>
+							<li class="nav-item" role="presentation"><a class="nav-link" id="contact-tab1" data-toggle="tab" href="#M1" role="tab"
+								aria-controls="contact" aria-selected="false"><b>GUIDE</b></a></li>
+							<li class="nav-item" role="presentation"><a class="nav-link" id="contact-tab2" data-toggle="tab" href="#M2" role="tab"
+								aria-controls="contact" aria-selected="false"><b>USER</b></a></li>
+							<li class="nav-item" role="presentation"><a class="nav-link" id="contact-tab3" data-toggle="tab" href="#M3" role="tab"
+								aria-controls="contact" aria-selected="false"><b>ADMIN</b></a></li>
 						</ul>
 
 
 						<div class="tab-content" id="myTabContent">
-						
 							<!-- 전체 -->
 							<div class="tab-pane fade show active" id="all" role="tabpanel" aria-labelledby="home-tab">
 								<div class="table-responsive">
@@ -47,8 +45,8 @@
 												<th>권한</th>
 											</tr>
 										</thead>
-										<tbody>
-											<tr th:each="m:${memberList}">
+										<tbody id="tbody">
+											<tr th:each="m:${pageInfo.list}">
 												<th th:text=${m.memberId}></th>
 												<td th:text=${m.name}></td>
 												<td th:text=${m.nick}></td>
@@ -58,6 +56,37 @@
 										</tbody>
 									</table>
 								</div>
+								<br>
+								<!-- 페이지네이션 -->
+								<nav aria-label="Page navigation example">
+									<ul class="pagination pagination-info  justify-content-center">
+										<li class="page-item disabled"
+											th:if="${pageInfo.isIsFirstPage()}"><span
+											class="page-link">«</span></li>
+										<li class="page-item"
+											th:if="${!pageInfo.isIsFirstPage() && pageInfo.getList().size() > 0}"><a
+											class="page-link"
+											th:href="|javascript:gopage([[${pageInfo.getPrePage()}]])|"
+											rel="prev">«</a></li>
+										<li
+											th:class="|page-item ${(pageInfo.pageNum eq page) ? 'active': ''} |"
+											th:each="page:${pageInfo.navigatepageNums}"><span
+											class="page-link" th:if="${pageInfo.pageNum eq page}"
+											th:text="${page}"></span> <a class="page-link"
+											th:unless="${pageInfo.pageNum eq page}"
+											th:href="|javascript:gopage(${page})|" th:text="${page}">{{$page
+												}}</a></li>
+										<li class="page-item" th:if="${pageInfo.hasNextPage}"><a
+											class="page-link"
+											th:href="|javascript:gopage([[${pageInfo.getNextPage()}]])|"
+											rel="next">»</a></li>
+										<li class="page-item disabled"
+											th:unless="${pageInfo.hasNextPage}"><span
+											class="page-link">»</span></li>
+									</ul>
+								</nav>
+						
+          
 							</div>
 						
 							<!-- GUIDE -->
@@ -73,16 +102,8 @@
 												<th>권한</th>
 											</tr>
 										</thead>
-										<tbody>
-											<tr th:each="m:${memberList}">
-											<div th:if="${m.auth}=='GUIDE'">
-												<th th:text=${m.memberId}></th>
-												<td th:text=${m.name}></td>
-												<td th:text=${m.nick}></td>
-												<td th:text=${m.email}></td>
-												<td th:text=${m.auth}></td>
-											</div>
-											</tr>
+										<tbody id="m11">
+											
 										</tbody>
 									</table>
 								</div>
@@ -103,14 +124,12 @@
 											</tr>
 										</thead>
 										<tbody>
-											<tr th:each="m:${memberList}">
-											<div th:if="${m.auth}=='USER'">
+											<tr th:each="m:${pageInfo.list}" th:if="${m.auth}=='USER'">
 												<th th:text=${m.memberId}></th>
 												<td th:text=${m.name}></td>
 												<td th:text=${m.nick}></td>
 												<td th:text=${m.email}></td>
 												<td th:text=${m.auth}></td>
-											</div>
 											</tr>
 										</tbody>
 									</table>
@@ -132,14 +151,12 @@
 											</tr>
 										</thead>
 										<tbody>
-											<tr th:each="m:${memberList}">
-											<div th:if="${m.auth}=='ADMIN'">
+											<tr th:each="m:${pageInfo.list}" th:if="${m.auth}=='ADMIN'">
 												<th th:text=${m.memberId}></th>
 												<td th:text=${m.name}></td>
 												<td th:text=${m.nick}></td>
 												<td th:text=${m.email}></td>
 												<td th:text=${m.auth}></td>
-											</div>
 											</tr>
 										</tbody>
 									</table>
@@ -154,6 +171,43 @@
 				</div>
 			</div>
 		</div>
+		<script type="text/javascript">
+		$(".nav-item").on("click","#contact-tab1",function(){
+			var auth = $(this).text()
+			var tbody = $("#M11")
+			console.log(tbody)
+			
+			$.ajax({
+				url:'/memberListOf.do',
+				type:'get',
+				dataType:'json',
+				data:{'auth':auth},
+				success:function result(res){
+					console.log(res)
+					res.list.forEach((elem,idx,arr)=>{
+					
+						tbody.innerHTML +=
+							"<tr><th>"+elem.memberId+"</th>"
+								+"<td>"+elem.name+"</td>"
+								+"<td>"+elem.nick+"</td>"
+								+"<td>"+elem.email+"</td>"
+								+"<td>"+elem.auth+"</td></tr>"
+						})
+				}
+			})
+			
+			
+			
+			
+		})
+		
+		
+		function gopage(p) {
+			location.href = '/memberList.do?pageNum=' + p;
+		}
+		
+		</script>
+		
 	</div>
 </body>
 </html>

@@ -6,6 +6,12 @@
  						parameterType="co.itrip.prj.member.service.MemberVO">
 	select * from member
 </select>
+
+<select id="memberListOf" resultType="co.itrip.prj.member.service.MemberVO"
+ 						parameterType="co.itrip.prj.member.service.MemberVO">
+	select * from member where auth = #{auth}
+</select>
+
 <select id="memberAuthList" resultType="co.itrip.prj.guide.service.GuideVO"
  						parameterType="co.itrip.prj.guide.service.GuideVO">
 	select g.guide_id, g.career,g.dc,g.duty,g.attach,g.attach_dir,g.state_cd,cm.cd_name,m.nick,m.name,m.auth
@@ -16,7 +22,7 @@
 		and g.guide_id = m.member_id
 </select>
 
-<update id="memberAuthUpdate">
-	update guide set state_cd = #{stateCd} where guide_id=#{guideId};
+<update id="memberAuthUpdate" parameterType="co.itrip.prj.guide.service.GuideVO">
+	update guide set state_cd = #{stateCd} where guide_id = #{guideId}
 </update>
 </mapper>

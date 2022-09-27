@@ -12,7 +12,7 @@ import co.itrip.prj.member.service.MemberVO;
 public class AdminServiceImpl implements AdminService {
 
 	@Autowired
-	AdminMapper map;
+	private AdminMapper map;
 	
 	@Override
 	public List<MemberVO> memberList(MemberVO vo) {
@@ -27,6 +27,11 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public int memberAuthUpdate(GuideVO vo) {
 		return map.memberAuthUpdate(vo);
+	}
+
+	@Override
+	public List<MemberVO> memberListOf(MemberVO vo) {
+		return map.memberListOf(vo);
 	}
 
 	

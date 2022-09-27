@@ -12,22 +12,19 @@
 .content { /*컨텐츠 넓이지정*/
 	position: relative;
 	width: 700px;
-	border:1px solid red;
 	margin: 0 auto;
 	height: 550px;
 }
 .card-content{
-	border:1px solid green;
 	padding-bottom: 50px;
-	height: 500px;
+	height: 600px;
 	overflow:auto;
 }
 .slide_item { /*슬라이드 아이템을 absolute로 겹쳐놓고 투명하게 하기 height: auto;*/
 	position: absolute;
 	width: 700px;
-	height: 550px;
+	height: 650px;
 	transition: all 0.3s;
-	border:1px solid blue;
 }
 .ontheSlide { /*현재 아이템에 붙여줄 클래스*/
 	opacity: 1;
@@ -91,7 +88,7 @@
 </style>
 </head>
 <body>
-<div layout:fragment="content">
+<div layout:fragment="content"> 
 <div th:if="${#lists.isEmpty(cbtOne)}">
 	<div class="content">
 		<div class="col-xl-4 col-md-6 col-sm-12 "><!-- slides -->
@@ -111,18 +108,15 @@
 </div>
 <div th:unless="${#lists.isEmpty(cbtOne)}">
 	<div class="content" style="z-index: 1;margin: 0 auto;" th:if="${cbtOne.utpCd=='1'}">
-		<div id="imgArea">
-		</div>
-	
+		<!-- <div id="imgArea"></div> -->
 		<div class="col-xl-4 col-md-6 col-sm-12 "><!-- slides -->
 			<div class="card slide_item ontheSlide" >
 				<div class="card-content">
-				<div  id="langBadge" class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem" th:text="${cbtOne.langCd}"> </div>
-						
+					<div id="imgArea"></div>
+					<div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem" th:text="${cbtOne.cdName}"> </div>
 					<div id="cardContent">
 						<div class="card-header">
 						 	<div id="cbtNos" th:text="${cbtOne.cbtNo}" style="display:none;"></div> 
-						 	
 							<br><h3 th:text="Q.+${cbtOne.ques}"></h3> 
 						</div>
 						<div class="card-body"> 
@@ -136,96 +130,8 @@
 								<b>4</b>. <a href="#" class="ex" th:text="${cbtOne.ex4}"></a>
 							</div>
 						</div>
-						
-						
-						
-						
-						
-						
-						
-						
-						
-		
-						
-						
-						
-						
-						
-						<!-- 댓글구현하고 moreInfo에 옮기고 지우기
-						
-					 	  <div class="explna">
-							<ul class="nav nav-tabs" id="myTab" role="tablist">
-								<li class="nav-item" role="presentation">
-									<a class="nav-link active" id="home-tab" data-toggle="tab" href="#tab1" role="tab" aria-controls="home"
-									aria-selected="true">풀이</a>
-								</li>
-								<li class="nav-item" role="presentation" id="feedbackTab">
-									<a class="nav-link"data-toggle="tab" href="#tab2" role="tab"
-									aria-controls="contact" aria-selected="false">의견나누기</a>
-								</li>
-							</ul>
-							<div class="tab-content">
-								<div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="home-tab">
-									<div style="padding: 20px;" th:text="${cbtOne.explna}"></div>
-								</div>
-								<div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="contact-tab">
-									
-									<div style="padding: 20px;">
-						 				<div>
-						 					
-					 					<form style="text-align: center;margin-bottom:5px;" action="feedbackInsert.do" method="post">
-							 				<input type="text" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" >	
-							 				<input type="text" name="cbtNo" id="cbtNo" th:value="${cbtOne.cbtNo}">
-							 				<input type="text" name="content" id="content" class="form-control" placeholder="문제에 대한 댓글등록이 가능합니다...." style="width: 550px; display:inline-block">
-							 				<button type="submit" id="fbInsert" class="btn btn-outline-primary">등록</button>
-							 			</form>
-								          	
-								          <table class="feedbackList">
-								            <thead>
-								              <tr>
-								                <th>번호</th>
-								                <th>내용</th>
-								                <th>이름</th>
-								              </tr>
-								            </thead>
-								            <tbody id="feedbackArea">
-								            	<tr><td>1</td><td>내용</td><td>경자</td></tr>
-								            	<tr><td>2</td><td>내용2</td><td>경자2</td></tr>
-								            </tbody>
-								          </table>
-								        </div> 
-									</div>
-								</div>
-							</div>
-						</div>   
-						 
-						
-						
-						<div id="content" class="container" style="border:1px solid red;"></div>
-							<div class="container">
-							 <div class="panel col-sm-10 panel-default">
-							 <div class="panel-body reply-top media">
-							  <div id="page"></div>
-							 </div>
-							 </div>
-							</div>
-						
-						-->
-						
-						
-						
-						
-										
-						
-						
-						
-		
-						
-						
-						
-						
 					</div>
-				</div><!-- end if card-content -->
+				</div><!-- end of card-content -->
 				<div class="buttons btn-group btn-group-lg" role="group" style="width: 100%;">
 					<button type="button" class="prevButton btn btn-primary">◀</button>
 					<button type="button" class="nextButton btn btn-primary">▶</button>
@@ -235,11 +141,12 @@
 	</div><!-- end of content  -->
 	
 	<div class="content" style="z-index: 1;margin: 0 auto;" th:if="${cbtOne.utpCd=='2'}">
-		<div id="imgArea"></div>
+		<!-- <div id="imgArea"></div> -->
 		<div class="col-xl-4 col-md-6 col-sm-12 "><!-- slides -->
 			<div class="card slide_item ontheSlide">
 				<div class="card-content">
-				<div  id="langBadge" class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem;" th:text="${cbtOne.langCd}"> </div>
+				<div id="imgArea"></div>
+				<div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem;" th:text="${cbtOne.cdName}"> </div>
 					<div id="cardContent">
 						<div class="card-header">
 						 	<div id="cbtNos" th:text="${cbtOne.cbtNo}" style="display:none;"></div> 
@@ -268,19 +175,17 @@
 
 
 
-
-
-
+<div id="langCd" style="display: none;" th:text="${cbtOne.langCd}"></div>
 <div id="pageNum"></div>
 <input type="hidden" id="memberId" name="memberId" th:value="${#authentication.principal.member.memberId}">
-<input type="hidden" name="cbtNo" id="cbtNo" th:value="${cbtOne.cbtNo}">
+<input type="hidden" name="cbtNo" id="cbtNo" th:value="${cbtOne?.cbtNo}">
 
 <script type="text/javascript">
 let csrfHeaderName = $("meta[name='_csrf']").attr("content");
 let csrfTokenValue = $("meta[name='_csrf_header']").attr("content");
 
 //prev,next버튼 누르면 다음문제 ajax로 가져오기
-let langBadge = document.getElementById('langBadge').innerHTML
+let langCd = document.getElementById('langCd').innerHTML
 const nextButton = document.querySelector('.nextButton');//다음버튼 
 const prevButton = document.querySelector('.prevButton');//이전버튼 
 let savePage = document.getElementById("pageNum").innerHTML;
@@ -321,7 +226,7 @@ nextButton.addEventListener('click', function() {
 			xhr.setRequestHeader(csrfHeaderName,csrfTokenValue);
 		}, 
 		dataType:'json',
-		data:{'langCd':langBadge,'rownum':savePage},
+		data:{'langCd':langCd},
 		success:function result(res){
 			cardContent.innerHTML = "";
 			newQuestion(res);
@@ -348,7 +253,7 @@ prevButton.addEventListener('click', function() {
 			xhr.setRequestHeader(csrfHeaderName,csrfTokenValue);
 		}, 
 		dataType:'json',
-		data:{'langCd':langBadge,'rownum':savePage},
+		data:{'langCd':langCd},
 		success:function newQ(res){
 			cardContent.innerHTML ="";
 			imgArea.innerHTML="";
@@ -416,14 +321,14 @@ function compareCnsrAjax(myChoice){
 			xhr.setRequestHeader(csrfHeaderName,csrfTokenValue);
 		}, 
 		dataType:'json',
-		data:{'langCd':langBadge,'rownum':savePage},
+		data:{'langCd':langBadge},
 		success:function result(res){
 			 if(res.cnsr == myChoice){
 				imgArea.innerHTML +=`<img alt="" src="images/O.png" style="position:absolute; z-index:2;width: 100px;">`
 				alert("정답입니다.다시풀기버튼만들기");
 				
 			}else{
-				imgArea.innerHTML +=`<img alt="" src="images/X.png" style="position:absolute; z-index:2;width: 100px">`	
+				imgArea.innerHTML +=`<img alt="" src="images/X.png" style="position:absolute; z-index:2;width: 100px;">`	
 				alert("오답입니다.다시풀기버튼만들기")	
 			} 
 			$(".form-check").addClass("disabledDiv");
@@ -473,136 +378,82 @@ function moreInfo(res){
 				          </table>
 				        </div>
 				     </div>
-				</div>
+				</div><div id="pageArea"></div>
 			</div>
-			<div id="pageArea"></div>
 		</div>`
 		
 
 	let feedbackTab = document.getElementById("feedbackTab");
 	let feedbackArea = document.getElementById("feedbackArea");
 	let pageArea = document.getElementById("pageArea");
+	feedbackTab.addEventListener("click",function(){gopage(1)}) 
+ }
 
+
+function gopage(p){
 	let cbtNos = document.getElementById("cbtNos").innerText;
-	
-	feedbackTab.addEventListener("click",function(){
-		$.ajax({
-			url:'/feedbackList.do',
-			type:'get',
-	 		beforeSend:function(xhr){
-				xhr.setRequestHeader(csrfHeaderName,csrfTokenValue);
-			}, 
-			dataType:'json',
-			data:{'cbtNo':cbtNos},
-			success:function result(res){
-				feedbackArea.innerHTML="" 
-				res.forEach((elem,idx,arr)=>{
-					console.log("댓글정보..."+elem,idx,arr)
-					//feedbackArea.innerHTML+= "댓글이없습니당ㅇ....."
-					
-					content=""
-					feedbackArea.innerHTML+= 
-						"<tr><td>"+(idx+1)+"</td><td>"+elem.content+"</td><td>"
-						+elem.nick+"</td><td><button type='button' class='badge bg-warning fbDelete' id='fbDelete' value="+elem.feedbackNo+">x</button></td></tr>"
-							
-				})
-			},
-			error:function err(xhr,err){
-				console.log(xhr,err)
+	$.ajax({
+		url:'/feedbackList.do',
+		type:'get',
+		dataType:'json',
+		data:{"cbtNo":cbtNos,"pageNum":p},
+		success:function result(res){
+			feedbackArea.innerHTML = "";
+			if(res.total==0){
+				feedbackArea.innerHTML+= "<tr><td>댓글이없습니당ㅇ.....</td></tr>"
 			}
-		}) 
+			res.list.forEach((elem,idx,arr)=>{
+				
+				feedbackArea.innerHTML+= 
+					"<tr><td>"+(idx+1)+"</td><td>"+elem.content+"</td><td>"
+					+elem.nick+"</td><td><button type='button' class='badge bg-warning fbDelete' id='fbDelete' value="+elem.feedbackNo+">x</button></td></tr>"
+			})
+			
+			//paging..start
+			ph ='<nav aria-label="Page navigation example">'
+			    +'<ul class="pagination pagination-info  justify-content-center">'
+			 if(res.isFirstPage==true){  
+				ph+= '<li class="page-item disabled"><span class="page-link">«</span></li>'
+			 }
+			 else{
+		    	ph+='<li class="page-item">'
+				+'<a class="page-link" href="javascript:gopage('+res.prePage+')" rel="prev">«</a></li>'
+		    }
+	
+			for(page of res.navigatepageNums){
+				ph+="<li class='page-item ("+res.pageNum +" eq "+ page+") ? 'active': ''} '></li>"
+				if(res.pageNum == page){
+					ph+="<span class='page-link'>"+page+"</span>"
+				}else{
+					ph+="<a class='page-link' href='javascript:gopage("+page+")'>"+page+"</a>"
+				}
+				ph+="</li>"
+			}
 		
+			if(res.hasNextPage ==true){
+				ph+=' <li class="page-item"><a class="page-link" href="javascript:gopage('+res.nextPage+')" rel="next">»</a></li>'
+			}else{
+				ph+='<li class="page-item disabled"><span class="page-link">»</span></li></ul></nav>'
+			}
+			
+			pageArea.innerHTML = ph
+			//paging..end	
+					
+		},
+		error:function err(xhr,err){
+			console.log(xhr,err)
+		}
 	}) 
 	
-	
-	
-
-	
-	/*
-	
-	
-	//page start
-	
-	feedbackTab.addEventListener("click",function(){
-		
-pagehtml(0);
-	let pageNum = 0;
-	function pagehtml(pageNum) {
-		
-//var articleid = $("#articleNum").val();
-if (pageNum == 0){
-pageNum=1;
-} else {
-pageNum=pageNum;
 }
-$.ajax({
- url:'/feedbackList.do',
-	type:'get',
-	beforeSend:function(xhr){
-		xhr.setRequestHeader(csrfHeaderName,csrfTokenValue);
-	}, 
-	dataType:'json',
-	data: {'pageNum' : 5, 'pageSize' : 5, 'cbtNo':cbtNos },
-success:function (data) {
-console.log(data.pageNum+": pageNum")
-console.log(data.pages+": pages")
- var options = {
-alignment:"center",//    
-　　　　　　currentPage: data.pageNum,//    
-　　　　　　totalPages: data.pages,//           
-　　　　　　pageUrl: function(type, page, current){
-if (page==current) {
-return "javascript:void(0)";
-} else {
-return "javascript:pagehtml("+page+")";
-}
-}
-};
-var html="";
-$.each(data.list, function (i, obj) {
-html += '<div class="panel col-sm-10 panel-default">'+
-'<div class="panel-body reply-top media">'+
-'<div class="col-sm-3 col-md-2 media-left">'+
-'<img src="images/dt.png" class="img-circle img-thumbnail" />'+
-'<p class="p-css"></p>'+
-'</div>'+
-'<div class="col-sm-10">'+
-'<div class="text-right">#'+i+'</div>'+
-'<hr/>'+
-'<div class="reply-content">'+
-'<span>'+obj.content+'</span>'+
-'</div>'+
-'</div>'+
-'</div>'+
-'</div>';
-});
-$("#content").empty();
-$("#content").append(html);
-$("#page").bootstrapPaginator(options);
-},
-error:function (error) {
-alert("error");
-}
-});
-}
-	})
-	
-	
-	//page end
-	*/
-	
-
- }
 
 /* <input type="text" name="cbtNo" id="cbtNo" value=${res.cbtNo}> */
 
 $(document).on("click","#fbInsert", function(e){
 	let content = document.getElementById("content").value;
 	let memberId = document.getElementById("memberId").value;
-	let csrfToken=$("input[name=_csrf]").val();
-	console.log(memberId)
-	console.log(content)
-	console.log(cbtNos.innerText)
+	let csrfToken = $("input[name=_csrf]").val();
+
 	$.ajax({ 
 		url : "/feedbackInsert.do",
 		type : "post",
@@ -616,7 +467,6 @@ $(document).on("click","#fbInsert", function(e){
 			console.log(data);
 			if(data == 1){
 				alert("댓글이 성공적으로 등록되었습니다.")
-				
 				
 				//똑같은아작스 또 호출해야되나;? 
 				$.ajax({
@@ -648,8 +498,9 @@ $(document).on("click","#fbInsert", function(e){
 			console.error(xhr,err)
 		}
 	})
-	
 })
+
+	
 
 
 $(document).on("click",".fbDelete", function(e){
@@ -668,7 +519,7 @@ $(document).on("click",".fbDelete", function(e){
 		dataType:'json',
 		data:{'feedbackNo':fNo},
 		success:function result(res){
-			alert("삭제완료~~")
+			alert("삭제완료")
 			if(res==1){
 				$this.closest("tr").remove()
 			}
