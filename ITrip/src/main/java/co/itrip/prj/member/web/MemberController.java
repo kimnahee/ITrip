@@ -78,6 +78,7 @@ public class MemberController { //Principal
 	// 마이페이지 1:1상담
 	@GetMapping("/mConsult")
 	public String mConsult(ConsultVO vo, Model model, HttpServletRequest request) {
+		vo.setEnnc("활성화");
 		model.addAttribute("consultList", conService.findAll(vo));
 		return "member/mconsult";
 	}
