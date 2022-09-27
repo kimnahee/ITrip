@@ -57,10 +57,10 @@
 					<span class="px-2">Latest Blog</span>
 				</p> -->
 			</div>
-				
+		<!-- 	  -->
 				<div class="row pb-3">
-				<div class="card" th:each="consultList : ${pageInfo.list}" 
-								th:if="${consultList.ennc} == '활성화'">
+				<div class="card" th:each="consultList : ${pageInfo.list}" th:if="${consultList.ennc} == '활성화'">
+								
 				  <div class="card-body">
 				    <h5 class="card-title" th:text="${consultList.title}"></h5>
 				  </div>
