@@ -11,6 +11,7 @@ public class ConsultDtVO {
 	private String week; // 요일
 	private String beginTime; // 시작시간
 	private String endTime; // 종료시간
+	private int price; // 결제금액
 	
 
 }

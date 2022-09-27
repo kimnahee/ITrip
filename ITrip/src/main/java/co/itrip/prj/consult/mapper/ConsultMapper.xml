@@ -10,7 +10,6 @@
 	            ,c.state_cd
 	            ,c.guide_id
 	            ,c.job_cd
-	            ,c.price
 	            ,c.ennc
 	            ,c.begin_date
 	            ,c.end_date
@@ -38,7 +37,6 @@
 		            ,C.STATE_CD
 		            ,C.GUIDE_ID
 		            ,C.JOB_CD
-		            ,C.PRICE
 		            ,C.ENNC
 		            ,C.BEGIN_DATE
 		            ,C.END_DATE
@@ -71,7 +69,6 @@
 	            ,C.STATE_CD
 	            ,C.GUIDE_ID
 	            ,C.JOB_CD
-	            ,C.PRICE
 	            ,C.ENNC
 	            ,C.BEGIN_DATE
 	            ,C.END_DATE
@@ -103,7 +100,7 @@
 			SELECT CASE WHEN MAX(CONSULT_NO) IS NULL THEN 1 ELSE MAX(CONSULT_NO)+1 END FROM CONSULT
 		</selectKey>
 		INSERT INTO CONSULT 
-		VALUES(#{consultNo}, #{title}, #{content}, sysdate, '1', #{guideId}, #{jobCd}, #{price}, '비활성화', #{beginDate}, #{endDate})
+		VALUES(#{consultNo}, #{title}, #{content}, sysdate, '1', #{guideId}, #{jobCd}, '비활성화', #{beginDate}, #{endDate})
 	</insert>
 	
 	<insert id="consultDtInsert">
@@ -115,7 +112,7 @@
 		FROM CONSULT_DT
 		WHERE CONSULT_NO = #{consultNo}
 		</selectKey>
-		INSERT INTO CONSULT_DT VALUES (#{cdtNo}, #{consultNo}, #{week}, #{beginTime}, #{endTime})
+		INSERT INTO CONSULT_DT VALUES (#{cdtNo}, #{consultNo}, #{week}, #{beginTime}, #{endTime}, #{price})
 	</insert>
 	
 

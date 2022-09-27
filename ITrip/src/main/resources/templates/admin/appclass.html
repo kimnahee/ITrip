@@ -38,7 +38,7 @@
                 <th>승인수정</th>
               </tr>
             </thead>
-            <tbody th:each="classList : ${pageInfo.list}" th:if="${classList.confmCd}=='1'">
+            <tbody th:each="classList : ${pageInfo.list}">
               <tr>
                 <td class="text-bold-500" th:text="${classList.title}"></td>
                 <td th:text="${classList.guideId}"></td>

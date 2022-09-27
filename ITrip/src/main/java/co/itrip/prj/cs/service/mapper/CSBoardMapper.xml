@@ -17,6 +17,7 @@
 		ctgry
 		from csboard
 		<if test="ctgry.equals('공지사항') or ctgry.equals('QNA')"> where ctgry = #{ctgry} </if>
+		<if test="memberId != null">and member_id = #{memberId}</if>
 		order by orgno desc, groupodr asc
 	</select>
 
