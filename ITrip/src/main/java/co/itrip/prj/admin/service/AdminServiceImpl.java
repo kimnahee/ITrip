@@ -34,6 +34,7 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public List<MemberVO> memberListOf(MemberVO vo) {
 		return map.memberListOf(vo);
+	}
 
 	public List<ClassVO> classList(ClassVO vo) {
 		// Class 전체조회

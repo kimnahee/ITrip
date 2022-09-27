@@ -14,14 +14,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
-* ajax를 통해 결제 처리
+* ajax를 통해 카카오페이 결제 처리
 * @author 김하은
 * @date 2022.09.27
-* @version 1.1
+* @version 1.0
 */
 @RestController
 public class AjaxpayformController {
 	
+	/* ajax를 통해 카카오페이 결제 처리(사용안함)*/ 
 	@RequestMapping("/ajaxpayform.do")
 	public String payform() {
 		try {
@@ -36,16 +37,16 @@ public class AjaxpayformController {
 						+ "&partner_order_id=partner_order_id"
 						+ "&partner_user_id=partner_user_id"
 						+ "&item_name=초코파이"
-						+ "&quantity=1=2200"
-						+ "&total_amount=200"
+						+ "&quantity=1"
+						+ "&total_amount=2200"
 						+ "&tax_free_amount=0"
-						+ "&approval_url=https://developers.kakao.com/success"
-						+ "&cancel_url=https://developers.kakao.com/fail"
-						+ "&fail_url=https://developers.kakao.com/cancel";
+						+ "&approval_url=https://developers.kakao.com/success" //http://localhost/payformSuccess.do
+						+ "&fail_url=http://localhost/payformFail.do"
+						+ "&cancel_url=http://localhost/payformCancel.do";
 				// 값을 보냄
 				OutputStream req = conn.getOutputStream() ; // 파라미터를 서버에 전달(요청)
 				DataOutputStream reqData = new DataOutputStream(req); // 넘길 데이터
-				reqData.writeBytes(param); //바이트 형식으로 변환하여 넘김
+				//reqData.writeBytes(param); //바이트 형식으로 변환하여 넘김
 				  //reqData.flush(); // 가지고 있는 데이터를 서버로 넘김으로써 가지고 있는 데이터를 비움(데이터 이동)
 				reqData.close(); // 끝 (close를 실행하면 flush가 자동으로 같이 실행됨)
 								
