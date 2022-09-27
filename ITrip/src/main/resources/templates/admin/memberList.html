@@ -45,7 +45,7 @@
 												<th>권한</th>
 											</tr>
 										</thead>
-										<tbody id="tbody">
+										<tbody>
 											<tr th:each="m:${pageInfo.list}">
 												<th th:text=${m.memberId}></th>
 												<td th:text=${m.name}></td>
@@ -102,8 +102,7 @@
 												<th>권한</th>
 											</tr>
 										</thead>
-										<tbody id="m11">
-											
+										<tbody class="m11">
 										</tbody>
 									</table>
 								</div>
@@ -174,9 +173,10 @@
 		<script type="text/javascript">
 		$(".nav-item").on("click","#contact-tab1",function(){
 			var auth = $(this).text()
-			var tbody = $("#M11")
+			//var tbody = $("#M11")
+			let tb = ""
+			let tbody  = document.getElementsByClassName("M11")
 			console.log(tbody)
-			
 			$.ajax({
 				url:'/memberListOf.do',
 				type:'get',
@@ -186,13 +186,13 @@
 					console.log(res)
 					res.list.forEach((elem,idx,arr)=>{
 					
-						tbody.innerHTML +=
-							"<tr><th>"+elem.memberId+"</th>"
+						tb += "<tr><th>"+elem.memberId+"</th>"
 								+"<td>"+elem.name+"</td>"
 								+"<td>"+elem.nick+"</td>"
 								+"<td>"+elem.email+"</td>"
 								+"<td>"+elem.auth+"</td></tr>"
 						})
+						//tbody.append(tb)
 				}
 			})
 			
