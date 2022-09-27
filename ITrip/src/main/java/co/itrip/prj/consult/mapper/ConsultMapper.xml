@@ -3,6 +3,7 @@
 <mapper namespace="co.itrip.prj.consult.mapper.ConsultMapper">
 	
 	<select id="consultList" resultType="co.itrip.prj.consult.service.ConsultVO">
+
          SELECT C.CONSULT_NO
 	            ,C.TITLE
 	            ,C.CONTENT
@@ -26,6 +27,7 @@
       AND G.DUTY= CM.CD_NO
       AND CM.CD_INI='D'
       ORDER BY CONSULT_NO DESC
+
 	</select> 
 	
 	<!-- 페이징 처리 카테고리 -->
@@ -124,7 +126,9 @@
 		FROM CONSULT_DT
 		WHERE CONSULT_NO = #{consultNo}
 		</selectKey>
+
 		INSERT INTO CONSULT_DT VALUES (#{cdtNo}, #{consultNo},#{week}, #{beginTime}, #{endTime}, #{price})
+
 	</insert>
 	
 
