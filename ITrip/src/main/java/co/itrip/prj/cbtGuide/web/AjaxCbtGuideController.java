@@ -16,7 +16,7 @@ import co.itrip.prj.cbtGuide.service.MyCbtLongVO;
 * 사용자가 서술형 문제를 풀면 ajax를 통해 화면에 풀이 출력
 * @author 김하은
 * @date 2022.09.19 
-* @version 1.0
+* @version 1.1
 */
 @RestController
 public class AjaxCbtGuideController {
@@ -24,23 +24,17 @@ public class AjaxCbtGuideController {
 	private CbtGuideService cgDao;
 	
 	@PostMapping("/ajaxMyCbtLongList.do")
-	public CbtGuideVO ajaxCbtLongAll(CbtGuideVO vo, MyCbtLongVO myVo,  Model model, HttpServletRequest request) {
-		vo.setCbtNo(Integer.parseInt(request.getParameter("cbtNo"))); // 요청된 파라미터 값 유형코드 담음 
-		System.out.println("======controller vo.getMcNo : "+vo.getCbtNo());
-		 //cgDao.ajaxMyCbtLongInsert(myVo);
+	public MyCbtLongVO ajaxMyCbtLongList(CbtGuideVO vo, MyCbtLongVO myVo,  Model model, HttpServletRequest request) {
+		myVo.setCbtNo(Integer.parseInt(request.getParameter("cbtNo"))); // 요청된 파라미터 값 유형코드 담음 
 		
-		model.addAttribute("cbtList", cgDao.ajaxMyCbtLongList(vo));
+		cgDao.ajaxMyCbtLongInsert(myVo); // 사용자가 입력한 값 등록
+		//System.out.println("vo.getChklist()===="+ vo.getChklist());
 		
+		//model.addAttribute("cbtList", cgDao.ajaxMyCbtLongList(vo));
 		//model.addAttribute("myList", cgDao.myCbtLongInsert(myVo));
-		return cgDao.ajaxMyCbtLongList(vo);
+		return cgDao.ajaxMyCbtLongList(myVo);
 	}
-	/*
-	 * @RequestMapping("/myCbtLongInsert.do") public String
-	 * cbtGuideListTabLong(MyCbtLongVO vo, HttpServletRequest request){
-	 * vo.setCbtNo(Integer.parseInt(request.getParameter("cbtNo"))); // 요청된 파라미터 값
-	 * 유형코드 담음 System.out.println("======controller vo.getMcNo : "+vo.getCbtNo());
-	 * cgDao.myCbtLongInsert(vo); return "main/main"; }
-	 */
+	
 	
 	
 
