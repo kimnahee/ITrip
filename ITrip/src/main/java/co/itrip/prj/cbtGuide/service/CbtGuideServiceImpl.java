@@ -80,34 +80,12 @@ public class CbtGuideServiceImpl implements CbtGuideService {
 
 	/* 2022.09.26 객관식 문제 ajax로 전부 처리 */
 	@Override
-	public CbtGuideVO ajaxMyCbtLongList(CbtGuideVO vo) {
+	public MyCbtLongVO ajaxMyCbtLongList(MyCbtLongVO myVo) {
 		
-		/* 사용자가 입력한 값 등록*/
-		MyCbtLongVO myVo = new MyCbtLongVO(); // MyCbtLongVO 인스턴스 생성
-		map.ajaxMyCbtLongInsert(myVo); // 등록 (파라미터 값 : mcKwrd, cbtNo)
-		
-		/*사용자가 등록한 값과 키워드의 값 비교 */
-		CbtKeywordVO kvo = new CbtKeywordVO();
-		kvo.setCbtNo(vo.getCbtNo());
-		map.ajaxMyCbtLongChkList(vo); // 키워드 기준으로 사용자의 답이 있으면 0, 없으면 1 반환(복수형태)
+		//map.ajaxMyCbtLongChkList(vo); // 키워드 기준으로 사용자의 답이 있으면 0, 없으면 1 반환(복수형태)
 		// return 값이 CbtKeywordVO의 List<Integer>chklist 필드에 담김..?
-		
-		
-		Map<String, Object> param = new HashMap<>();
-		
-		for (int i = 0; i < vo.getKeyword().size(); i++) {
-			if (kvo.getChklist().get(i) != null) { // 여러값 입력 시 null이 들어갈 수 있으므로 처리
-				if (kvo.getChklist().get(i) == 0) {
-					param.put("chkOX", 0); // 오답처리
-				} else {
-					
-				    param.put("chkOX", 1); // 정답처리
-				}
-			}
-		}
-		/* 정답유무 처리 업데이트 0 또는 1*/
-		map.ajaxMyCbLongChkUpdate(myVo); 
-		return map.ajaxMyCbtLongList(vo);
+
+		return map.ajaxMyCbtLongList(myVo);
 	} 
 
 	/* 키워드 조회 */
@@ -172,6 +150,45 @@ public class CbtGuideServiceImpl implements CbtGuideService {
 	@Override
 	public List<CbtGuideVO> cbtGuideListX(CbtGuideVO vo) {
 		return map.cbtGuideListX(vo);
+	}
+
+	/* 사용자가 푼 서술형 문제 등록 */
+	@Override
+	public int ajaxMyCbtLongInsert(MyCbtLongVO vo) {
+		int r = map.ajaxMyCbtLongInsert(vo); // 등록 (파라미터 값 : mcKwrd, cbtNo)
+		
+		/*사용자가 등록한 값과 키워드의 값 비교 */
+		CbtGuideVO gVo = new CbtGuideVO(); 
+		CbtKeywordVO kVo = new CbtKeywordVO();
+		
+		gVo.setCbtNo(vo.getCbtNo());
+		gVo.setMkyNo(vo.getMkyNo());
+		int gCunt = map.ajaxMyCbtLongChkList(gVo); // 키워드 기준으로 사용자의 답이 있으면 0, 없으면 1 반환하여 더함
+		kVo.setCbtNo(vo.getCbtNo());
+		
+		int kCunt = map.KeywordListCount(kVo);
+		
+		kVo.setKeywordCunt(kCunt);
+		gVo.setChklist(gCunt);
+		
+		System.out.println("=========gVo.getKeyword().size()===="+ kVo.getKeywordCunt());
+		System.out.println("=========gVo.getChklist()===="+ gVo.getChklist());
+		
+		/* 키워드 갯수와 사용자의 정답갯수가 같으면 1(정답), 다르면 0(오답처리) update */
+        Map<String, Integer> param = new HashMap<>();
+        
+        param.put("mkyNo", vo.getMkyNo());
+        param.put("cbtNo", vo.getCbtNo()); 
+	    if (kVo.getKeywordCunt() == gVo.getChklist()){
+	    	param.put("chkOX", 1); // 정답처리
+	    } else {
+	    	param.put("chkOX", 0); // 오답처리 
+	    }
+	    
+		/* 정답유무 처리 업데이트 0 또는 1*/
+		map.ajaxMyCbLongChkUpdate(param); 
+		
+		return r;
 	}
 
 

@@ -81,7 +81,7 @@ p {
                             <!-- 풀이내용까지 끝 -->
                             <div class="col-12 d-flex justify-content-end">
                             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-                                <button type="submit" class="btn btn-primary mr-1 mb-1">제출</button>
+                                <button type="button" class="btn btn-primary mr-1 mb-1" onclick="insertCall()">제출</button>
                                 <button type="reset" class="btn btn-light-secondary mr-1 mb-1">초기화</button>
                             </div>
                              </div>
@@ -142,7 +142,7 @@ p {
 		}
         }
         
-        function add(){
+        function add(){ 
         	answer.innerHTML+=`
         	<div class="col-sm-6">
             <div class="form-group position-relative has-icon-right">
@@ -154,6 +154,18 @@ p {
         </div>`;
         	
         }
+        function insertCall(){
+            let insertText = confirm("등록하겠습니까?");
+            if(insertText){
+                alert("등록되었습니다.");
+                frm.action = '/cbtGuideInsert.do';
+			    $("#frm").submit();
+            }else{
+                alert("등록을 취소하였습니다.");
+			 
+            }
+        }
+        
     
     </script>
 </div>

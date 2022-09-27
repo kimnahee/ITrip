@@ -31,9 +31,16 @@
 	    </if>
 	</select>
 	
-	<!-- public CbtGuideVO ajaxMyCbtLong(CbtGuideVO vo); /* 객관식 문제 채점시 ajax로 정답 출력 */ -->
-	<select id="ajaxMyCbtLongList" parameterType="co.itrip.prj.cbtGuide.service.CbtGuideVO" resultType="co.itrip.prj.cbtGuide.service.CbtGuideVO">
-	    SELECT * FROM CBT_GUIDE WHERE CBT_NO = ${cbtNo}
+	<!-- public MyCbtLongVO ajaxMyCbtLong(MyCbtLongVO vo); /* 객관식 문제 채점시 ajax로 정답 출력 */ -->
+	<select id="ajaxMyCbtLongList" resultType="co.itrip.prj.cbtGuide.service.MyCbtLongVO">
+	    SELECT DISTINCT MY.CBT_NO, MY.MKY_NO, CBT.QUES, CBT.CNSR, MY.MC_KWRD, 
+	                    (SELECT LISTAGG(C_KWRD, ', ') WITHIN GROUP(ORDER BY C_KWRD) 
+		                 FROM CBT_KEYWORD WHERE CBT_NO = ${cbtNo} ) AS C_KWRD,
+		                MY.CHK
+		FROM MYCBT_LONG MY, CBT_GUIDE CBT, CBT_KEYWORD K 
+		WHERE MY.CBT_NO = CBT.CBT_NO 
+		      AND CBT.CBT_NO = K.CBT_NO 
+		      AND MY.MKY_NO= ${mkyNo}
 	</select>
 	
 	
@@ -96,7 +103,10 @@
 		                      CHK5 =  case when( SELECT cnsr FROM cbt_guide WHERE cbt_no = mycbt_hder.cbt_no5 )=(select cnsr5 from mycbt_hder where mc_no= ${mcNo}) then 1 else 0 end  where mc_no =${mcNo}
 	</update>
 	
-	<!-- public CbtKeywordVO KeywordList(CbtKeywordVO vo); -->
+	<!-- public int KeywordListCount(CbtKeywordVO vo); -->
+	<select id="KeywordListCount" parameterType="co.itrip.prj.cbtGuide.service.CbtKeywordVO" resultType="int">
+	    SELECT COUNT(C_KWRD) AS KEYWORD_CUNT FROM CBT_KEYWORD WHERE CBT_NO = ${cbtNo}
+	</select>
 	
 	<!--  MyCbtHderVO myCbtHderList(MyCbtHderVO vo); //myCbtHder 단건 조회-->
 	<select id="myCbtHderList" parameterType="co.itrip.prj.cbtGuide.service.MyCbtHderVO" resultType="co.itrip.prj.cbtGuide.service.MyCbtHderVO">
@@ -105,7 +115,7 @@
 	
 	<!--  public int chkCuntUpdate(MyCbtHderVO vo); //맞은 카운트 조회-->
 	<update id="chkCuntUpdate">
-	    UPDATE MYCBT_HDER SET CHK0_CUNT = (select 5-(chk1+chk2+chk3+chk4+chk5) from mycbt_hder where mc_no= ${mcNo}), chk1_cunt = (select chk1+chk2+chk3+chk4+chk5 from mycbt_hder where mc_no= ${mcNo}) WHERE MC_NO = ${mcNo}
+	    UPDATE MYCBT_HDER SET CHK0_CUNT = (select 5-(chk1+chk2+chk3+chk4+chk5) FROM MYCBT_HDER WHERE MC_NO= ${mcNo}), CHK1_CUNT = (select chk1+chk2+chk3+chk4+chk5 from mycbt_hder where mc_no= ${mcNo}) WHERE MC_NO = ${mcNo}
 	</update>
 	
 	<!-- List<Map<Integer,Object>> cbtGuideListFive(CbtGuideVO vo);//내가 푼거 5개만 한번에 찾기(채점된 문제 출력용)  -->
@@ -138,15 +148,16 @@
 		INSERT INTO MYCBT_LONG (MKY_NO, MC_KWRD, CBT_NO) VALUES (${mkyNo}, #{mcKwrd}, ${cbtNo})
 	</insert>
 	
-	<!-- public List<Integer> ajaxMyCbtLongChkList(CbtGuideVO vo); /* REGEXP_COUNT를 이용하여 사용자가 입력한 값과 키워드를 비교하여 키워드 기준으로 존재하면 1 없으면 0 출력*/ -->
-	<select id="ajaxMyCbtLongChkList" parameterType="co.itrip.prj.cbtGuide.service.CbtGuideVO" resultType="map">
-	    SELECT REGEXP_COUNT ( (SELECT MC_KWRD FROM MYCBT_LONG WHERE CBT_NO=${cbtNo} AND MKY_NO = ${mkyNo}), C_KWRD ) AS CHKList
-	    FROM CBT_KEYWORD WHERE CBT_NO = ${cbtNo} 
+	<!-- public int ajaxMyCbtLongChkList(CbtGuideVO vo); /* REGEXP_COUNT를 이용하여 사용자가 입력한 값과 키워드를 비교하여 키워드 기준으로 존재하면 1 없으면 0 출력*/ -->
+	<select id="ajaxMyCbtLongChkList" resultType="int">
+	    SELECT SUM(CHK) AS CHKLIST FROM (
+	        SELECT REGEXP_COUNT ( (SELECT MC_KWRD FROM MYCBT_LONG WHERE CBT_NO=${cbtNo} AND MKY_NO = ${mkyNo}), C_KWRD ) AS CHK
+	        FROM CBT_KEYWORD WHERE CBT_NO = ${cbtNo})
 	</select>
 	
-	<!-- public List<Map<String,Integer>> myCbLongChkUpdate(MyCbtHderVO vo); /*  사용자가 입력한 값과 가이드가 등록한 키워드들을 비교하여(AND) 정답유무 처리 */ -->
-	<update id="ajaxMyCbLongChkUpdate" parameterType="co.itrip.prj.cbtGuide.service.MyCbtLongVO" >
-	    update mycbt_long set chk = ${chkOX}  where mky_no = ${mkyNo}
+	<!-- public List<Map<String,Integer>> myCbLongChkUpdate(MyCbtLongVO vo); /*  사용자가 입력한 값과 가이드가 등록한 키워드들을 비교하여(AND) 정답유무 처리 */ -->
+	<update id="ajaxMyCbLongChkUpdate" parameterType="map" >
+	    update mycbt_long set chk = ${chkOX}  where mky_no = ${mkyNo} and cbt_no = ${cbtNo}
 	</update>
 	
 </mapper>
