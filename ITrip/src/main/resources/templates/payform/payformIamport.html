@@ -1,0 +1,47 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+<head>
+<meta charset="UTF-8">
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+<title>Insert title here</title>
+<script src="js/jquery-3.6.0.min.js"></script>
+<!-- iamport.payment.js -->
+  <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+</head>
+<body>
+<div layout:fragment="content">
+<h1>TEST</h1>
+<img alt="" src="images/kakaopay.png" style="position:absolute; z-index:2;width: 110px; cursor: pointer;" id="kakaopay">
+<br>
+
+
+<script type="text/javascript">
+    /* 2022.09.27  결제 이벤트*/
+	$("#kakaopay").on("click",function(data) {
+	
+	    IMP.init('imp21718783');//'가맹점 식별코드' 
+	    IMP.request_pay({// param
+	        pg: "kakaopay.TC0ONETIME", //pg사명 or pg사명.CID 
+	        pay_method: "card", //지불 방법
+	        merchant_uid: "order_no_0004",  // 상점에서 관리하는 주문 번호
+	        name: "주문명:결제테스트", //결제창에 노출될 상품명
+	        amount: 13700, //금액
+	        //buyer_email : "testiamport@naver.com", 
+	        buyer_name : "김트립",
+	        buyer_tel : "01012341234"
+	    }, function (rsp) { // callback
+	        if (rsp.success) {
+	            alert("완료 -> imp_uid : "+rsp.imp_uid+" / merchant_uid(orderKey) : " +rsp.merchant_uid);
+	        } else {
+	            alert("실패 : 코드("+rsp.error_code+") / 메세지(" + rsp.error_msg + ")");
+	        }
+	    });
+	});
+   
+
+</script>
+</div>
+</body>
+</html>
