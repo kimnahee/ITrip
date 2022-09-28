@@ -23,7 +23,14 @@
 </select>
 
 <update id="memberAuthUpdate" parameterType="co.itrip.prj.guide.service.GuideVO">
-	update guide set state_cd = #{stateCd} where guide_id = #{guideId}
+	update guide set 
+	<if test="stateCd==1">state_cd = '2'</if>
+	<if test="stateCd==2">state_cd = '3'</if>
+	 where guide_id = #{guideId}
+</update>
+
+<update id="memberAuthUpdateTo" parameterType="co.itrip.prj.member.service.MemberVO">
+	update member set auth = 'GUIDE' where member_id = #{guideId} and auth='USER'
 </update>
 
 <!-- classList뿌리기 -->
