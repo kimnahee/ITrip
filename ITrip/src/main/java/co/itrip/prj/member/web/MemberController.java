@@ -153,5 +153,13 @@ public class MemberController { //Principal
 //		return "redirect:gmyPage.do";
 //	}
 
+	
+	/** */
+	@PostMapping("/memberInsert.do")
+	public String memberInsert(MemberVO vo) {
+		mService.memberInsert(vo);
+		return "main/main";
+	}
+	
 }
 
