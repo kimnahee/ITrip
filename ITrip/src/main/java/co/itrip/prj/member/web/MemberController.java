@@ -75,7 +75,6 @@ public class MemberController { //Principal
 	// 마이페이지-클래스
 	@GetMapping("/mClass")
 	public String mClass(ClassVO vo,Model model, HttpServletRequest request) {
-//		model.addAttribute("pageInfo", PageInfo.of(cService.classList(vo)));
 		model.addAttribute("classList", cService.classList(vo));
 		return "member/mclass";
 	}
@@ -90,10 +89,10 @@ public class MemberController { //Principal
 	
 	// 가이드 신청폼
 	@GetMapping("/gApply")
-	public String gApply(Model model, MemberVO vo, GuideVO gvo, HttpServletRequest request) {
+	public String gApply(Model model, MemberVO vo, GuideVO gvo, Principal principal) {
 		// 가이드 신청폼에 member테이블 id,name 가져옴
-		vo.setMemberId(request.getParameter("memberId"));
-		gvo.setGuideId(request.getParameter("memberId"));
+		vo.setMemberId(principal.getName());
+		gvo.setGuideId(principal.getName());
 		
 		if(guiService.guideSelect(gvo) == null) {
 			model.addAttribute("guides", mService.memberSelect(vo));
@@ -118,13 +117,13 @@ public class MemberController { //Principal
 
 	// 마이페이지 내가 쓴 글(스터디게시판)
 		@GetMapping("/myWriter")
-		public String myWriter(CommunityVO vo,CSBoardVO csvo, Model model, HttpServletRequest request,
+		public String myWriter(CommunityVO vo,CSBoardVO csvo, Model model, Principal principal,
 				@RequestParam(required = false, defaultValue = "1") int pageNum,
 				@RequestParam(required = false, defaultValue = "5") int pageSize) {
 			PageHelper.startPage(pageNum, pageSize);
 			vo.setCtgry("''");
-			vo.setMemberId(request.getParameter("memberId"));
-			csvo.setMemberId(request.getParameter("memberId"));
+			vo.setMemberId(principal.getName());
+			csvo.setMemberId(principal.getName());
 			csvo.setCtgry("QNA");
 			model.addAttribute("pageOutfo", PageInfo.of(csService.findAll(csvo)));
 			model.addAttribute("pageInfo", PageInfo.of(comService.findAll(vo)));
