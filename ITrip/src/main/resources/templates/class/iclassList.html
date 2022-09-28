@@ -31,17 +31,20 @@ layout:decorate="~{layout/layout}">
 <body layout:fragment="content">
  <div class="section section-properties">
       <div class="container">
-        <div class="row" id="classList">
+      
+			
+      <div style=" display:inline-block; margin:0 auto;" th:each="j:${job}">
+    	
+     		<button th:text=${j.cdName} th:id="${j.cdNo}" class="btn btn-info round" onclick="jobSearch(this.getAttribute('id'))"></button>
+	
+      </div><br><br><br>
+        <div class="row" id="classList" style="border:1px solid red;">
         
 
           <div class="card col-xs-12 col-sm-6 col-md-5 col-lg-4" th:each="cList:${pageInfo.list}">
 
             <div class="property-item mb-30">
-              <a href="#" class="img">
-               <!--  <img src="bootstrap/property/images/img_1.jpg" alt="Image" class="img-fluid" /> -->
-              <img th:src="@{*{cList.attachDir}}"alt="Image" class="img-fluid">
-              <!--<img src="images/라이언.jpg"alt="Image" class="img-fluid">-->
-              </a>
+              <a href="#" class="img"><img th:src="@{*{cList.attachDir}}"alt="Image" class="img-fluid"></a>
               <div class="property-content">
                 <div class="price mb-2"><span th:text=${cList.price} class="cPrice"></span></div>
                 <div>
@@ -114,7 +117,6 @@ layout:decorate="~{layout/layout}">
     	cPrice[i].innerText=cPrice[i].innerText.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")
     }
 
-
 	function gopage(p) {
 		location.href = '/iClassList.do?pageNum=' + p;
 	}
@@ -124,6 +126,59 @@ layout:decorate="~{layout/layout}">
     	frm.classNo.value = no
     	frm.submit()
     }) 
+    
+    
+	let csrfToken = $("input[name=_csrf]").val();
+	 		
+    function jobSearch(jobCd) {
+    	console.log(jobCd)
+		$.ajax({
+			url : "ajaxJobSearch.do",
+			type : "post",
+	 		beforeSend:function(xhr){
+				xhr.setRequestHeader("AJAX", true);
+			    xhr.setRequestHeader("X-CSRF-TOKEN", csrfToken);
+			}, 
+			data : {'jobCd' : jobCd},
+			dataType : "json",
+			success : function(result){
+				if(result.length > 0) {
+					makeDiv(result);
+				}else {
+					alert("검색한 결과가 없습니다.");
+				}
+			},
+			error : function(err) {
+				console.log(err)
+			}
+		})
+	} 
+
+	function makeDiv(data) {
+		$('#classList').html("");
+		var div = $("<div />");
+		//var row = ""
+		$.each(data, function(index, item){
+			console.log("item : " + item.title)
+			var row = '<div class="card col-xs-12 col-sm-6 col-md-5 col-lg-4">'
+						+'<div class="property-item mb-30">'
+	             		+'<a href="#" class="img"><img src='+item.attachDir+' alt="Image" class="img-fluid"></a>'
+	            		+'<div class="property-content">'
+	             		+'<div class="price mb-2"><span class="cPrice">'+item.price+'</span></div>'
+	              		+'<div><img src="images/dt.png" width="20px;"></img><span class="caption badge bg-warning">'+item.term+'</span>'
+	               		+'<span class="city d-block mb-3">'+item.title+'</span>'
+						+'<div class=""><span class="">주요기능 </span><h5 class="card-title">'+item.cdName+'</h5>'
+	               		+'</div><div class="">'
+	                	+'<span class="">정원 </span><h5 class="card-title">'+item.psncpa+'"</h5> </div>'
+	                	+'<a href="#"  class="btn btn-primary py-2 px-3 classInfo">더보기</a>'
+						+'<div style="display: none">'+item.classNo+'</div></div></div></div> </div>'
+			
+			
+			div.append(row);
+		});
+		$('#classList').append(div);
+	}
+    
     </script>
     
     <script src="bootstrap/property/js/bootstrap.bundle.min.js"></script>

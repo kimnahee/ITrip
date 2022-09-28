@@ -10,6 +10,6 @@ public interface ClassService {
 	int classDelete(ClassVO vo); // 클래스 삭제
 
 	List<ClassDtVO> classDtList(ClassDtVO vo);
-	
+	List<ClassVO> ajaxJobSearch(ClassVO vo);
 
 }
