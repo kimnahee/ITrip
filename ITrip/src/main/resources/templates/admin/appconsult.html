@@ -88,33 +88,35 @@
 			let token = $("meta[name='_csrf']").attr("content");
 			
 			function updateConsult(cNo) {
+				// cNo : consultNo 
+				let modifyTd = document.getElementById(cNo); // id가 cNo인 태그(td)
+				modifyTd.previousElementSibling.innerText=""; // 승인대기 글씨 비우기
 				
-				let modifyTd = document.getElementById(cNo); // id가 cNo인것 
-				modifyTd.previousElementSibling.innerText=""; // 승인대기 = ""
+				let td = modifyTd.previousElementSibling; // 승인대기 있는 태그(td)
 				
-				let td = modifyTd.previousElementSibling; // 승인대기있는 td꺽새
-				
-				let select = document.createElement('select'); // select 태그생성
+				let select = document.createElement('select'); // select태그 생성
 				select.setAttribute('id','sel');
 				select.setAttribute('class','form-select');
 				select.setAttribute('style','width:100px');
+				
 				let author = ['승인수락','승인거절'];
 				
-				author.forEach(function (ath,idx) {
+				author.forEach(function (ath,idx) { // author의 내용이랑 인덱스
 					select.innerHTML +='<option value='+idx+'>' + ath + '</option>';
 				})
-				td.append(select);
+				td.append(select); // 승인대기있는 태그에 만든 select태그 append
 				
-				let btn = modifyTd.firstElementChild
+				let btn = modifyTd.firstElementChild // id가 cNo인 태그(td)의 자식태그 => input태그(버튼타입)
 				btn.value='수정완료';
 				
 				let opVal = "";
-				$("#sel").change(function() {
-					opVal = $(this).val();
+				$("#sel").change(function() { // change : 셀렉터를 정하여 해당 셀렉터의 값이 변할경우 변화를 캐치하는 이벤트
+					opVal = $(this).val(); // 만든 select 태그에 value로 0,1 주기
+					console.log(opVal);
 				})
 				
 				btn.addEventListener('click', function(e) {
-					e.preventDefault();
+					e.preventDefault(); // 브라우저 고유의 동작을 중단시켜주는 역할
 					
 					$.ajax({
 						url:'/consultUpdate.do',
@@ -125,11 +127,11 @@
 						    xhr.setRequestHeader("X-CSRF-TOKEN", token);
 						},
 						success:function result(res) {
-							alert('수정완료');
+							alert('수정완료'); // res: 응답 body부 데이터
 							location.href="appConsult.do";
 						}, 
 						error:function err(xhr,err) {
-							alert('수정에러');
+							alert('수정에러'); // xhr: 응답 메시지
 						}
 					})
 				})
