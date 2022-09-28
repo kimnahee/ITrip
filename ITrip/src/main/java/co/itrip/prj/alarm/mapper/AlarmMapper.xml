@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.itrip.prj.alarm.mapper.AlarmMapper">
+	<select id="alarmList" resultType="co.itrip.prj.alarm.service.AlarmVO">
+		select *
+		from alarm
+		where member_id = #{memberId}
+	</select>
+
+	<select id="alarmCount" resultType="Integer">
+		select count(*) as alarmCount
+		from alarm
+		where member_id= #{memberId}
+		and alarm_chk = 0
+	</select>
+</mapper>
