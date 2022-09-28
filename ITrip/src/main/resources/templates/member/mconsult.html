@@ -75,7 +75,7 @@
                   <div class="property-content">
                     <div class="price mb-2"><span th:text="${con.title}" class="cTitle">Web개발 고민</span></div>
                     <div>                     
-                      <span class="city d-block mb-3">Nahi</span>
+                      <span class="city d-block mb-3" th:text="${con.guideId}">Nahi</span>
                       <div class="specs d-flex mb-4">
                         <span class="d-block d-flex align-items-center me-3">        
                           <span class="caption" th:text="'직무   '+${con.cdName}">직무 / 프론트앤드</span><br>        

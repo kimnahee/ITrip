@@ -9,10 +9,11 @@ import co.itrip.prj.member.service.MemberVO;
 
 
 public interface AdminService {
-	List<MemberVO> memberList(MemberVO vo);
-	List<MemberVO> memberListOf(MemberVO vo);
-	List<GuideVO> memberAuthList(GuideVO vo);
-	int memberAuthUpdate(GuideVO vo);
+	List<MemberVO> memberList(MemberVO vo);//전체회원조회
+	List<MemberVO> memberListOf(MemberVO vo);//권한변회원조회
+	List<GuideVO> memberAuthList(GuideVO vo);//guide신청한 회원조회
+	int memberAuthUpdate(GuideVO vo); //guide신청한 회원등급수정
+	int memberAuthUpdateTo(MemberVO vo); //guide신청한 회원의 멤버테이블 권한수정 
 	
 	List<ClassVO> classList(ClassVO vo); // 클래스 전체조회 페이징 처리 
 	List<ConsultVO> ConsultList(ConsultVO vo); // 상담 전체조회 페이징처리 

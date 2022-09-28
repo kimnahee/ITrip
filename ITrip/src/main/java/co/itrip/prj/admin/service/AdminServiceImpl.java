@@ -62,6 +62,11 @@ public class AdminServiceImpl implements AdminService {
 
 	}
 
+	@Override
+	public int memberAuthUpdateTo(MemberVO vo) {
+		return map.memberAuthUpdateTo(vo);
+	}
+
 	
 
 }

@@ -15,13 +15,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
+
 import co.itrip.prj.cmmncd.service.CmmnCdService;
 import co.itrip.prj.follow.service.FollowService;
 import co.itrip.prj.follow.service.FollowVO;
 import co.itrip.prj.guide.service.GuideService;
 import co.itrip.prj.guide.service.GuideVO;
-import co.itrip.prj.iclass.service.ClassDtVO;
-import co.itrip.prj.iclass.service.ClassVO;
 import co.itrip.prj.member.service.MemberService;
 import co.itrip.prj.member.service.MemberVO;
 
@@ -54,10 +53,10 @@ public class GuideController {
 			String filename = uuid+"_"+file.getOriginalFilename(); // 파일이름은 UUID에 있는 랜덤값 + 원래 파일이름으로 설정된다.
 			File saveFile = new File(projectpath,filename);
 			file.transferTo(saveFile);
-			vo.setAttach(filename);
+			vo.setAttach(file.getOriginalFilename());
 			vo.setAttachDir("/files/"+filename);
+			
 		}
-		
 		guService.guideInsert(vo);
 					
 		return "member/mypage";

@@ -23,7 +23,14 @@
 </select>
 
 <update id="memberAuthUpdate" parameterType="co.itrip.prj.guide.service.GuideVO">
-	update guide set state_cd = #{stateCd} where guide_id = #{guideId}
+	update guide set 
+	<if test="stateCd==1">state_cd = '2'</if>
+	<if test="stateCd==2">state_cd = '3'</if>
+	 where guide_id = #{guideId}
+</update>
+
+<update id="memberAuthUpdateTo" parameterType="co.itrip.prj.member.service.MemberVO">
+	update member set auth = 'GUIDE' where member_id = #{guideId} and auth='USER'
 </update>
 
 <!-- classList뿌리기 -->
@@ -68,16 +75,18 @@
 
 <!-- class 승인상태변경 -->
 <update id="classUpdate">
-	update class set confm_cd = 2, ennc = '활성화'
-	where confm_cd = '1'
-	and class_no = #{classNo}; 
+	update class set 
+		<if test="confmCd==0">confm_cd = '2' ,ennc = '활성화'</if>
+		<if test="confmCd==1">confm_cd = '3'</if>
+	where class_no = #{classNo}
 </update>
 
 <!-- consult 승인상태변경 -->
 <update id="consultUpdate">
-	update consult set state_cd = 2, ennc = '활성화'
-	where state_cd = '1'
-	and consult_no = #{consultNo}; 
+	update consult set 
+		<if test="stateCd==0">state_cd = '2' ,ennc = '활성화'</if>
+		<if test="stateCd==1">state_cd = '3'</if>
+	where consult_no = #{consultNo}
 </update>
 
 </mapper>
