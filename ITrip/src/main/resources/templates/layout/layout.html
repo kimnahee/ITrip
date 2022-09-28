@@ -214,10 +214,11 @@
 
 		<script>
 			let id = $("#memberId").val();
-			
+
 			$("#myPage").on("click", function() {
 				//console.log(memberId);
-				location.href = "/myPage?memberId" + id;
+				location.href = "/myPage"
+
 			})
 			// 가이드가 로그인시 가이드 마이페이지 버튼이 생기고 세션값을 
 			$("#guideMyPage").on("click", function() {

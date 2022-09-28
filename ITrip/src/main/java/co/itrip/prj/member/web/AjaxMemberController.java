@@ -3,9 +3,11 @@ package co.itrip.prj.member.web;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import co.itrip.prj.member.service.MemberService;
+import co.itrip.prj.member.service.RegisterMail;
 
 /**
  * 회원가입에 필요한 ajax 처리
@@ -18,6 +20,9 @@ public class AjaxMemberController {
 	@Autowired
 	private MemberService mService;
 	
+	@Autowired
+	private RegisterMail registerMail;
+	
 	// id 중복 검사
 	@PostMapping("/ajaxIdChk.do")
 	public int ajaxIdChk(String mId) {
@@ -29,13 +34,21 @@ public class AjaxMemberController {
 	public int ajaxNickChk(String mNick) {
 		System.out.println(mNick);
 		return mService.ajaxNickChk(mNick);
-		
-	}  
+	}
+	
 	// 패스워드 확인
 	@PostMapping("/ajaxpwChk.do")
 	public int ajaxpwChk(String mPw) {
-		int r = mService.ajaxpwChk(mPw);
-		return r;
+		return mService.ajaxpwChk(mPw);
+	}
+	
+	// 이메일 인증
+	@PostMapping("/ajaxMailChk.do")
+	String ajaxMailChk(@RequestParam("email") String email) throws Exception{
 		
-	}  
+		String code = registerMail.sendSimpleMessage(email);
+		System.out.println("========= 인증코드 : "+code);
+		return code;
+		
+	}
 }
