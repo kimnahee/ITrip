@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+layout:decorate="~{layout/layout}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <section class="section" style="margin-left:100px;margin-right:100px;">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title" th:text="${consultOne.title}"></h3>
+                        <h4 class="card-title" th:text="${consultOne.guideId}"></h4>
+                        <div class="divider">
+                            <div class="divider-text">가이드 소개</div>
+                        </div>
+                   		<h5 class="card-title" th:text="${consultOne.career}"></h5>
+                        <h5 class="card-title" th:text="${consultOne.cdName}"></h5>
+                        <h5 class="card-title" th:text="${consultOne.content}"></h5>
+                    </div>
+                   <div class="card-body">
+                        <div class="divider">
+                            <div class="divider-text">상담 가능 시간</div>
+                        </div>
+                        <div th:each="con : ${consultDt}">
+	                        <span th:text=${con.week}></span> &nbsp;&nbsp;&nbsp;
+	                        <span th:text="${'시작시간:'+con.beginTime}"></span>~ 
+	                        <span th:text="${'끝나는시간:'+con.endTime}"></span> 
+                        	<h5>결제 금액 : <b th:text="${con.price}"></b>원</h5>
+                         </div>
+                         </div>
+                     <!--   <div class="divider">
+                            <div class="divider-text">커리큘럼</div>
+                        </div>
+                        <h5 th:text=${consultOne.crclm}></h5>
+                        <div class="divider">
+                            <div class="divider-text">수업상세내용</div>
+                        </div>
+                        <h5 th:text=${consultOne.content}></h5>
+                    </div> -->
+                      <div class="divider">
+                            <div class="divider-text">비고</div>
+                            <p>1회 컨설트 : 1시간/1명</p>
+                        </div>
+                    <div style="padding:10px;">
+	                    <a href="#"  class="btn btn-primary py-2 px-3 " style="float: right;" data-toggle="modal" data-target="#inlineForm">상담신청하기</a>
+					 	<div th:text="${consultOne.consultNo}" style="display: none"></div>
+					</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    
+    <!--login form Modal -->
+   <!--  <div class="modal fade text-left" id="inlineForm" tabindex="-1" role="dialog"
+        aria-labelledby="myModalLabel33" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h4 class="modal-title" id="myModalLabel33">클래스신청 </h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <i data-feather="x"></i>
+            </button>
+            </div>
+            <form action="#">
+            <div class="modal-body">
+                <div class="form-group">
+                 <h5>클래스명 : <b th:text="${consultOne.title}"></b></h5>
+                </div>
+                <div class="form-group" th:each="cdt,i:${consultDt}">
+           <span th:text=${cdt.term}></span> &nbsp;&nbsp;&nbsp;
+           <span th:text="${'시작시간:'+cdt.beginTime}"></span>~ 
+           <span th:text="${'끝나는시간:'+cdt.endTime}"></span> 
+                </div>
+                <div class="form-group">
+                 <h5>주요언어 : <b th:text="${consultOne.cdName}"></b></h5>
+                </div>
+                <div class="form-group">
+               		<h5>금액: 총 <b th:text="${consultDt.price}"></b>원</h5>
+                </div>
+                <div class="form-group">
+                	<h5>신청자: <b th:text="${#authentication.principal.member.memberId}"></b></h5>
+                </div>
+                <br><br>
+                <span>신청하기 버튼을 누르면 결제화면으로 넘어갑니다.</span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-secondary" data-dismiss="modal">
+                <i class="bx bx-x d-block d-sm-none"></i>
+                <span class="d-none d-sm-block">취소</span>
+                </button>
+                <button type="button" class="btn btn-primary ml-1 " data-dismiss="modal">
+                <i class="bx bx-check d-block d-sm-none"></i>
+                <span class="d-none d-sm-block">신청하기</span>
+                </button>
+            </div>
+            </form>
+        </div>
+        </div>
+    </div> -->
+</div>
+</body>
+</html>
