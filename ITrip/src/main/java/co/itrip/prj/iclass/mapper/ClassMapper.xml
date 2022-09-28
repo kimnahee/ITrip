@@ -50,4 +50,9 @@
 			and cm.cd_no = c.job_cd 
 			and class_no = #{classNo}
 	</select>
+	
+	<select id="ajaxJobSearch" resultType="co.itrip.prj.iclass.service.ClassVO"
+			 parameterType="co.itrip.prj.iclass.service.ClassVO">
+		select * from class where job_cd=#{jobCd}	 
+	</select>
 </mapper>

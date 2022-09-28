@@ -18,4 +18,5 @@ public interface ClassMapper {
 	int classDtDelete(ClassDtVO vo); // 클래스 시간 삭제
 	
 
+	List<ClassVO> ajaxJobSearch(ClassVO vo);
 }

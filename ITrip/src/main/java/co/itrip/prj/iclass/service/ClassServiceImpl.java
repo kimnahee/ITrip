@@ -58,4 +58,9 @@ public class ClassServiceImpl implements ClassService {
 		return map.classDtList(vo);
 	}
 
+	@Override
+	public List<ClassVO> ajaxJobSearch(ClassVO vo) {
+		return map.ajaxJobSearch(vo);
+	}
+
 }
