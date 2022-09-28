@@ -85,6 +85,21 @@ public class AdminController {
 		return "admin/appconsult";
 	}
 	
+	// class 승인
+	@PostMapping("/classUpdate.do")
+	@ResponseBody
+	public int classUpdate(ClassVO vo) {
+		return dao.classUpdate(vo);
+	}
+	
+	// consult 승인
+	@PostMapping("/consultUpdate.do")
+	@ResponseBody
+	public int consultUpdate(ConsultVO vo) {
+		return dao.consultUpdate(vo);
+	}
+	
+	
 	
 	@GetMapping("/memberAuthList.do")
 	public String memberAuthList(GuideVO vo,Model model, HttpServletRequest request,
