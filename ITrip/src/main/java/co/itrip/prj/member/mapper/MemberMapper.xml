@@ -33,8 +33,23 @@
 	<delete id="memberDelete">
 	
 	</delete>
-
-
-
+	
+	<!-- pulbic int memberInsert(MemberVO vo); // 회원등록 -->
+	<insert id="memberInsert">
+	    INSERT INTO MEMBER (MEMBER_ID, NICK, PW, NAME, EMAIL, ATTACH, ATTACH_DIR, AUTH)
+	                VALUES (#{memberId}, #{nick},#{pw}, #{name}, #{email}, null, null, 'USER')
+	</insert>
+	
+	<!--public int ajaxIdChk(String mId);    // id 중복 검사 -->
+	<select id="ajaxIdChk" resultType="integer">
+	    select count(*) from member where member_id = #{mId}
+	</select>
+	<!--public int ajaxNickChk(String mNick); // 닉네임 중복검사 -->
+	<select id="ajaxNickChk"  resultType="integer">
+	    select count(*) from member where nick = #{mNick}
+	</select>
+	<!--public int ajaxpwChk(String mPw);    // 패스워드 확인 -->
+	<select id="ajaxpwChk" resultType="integer">
+	</select>
 
 </mapper>
