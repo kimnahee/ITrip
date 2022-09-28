@@ -29,6 +29,7 @@
 										<th>직무</th>
 										<th>경력</th>
 										<th>설명</th>
+										<th>재직증명서 외</th>
 										<th>권한</th>
 										<th>권한수정</th>
 									</tr>
@@ -40,6 +41,7 @@
 										<td th:text=${g.duty}></td>
 										<td th:text=${g.career}></td>
 										<td th:text=${g.dc}></td>
+										<td><a th:href="@{/download(fileName=${g.attachDir})}"  th:text="${g.attach}" ></a></td>
 										<td th:text=${g.cdName}></td>
 										<td th:id="${g.guideId }">
 											<input type="button" th:onclick="updateFnc(this.getAttribute('id'))"
@@ -101,15 +103,15 @@
 			select.setAttribute('id','sel');
 			select.setAttribute('class','form-select');
 			select.setAttribute('style','width:100px');
-			let author = ['========','승인대기','승인수락','승인거절'];
+			let author = ['=========','승인수락','승인거절'];
 			
-			let option = "";
 			author.forEach(function (ath,idx) {
 				console.log(idx)
 				select.innerHTML += '<option value='+idx+'>'+ ath +'</option>';
 			})
-			select.append(option)
+			
 			td.append(select)
+			$("select option[value*='0']").prop('disabled',true);
 			
 			let btn = modifyTd.firstElementChild  
 			btn.value='수정완료';
@@ -133,12 +135,12 @@
 					dataType:'json',
 					data:{'guideId':memId,'stateCd':opVal},
 					success:function result(res){
-						alert('수정완료')
+						alert('수정이 정상적으로 완료되었습니다.')
 						location.href="memberAuthList.do"
 					},
 					error:function err(xhr,err){
-						alert('수정에러')
-						//location.href="memberAuthList.do"
+						alert('수정이 불가합니다. 다시 시도하세요')
+						location.href="memberAuthList.do"
 					}
 				}) 
 			})

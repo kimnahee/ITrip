@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{layout/layout}">
+	layout:decorate="~{layout/layout}" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -22,11 +22,11 @@
 						<ul class="nav nav-tabs" id="myTab" role="tablist">
 							<li class="nav-item" role="presentation"><a class="nav-link active" id="home-tab" data-toggle="tab" href="#all" role="tab" aria-controls="home"
 								aria-selected="true"><b>전체</b></a></li>
-							<li class="nav-item" role="presentation"><a class="nav-link" id="contact-tab1" data-toggle="tab" href="#M1" role="tab"
+							<li class="nav-item" role="presentation"><a class="nav-link" id="contact-tab" data-toggle="tab" href="#M1" role="tab"
 								aria-controls="contact" aria-selected="false"><b>GUIDE</b></a></li>
-							<li class="nav-item" role="presentation"><a class="nav-link" id="contact-tab2" data-toggle="tab" href="#M2" role="tab"
+							<li class="nav-item" role="presentation"><a class="nav-link" id="contact-tab" data-toggle="tab" href="#M2" role="tab"
 								aria-controls="contact" aria-selected="false"><b>USER</b></a></li>
-							<li class="nav-item" role="presentation"><a class="nav-link" id="contact-tab3" data-toggle="tab" href="#M3" role="tab"
+							<li class="nav-item" role="presentation"><a class="nav-link" id="contact-tab" data-toggle="tab" href="#M3" role="tab"
 								aria-controls="contact" aria-selected="false"><b>ADMIN</b></a></li>
 						</ul>
 
@@ -85,126 +85,94 @@
 											class="page-link">»</span></li>
 									</ul>
 								</nav>
-						
-          
 							</div>
-						
-							<!-- GUIDE -->
-							<div class="tab-pane fade" id="M1" role="tabpanel" aria-labelledby="contact-tab">
-								<div class="table-responsive">
-									<table class="table table-striped mb-0">
-										<thead>
-											<tr>
-												<th>아이디</th>
-												<th>이름</th>
-												<th>닉네임</th>
-												<th>이메일</th>
-												<th>권한</th>
-											</tr>
-										</thead>
-										<tbody class="m11">
-										</tbody>
-									</table>
-								</div>
-							</div>
-						
-						
-							<!-- USER -->
-							<div class="tab-pane fade" id="M2" role="tabpanel" aria-labelledby="contact-tab">
-								<div class="table-responsive">
-									<table class="table table-striped mb-0">
-										<thead>
-											<tr>
-												<th>아이디</th>
-												<th>이름</th>
-												<th>닉네임</th>
-												<th>이메일</th>
-												<th>권한</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr th:each="m:${pageInfo.list}" th:if="${m.auth}=='USER'">
-												<th th:text=${m.memberId}></th>
-												<td th:text=${m.name}></td>
-												<td th:text=${m.nick}></td>
-												<td th:text=${m.email}></td>
-												<td th:text=${m.auth}></td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-							</div>
-						
-						
-							<!-- ADMIN -->
-							<div class="tab-pane fade" id="M3" role="tabpanel" aria-labelledby="contact-tab">
-								<div class="table-responsive">
-									<table class="table table-striped mb-0">
-										<thead>
-											<tr>
-												<th>아이디</th>
-												<th>이름</th>
-												<th>닉네임</th>
-												<th>이메일</th>
-												<th>권한</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr th:each="m:${pageInfo.list}" th:if="${m.auth}=='ADMIN'">
-												<th th:text=${m.memberId}></th>
-												<td th:text=${m.name}></td>
-												<td th:text=${m.nick}></td>
-												<td th:text=${m.email}></td>
-												<td th:text=${m.auth}></td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-							</div>
-						
-						
-						
-						
 						</div><!-- end of myTabContent -->
 					</div><!-- end of card-content -->
 				</div>
 			</div>
 		</div>
 		<script type="text/javascript">
-		$(".nav-item").on("click","#contact-tab1",function(){
+		let authView = document.getElementById("authView")
+		let all = document.getElementById("all")
+		
+		$(".nav-item").on("click","#home-tab",function(){
+			location.href="memberList.do"
+		})
+			
+		
+		$(".nav-item").on("click","#contact-tab",function(){
 			var auth = $(this).text()
-			//var tbody = $("#M11")
-			let tb = ""
-			let tbody  = document.getElementsByClassName("M11")
-			console.log(tbody)
-			$.ajax({
-				url:'/memberListOf.do',
-				type:'get',
-				dataType:'json',
-				data:{'auth':auth},
-				success:function result(res){
-					console.log(res)
-					res.list.forEach((elem,idx,arr)=>{
-					
-						tb += "<tr><th>"+elem.memberId+"</th>"
-								+"<td>"+elem.name+"</td>"
-								+"<td>"+elem.nick+"</td>"
-								+"<td>"+elem.email+"</td>"
-								+"<td>"+elem.auth+"</td></tr>"
-						})
-						//tbody.append(tb)
-				}
-			})
-			
-			
+			gopageAjax(1,auth)
 			
 			
 		})
+			
+		
+			function gopageAjax(p,author){
+			
+				$.ajax({
+					url:'/memberListOf.do',
+					type:'get',
+					dataType:'json',
+					data:{'auth':author,"pageNum":p},
+					success:function result(res){
+						console.log(author)
+						all.innerHTML = "";
+						listOfAuth= '<div class="table-responsive">'
+										+'<table class="table table-striped mb-0">'
+										+'<thead><tr><th>아이디</th><th>이름</th><th>닉네임</th><th>이메일</th><th>권한</th></tr>'
+										+'</thead><tbody">'
+					
+						res.list.forEach((elem,idx,arr)=>{
+							listOfAuth += "<tr><th>"+elem.memberId+"</th><td>"+elem.name+"</td><td>"+elem.nick+"</td>"
+									+"<td>"+elem.email+"</td><td>"+elem.auth+"</td></tr>"
+						})
+						
+						listOfAuth += '</tbody></table></div></div><br>'
+						
+						all.innerHTML = listOfAuth
+						
+						
+						
+						ph ='<nav aria-label="Page navigation example">'
+						    +'<ul class="pagination pagination-info  justify-content-center">'
+						 if(res.isFirstPage==true){  
+							ph += '<li class="page-item disabled"><span class="page-link">«</span></li>'
+						 }
+						 else{
+					    	ph += `<li class="page-item"><a class="page-link" href="javascript:gopageAjax(${res.prePage},'${author}')" rel="prev">«</a></li>`
+					    }
+				
+						for(page of res.navigatepageNums){
+							ph += `<li class="page-item (${res.pageNum} eq ${page}) ? active: ''}" ></li>`
+							if(res.pageNum == page){
+								ph += `<span class='page-link'>${page}</span>`
+							}else{
+								ph+=`<a class='page-link' href='javascript:gopageAjax(${page},"${author}")'>${page}</a>`
+							}
+							ph += "</li>"
+						}
+					
+						if(res.hasNextPage ==true){
+							ph += ` <li class="page-item"><a class="page-link" href="javascript:gopageAjax(${res.nextPage},'${author}')" rel="next">»</a></li>`
+						}else{
+							ph += '<li class="page-item disabled"><span class="page-link">»</span></li></ul></nav>'
+						}
+						
+						all.innerHTML += ph
+						
+					}
+				})
+			}
+			
+			
+			
 		
 		
-		function gopage(p) {
+		
+		 function gopage(p) {
 			location.href = '/memberList.do?pageNum=' + p;
-		}
+		} 
 		
 		</script>
 		
