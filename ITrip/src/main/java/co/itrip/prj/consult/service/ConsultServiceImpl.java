@@ -49,7 +49,11 @@ public class ConsultServiceImpl implements ConsultService{
 	@Override
 	public ConsultVO consultSelectOne(ConsultVO vo) {
 		// 상담 단건조회
-		return map.consultSelectOne(vo);
+		/*
+		 * ConsultDtVO dtvo = new ConsultDtVO(); // ConsultDtVO 호출을 위한 인스턴스 생성
+		 * dtvo.setCdtNo(vo.getConsultNo()); // 부모테이블 글번호 담기 map.consultDtList(dtvo); //
+		 * 글번호를 토대로 자식
+		 */		return map.consultSelectOne(vo);
 	}
 
 	@Override

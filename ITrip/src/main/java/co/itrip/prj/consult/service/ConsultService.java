@@ -11,7 +11,7 @@ public interface ConsultService {
 	
 	int consultInsert(ConsultVO vo); // 가이드 상담 등록
 	List<ConsultDtVO> consultDtList(ConsultDtVO vo);
-	//int consultDtInsert(ConsultVO vo); // 가이드 상담 등록 시 DT테이블에 시간 추가
+	// int consultDtInsert(ConsultVO vo); // 가이드 상담 등록 시 DT테이블에 시간 추가
 	
 
 }

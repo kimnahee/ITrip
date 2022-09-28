@@ -93,7 +93,7 @@
       ORDER BY CONSULT_NO DESC
 	</select>
 	
-	<select id="consultDtList">
+	<select id="consultDtList" resultType="co.itrip.prj.consult.service.ConsultDtVO">
 	SELECT CDT_NO, CONSULT_NO, CASE WHEN WEEK = '0' THEN '월'
 			 WHEN WEEK = '1' THEN '화'
 			 WHEN WEEK = '2' THEN '수'
