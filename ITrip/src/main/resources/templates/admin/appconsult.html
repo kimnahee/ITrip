@@ -4,6 +4,8 @@
 	layout:decorate="~{layout/layout}">
 <head>
 <meta charset="UTF-8">
+<meta name="_csrf" th:content="${_csrf.token}"/>
+<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
 </head>
 <body>
 	<div layout:fragment="content">
@@ -40,11 +42,10 @@
 										<td class="text-bold-500" th:text="${consultList.career}"></td>
 										<td class="text-bold-500" th:text="${consultList.dt}"></td>
 										<td class="text-bold-500" th:text="${consultList.stateCd}"></td>
-										<td th:id="${consultList.guideId}"><input type="button"
-											th:onclick="updateFnc(this.getAttribute('id'))"
-											class="btn btn-primary btn-l" value="수정"
-											th:name="${consultList.guideId}"
-											th:id="${consultList.guideId}"></td>
+										<td th:id="${consultList.consultNo}">
+										<input type="button" th:onclick="updateConsult(this.getAttribute('id'))" 
+										class="btn btn-primary btn-l" value="수정" th:name="${consultList.consultNo}" th:id="${consultList.consultNo}">
+										</td>
 									</tr>
 								</tbody>
 							</table>
@@ -82,6 +83,59 @@
 		<script type="text/javascript">
 			function gopage(p) {
 				location.href = '/appConsult.do?pageNum=' + p;
+			}
+			
+			let token = $("meta[name='_csrf']").attr("content");
+			
+			function updateConsult(cNo) {
+				
+				let modifyTd = document.getElementById(cNo); // id가 cNo인것 
+				modifyTd.previousElementSibling.innerText=""; // 승인대기 = ""
+				
+				let td = modifyTd.previousElementSibling; // 승인대기있는 td꺽새
+				
+				let select = document.createElement('select'); // select 태그생성
+				select.setAttribute('id','sel');
+				select.setAttribute('class','form-select');
+				select.setAttribute('style','width:100px');
+				let author = ['승인수락','승인거절'];
+				
+				author.forEach(function (ath,idx) {
+					select.innerHTML +='<option value='+idx+'>' + ath + '</option>';
+				})
+				td.append(select);
+				
+				let btn = modifyTd.firstElementChild
+				btn.value='수정완료';
+				
+				let opVal = "";
+				$("#sel").change(function() {
+					opVal = $(this).val();
+				})
+				
+				btn.addEventListener('click', function(e) {
+					e.preventDefault();
+					
+					$.ajax({
+						url:'/consultUpdate.do',
+						type:'post',
+						data:{'consultNo':cNo, 'stateCd':opVal},
+						beforeSend:function(xhr) {
+							xhr.setRequestHeader("AJAX", true);
+						    xhr.setRequestHeader("X-CSRF-TOKEN", token);
+						},
+						success:function result(res) {
+							alert('수정완료');
+							location.href="appConsult.do";
+						}, 
+						error:function err(xhr,err) {
+							alert('수정에러');
+						}
+					})
+				})
+				
+				
+				
 			}
 		</script>
 	</div>

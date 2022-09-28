@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+layout:decorate="~{layout/layout}"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+
+	.card-header {
+		margin-top: 10%;
+	}
+	
+	#error .error-title {
+     font-size: xx-large; 
+	}
+	
+	@media (min-width: 1200px)
+	h1, .h1 {
+     font-size: 2.25rem; 
+	}
+	
+	#error{
+	 width: 80em;
+	 height: 40em;
+	 margin-left: 11%;
+	}
+	
+	.error-title {
+		margin-top: 11%;
+	}
+	
+</style>
+</head>
+<body>
+<div layout:fragment="content">
+
+		<div id="error">
+<div class="container text-center pt-32" th:each="gui: ${guides}">
+    <h1 class='error-title' th:text="${gui.memberId}+'님 이미 가이드를 신청하셨습니다'">500</h1>
+    <p>Guide신청이 승인대기중입니다.</p>
+    <a href="myPage">Go Mypage</a>
+</div>
+    </div>
+		</div>
+		
+</body>
+</html>

@@ -28,6 +28,8 @@ import co.itrip.prj.cs.service.CSBoardService;
 import co.itrip.prj.cs.service.CSBoardVO;
 import co.itrip.prj.follow.service.FollowService;
 import co.itrip.prj.follow.service.FollowVO;
+import co.itrip.prj.guide.service.GuideService;
+import co.itrip.prj.guide.service.GuideVO;
 import co.itrip.prj.iclass.service.ClassService;
 import co.itrip.prj.iclass.service.ClassVO;
 import co.itrip.prj.member.service.MemberService;
@@ -54,6 +56,9 @@ public class MemberController { //Principal
 	
 	@Autowired
 	private ConsultService conService;
+	
+	@Autowired
+	private GuideService guiService;
 
 	
 	// 마이페이지
@@ -85,15 +90,22 @@ public class MemberController { //Principal
 	
 	// 가이드 신청폼
 	@GetMapping("/gApply")
-	public String gApply(Model model, MemberVO vo, HttpServletRequest request) {
+	public String gApply(Model model, MemberVO vo, GuideVO gvo, HttpServletRequest request) {
 		// 가이드 신청폼에 member테이블 id,name 가져옴
-		System.out.println(request.getParameter("memberId"));
 		vo.setMemberId(request.getParameter("memberId"));
-		model.addAttribute("guides", mService.memberSelect(vo));
-		// 가이드 신청폼 select 태그
-		model.addAttribute("careerCdList", cdService.careerCdList());
-		model.addAttribute("dutyCdList", cdService.dutyCdList());
-		return "member/gapply";
+		gvo.setGuideId(request.getParameter("memberId"));
+		
+		if(guiService.guideSelect(gvo) == null) {
+			model.addAttribute("guides", mService.memberSelect(vo));
+			// 가이드 신청폼 select 태그
+			model.addAttribute("careerCdList", cdService.careerCdList());
+			model.addAttribute("dutyCdList", cdService.dutyCdList());
+			return "member/gapply";
+		} else {
+			model.addAttribute("guides", mService.memberSelect(vo));
+			return "member/error";
+		}
+		
 	}
 	
 	// 클래스 리뷰
