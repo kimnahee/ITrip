@@ -12,12 +12,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
+import co.itrip.prj.cbtGuide.service.CbtGuideVO;
+import co.itrip.prj.cbtGuide.service.MyCbtHderVO;
 import co.itrip.prj.cmmncd.service.CmmnCdService;
 import co.itrip.prj.community.service.CommunityService;
 import co.itrip.prj.community.service.CommunityVO;
@@ -32,6 +35,8 @@ import co.itrip.prj.guide.service.GuideService;
 import co.itrip.prj.guide.service.GuideVO;
 import co.itrip.prj.iclass.service.ClassService;
 import co.itrip.prj.iclass.service.ClassVO;
+import co.itrip.prj.langcd.mapper.LangCdMapper;
+import co.itrip.prj.langcd.service.LangCdService;
 import co.itrip.prj.member.service.MemberService;
 import co.itrip.prj.member.service.MemberVO;
 import co.itrip.prj.review.service.ReviewVO;
@@ -61,6 +66,9 @@ public class MemberController { //Principal
 	@Autowired
 	private GuideService guiService;
 
+	@Autowired
+	private LangCdService lcdService;
+	
 	
 	// 마이페이지
 	@GetMapping("/myPage")
@@ -181,5 +189,18 @@ public class MemberController { //Principal
 		return "main/main";
 	}
 	
+	//경아 - 오답노트
+	@GetMapping("/answerNoteMain.do")
+	public String answerNoteMain(Model model,MyCbtHderVO vo, Principal principal) {
+		vo.setMemberId(principal.getName());
+		model.addAttribute("langCdList",mService.myWrongAnswerLangCd(vo));
+		return "answerNote/answerNoteMain";
+	}
+	
+	@GetMapping("/myWrongAnswerNote.do")
+	public String myWrongAnswerNote(Model model,CbtGuideVO vo) {
+		model.addAttribute("note", mService.myWrongAnswerNote(vo));
+		return "answerNote/answerNoteSolve";
+	}
 }
 

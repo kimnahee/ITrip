@@ -34,7 +34,27 @@
 	</select>
 	
 	<delete id="followerDelete">
-		DELETE FOLLOW WHERE MEMBER_ID = #{memberId} and guide_id = #{guideId}
+		DELETE FOLLOW WHERE MEMBER_ID = #{memberId} AND GUIDE_ID = #{guideId}
+	</delete>
+	
+	
+	<!-- 상담 상세페이지 팔로우 기능 -->
+	
+	<select id="heartCount" resultType="int" >
+		SELECT COUNT(*)
+		FROM CONSULT C, FOLLOW F
+		WHERE C.GUIDE_ID = F.GUIDE_ID
+		AND F.GUIDE_ID = #{guideId}
+		AND F.MEMBER_ID = #{memberId}
+		AND C.CONSULT_NO = #{consultNo}
+	</select>
+	
+	<insert id="heartInsert">
+		INSERT INTO FOLLOW VALUES (#{guideId}, #{memberId})
+	</insert>
+	
+	<delete id="heartDelete">
+		DELETE FOLLOW WHERE MEMBER_ID = #{memberId} AND GUIDE_ID = #{guideId}
 	</delete>
 	
 

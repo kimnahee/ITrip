@@ -16,4 +16,7 @@ public class ReviewVO {
 	private String ctgry; // 리뷰종류 1:1 상담, 클래스
 	private String memberId; // 회원 아이디
 	private int star; // 별점
+	
+	private String title;// 제목
+	
 }

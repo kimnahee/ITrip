@@ -5,12 +5,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import co.itrip.prj.langcd.mapper.LangCdMapper;
+import co.itrip.prj.langcd.service.LangCdService;
 
 @Controller
 public class LangCdController {
 	@Autowired
-	LangCdMapper dao;
+	LangCdService dao;
 	
 	@RequestMapping("/cbtUserMain.do")
 	public String langCdList(Model model) {
