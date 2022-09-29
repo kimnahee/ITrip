@@ -156,7 +156,7 @@
                     <div class="card-content">
                     <div class="card-body">
                     
-                        <form class="form form-vertical">
+                        <form class="form form-vertical" action="reviewConsultInsert.do" method="post">
                          <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
                         <div class="form-body">
                             <div class="row">
@@ -192,15 +192,14 @@
 
                              </div>
                          </div>
-                            <div class="col-12">
+                           <!--   <div class="col-12">
                                 <div class="form-group">
                                 <label for="email-id-vertical">작성일자</label>
                                 <input type="date" id="dt" class="form-control" name="dt" readOnly>
                                 </div>
-                            </div>
+                            </div>  -->
                             <div class="col-12 d-flex justify-content-end">
-                                <button type="submit" class="btn btn-primary mr-1 mb-1">Submit</button>
-                                <button type="reset" class="btn btn-light-secondary mr-1 mb-1">Reset</button>
+                                <button type="submit" class="btn btn-primary mr-1 mb-1">제출하기</button>
                             </div>
                             </div>
                         </div>

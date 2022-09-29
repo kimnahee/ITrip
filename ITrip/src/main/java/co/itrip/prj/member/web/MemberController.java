@@ -114,6 +114,12 @@ public class MemberController { //Principal
 		return "member/mcreview";
 	}
 	
+	// 상담 리뷰
+	@GetMapping("/conReview")
+	public String conReview() {
+		return "member/consultReview";
+	}
+	
 	
 
 	// 마이페이지 내가 쓴 글(스터디게시판)
