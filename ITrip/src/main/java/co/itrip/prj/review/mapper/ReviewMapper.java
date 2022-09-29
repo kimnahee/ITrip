@@ -4,6 +4,6 @@ import co.itrip.prj.review.service.ReviewVO;
 
 public interface ReviewMapper {
 
-	
 	int reviewConsultInsert(ReviewVO vo); // 리뷰 등록
+	int classReviewInsert(ReviewVO vo); // 클래스 리뷰등록
 }

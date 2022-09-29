@@ -19,4 +19,6 @@ public interface ConsultMapper {
 	
 	ConsultVO consultSelectOne(ConsultVO vo); // 상담 단건조회
 	List<ConsultDtVO> consultDtList(ConsultDtVO vo);
+	
+	List<ConsultVO> myConsultList(ConsultVO vo); // 마이페이지 상담 전체조회
 }

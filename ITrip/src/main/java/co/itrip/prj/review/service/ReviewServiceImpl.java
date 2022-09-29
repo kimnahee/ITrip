@@ -10,10 +10,19 @@ public class ReviewServiceImpl implements ReviewService {
 
 	@Autowired
 	private ReviewMapper map;
+	
 	@Override
 	public int reviewConsultInsert(ReviewVO vo) {
 		// TODO Auto-generated method stub
 		return map.reviewConsultInsert(vo);
 	}
+
+	@Override
+	public int classReviewInsert(ReviewVO vo) {
+		// TODO Auto-generated method stub
+		return map.classReviewInsert(vo);
+	}
+	
+
 
 }

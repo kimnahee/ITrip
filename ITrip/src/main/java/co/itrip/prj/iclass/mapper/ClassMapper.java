@@ -19,4 +19,6 @@ public interface ClassMapper {
 	
 
 	List<ClassVO> ajaxJobSearch(ClassVO vo);
+	
+	List<ClassVO> myClassList(ClassVO vo); // 마이페이지 클래스 전체조회
 }
