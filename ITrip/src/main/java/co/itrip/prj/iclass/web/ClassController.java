@@ -77,7 +77,7 @@ public class ClassController {
 				file.transferTo(saveFile);
 				vo.setAttach(filename);
 				vo.setAttachDir("/files/"+filename);
-			}*/
+			}
 			
 			//새로운파일저장경로
 			String saveFolder = ("");

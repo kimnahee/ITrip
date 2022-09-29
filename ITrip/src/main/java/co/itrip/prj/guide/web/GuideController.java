@@ -79,7 +79,7 @@ public class GuideController {
 	// 가이드 마이페이지 
 	@GetMapping("/gmyPage.do")
 	public String gmyPage(Model model, Principal principal, FollowVO vo) {
-		// vo.setMemberId(principal.getName());
+		 vo.setMemberId(principal.getName());
 		 model.addAttribute("count", fService.followCount()); 
 			/*
 			 * vo = mService.memberSelect(vo); System.out.println("========"+vo.getName());
