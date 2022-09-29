@@ -54,35 +54,49 @@
 									<!-- 폼 -->
 									<form role="form" method="post" id="frm">
 									 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-										<div class="input-group input-group-outline mb-3">
-											<input type="text" class="form-control" id="memberId" name="memberId" placeholder="아이디를 입력해주세요."><br><br>
-											<label><small class="point successIdChk">&nbsp;&nbsp;※ 영문자, 소문자 입력가능, 최대 10자까지 입력</small></label>
+										<div class="input-group input-group-outline ">
+											<input type="text" class="form-control " id="memberId" name="memberId" placeholder="아이디를 입력해주세요.">
+										</div>
+										<div>
+											<label><small class="point mb-3 successIdChk">&nbsp;&nbsp;※ 영문자, 소문자 입력가능, 최대 10자까지 입력</small></label>
 											<input type="hidden" id="idChk" value="false">
 										</div>
 										<div class="input-group input-group-outline mb-3">
 											<input type="password" class="form-control" id="pw" name="pw" placeholder="비밀번호를 입력해주세요.">
 										</div>
-										<div class="input-group input-group-outline mb-3">
+										<div class="input-group input-group-outline ">
 											<input type="password" class="form-control" id="pwRe" name="pwRe" placeholder="비밀번호를 동일하게 한 번 더 입력하세요.">&nbsp;&nbsp;<br>
-											<label><small class="point successPwChk"></small></label>
+										</div>
+										<div>
+											<label><small class="point mb-3 successPwChk"></small></label>
 											<input type="hidden" id="pwChk" value="false"/> 
 										</div>
-										<div class="input-group input-group-outline mb-3">
+										<div class="input-group input-group-outline ">
 											<input type="text" class="form-control" id="name" name="name" placeholder="이름을 입력하세요.">&nbsp;&nbsp;<br>
-											<label><small class="point successName">&nbsp;&nbsp;</small></label>
+										</div>
+										<div>
+											<label><small class="point mb-3 successName">&nbsp;&nbsp;</small></label>
 											<input type="hidden" id="nameChk" value="false"/> 
 										</div>
-										<div class="input-group input-group-outline mb-3">
+										<div class="input-group input-group-outline ">
 											<input type="text" class="form-control" id="nick" name="nick" placeholder="닉네임을 입력해주세요.">
+										</div>
+										<div>
 											<input type="hidden" id="nickChk" value="false">
-											<label><small class="point successNickChk">&nbsp;&nbsp;</small></label>
+											<label><small class="point mb-3 successNickChk">&nbsp;&nbsp;</small></label>
 										</div>
-										<div class="input-group input-group-outline mb-3">
-											<input type="text" class="form-control" id="email" name="email" placeholder="이메일을 입력해주세요.">
-											<button class="btn btn-outline-info btn-sm mb-0" value="false" id="checkEmail">인증하기</button>&nbsp;&nbsp;<br>
+										<div class="input-group input-group-outline">
+											<input type="text" class="form-control mb-0" id="email" name="email" placeholder="이메일을 입력해주세요.">
+											<button type="button" class="btn btn-outline-info btn-sm mb-0" value="false" id="checkEmail">인증하기</button>&nbsp;&nbsp;<br>
 										</div>
-										<div class="input-group input-group-outline mb-3">
-											<input type="text" class="form-control" id="code" name="code" placeholder="이메일 인증번호를 입력하세요.">
+										<div>
+											<label><small class="point mb-2 successEmailRegChk ">&nbsp;&nbsp;</small></label>
+											<input type="hidden" id="emailRegChk" value="false">
+										</div>
+										<div class="input-group input-group-outline mb-2">
+											<input type="text" class="form-control" id="inputCode" name="inputCode" placeholder="이메일 인증번호를 입력하세요.">
+										</div>
+										<div>
 											<label><small class="point successEmailChk">&nbsp;&nbsp;</small></label>
 											<input type="hidden" id="emailChk" value="false">
 										</div>
@@ -218,41 +232,64 @@
     })
     //이름 끝
     
+    
+    // 이메일 정규표현식 체크
+	 $("#email").blur(function(){        
+	    let email = $("#email").val();
+	    let exptext = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+	        if(exptext.test(email)==false){
+	            //이메일 형식이 알파벳+숫자@알파벳+숫자.알파벳+숫자 형식이 아닐경우            
+	            $(".successEmailRegChk").text("* 이메일 형식에 맞게 작성해주세요.");
+			    $(".successEmailRegChk").css("color", "red");
+			    $("#emailRegChk").val("false");
+	        }else{
+	        	$(".successEmailRegChk").text("");
+				$("#emailRegChk").val("true");
+	        }
+	});
+    
     // 이메일 인증번호
     $("#checkEmail").click(function(){
         var token = $("meta[name='_csrf']").attr("content");
         var header = $("meta[name='_csrf_header']").attr("content");
         
         let mEmail = $("#email").val();
+        if ($("#emailRegChk").val() == 'true'){
+        	
+	        $.ajax({
+	            url: '/chk/ajaxMailChk.do',
+	            type: 'post',
+	            data :{ 'email' : mEmail },
+	            beforeSend: function(xhr){
+	    		    	xhr.setRequestHeader(header, token);
+	    		    },
+	            success : function(data){
+	                alert("해당 이메일로 인증번호 발송이 완료되었습니다.");
+	                console.log("data :"+data);
+	                
+	                chkEmailConfirm(data);
+	            },error : function() {
+					console.log("실패");
+				}
+	        })
+        }else{
+        	alert("이메일을 확인해주시기 바랍니다.")
+        }
         
-        $.ajax({
-            url: '/chk/ajaxMailChk.do',
-            type: 'post',
-            data :{ 'email' : mEmail },
-            beforeSend: function(xhr){
-    		    	xhr.setRequestHeader(header, token);
-    		    },
-            success : function(data){
-                alert("해당 이메일로 인증번호 발송이 완료되었습니다.");
-                console.log("data : "+data);
-                
-                chkEmailConfirm(data);
-            }
-        })
     })
     
     //이메일 인증번호 체크 함수
     function chkEmailConfirm(data){
-    let code = $("#code").val();
     
-        $("#emailChk").on("keyup", function(){
-            if(data != code){
+        $("#inputCode").on("keyup", function(){ //코드입력 후...
+    		let iCode = document.getElementById("inputCode").value;
+            if(data != iCode){
                 $(".successEmailChk").text("* 인증 코드가 맞지 않습니다.");
 			    $(".successEmailChk").css("color", "red");
 			    $("#emailChk").val("false");
             } else{
-                $(".successPwChk").text("* 인증번호 확인 완료");
-			    $(".successPwChk").css("color", "green");
+                $(".successEmailChk").text("* 인증번호 확인 완료");
+			    $(".successEmailChk").css("color", "green");
 			    $("#emailChk").val("true");
             }
             
@@ -268,7 +305,8 @@
     	console.log($("#pwChk").val());
     	console.log($("#nameChk").val());
     	
-    	if($("#idChk").val() == 'true' & $("#nickChk").val() == 'true' & $("#pwChk").val() =='true' & $("#nameChk").val() == 'true' & $("#emailChk").val() == 'true' ){
+    	if($("#idChk").val() == 'true' & $("#nickChk").val() == 'true' & $("#pwChk").val() =='true' & $("#nameChk").val() == 'true' & $("#emailChk").val() == 'true' 
+    		&  $("#emailRegChk").val() =='true' &  $("#emailChk").val() == 'true'){
     		alert("회원가입 되었습니다!")
 	    	frm.action="/memberInsert.do";
 	    	frm.submit();

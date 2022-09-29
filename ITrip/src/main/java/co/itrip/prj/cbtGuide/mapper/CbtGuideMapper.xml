@@ -49,7 +49,6 @@
 	<select id="cbtGuideListOne" parameterType="co.itrip.prj.cbtGuide.service.CbtGuideVO" resultType="co.itrip.prj.cbtGuide.service.CbtGuideVO">
 	    SELECT * FROM CBT_GUIDE WHERE CBT_NO = ${cbtNo}
 	</select>
-	
 	<!-- public int cbtGuideInsert(CbtGuideVO VO); //등록(C) -->
 	<insert id="cbtGuideInsert" >
 	   <selectKey keyProperty="cbtNo" order="BEFORE" resultType="int">

@@ -7,6 +7,13 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import co.itrip.prj.member.mapper.MemberMapper;
 
+/**
+ * 시큐리티 처리를 위한 service
+ * @author 김하은
+ * @Date 2022.09.21
+ * @version 1.0
+ *
+ */
 public class MemberDetailService implements UserDetailsService {
     @Autowired
     private MemberMapper map;

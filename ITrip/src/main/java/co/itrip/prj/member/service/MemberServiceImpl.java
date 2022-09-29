@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import ch.qos.logback.core.recovery.ResilientSyslogOutputStream;
 import co.itrip.prj.member.mapper.MemberMapper;
 
 @Service
@@ -87,7 +86,6 @@ public class MemberServiceImpl implements MemberService {
 	public int ajaxpwChk(String mPw) {
 		return map.ajaxpwChk(mPw);
 	}
-	
-	
+
 
 }
