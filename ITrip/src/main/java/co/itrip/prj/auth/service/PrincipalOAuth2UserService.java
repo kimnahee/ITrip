@@ -11,7 +11,7 @@ import co.itrip.prj.auth.userInfo.OAuth2UserInfo;
 
 @Service
 public class PrincipalOAuth2UserService  {
-	@Autowired private UserRepository userRepository;
+	/*@Autowired private UserRepository userRepository;
     @Autowired private BCryptPasswordEncoder bCryptPasswordEncoder;
     
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
@@ -46,5 +46,5 @@ public class PrincipalOAuth2UserService  {
         }
 
         return new PrincipalDetails(byUsername, oAuth2UserInfo);	
-    }
+    }*/
 }
