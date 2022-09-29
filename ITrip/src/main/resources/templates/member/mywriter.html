@@ -91,7 +91,11 @@
                         <!-- 스터디게시판 -->
                             <div class="tab-pane fade show active"  id="home" role="tabpanel" aria-labelledby="home-tab">
                                 <div class="card-body px-0 pb-2">
-					<div class="table-responsive p-0">
+					<div class="table-responsive p-0" th:if="${#lists.isEmpty(pageInfo.list)}">
+						<p>스터디게시판에 작성한 게시글이 없습니다.</p>						
+					</div>
+					
+					<div class="table-responsive p-0" th:unless="${#lists.isEmpty(pageInfo.list)}">
 						<table class="table align-items-center mb-0">
 							<thead>
 								<tr>
@@ -102,7 +106,7 @@
 									<th class="text-center text-uppercase text-secondary text-md font-weight-bolder opacity-7">조회수</th>
 								</tr>
 							</thead>
-							<tbody id="studyList">
+							<tbody>
 								<tr th:each="study : ${pageInfo.list}" th:if="${study.ctgry == '스터디' }">
 									<td><p class="text-md text-secondary mb-0"  th:text="${study.comNo}">글번호</p></td>
 									<td><p class="text-md text-secondary mb-0" th:text="${study.title}">글제목</p></td>
@@ -111,6 +115,7 @@
 									<td><p class="text-md text-secondary mb-0" th:text="${study.hit}">조회수</p></td>
 								</tr>
 							</tbody>
+							
 						</table>
 					</div>
 						<!-- 페이지네이션 -->
@@ -147,7 +152,11 @@
                             <!-- 자유게시판 -->
                             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                                  <div class="card-body px-0 pb-2">
-					<div class="table-responsive p-0">
+                            <div class="table-responsive p-0" th:if="${#lists.isEmpty(pageInfo.list)}">
+								<p>자유게시판에 작성한 게시글이 없습니다.</p>						
+						    </div>
+                                 
+					<div class="table-responsive p-0" th:unless="${#lists.isEmpty(pageInfo.list)}">
 						<table class="table align-items-center mb-0">
 							<thead>
 								<tr>
@@ -203,7 +212,11 @@
                             <!-- Q&A 게시판 -->
                             <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
                                  <div class="card-body px-0 pb-2">
-					<div class="table-responsive p-0">
+                              <div class="table-responsive p-0" th:if="${#lists.isEmpty(pageOutfo.list)}">
+								<p>Q&A게시판에 작성한 게시글이 없습니다.</p>						
+						      </div>
+                                 
+					<div class="table-responsive p-0" th:unless="${#lists.isEmpty(pageOutfo.list)}">
 						<table class="table align-items-center mb-0">
 							<thead>
 								<tr>

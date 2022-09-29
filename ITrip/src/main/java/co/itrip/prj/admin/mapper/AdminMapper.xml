@@ -27,11 +27,16 @@
 	<if test="stateCd==1">state_cd = '2'</if>
 	<if test="stateCd==2">state_cd = '3'</if>
 	 where guide_id = #{guideId}
+	 
 </update>
 
 <update id="memberAuthUpdateTo" parameterType="co.itrip.prj.member.service.MemberVO">
-	update member set auth = 'GUIDE' where member_id = #{guideId} and auth='USER'
+	
+	update member set 
+	 auth = case when ( SELECT state_cd FROM guide WHERE guide_id = #{guideId}) ='2' then 'GUIDE' else 'USER' end
+	 where member_id=#{guideId}
 </update>
+
 
 <!-- classList뿌리기 -->
 <select id="classList" resultType="co.itrip.prj.iclass.service.ClassVO" parameterType="co.itrip.prj.iclass.service.ClassVO">

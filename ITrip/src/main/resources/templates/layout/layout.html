@@ -15,6 +15,11 @@
 <link rel="stylesheet" href="bootstrap/voler/assets/css/app.css">
 <link rel="shortcut icon"
 	href="bootstrap/voler/assets/images/favicon.svg" type="image/x-icon">
+<style>
+.dropdown-menu-large {
+	min-width: 32rem;
+}
+</style>
 </head>
 <body>
 	<div id="app">
@@ -69,9 +74,9 @@
 							class='sidebar-link'> <i data-feather="layout" width="20"></i>
 								<span>멘티 CBT</span>
 						</a></li>
-						<li class="sidebar-item  "><a href="form-editor.html"
+						<li class="sidebar-item  "><a href="answerNoteMain.do"
 							class='sidebar-link'> <i data-feather="layers" width="20"></i>
-								<span>나만의 노트</span>
+								<span>오답노트</span>
 						</a></li>
 						<li class="sidebar-item  "><a href="table.html"
 							class='sidebar-link'> <i data-feather="grid" width="20"></i>
@@ -141,30 +146,22 @@
 						<div>
 							<a href="#" class="badge bg-primary" id="alarmCount"></a>
 						</div>
-						<li class="dropdown nav-icon"><a href="#"
-							data-toggle="dropdown"
-							class="nav-link  dropdown-toggle nav-link-lg nav-link-user">
+						<!-- 알림 리스트 출력하는 공간 -->
+						<li class="dropdown nav-icon">
+							<a href="#" data-toggle="dropdown" class="nav-link  dropdown-toggle nav-link-lg nav-link-user">
 								<div class="d-lg-inline-block">
 									<i data-feather="bell"></i>
 								</div>
-						</a>
-							<div
-								class="dropdown-menu dropdown-menu-right dropdown-menu-large">
-								<h6 class='py-2 px-4'>Notifications</h6>
-								<ul class="list-group rounded-none">
-									<li class="list-group-item border-0 align-items-start">
-										<div class="avatar bg-success mr-3">
-											<span class="avatar-content"><i
-												data-feather="shopping-cart"></i></span>
-										</div>
-										<div>
-											<h6 class='text-bold'>New Order</h6>
-											<p class='text-xs'>An order made by Ahmad Saugi for
-												product Samsung Galaxy S69</p>
-										</div>
-									</li>
+							</a>
+							<div class="dropdown-menu dropdown-menu-right dropdown-menu-large">
+								<h6 class='py-2 px-4'>알림</h6>
+								<ul class="list-group rounded-none" id="alarmList">
+
 								</ul>
-							</div></li>
+							</div>
+							
+						</li>
+
 						<li class="dropdown">
 							<div sec:authorize="isAuthenticated()">
 								<div th:switch="${#authentication.principal.member.auth}">
@@ -211,8 +208,9 @@
 				</div>
 			</footer>
 		</div>
+	</div>
 
-		<script>
+	<script>
 			let id = $("#memberId").val();
 
 			$("#myPage").on("click", function() {
@@ -226,14 +224,43 @@
 				location.href = "/gmyPage.do"
 			})
 			
+			$("#alarmInsert").on("click", function(){
+				location.href="/alarmInsert.do?memberId="+ id;
+			})
+			
+			//알람 상태 업데이트
+			$("#alarmList").on("click", function(e){
+				let csrfHeaderName = "${_csrf.headerName}";
+				let csrfToken=$("input[name=_csrf]").val();
+				
+				if($(e.target).hasClass("css-i6dzq1")){
+					let alarmNo = $(e.target).prev().prev().html();
+					$.ajax({ 
+						url : "/alarmUpdate.do",
+						type : "post",
+						data : {'alarmNo' : alarmNo},
+						beforeSend: function(xhr){
+							xhr.setRequestHeader("AJAX", true);
+						    xhr.setRequestHeader("X-CSRF-TOKEN", csrfToken);
+						},
+						success : function(data){
+							console.log(data);
+							alarmCount();
+							alarmList();
+						}
+					})
+				}
+				
+			})
+			
 			//헤더 알림 ajax
 			$(document).ready(function(){
 				console.log(id);    
-				if(id == undefined || id == "" || id == null){
-					console.log("ㅌ"); //페이지 로딩시 알람 개수 출력 
+				if(!id){
+					//console.log("확인");  
 				} else{
-					alarmCount();
-					alarmList();
+					alarmCount();//페이지 로딩시 알람 개수 출력
+					alarmList();//알람 리스트 출력
 				}
 			});
 			
@@ -252,8 +279,17 @@
 					},
 					success : function(data){
 						console.log(data);
+							let a = '';
 						data.forEach(element=>{
-							console.log(element.alarmMsg);
+							a += `<li class="list-group-item border-0 align-items-start">
+							<div class="avatar bg-info mr-3"><span class="avatar-content">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clipboard"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg></span></div>
+							<div style="display: none;">${element.alarmNo}</div>
+							<h6 class="text-bold">${element.alarmMsg}</h6>
+							<svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+							</li>`;
+							$("#alarmList").html(a);
+							//console.log(element.alarmMsg);
 						})
 					}
 				})
@@ -281,14 +317,14 @@
 			
 		</script>
 
-		<script src="bootstrap/voler/assets/js/feather-icons/feather.min.js"></script>
-		<script
-			src="bootstrap/voler/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-		<script src="bootstrap/voler/assets/js/app.js"></script>
-		<script src="bootstrap/voler/assets/vendors/chartjs/Chart.min.js"></script>
-		<script
-			src="bootstrap/voler/assets/vendors/apexcharts/apexcharts.min.js"></script>
-		<script src="bootstrap/voler/assets/js/pages/dashboard.js"></script>
-		<script src="bootstrap/voler/assets/js/main.js"></script>
+	<script src="bootstrap/voler/assets/js/feather-icons/feather.min.js"></script>
+	<script
+		src="bootstrap/voler/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+	<script src="bootstrap/voler/assets/js/app.js"></script>
+	<script src="bootstrap/voler/assets/vendors/chartjs/Chart.min.js"></script>
+	<script
+		src="bootstrap/voler/assets/vendors/apexcharts/apexcharts.min.js"></script>
+	<script src="bootstrap/voler/assets/js/pages/dashboard.js"></script>
+	<script src="bootstrap/voler/assets/js/main.js"></script>
 </body>
 </html>

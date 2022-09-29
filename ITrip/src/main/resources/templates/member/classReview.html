@@ -156,17 +156,11 @@
                     <div class="card-content">
                     <div class="card-body">
                     
-                        <form class="form form-vertical" action="reviewConsultInsert.do" method="post">
-                         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                        <form class="form form-vertical" action="reviewClassInsert.do" method="post">
+                         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" readOnly>
                         <div class="form-body">
-                         <div class="row">
-                            <!-- <div class="col-12">
-                                <div class="form-group">
-                                <label for="first-name-vertical">상담 : </label>
-                                <input type="text" id="title" class="form-control" name="title" th:eacn="con : ${consultList}" th:value="${con.title}" readOnly>
-                                </div>
-                            </div> -->
                             <div class="row">
+                                <input th:value="${guideId}" name="guideId" type="hidden">
                             <div class="col-12">
                                 <div class="form-group">
                                 <label for="first-name-vertical">작성자 아아디</label>
@@ -185,7 +179,7 @@
                                <span class="star">
 								  ★★★★★
 								  <span>★★★★★</span>
-								  <input type="range" oninput="drawStar(this)" name="star" value="1" step="1" min="0" max="5">
+								  <input type="range" id="star" oninput="drawStar(this)" name="star" value="0" step="1" min="0" max="5">
 								</span> 
 								</div>
 							</div>
@@ -193,8 +187,8 @@
                                 <div class="form-group mb-3">
 						        <div class="review_contents">
 						            <label for="exampleFormControlTextarea1" class="form-label">리뷰내용</label>
-						            <div class="warning_msg">5자 이상으로 작성해 주세요.</div>
-						            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="content"></textarea>
+						            <div class="warning_msg"></div>
+						            <textarea class="form-control" id="content" name="content" rows="3" placeholder="5자 이상으로 작성해 주세요."></textarea>
 						        </div>   
 
                              </div>
@@ -209,49 +203,21 @@
                     </div>
                 </div>
                 </div>
-                
 	<script> 
-
+	    
 	    const drawStar = (target) => {
-	    	/* console.log(target);
-	    	let width = $(target).prev()[0].style.cssText//.width
-	    	console.log(width); 
-	    	$("[name='star']").val()*/
 	        document.querySelector(`.star span`).style.width = `${target.value * 20}%`;
 	      }
 	    
 	    
-    //상품평 작성 글자수 초과 체크 이벤트 리스너
-    document.querySelector('.review_textarea').addEventListener('keydown',function(){
-        //리뷰 400자 초과 안되게 자동 자름
-        let review = document.querySelector('.review_textarea');
-        let lengthCheckEx = /^.{400,}$/;
-        if(lengthCheckEx.test(review.value)){
-            //400자 초과 컷
-            review.value = review.value.substr(0,400);
-        }
-    });
-
-    //저장 전송전 필드 체크 이벤트 리스너
-    document.querySelector('#save').addEventListener('click', function(e){
-        //별점 선택 안했으면 메시지 표시
-        if(rating.rate == 0){
-            rating.showMessage('rate');
-            return false;
-        }
-        //리뷰 5자 미만이면 메시지 표시
-        if(document.querySelector('.review_textarea').value.length < 5){
-            rating.showMessage('review');
-            return false;
-        }
-        //폼 서밋
-    });
+    	
 
     </script>     
            
     <script src="assets/js/feather-icons/feather.min.js"></script>
     <script src="assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
     <script src="assets/js/app.js"></script>
+    
     <script src="assets/js/main.js"></script>
     
 </body>

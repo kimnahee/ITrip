@@ -1,7 +1,12 @@
 package co.itrip.prj.payform.web;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import co.itrip.prj.payform.service.PayformService;
+import co.itrip.prj.payform.service.PayformVO;
 
 /**
 * 결제 관련 컨트롤러
@@ -11,6 +16,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 */
 @Controller
 public class PayformController {
+	
+	@Autowired
+	private PayformService dao;
+	
+	//경아 - 클래스구입
+	@PostMapping("/ClPayformInsert.do")
+	public String ClPayformInsert(PayformVO vo) {
+		dao.clPayformInsert(vo);
+		return "member/mypage";
+	}
 	
 	/*
 	 * 2022.09.27 작업하였으나 API변경으로 인해 사용안함

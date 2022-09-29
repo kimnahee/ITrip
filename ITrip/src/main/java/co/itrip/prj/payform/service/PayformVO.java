@@ -19,6 +19,6 @@ public class PayformVO {
 	private int amount;               // 금액
 	private String member_id;         // 결제 신청자
 	private String category;          // 상담 또는 클래스 구분
-	private String no;                // 상품 번호
+	private int no;                // 상품 번호
 	private Date setlede;             // 결제일자
 }

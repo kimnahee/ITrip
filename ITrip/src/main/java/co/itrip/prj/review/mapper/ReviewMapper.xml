@@ -12,4 +12,16 @@
 	</selectKey> 
 	INSERT INTO REVIEW VALUES (#{reviewNo},'enji','소라미',#{content}, sysdate, 'consult', #{memberId}, #{star} )
 	</insert>
+	
+	<insert id="classReviewInsert">
+		<selectKey keyProperty="reviewNo" order="BEFORE" resultType="int">
+			SELECT 
+			   CASE WHEN MAX(REVIEW_NO) IS NULL THEN 1 
+			   ELSE MAX(REVIEW_NO)+1 
+			   END 
+			 FROM REVIEW
+		</selectKey>
+			INSERT INTO REVIEW VALUES (#{reviewNo}, #{guideId}, #{nick}, #{content}, sysdate, 'class', #{memberId}, #{star} )
+	</insert>
+	
 </mapper>

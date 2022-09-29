@@ -2,6 +2,9 @@ package co.itrip.prj.member.service;
 
 import java.util.List;
 
+import co.itrip.prj.cbtGuide.service.CbtGuideVO;
+import co.itrip.prj.cbtGuide.service.MyCbtHderVO;
+
 public interface MemberService {
 	
 	List<MemberVO> memberSelectList(MemberVO vo);
@@ -13,5 +16,9 @@ public interface MemberService {
 	public int ajaxIdChk(String mId);    // id 중복 검사
 	public int ajaxNickChk(String mNik); // 닉네임 중복검사
 	public int ajaxpwChk(String mPw);    // 패스워드 확인
-	
+
+
+	List<MyCbtHderVO> myWrongAnswerLangCd(MyCbtHderVO vo);
+	List<CbtGuideVO> myWrongAnswerNote(CbtGuideVO vo);
+
 }

@@ -12,4 +12,5 @@ public class FollowVO {
 	// 쿼리 조인 (4 테이블)
 	private String nick; // 유저 닉네임
 	private String cdName; // 가이드 직무 이름
+	private int consultNo;
 }
