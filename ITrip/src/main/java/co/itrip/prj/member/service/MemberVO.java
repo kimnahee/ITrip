@@ -19,4 +19,5 @@ public class MemberVO {
 	private String auth; // 권한
 
 	private String guideId; // 아이디
+	
 }

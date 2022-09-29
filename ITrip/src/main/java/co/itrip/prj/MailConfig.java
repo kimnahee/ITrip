@@ -11,7 +11,7 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
  * 이메일 인증을 위한 메일 환경설정
  * @author 김하은
  * @Date 2022.09.28
- *  @version 1.0
+ * @version 1.0
  *
  */
 @Configuration

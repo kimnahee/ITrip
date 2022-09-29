@@ -8,7 +8,13 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
 import lombok.Getter;
-
+/**
+ * 시큐리티 처리를 위한 회원vo
+ * @author 김하은
+ * @Date 2022.09.21
+ * @version 1.0
+ *
+ */
 @Getter
 public class DetailMemberVO extends User{
 	//시큐리티 처리하기 위한 MemberVO (CustomUser)

@@ -17,6 +17,8 @@ public interface MemberService {
 	public int ajaxNickChk(String mNik); // 닉네임 중복검사
 	public int ajaxpwChk(String mPw);    // 패스워드 확인
 
+
 	List<MyCbtHderVO> myWrongAnswerLangCd(MyCbtHderVO vo);
 	List<CbtGuideVO> myWrongAnswerNote(CbtGuideVO vo);
+
 }

@@ -43,8 +43,7 @@ public class SecurityConfig {
 	}
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		http.authorizeHttpRequests((requests) -> 
-							requests
+		http.authorizeHttpRequests((requests) ->  requests
 							.antMatchers("/", "/loginForm.do","/signupForm.do", "/login","/memberInsert.do", "/chk/**").permitAll()
 							.antMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
 							.anyRequest().authenticated())
@@ -77,6 +76,5 @@ public class SecurityConfig {
 	public WebSecurityCustomizer webSecurityCustomizer() {
 		return (web) -> web.ignoring().antMatchers("/images/**", "/js/**", "/css/**", "/bootstrap/**","/files/**");
 	}
-
 	
 }

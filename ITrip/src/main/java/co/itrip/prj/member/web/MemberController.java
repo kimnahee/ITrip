@@ -182,12 +182,13 @@ public class MemberController { //Principal
 //	}
 
 	
-	/** */
+	/* 회원가입*/
 	@PostMapping("/memberInsert.do")
 	public String memberInsert(MemberVO vo) {
 		mService.memberInsert(vo);
 		return "main/main";
 	}
+
 	
 	//경아 - 오답노트
 	@GetMapping("/answerNoteMain.do")
