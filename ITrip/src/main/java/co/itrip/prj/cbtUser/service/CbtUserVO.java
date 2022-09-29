@@ -20,4 +20,5 @@ public class CbtUserVO {
 	String langCd; //언어카테고리코드 - 자바,자바스크립트..
 	String memberId; //제출자아이디
 	String cdName; //공통코드 
+	int rownum;
 }

@@ -13,7 +13,7 @@
 	position: relative;
 	width: 700px;
 	margin: 0 auto;
-	height: 550px;
+	height: 750px;
 }
 .card-content{
 	padding-bottom: 50px;
@@ -39,7 +39,7 @@
 .prevButton {float: left;}
 .ontheSlide .form-check {font-size: 1.5em;}
 #imgArea{padding-left: 10px;}
-.cnsrOX{border:1px solid black;padding-left:20px;}
+.cnsrOX{padding-left:20px;}
 .form-check{padding-right: 1.75em;}
 .disabledDiv{
 	pointer-events: none;
@@ -212,7 +212,7 @@ function choiceResult(){
 
 //다음 버튼을 누른다면
 nextButton.addEventListener('click', function() {
-
+	
 	page ++; 
 	savePage = page;
 	
@@ -226,7 +226,7 @@ nextButton.addEventListener('click', function() {
 			xhr.setRequestHeader(csrfHeaderName,csrfTokenValue);
 		}, 
 		dataType:'json',
-		data:{'langCd':langCd},
+		data:{'langCd':langCd,'rownum':savePage},
 		success:function result(res){
 			cardContent.innerHTML = "";
 			newQuestion(res);
@@ -253,7 +253,7 @@ prevButton.addEventListener('click', function() {
 			xhr.setRequestHeader(csrfHeaderName,csrfTokenValue);
 		}, 
 		dataType:'json',
-		data:{'langCd':langCd},
+		data:{'langCd':langCd,'rownum':savePage},
 		success:function newQ(res){
 			cardContent.innerHTML ="";
 			imgArea.innerHTML="";
@@ -314,6 +314,7 @@ function newQuestion(res){
 
 //채점
 function compareCnsrAjax(myChoice){
+	savePage = page;
 	$.ajax({
 		url:'/ajaxQuestion.do',
 		type:'get',
@@ -321,7 +322,7 @@ function compareCnsrAjax(myChoice){
 			xhr.setRequestHeader(csrfHeaderName,csrfTokenValue);
 		}, 
 		dataType:'json',
-		data:{'langCd':langBadge},
+		data:{'langCd':langCd,'rownum':savePage},
 		success:function result(res){
 			 if(res.cnsr == myChoice){
 				imgArea.innerHTML +=`<img alt="" src="images/O.png" style="position:absolute; z-index:2;width: 100px;">`
@@ -400,7 +401,7 @@ function gopage(p){
 		success:function result(res){
 			feedbackArea.innerHTML = "";
 			if(res.total==0){
-				feedbackArea.innerHTML+= "<tr><td>댓글이없습니당ㅇ.....</td></tr>"
+				feedbackArea.innerHTML+= "<tr><td colspan='4'>댓글이 없습니다 .....</td></tr>"
 			}
 			res.list.forEach((elem,idx,arr)=>{
 				
