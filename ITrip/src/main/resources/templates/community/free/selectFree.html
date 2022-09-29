@@ -166,7 +166,7 @@
 			let csrfHeaderName = "${_csrf.headerName}";
 			let csrfToken=$("input[name=_csrf]").val();
 			console.log(csrfToken);
-			let id = $("#myId").val();
+			let mid = $("#myId").val();
 			
 			function replyList(){
 				$.ajax({ 
@@ -280,7 +280,7 @@
 				$.ajax({ 
 					url : "/replyInsert.do",
 					type : "post",
-					data : {"comNo" : comNo, "content" : content, "memberId" : id},
+					data : {"comNo" : comNo, "content" : content, "memberId" : mid},
 					beforeSend: function(xhr){
 						xhr.setRequestHeader("AJAX", true);
 					    xhr.setRequestHeader("X-CSRF-TOKEN", csrfToken);
