@@ -17,4 +17,10 @@ public interface FollowMapper {
 	int followerInsert(FollowVO vo); // 팔로워
 	int followerDelete(FollowVO vo); // 언팔로우
 	int followerCount(); // 팔로워 수
+	
+	
+	// 상담페이지 팔로우(하트 찜기능)
+	int heartCount(FollowVO vo); // 팔로우 체크 
+	int heartInsert(FollowVO vo); // 팔로우 등록
+	int heartDelete(FollowVO vo); //팔로우 삭제
 }

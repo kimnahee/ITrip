@@ -52,13 +52,31 @@ public class FollowServiceImpl implements FollowService {
 	@Override
 	public int followerDelete(FollowVO vo) {
 		// TODO Auto-generated method stub
-		return map.followDelete(vo);
+		return map.followerDelete(vo);
 	}
 
 	@Override
 	public int followerCount() {
 		// TODO Auto-generated method stub
-		return map.followCount();
+		return map.followerCount();
+	}
+
+	@Override
+	public int heartCount(FollowVO vo) {
+		// TODO Auto-generated method stub
+		return map.heartCount(vo);
+	}
+
+	@Override
+	public int heartInsert(FollowVO vo) {
+		// TODO Auto-generated method stub
+		return map.heartInsert(vo);
+	}
+
+	@Override
+	public int heartDelete(FollowVO vo) {
+		// TODO Auto-generated method stub
+		return map.heartDelete(vo);
 	}
 
 }
