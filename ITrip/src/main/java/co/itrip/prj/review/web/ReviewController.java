@@ -21,4 +21,10 @@ public class ReviewController {
 		reServicce.reviewConsultInsert(vo);
 		return "redirect:myPage"; 
 	}
+	
+	@PostMapping("/reviewClassInsert.do")
+	public String reviewClassInsert(ReviewVO vo) {
+		reServicce.classReviewInsert(vo);
+		return "redirect:mClass";
+	}
 }

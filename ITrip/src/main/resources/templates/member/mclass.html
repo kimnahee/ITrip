@@ -5,6 +5,7 @@
 	<title>
       Property &mdash; Free Bootstrap 5 Website Template by Untree.co
     </title>
+     <script src="js/jquery-3.6.0.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="author" content="Untree.co" />
     <link rel="shortcut icon" href="favicon.png" />
@@ -53,21 +54,29 @@
     </div>
      <!-- Projects Start -->
            
-            <div class="section ">
+    <div class="section ">
       <div class="container">
         <div class="row mb-5 align-items-center">
           <div class="col-lg-6">
-            <h2 class="font-weight-bold text-primary heading">
-             Class
-            </h2>
+            <h2 class="font-weight-bold text-primary heading">Class</h2>
           </div>
-          
         </div>
+        
+		<div class="row" th:if="${#lists.isEmpty(classList)}">
+						<div>
+							<div class="container text-center pt-32" >
+								<h1 class='error-title'>진행중인 Class가 없습니다.</h1>
+								<p>새로운 class를 신청해주세요.</p>
+								<a href="myPage">Go Mypage</a>
+							</div>
+						</div>
+					</div>        
+        
         <div class="row">
-          <div class="col-12">
+          <div class="col-12" th:unless="${#lists.isEmpty(classList)}">
             <div class="property-slider-wrap">
               <div class="property-slider">
-              <div class="card col-xs-12 col-sm-6 col-md-5 col-lg-3" th:each="cList:${classList}" th:if="${cList.confmCd == '2' }">
+              <div class="card col-xs-12 col-sm-6 col-md-5 col-lg-3" th:each="cList : ${classList}">
               
                 <!-- .item -->
                 <div class="property-item mb-30">
@@ -88,10 +97,14 @@
                       	<span class="">정원 </span>
                       	<h5 class="card-title" th:text="${cList.psncpa}+명"></h5>
                       </div>                    
-                     
-                       <a href="mcReview"class="btn btn-primary py-2 px-3 classInfo">리뷰</a>
-                        <a href="property-single.html"class="btn btn-primary py-2 px-3 classInfo">링크</a>
-                         <a href="property-single.html"class="btn btn-primary py-2 px-3 classInfo">수료증</a>
+                     <form class="token" action="mcReview" method="post">
+                		<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                      	<input name="guideId" id="guideId" th:value="${cList.guideId}" type="hidden">
+                      	<button type="submit" class="btn btn-primary py-2 px-3 classInfo">리뷰</button>
+                        <a href="/"class="btn btn-primary py-2 px-3 classInfo">링크</a>
+                        <a href="/"class="btn btn-primary py-2 px-3 classInfo">수료증</a>
+                	</form>
+                   <!--     <a class="btn btn-primary py-2 px-3 classInfo mcReview">리뷰</a> -->
                          <div th:text="${cList.classNo}" style="display: none"></div>
                     </div>
                   </div>
@@ -143,6 +156,8 @@
     
 	<script type="text/javascript">
 	let cPrice = document.getElementsByClassName("cPrice")
+	let guideId = $("#guideId").val();
+	
     for (let i = 0; i < cPrice.length; i++){
     	cPrice[i].innerText=cPrice[i].innerText.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")
     }
@@ -153,6 +168,14 @@
     	frm.classNo.value = no
     	frm.submit()
     }) 
+    
+    // 클래스 리뷰
+   /*  $(".mcReview").on("click", function() {
+    	console.log(guideId);
+    	location.href = "/mcReview?guideId=" + guideId;
+    }) */
+    
+    
     
 	</script>
 </body>

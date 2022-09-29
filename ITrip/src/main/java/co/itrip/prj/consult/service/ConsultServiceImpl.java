@@ -62,6 +62,13 @@ public class ConsultServiceImpl implements ConsultService{
 		return map.consultDtList(vo);
 	}
 
+	@Override
+	public List<ConsultVO> myConsultList(ConsultVO vo) {
+		// 마이페이지 상담 전체조회
+		return map.myConsultList(vo);
+	}
+
+	
 
 
 }

@@ -34,6 +34,7 @@ import co.itrip.prj.iclass.service.ClassService;
 import co.itrip.prj.iclass.service.ClassVO;
 import co.itrip.prj.member.service.MemberService;
 import co.itrip.prj.member.service.MemberVO;
+import co.itrip.prj.review.service.ReviewVO;
 
 
 @Controller
@@ -74,16 +75,17 @@ public class MemberController { //Principal
 		
 	// 마이페이지-클래스
 	@GetMapping("/mClass")
-	public String mClass(ClassVO vo,Model model, HttpServletRequest request) {
-		model.addAttribute("classList", cService.classList(vo));
+	public String mClass(ClassVO vo,Model model, Principal principal) {
+		vo.setMemberId(principal.getName());
+		model.addAttribute("classList", cService.myClassList(vo));
 		return "member/mclass";
 	}
 	
-	// 마이페이지 1:1상담
+	// 마이페이지-1:1상담
 	@GetMapping("/mConsult")
-	public String mConsult(ConsultVO vo, Model model, HttpServletRequest request) {
-		vo.setEnnc("활성화");
-		model.addAttribute("consultList", conService.findAll(vo));
+	public String mConsult(ConsultVO vo, Model model, Principal principal) {
+		vo.setMemberId(principal.getName());
+		model.addAttribute("consultList", conService.myConsultList(vo));
 		return "member/mconsult";
 	}
 	
@@ -108,9 +110,10 @@ public class MemberController { //Principal
 	}
 	
 	// 클래스 리뷰
-	@GetMapping("/mcReview")
-	public String mcReview() {
-		return "member/mcreview";
+	@PostMapping("/mcReview")
+	public String mcReview(ReviewVO vo, Model model) {
+		model.addAttribute("guideId", vo.getGuideId());
+		return "member/classReview";
 	}
 	
 	// 상담 리뷰

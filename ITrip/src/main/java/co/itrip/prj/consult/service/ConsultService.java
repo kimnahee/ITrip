@@ -13,5 +13,7 @@ public interface ConsultService {
 	List<ConsultDtVO> consultDtList(ConsultDtVO vo);
 	// int consultDtInsert(ConsultVO vo); // 가이드 상담 등록 시 DT테이블에 시간 추가
 	
+	List<ConsultVO> myConsultList(ConsultVO vo); // 마이페이지 상담 전체조회
+	
 
 }

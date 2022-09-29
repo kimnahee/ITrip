@@ -33,5 +33,7 @@ public class ClassVO {
 	private String beginTime;
 	private String endTime;
 	
+	private String memberId; 
+	
 	
 }

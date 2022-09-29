@@ -33,6 +33,8 @@ public class ConsultVO {
 	private String endTime; // 종료시간
 	private int price; //상담결제금액
 	
+	private String memberId;  
+	
 	
 	
 	
