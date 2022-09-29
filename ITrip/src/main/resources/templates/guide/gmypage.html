@@ -228,11 +228,11 @@
 		    	xhr.setRequestHeader("X-CSRF-TOKEN", csrfToken);
        		},
        		success : function(data) {
-       			      console.log(data.length);
+       			      //console.log(data.length);
        			    $("#fcount").append(makeH(data));
            	     data.forEach(element=>{
        				$("#followBody").append(makeTr(element));
-       				 console.log(element);
+       				 //console.log(element);
            		})  
        		}
        	})
@@ -253,8 +253,8 @@
         // 언팔로우
        $(document).on("click",".deletF", function(e) {
    	   let deleteF = $(e.target).closest("tr").children(0).html();
-   	   console.log(deleteF);
-   	   console.log(memberId);
+    	   console.log("deleteF", deleteF);
+   	   console.log("guideId",guideId); 
    	   $.ajax({
    		   url : "/followerDelete.do",
    		   type : "get",
