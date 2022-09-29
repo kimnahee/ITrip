@@ -10,4 +10,6 @@ public interface PayformService {
 	//결제처리
 	public void addPay(PayformVO vo);
 
+	//경아 - 클래스결제테이블insert
+	int clPayformInsert(PayformVO vo);
 }

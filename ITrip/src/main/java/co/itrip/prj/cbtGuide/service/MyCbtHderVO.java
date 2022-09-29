@@ -35,4 +35,8 @@ public class MyCbtHderVO {
 	
 	private int chk0Cunt; // 정답카운트
 	private int chk1Cunt; // 오답카운트
+	
+	//경아 오답노트
+	private String cdNo;
+	private String cdName;
 }
