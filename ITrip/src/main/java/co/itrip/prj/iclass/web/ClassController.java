@@ -8,6 +8,7 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,7 +35,7 @@ public class ClassController {
 	@Autowired
 	private CmmnCdService cmService; // 공통코드서비스
 	
-	
+	//경아,소정 - 클래스리스트
 	@GetMapping("/iClassList.do") 
 	public String iClass(ClassVO vo,Model model, HttpServletRequest request,
 			@RequestParam(required = false, defaultValue = "1") int pageNum,
@@ -45,11 +46,14 @@ public class ClassController {
 		model.addAttribute("job", cmService.jobCdList());
 		return "class/iclassList";
 	}
+
+	@Value("${file.dir}")
+	private File fileDir;
 	
-	// Class insert & 파일처리
+	//소정 - Class insert & 파일처리
 		@PostMapping("/classInsert.do")
 		public String classInsert(ClassVO vo, ClassDtVO dtvo, MultipartFile file) throws IllegalStateException, IOException {
-			
+			/*
 			if(!file.getOriginalFilename().isEmpty()) {
 				String projectpath = System.getProperty("user.dir")+"/src/main/resources/static/files";  
 				UUID uuid = UUID.randomUUID(); 
@@ -58,7 +62,21 @@ public class ClassController {
 				file.transferTo(saveFile);
 				vo.setAttach(filename);
 				vo.setAttachDir("/files/"+filename);
+			}*/
+			
+			//새로운파일저장경로
+			String saveFolder = ("");
+			File sfile = new File(saveFolder);
+			String oFileName = file.getOriginalFilename();
+			if(!oFileName.isEmpty()) {
+				String sFileName = UUID.randomUUID().toString()+oFileName.substring(oFileName.lastIndexOf("."));
+				String path = fileDir+"/"+sFileName;
+				file.transferTo(new File(path));
+				vo.setAttach(oFileName); 
+				vo.setAttachDir(saveFolder+"/"+sFileName);
 			}
+			
+			
 			// ClassVO
 			System.out.println("1"+vo.getTitle());
 			System.out.println("2"+vo.getClassNo()); // 0으로나옴
@@ -87,6 +105,7 @@ public class ClassController {
 			return "guide/gclass";
 		}
 		
+		//경아 - 클래스상세보기
 		@RequestMapping("/iClassSelectOne.do") 
 		public String iClassSelectOne(ClassVO vo, Model model, ClassDtVO dvo) {
 			model.addAttribute("classOne", cService.classSelectOne(vo));
@@ -94,14 +113,21 @@ public class ClassController {
 			return "class/iclassSelectOne";
 		}
 		
+		//경아 - 클래스신청 아직안함결제랑연결시켜야됨
 		@GetMapping("/iClassInsert.do")
 		public String iClassInsert() {
 			return "class/iClassList";//말고 마이페이지로 넘어가야됨
 		}
-
+		
+		//경아 - 클래스 검색
 		@RequestMapping("/ajaxJobSearch.do")
 		@ResponseBody
-		public List<ClassVO> ajaxJobSearch(ClassVO vo){
-			return cService.ajaxJobSearch(vo);
+		public PageInfo<ClassVO> ajaxJobSearch(ClassVO vo, Model model, HttpServletRequest request,
+				@RequestParam(required = false, defaultValue = "1") int pageNum,
+				@RequestParam(required = false, defaultValue = "6") int pageSize){
+			PageHelper.startPage(pageNum, pageSize);
+			
+			//return cService.ajaxJobSearch(vo);
+			return PageInfo.of(cService.ajaxJobSearch(vo));
 		}
 }

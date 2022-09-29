@@ -65,7 +65,7 @@ public class AdminController {
 	private AdminService dao;
 
 	
-	@GetMapping("/appClass.do") // admin-Class 승인
+	@GetMapping("/appClass.do") //소정 - admin-Class 승인
 	public String appClass(ClassVO vo, Model model, HttpServletRequest request,
 			@RequestParam(required = false, defaultValue = "1") int pageNum,
 			@RequestParam(required = false, defaultValue = "5") int pageSize) {
@@ -75,7 +75,7 @@ public class AdminController {
 	}
 	
 
-	@GetMapping("/appConsult.do") // admin-Consult 승인
+	@GetMapping("/appConsult.do") //소정 - admin-Consult 승인
 	public String appConsult(ConsultVO vo, Model model, HttpServletRequest request,
 			@RequestParam(required = false, defaultValue = "1") int pageNum,
 			@RequestParam(required = false, defaultValue = "5") int pageSize) {
@@ -85,14 +85,14 @@ public class AdminController {
 		return "admin/appconsult";
 	}
 	
-	// class 승인
+	//소정 - class 승인
 	@PostMapping("/classUpdate.do")
 	@ResponseBody
 	public int classUpdate(ClassVO vo) {
 		return dao.classUpdate(vo);
 	}
 	
-	// consult 승인
+	//소정 - consult 승인
 	@PostMapping("/consultUpdate.do")
 	@ResponseBody
 	public int consultUpdate(ConsultVO vo) {
@@ -100,7 +100,7 @@ public class AdminController {
 	}
 	
 	
-	
+	//경아 - 가이드신청리스트
 	@GetMapping("/memberAuthList.do")
 	public String memberAuthList(GuideVO vo,Model model, HttpServletRequest request,
 			@RequestParam(required = false, defaultValue = "1") int pageNum,
@@ -110,7 +110,7 @@ public class AdminController {
 		return "admin/memberAuthList";
 	}
 
-
+	//경아 - 회원리스트
 	@GetMapping("/memberList.do")
 	public String memberList(MemberVO vo,Model model, HttpServletRequest request,
 			@RequestParam(required = false, defaultValue = "1") int pageNum,
@@ -120,7 +120,7 @@ public class AdminController {
 		return "admin/memberList";
 	}
 
-
+	//경아 - 권한별 회원리스트
 	@GetMapping("/memberListOf.do")
 	@ResponseBody
 	public PageInfo<MemberVO> memberListOf(MemberVO vo,Model model, HttpServletRequest request,
@@ -130,17 +130,18 @@ public class AdminController {
 		return  PageInfo.of(dao.memberListOf(vo));
 	}
 	
+	//경아 - 회원->가이드 권한수정
 	@PostMapping("/memberAuthUpdate.do")
 	@ResponseBody
 	public int memberAuthUpdate(GuideVO vo,MemberVO mvo) {
 		mvo.setMemberId(vo.getGuideId());
 		dao.memberAuthUpdateTo(mvo);
-		return dao.memberAuthUpdate(vo);
+		return  dao.memberAuthUpdate(vo);
 	}
 	
 	
 
-    // 파일 다운로드 처리
+    //경아 - 파일 다운로드 처리
 	 @GetMapping(value = "/download", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	 public void download(String fileName, HttpServletResponse response, HttpServletRequest request){
 
