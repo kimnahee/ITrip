@@ -38,6 +38,7 @@ public class CSBoardController {
 		System.out.println(request.getParameter("csNo"));
 		vo.setCsNo(Integer.parseInt(request.getParameter("csNo")));
 		model.addAttribute("csSelect", service.selectCs(vo));
+		service.csHitUpdate(vo);
 		return "csboard/notice/selectNotice";
 	}
 	

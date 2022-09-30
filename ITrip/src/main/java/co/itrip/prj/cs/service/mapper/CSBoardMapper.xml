@@ -88,6 +88,10 @@
 	<update id="repUpdate">
 		update csboard set groupodr = groupodr + 1 where orgno = #{orgNo} and groupodr > #{groupOdr}
 	</update>
-
+	
+	<!-- 조회수 처리 -->
+	<update id="csHitUpdate">
+		update csboard set hit = hit + 1 where cs_no = #{csNo}
+	</update>
 	
 </mapper>

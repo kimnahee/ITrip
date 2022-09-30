@@ -12,6 +12,7 @@ public interface CSBoardMapper {
 	int csInsert(CSBoardVO vo);//게시글 작성
 	int csUpdate(CSBoardVO vo);//게시글 수정
 	int csDelete(CSBoardVO vo);//게시글 삭제
+	int csHitUpdate(CSBoardVO vo);//조회수 처리
 	
 	int repInsert(CSBoardVO vo); //답글 작성
 	int repUpdate(CSBoardVO vo); //답글 상태 수정

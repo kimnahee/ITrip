@@ -35,26 +35,26 @@
 				<div class="sidebar-menu">
 					<ul class="menu">
 						<li class='sidebar-title'>메뉴</li>
-						<li class="sidebar-item active "><a href="/"
+						<li id="main" class="sidebar-item active "><a href="/"
 							class='sidebar-link'> <i data-feather="home" width="20"></i>
 								<span>Main</span>
 						</a></li>
 
 						<!-- 1:1 상담 탭 -->
 
-						<li class="sidebar-item  "><a href="consultList.do"
+						<li id="consult" class="sidebar-item  "><a href="consultList.do"
 							class='sidebar-link'> <i data-feather="layers" width="20"></i>
 								<span>1:1상담</span>
 						</a></li>
 
 						<!-- I-CLASS 탭 -->
-						<li class="sidebar-item"><a href="iClassList.do"
+						<li id="iClass" class="sidebar-item"><a href="iClassList.do"
 							class='sidebar-link'> <i data-feather="briefcase" width="20"></i>
 								<span>I-CLASS</span>
 						</a></li>
 
 						<!-- 커뮤니티 탭 -->
-						<li class="sidebar-item  has-sub"><a href="#"
+						<li id="community" class="sidebar-item  has-sub"><a href="#"
 							class='sidebar-link'> <i data-feather="file-text" width="20"></i>
 								<span>커뮤니티</span>
 						</a>
@@ -65,32 +65,32 @@
 							</ul></li>
 
 						<!-- CBT 탭 -->
-						<li class='sidebar-title'>CBT</li>
+						<li id="guideCBT" class='sidebar-title'>CBT</li>
 						<li class="sidebar-item"><a href="/cbtGuideMain.do"
 							class='sidebar-link'> <i data-feather="file-text" width="20"></i>
 								<span>멘토 CBT</span>
 						</a>
-						<li class="sidebar-item  "><a href="cbtUserMain.do"
+						<li id="userCBT" class="sidebar-item  "><a href="cbtUserMain.do"
 							class='sidebar-link'> <i data-feather="layout" width="20"></i>
 								<span>멘티 CBT</span>
 						</a></li>
-						<li class="sidebar-item  "><a href="answerNoteMain.do"
+						<li id="myNote" class="sidebar-item  "><a href="answerNoteMain.do"
 							class='sidebar-link'> <i data-feather="layers" width="20"></i>
 								<span>오답노트</span>
 						</a></li>
-						<li class="sidebar-item  "><a href="table.html"
+						<li id="myCBT"class="sidebar-item  "><a href="table.html"
 							class='sidebar-link'> <i data-feather="grid" width="20"></i>
 								<span>나만의 CBT</span>
 						</a></li>
 
 						<!-- 고객센터 탭 -->
-						<li class='sidebar-title'>고객센터</li>
+						<li id="notice" class='sidebar-title'>고객센터</li>
 						<li class="sidebar-item"><a href="noticeList.do"
 							class='sidebar-link'> <i data-feather="user" width="20"></i>
 								<span>공지사항</span>
 						</a></li>
 
-						<li class="sidebar-item"><a href="qnaList.do"
+						<li id="QNA" class="sidebar-item"><a href="qnaList.do"
 							class='sidebar-link'> <i data-feather="trending-up"
 								width="20"></i> <span>Q&A</span>
 						</a></li>
@@ -147,28 +147,27 @@
 							<a href="#" class="badge bg-primary" id="alarmCount"></a>
 						</div>
 						<!-- 알림 리스트 출력하는 공간 -->
-						<li class="dropdown nav-icon">
-							<a href="#" data-toggle="dropdown" class="nav-link  dropdown-toggle nav-link-lg nav-link-user">
+						<li class="dropdown nav-icon"><a href="#"
+							data-toggle="dropdown"
+							class="nav-link  dropdown-toggle nav-link-lg nav-link-user">
 								<div class="d-lg-inline-block">
 									<i data-feather="bell"></i>
 								</div>
-							</a>
+						</a>
 							<div class="dropdown-menu dropdown-menu-right dropdown-menu-large">
 								<h6 class='py-2 px-4'>알림</h6>
 								<ul class="list-group rounded-none" id="alarmList">
 
 								</ul>
-							</div>
-							
-						</li>
+							</div></li>
 
 						<li class="dropdown">
 							<div sec:authorize="isAuthenticated()">
 								<div th:switch="${#authentication.principal.member.auth}">
 									<button th:case="ROLE_USER" id="myPage"
-										class="btn btn-xs btn-outline-primary">마이페이지</button>
+										class="btn btn-sm btn-outline-primary">마이페이지</button>
 									<button th:case="ROLE_GUIDE" id="guideMyPage"
-										class="btn btn-xs btn-outline-primary">가이드 마이페이지</button>
+										class="btn btn-sm btn-outline-primary">가이드 마이페이지</button>
 								</div>
 							</div>
 						</li>&nbsp;&nbsp;
@@ -179,7 +178,7 @@
 										th:value="${_csrf.token}"> <input id="memberId"
 										type="hidden"
 										th:value="${#authentication.principal.member.memberId}">
-									<button class="btn btn-xxs btn-outline-primary">로그아웃</button>
+									<button class="btn btn-sm btn-outline-primary">로그아웃</button>
 								</form>
 							</div>
 						</li>
@@ -232,9 +231,11 @@
 			$("#alarmList").on("click", function(e){
 				let csrfHeaderName = "${_csrf.headerName}";
 				let csrfToken=$("input[name=_csrf]").val();
+				//console.log($(e.target).prop('tagName'));
 				
-				if($(e.target).hasClass("css-i6dzq1")){
-					let alarmNo = $(e.target).prev().prev().html();
+				if($(e.target).prop('tagName') == 'SPAN'){
+					let alarmNo = $(e.target).closest("div").prev().html();
+					//console.log(alarmNo);
 					$.ajax({ 
 						url : "/alarmUpdate.do",
 						type : "post",
@@ -244,7 +245,7 @@
 						    xhr.setRequestHeader("X-CSRF-TOKEN", csrfToken);
 						},
 						success : function(data){
-							console.log(data);
+							//console.log(data);
 							alarmCount();
 							alarmList();
 						}
@@ -255,7 +256,7 @@
 			
 			//헤더 알림 ajax
 			$(document).ready(function(){
-				console.log(id);    
+				//console.log(id);    
 				if(!id){
 					//console.log("확인");  
 				} else{
@@ -278,16 +279,20 @@
 					    xhr.setRequestHeader("X-CSRF-TOKEN", csrfToken);
 					},
 					success : function(data){
-						console.log(data);
+						//console.log(data);
 							let a = '';
 						data.forEach(element=>{
 							a += `<li class="list-group-item border-0 align-items-start">
-							<div class="avatar bg-info mr-3"><span class="avatar-content">
-							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clipboard"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg></span></div>
-							<div style="display: none;">${element.alarmNo}</div>
-							<h6 class="text-bold">${element.alarmMsg}</h6>
-							<svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+								<div style="display: none;">${element.alarmNo}</div>
+								<div class="alert alert-info alert-dismissible show fade">
+									${element.alarmMsg}
+								<button type="button" class="close" data-dismiss="alert"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
 							</li>`;
+
 							$("#alarmList").html(a);
 							//console.log(element.alarmMsg);
 						})
@@ -309,7 +314,7 @@
 					    xhr.setRequestHeader("X-CSRF-TOKEN", csrfToken);
 					},
 					success : function(data){
-						console.log(data);
+						//console.log(data);
 						$("#alarmCount").html(data);
 					}
 				})
@@ -318,12 +323,10 @@
 		</script>
 
 	<script src="bootstrap/voler/assets/js/feather-icons/feather.min.js"></script>
-	<script
-		src="bootstrap/voler/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+	<script src="bootstrap/voler/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 	<script src="bootstrap/voler/assets/js/app.js"></script>
 	<script src="bootstrap/voler/assets/vendors/chartjs/Chart.min.js"></script>
-	<script
-		src="bootstrap/voler/assets/vendors/apexcharts/apexcharts.min.js"></script>
+	<script src="bootstrap/voler/assets/vendors/apexcharts/apexcharts.min.js"></script>
 	<script src="bootstrap/voler/assets/js/pages/dashboard.js"></script>
 	<script src="bootstrap/voler/assets/js/main.js"></script>
 </body>
