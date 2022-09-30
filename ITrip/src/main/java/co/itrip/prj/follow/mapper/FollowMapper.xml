@@ -50,7 +50,7 @@
 	</select>
 	
 	<insert id="heartInsert">
-		INSERT INTO FOLLOW VALUES (#{guideId}, #{memberId})
+		INSERT INTO FOLLOW (GUIDE_ID, MEMBER_ID) VALUES (#{guideId}, #{memberId})
 	</insert>
 	
 	<delete id="heartDelete">

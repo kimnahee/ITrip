@@ -23,8 +23,6 @@ public class FollowController {
 	@Autowired
 	private FollowService fService;
 	
-	
-
 		@GetMapping("/followList.do")
 		@ResponseBody
 		public List<FollowVO> followList(FollowVO vo, HttpServletRequest request, Model model) {
@@ -63,20 +61,19 @@ public class FollowController {
 			return fService.followerDelete(vo);
 		}
 	
-		// 유저가 가이드 ♡ 눌러서 팔로우하기 ♥ (찜기능)
-		@PostMapping("/heartCount.do")
-		@ResponseBody
-		public int heartCount(FollowVO vo, HttpServletRequest request, Model model) {
-			String memberId = request.getParameter("memberId");
-			String guideId = request.getParameter("guideId");
-			int consultNo = Integer.parseInt(request.getParameter("consultNo"));
-			System.out.println(memberId+guideId+consultNo);
-			vo.setMemberId(memberId);
-			vo.setGuideId(guideId);
-			vo.setConsultNo(consultNo);
-			return fService.heartCount(vo);
-		}
-		
+		/*
+		 * // 해당 가이드 찜(팔로우) 여부 확인용 데이터 가져오기
+		 * 
+		 * @PostMapping("/heartCount.do")
+		 * 
+		 * @ResponseBody public int heartCount(FollowVO vo, HttpServletRequest request)
+		 * { String memberId = request.getParameter("memberId"); String guideId =
+		 * request.getParameter("guideId"); int consultNo =
+		 * Integer.parseInt(request.getParameter("consultNo"));
+		 * System.out.println(memberId+guideId+consultNo); vo.setMemberId(memberId);
+		 * vo.setGuideId(guideId); vo.setConsultNo(consultNo); return
+		 * fService.heartCount(vo); }
+		 */
 		
 	
 
