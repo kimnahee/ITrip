@@ -68,9 +68,6 @@ public class ClassController {
 
 		public String classInsert(AlarmVO avo, FollowVO fvo, ClassVO vo, ClassDtVO dtvo, MultipartFile file) throws IllegalStateException, IOException {
 			
-
-
-
             /*
 
 			if(!file.getOriginalFilename().isEmpty()) {
@@ -98,8 +95,6 @@ public class ClassController {
 			
 			
 			// ClassVO
-			
-			
 			System.out.println("1"+vo.getTitle());
 			System.out.println("2"+vo.getClassNo()); // 0으로나옴
 			System.out.println("3"+vo.getContent());
