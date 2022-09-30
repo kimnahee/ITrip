@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{layout/layout}">
+	layout:decorate="~{layout/layout}"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="UTF-8">
 <title>CBT 메인 화면</title>
@@ -23,8 +24,13 @@ hr {
 		<!-- Section -->
 		<!-- 만약 가이드라면 버튼 활성화...(아직 처리 안함)-->
 		<!-- 글쓰기 버튼 -->
-		<div class="buttons" id="insertFrmCall">
-			<a href="/cbtGuideInsertForm.do" class="btn btn-primary">문제출제하기</a>
+		<div sec:authorize="isAuthenticated()"> <!-- 가이드 권한만 문제 출제가능-->
+			<div th:switch="${#authentication.principal.member.auth}">
+				<div class="buttons" th:case="ROLE_GUIDE" id="insertFrmCall">
+				<a href="/cbtGuideInsertForm.do" class="btn btn-primary">문제출제하기</a>
+				<small><a href="/cbtGuideMyList.do" class="primary">문제관리</a><small>
+				</div>
+			</div>
 		</div>
 		<!--글쓰기 버튼 끝 -->
 		<!--  탭 페이지 -->

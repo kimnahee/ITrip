@@ -4,7 +4,7 @@
  <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Form Layout - Voler Admin Dashboard</title>
-    
+    <script src="js/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="assets/css/bootstrap.css">
     
     <link rel="stylesheet" href="assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
@@ -156,7 +156,7 @@
                     <div class="card-content">
                     <div class="card-body">
                     
-                        <form class="form form-vertical" action="reviewClassInsert.do" method="post">
+                        <form class="form form-vertical" action="reviewClassInsert.do" onsubmit="return formCheck()" method="post">
                          <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" readOnly>
                         <div class="form-body">
                             <div class="row">
@@ -208,6 +208,36 @@
 	    const drawStar = (target) => {
 	        document.querySelector(`.star span`).style.width = `${target.value * 20}%`;
 	      }
+	    
+	    function formCheck(){
+	    	
+	    	var consult = $("#content").val();
+	    	var con = $("#content");
+	    	
+	    	if (consult == "") {
+	    		alert("내용을 입력해주세요.");
+	    		con.focus();
+	    		return false;
+	    	}
+	    	
+	    	 if (consult != "") {
+	    		
+	    		var count = /^[\w\Wㄱ-ㅎㅏ-ㅣ가-힣]{5,400}$/;
+	    		
+	    		if(count.test(consult) == false) {
+	    			alert("리뷰는 5자 이상 400자 미만으로 작성가능합니다.");
+	    			con.focus();
+	    			return false;
+	    		}
+	    		
+	    	} 
+	    	
+	    	
+	    	return true;
+	    }
+	    
+	    
+	    
 	    
 	    
     	

@@ -116,8 +116,10 @@
 					})
 				}
 		
-		/* $("#heartBody").on(click, e => {
+		$("#heartBody").on(click, e => {
+			console.log("하트반응보기")
 			e.preventDefault();
+			
 			
 			$.ajax({
 				url:"/heartInsert.do",
@@ -144,7 +146,7 @@
                      location.reload(); // 실패시 새로고침하기
 				 }
 			}) 
-		})*/
+		})
 		
 		</script>
 </div>
