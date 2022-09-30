@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+<head>
+<meta charset="UTF-8">
+<meta name="_csrf" th:content="${_csrf.token}"/>
+<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+</head>
+<body>
+	<div layout:fragment="content">
+		<!-- Table head options start -->
+		<div class="row" id="table-head">
+			<div class="col-12">
+				<div class="card">
+					<div class="card-header">
+						<h4 class="card-title">회원정보</h4>
+					</div>
+					<div class="card-content">
+						<div class="card-body">
+							<p>Consult를 신청한 회원입니다. 권한을 수정해주세요.</p>
+						</div>
+						<!-- table head dark -->
+						<div class="table-responsive">
+							<table class="table table-light mb-0">
+								<thead>
+									<tr>
+										<th>상담제목</th>
+										<th>가이드 아이디</th>
+										<th>가이드직무</th>
+										<th>경력</th>
+										<th>신청일자</th>
+										<th>승인상태</th>
+										<th>승인수정</th>
+									</tr>
+								</thead>
+								<tbody th:each="consultList : ${pageInfo.list}">
+									<tr>
+										<td class="text-bold-500" th:text="${consultList.title}"></td>
+										<td th:text="${consultList.guideId}"></td>
+										<td class="text-bold-500" th:text="${consultList.cdName}"></td>
+										<td class="text-bold-500" th:text="${consultList.career}"></td>
+										<td class="text-bold-500" th:text="${consultList.dt}"></td>
+										<td class="text-bold-500" th:text="${consultList.stateCd}"></td>
+										<td th:id="${consultList.consultNo}">
+										<input type="button" th:onclick="updateConsult(this.getAttribute('id'))" 
+										class="btn btn-primary btn-l" value="수정" th:name="${consultList.consultNo}" th:id="${consultList.consultNo}">
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Table head options end -->
+		<!-- 페이지네이션 -->
+		<nav aria-label="Page navigation example">
+			<ul class="pagination pagination-info  justify-content-center">
+				<li class="page-item disabled" th:if="${pageInfo.isIsFirstPage()}"><span
+					class="page-link">«</span></li>
+				<li class="page-item"
+					th:if="${!pageInfo.isIsFirstPage() && pageInfo.getList().size() > 0}"><a
+					class="page-link"
+					th:href="|javascript:gopage([[${pageInfo.getPrePage()}]])|"
+					rel="prev">«</a></li>
+				<li
+					th:class="|page-item ${(pageInfo.pageNum eq page) ? 'active': ''} |"
+					th:each="page:${pageInfo.navigatepageNums}"><span
+					class="page-link" th:if="${pageInfo.pageNum eq page}"
+					th:text="${page}"></span> <a class="page-link"
+					th:unless="${pageInfo.pageNum eq page}"
+					th:href="|javascript:gopage(${page})|" th:text="${page}">{{$page}}</a></li>
+				<li class="page-item" th:if="${pageInfo.hasNextPage}"><a
+					class="page-link"
+					th:href="|javascript:gopage([[${pageInfo.getNextPage()}]])|"
+					rel="next">»</a></li>
+				<li class="page-item disabled" th:unless="${pageInfo.hasNextPage}"><span
+					class="page-link">»</span></li>
+			</ul>
+		</nav>
+		<script type="text/javascript">
+			function gopage(p) {
+				location.href = '/appConsult.do?pageNum=' + p;
+			}
+			
+			let token = $("meta[name='_csrf']").attr("content");
+			
+			function updateConsult(cNo) {
+				// cNo : consultNo 
+				let modifyTd = document.getElementById(cNo); // id가 cNo인 태그(td)
+				modifyTd.previousElementSibling.innerText=""; // 승인대기 글씨 비우기
+				
+				let td = modifyTd.previousElementSibling; // 승인대기 있는 태그(td)
+				
+				let select = document.createElement('select'); // select태그 생성
+				select.setAttribute('id','sel');
+				select.setAttribute('class','form-select');
+				select.setAttribute('style','width:100px');
+				
+				let author = ['승인수락','승인거절'];
+				
+				author.forEach(function (ath,idx) { // author의 내용이랑 인덱스
+					select.innerHTML +='<option value='+idx+'>' + ath + '</option>';
+				})
+				td.append(select); // 승인대기있는 태그에 만든 select태그 append
+				
+				let btn = modifyTd.firstElementChild // id가 cNo인 태그(td)의 자식태그 => input태그(버튼타입)
+				btn.value='수정완료';
+				
+				let opVal = "";
+				$("#sel").change(function() { // change : 셀렉터를 정하여 해당 셀렉터의 값이 변할경우 변화를 캐치하는 이벤트
+					opVal = $(this).val(); // 만든 select 태그에 value로 0,1 주기
+					console.log(opVal);
+				})
+				
+				btn.addEventListener('click', function(e) {
+					e.preventDefault(); // 브라우저 고유의 동작을 중단시켜주는 역할
+					
+					$.ajax({
+						url:'/consultUpdate.do',
+						type:'post',
+						data:{'consultNo':cNo, 'stateCd':opVal},
+						beforeSend:function(xhr) {
+							xhr.setRequestHeader("AJAX", true);
+						    xhr.setRequestHeader("X-CSRF-TOKEN", token);
+						},
+						success:function result(res) {
+							alert('수정완료'); // res: 응답 body부 데이터
+							location.href="appConsult.do";
+						}, 
+						error:function err(xhr,err) {
+							alert('수정에러'); // xhr: 응답 메시지
+						}
+					})
+				})
+				
+				
+				
+			}
+		</script>
+	</div>
+</body>
+</html>

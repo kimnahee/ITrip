@@ -1,7 +1,6 @@
 package co.itrip.prj.cbtUser.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,7 +14,7 @@ public class AjaxCbtUserController {
 	CbtUserService dao;
 	
 	@RequestMapping("/ajaxQuestion.do")
-	public CbtUserVO AjaxQuestion(CbtUserVO vo,Model model) {
+	public CbtUserVO AjaxQuestion(CbtUserVO vo) {
 		return dao.ajaxQuestion(vo);
 	}
 }

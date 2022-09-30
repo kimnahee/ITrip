@@ -12,6 +12,12 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 
 import co.itrip.prj.member.service.MemberDetailService;
 
+/**
+* 시큐리티 환경설정 처리
+* @author 김하은
+* @date 2022.09.21
+* @version 1.0
+*/
 @Configuration
 @EnableWebSecurity //CsrfRequestDataValueProcessor가 적용되어 form 에 CSRF 토큰이 자동적으로 들어감
 public class SecurityConfig {
@@ -37,9 +43,8 @@ public class SecurityConfig {
 	}
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		http.authorizeHttpRequests((requests) -> 
-							requests
-							.antMatchers("/", "/loginForm.do","/signupForm.do", "/login").permitAll()
+		http.authorizeHttpRequests((requests) ->  requests
+							.antMatchers("/", "/loginForm.do","/signupForm.do", "/login","/memberInsert.do", "/chk/**").permitAll()
 							.antMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
 							.anyRequest().authenticated())
 				.formLogin().loginPage("/loginForm.do")
@@ -71,6 +76,5 @@ public class SecurityConfig {
 	public WebSecurityCustomizer webSecurityCustomizer() {
 		return (web) -> web.ignoring().antMatchers("/images/**", "/js/**", "/css/**", "/bootstrap/**","/files/**");
 	}
-
 	
 }

@@ -4,6 +4,12 @@ import java.util.List;
 
 import lombok.Data;
 
+/**
+* 가이드가 등록한 문제와 관련된 변수가 담긴 클래스
+* @author 김하은
+* @date 2022.09.16
+* @version 1.0
+*/
 @Data
 public class CbtGuideVO {
 	private int cbtNo; //cbt번호
@@ -23,6 +29,9 @@ public class CbtGuideVO {
 	private String memberId; // 출제자
 	List<String> keyword; // 여러건 받을 키워드
 	private int rownum; //가상의 순번 
+	private int mcNo; // 사용자가 푼 문제 번호
+	private int mkyNo; // 사용자가 푼 서술형 문제 번호
+	private int chklist; // 키워드 기준올 사용자 정답여부를 체크할 임시 변수
 	
 	
 

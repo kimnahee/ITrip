@@ -1,6 +1,12 @@
 package co.itrip.prj.cbtGuide.service;
 
 import lombok.Data;
+/**
+* 사용자가 열람한 문제 중 즐겨찾기 
+* @author 김하은
+* @date 2022.09.16
+* @version 1.0
+*/
 
 @Data
 public class BookmarkVO {

@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>스터디게시판 글 작성하기</title>
+<title>스터디게시판 글 상세보기</title>
 <script src="js/jquery-3.6.0.min.js"></script>
 <link rel="stylesheet" href="bootstrap/voler/assets/css/bootstrap.css">
 <link rel="stylesheet"
@@ -80,7 +80,8 @@
 								</div>
 								<div id="atch" class="form-group"
 									th:if="${not #strings.isEmpty(selectCommunity.attach)}">
-									<span class="mb-2 text-md"><div style="text-align: center;">
+									<span class="mb-2 text-md"><div
+											style="text-align: center;">
 											<img th:src="@{*{attachDir}}" style="margin-bottom: 10px;">
 										</div></span>
 									<div class="form-group mb-3">
@@ -91,12 +92,19 @@
 								</div>
 
 								<!-- 수정&삭제 권한 : 작성자만 보이게 -->
-								<div class="col-sm-12 d-flex justify-content-end" id="btn" th:if="${selectCommunity.memberId} == ${#authentication.principal.member.memberId}">
-									<button type="button" id="updateBtn" class="btn btn-primary btn-md mb-0">수정하기</button>
-									&nbsp;&nbsp;
-									<button type="button"
-										class="btn btn-outline-primary btn-md mb-0" data-toggle="modal" data-target="#border-less">삭제하기</button>
+								<div class="col-sm-12 d-flex justify-content-end" id="btn">
+									<div th:if="${selectCommunity.memberId} == ${#authentication.principal.member.memberId}">
+										<button type="button" id="updateBtn"
+											class="btn btn-primary btn-md mb-0">수정하기</button>
+										<button type="button"
+											class="btn btn-outline-primary btn-md mb-0"
+											data-toggle="modal" data-target="#border-less">삭제하기</button>
+									</div>
+									&nbsp;
+									<button type="button" id="listBtn"
+										class="btn btn-primary btn-md mb-0">목록으로</button>
 								</div>
+
 								<!-- 삭제버튼 누르면 모달창 뜸 -->
 								<!--BorderLess Modal Modal -->
 								<div class="modal fade text-left modal-borderless"
@@ -263,7 +271,7 @@
 			})
 			
 			$("#commentBtn").on("click", function(e) {
-				let content = $("#comment").val();
+				let content = $("#comment").val(); //댓글내용
 				/* console.log(comNo);
 				console.log(content);
 				console.log(memberId); */
@@ -284,6 +292,10 @@
 						}
 					}
 				})
+			})
+			
+			$("#listBtn").on("click", function(e){
+				location.href = "/study.do";
 			})
 			
 			$(document).ready(function(){    

@@ -29,7 +29,7 @@ p {
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-6 mb-1">
-                                <input type="hidden" id="memberId" name="memberId" value="han">
+                                <input type="hidden" id="memberId" name="memberId" th:value="${#authentication.principal.member.nick}">
                                     <div class="input-group mb-2" >
                                         <label class="input-group-text" for="inputGroupSelect01">유형</label>
                                         <select class="form-select" id="gtpCd" name="gtpCd" onchange="mySel(this.value)">
@@ -80,7 +80,8 @@ p {
                             </div>
                             <!-- 풀이내용까지 끝 -->
                             <div class="col-12 d-flex justify-content-end">
-                                <button type="submit" class="btn btn-primary mr-1 mb-1">제출</button>
+                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                                <button type="button" class="btn btn-primary mr-1 mb-1" onclick="insertCall()">제출</button>
                                 <button type="reset" class="btn btn-light-secondary mr-1 mb-1">초기화</button>
                             </div>
                              </div>
@@ -141,11 +142,11 @@ p {
 		}
         }
         
-        function add(){
+        function add(){ 
         	answer.innerHTML+=`
         	<div class="col-sm-6">
             <div class="form-group position-relative has-icon-right">
-                <input type="text" class="form-control" 
+                <input type="text" class="form-control" id="keyword" name="keyword"
                     placeholder="정답 키워드를 입력해주세요. 키워드로 채점이 진행됩니다.">
                     <div class="form-control-icon"><a style="cursor: pointer;" onclick="add()"><h1>+</h1></a>
                 </div>
@@ -153,6 +154,18 @@ p {
         </div>`;
         	
         }
+        function insertCall(){
+            let insertText = confirm("등록하겠습니까?");
+            if(insertText){
+                alert("등록되었습니다.");
+                frm.action = '/cbtGuideInsert.do';
+			    $("#frm").submit();
+            }else{
+                alert("등록을 취소하였습니다.");
+			 
+            }
+        }
+        
     
     </script>
 </div>

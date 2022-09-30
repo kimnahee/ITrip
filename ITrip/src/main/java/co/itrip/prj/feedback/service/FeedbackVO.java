@@ -1,6 +1,8 @@
 package co.itrip.prj.feedback.service;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * 경아
@@ -8,10 +10,12 @@ import lombok.Data;
  * 2022/09/22시작 
  * */
 
-@Data
+@Getter
+@Setter
 public class FeedbackVO {
 	int feedbackNo;
 	String content;
 	int cbtNo;
 	String memberId;
+	String nick;
 }

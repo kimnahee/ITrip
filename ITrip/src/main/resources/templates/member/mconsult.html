@@ -1,279 +1,164 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
 <head>
 <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="author" content="Untree.co" />
-    <link rel="shortcut icon" href="favicon.png" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="author" content="Untree.co" />
+<link rel="shortcut icon" href="favicon.png" />
 
-    <meta name="description" content="" />
-    <meta name="keywords" content="bootstrap, bootstrap5" />
+<meta name="description" content="" />
+<meta name="keywords" content="bootstrap, bootstrap5" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+	href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&display=swap"
+	rel="stylesheet" />
 
-    <link rel="stylesheet" href="bootstrap/property/fonts/icomoon/style.css" />
-    <link rel="stylesheet" href="bootstrap/property/fonts/flaticon/font/flaticon.css" />
+<link rel="stylesheet" href="bootstrap/property/fonts/icomoon/style.css" />
+<link rel="stylesheet"
+	href="bootstrap/property/fonts/flaticon/font/flaticon.css" />
 
-    <link rel="stylesheet" href="bootstrap/property/css/tiny-slider.css" />
-    <link rel="stylesheet" href="bootstrap/property/css/aos.css" />
-    <link rel="stylesheet" href="bootstrap/property/css/style.css" />
+<link rel="stylesheet" href="bootstrap/property/css/tiny-slider.css" />
+<link rel="stylesheet" href="bootstrap/property/css/aos.css" />
+<link rel="stylesheet" href="bootstrap/property/css/style.css" />
 
-    <title>
-      Property &mdash; Free Bootstrap 5 Website Template by Untree.co
-    </title>
-    
-    <style>
-    .property-item .property-content {
-       margin-top: 0px;
-    }
-    .d-flex {
-    display: -webkit-box !important;
+<title>Property &mdash; Free Bootstrap 5 Website Template by
+	Untree.co</title>
+
+<style type="text/css">
+.property-item .property-content {
+	margin-top: 0px;
+}
+
+.d-flex {
+	display: -webkit-box !important;
+}
+
+.property-item .property-content .specs .caption {
+	font-size: 15px;
+}
+
+.tns-horizontal.tns-subpixel>.tns-item {
+	vertical-align: bottom;
+}
+.card-header {
+		margin-top: 10%;
 	}
-	.property-item .property-content .specs .caption {
-    font-size: 15px; 
+	
+	#error .error-title {
+     font-size: xx-large; 
 	}
-    </style>
+	
+	@media (min-width: 1200px)
+	h1, .h1 {
+     font-size: 2.25rem; 
+	}
+	
+	#error{
+	 width: 120em;
+	 height: 20em;
+	}
+	
+	.error-title {
+		margin-top: 1%;
+	}
+	
+</style>
 </head>
-<body  layout:fragment="content">
- <!-- About Start -->
-    <div class="text-center">
-        <div class="bg-primary mb-3 mx-auto" style="width: 60px; height: 2px;"></div>
-        <h1 class="display-5 mb-5">My Page</h1>
-    </div>
-     <!-- Projects Start -->
-    <div class="container-xxl py-5">
-        <div class="container">
-           
-            
-            <div class="section">
-      <div class="container">
-        <div class="row mb-5 align-items-center">
-          <div class="col-lg-6">
-            <h2 class="font-weight-bold text-primary heading">
-              1:1 상담
-            </h2>
-          </div>
-          
-        </div>
-        <div class="row">
-          <div class="col-12">
-            <div class="property-slider-wrap">
-              <div class="property-slider">
-              
-               <!-- .item -->
-                <div class="property-item">
-                  <div class="property-content">
-                    <div class="price mb-2"><span>Web개발 고민</span></div>
-                    <div>                     
-                      <span class="city d-block mb-3">Nahi</span>
-                      <div class="specs d-flex mb-4">
-                        <span class="d-block d-flex align-items-center me-3">        
-                          <span class="caption">직무 / 프론트앤드</span><br>        
-                            <span class="caption">경력 / 미들(4~8년)</span>
-                        </span>  
-                      </div>
-                      <span><a href="property-single.html"class="btn btn-primary py-2 px-1">리뷰</a></span>&nbsp;&nbsp;
-                      <span><a href="property-single.html"class="btn btn-primary py-2 px-1">채팅방</a></span>
-                    </div>
-                  </div>
-                </div>
-                
-                 <!-- .item -->
-                <div class="property-item">
-                  <div class="property-content">
-                    <div class="price mb-2"><span>Web개발 고민</span></div>
-                    <div>                      
-                      <span class="city d-block mb-3">Nahi</span>
-                      <div class="specs d-flex mb-4">
-                        <span class="d-block d-flex align-items-center me-3">        
-                          <span class="caption">직무 / 프론트앤드</span><br>        
-                            <span class="caption">경력 / 미들(4~8년)</span>
-                        </span>  
-                      </div>
-                      <span><a href="property-single.html"class="btn btn-primary py-2 px-1">리뷰쓰기</a></span>&nbsp;&nbsp;
-                      <span><a href="property-single.html"class="btn btn-primary py-2 px-1">채팅방</a></span>
-                    </div>
-                  </div>
-                </div>
-                
-                <!-- .item -->
-                <div class="property-item">
-                  <div class="property-content">
-                    <div class="price mb-2"><span>Web개발 고민</span></div>
-                    <div>                      
-                      <span class="city d-block mb-3">Nahi</span>
-                      <div class="specs d-flex mb-4">
-                        <span class="d-block d-flex align-items-center me-3">        
-                          <span class="caption">직무 / 프론트앤드</span><br>        
-                            <span class="caption">경력 / 미들(4~8년)</span>
-                        </span>  
-                      </div>
-                      <span><a href="property-single.html"class="btn btn-primary py-2 px-1">리뷰쓰기</a></span>&nbsp;&nbsp;
-                      <span><a href="property-single.html"class="btn btn-primary py-2 px-1">채팅방</a></span>
-                    </div>
-                  </div>
-                </div>
-                
-                <!-- .item -->
-                <div class="property-item">
-                  <div class="property-content">
-                    <div class="price mb-2"><span>Web개발 고민</span></div>
-                    <div>                      
-                      <span class="city d-block mb-3">Nahi</span>
-                      <div class="specs d-flex mb-4">
-                        <span class="d-block d-flex align-items-center me-3">        
-                          <span class="caption">직무 / 프론트앤드</span><br>        
-                            <span class="caption">경력 / 미들(4~8년)</span>
-                        </span>  
-                      </div>
-                      <span><a href="property-single.html"class="btn btn-primary py-2 px-1">리뷰쓰기</a></span>&nbsp;&nbsp;
-                      <span><a href="property-single.html"class="btn btn-primary py-2 px-1">채팅방</a></span>
-                    </div>
-                  </div>
-                </div>
-                
-                <!-- .item -->
-                <div class="property-item">
-                  <div class="property-content">
-                    <div class="price mb-2"><span>Web개발 고민</span></div>
-                    <div>                      
-                      <span class="city d-block mb-3">Nahi</span>
-                      <div class="specs d-flex mb-4">
-                        <span class="d-block d-flex align-items-center me-3">        
-                          <span class="caption">직무 / 프론트앤드</span><br>        
-                            <span class="caption">경력 / 미들(4~8년)</span>
-                        </span>  
-                      </div>
-                      <span><a href="property-single.html"class="btn btn-primary py-2 px-1">리뷰쓰기</a></span>&nbsp;&nbsp;
-                      <span><a href="property-single.html"class="btn btn-primary py-2 px-1">채팅방</a></span>
-                    </div>
-                  </div>
-                </div>
-                
-                <!-- .item -->
-                <div class="property-item">
-                  <div class="property-content">
-                    <div class="price mb-2"><span>Web개발 고민</span></div>
-                    <div>                      
-                      <span class="city d-block mb-3">Nahi</span>
-                      <div class="specs d-flex mb-4">
-                        <span class="d-block d-flex align-items-center me-3">        
-                          <span class="caption">직무 / 프론트앤드</span><br>        
-                            <span class="caption">경력 / 미들(4~8년)</span>
-                        </span>  
-                      </div>
-                      <span><a href="property-single.html"class="btn btn-primary py-2 px-1">리뷰쓰기</a></span>&nbsp;&nbsp;
-                      <span><a href="property-single.html"class="btn btn-primary py-2 px-1">채팅방</a></span>
-                    </div>
-                  </div>
-                </div>
-                
-                <!-- .item -->
-                <div class="property-item">
-                  <div class="property-content">
-                    <div class="price mb-2"><span>Web개발 고민</span></div>
-                    <div>                      
-                      <span class="city d-block mb-3">Nahi</span>
-                      <div class="specs d-flex mb-4">
-                        <span class="d-block d-flex align-items-center me-3">        
-                          <span class="caption">직무 / 프론트앤드</span><br>        
-                            <span class="caption">경력 / 미들(4~8년)</span>
-                        </span>  
-                      </div>
-                      <span><a href="property-single.html"class="btn btn-primary py-2 px-1">리뷰쓰기</a></span>&nbsp;&nbsp;
-                      <span><a href="property-single.html"class="btn btn-primary py-2 px-1">채팅방</a></span>
-                    </div>
-                  </div>
-                </div>
-                
-                <!-- .item -->
-                <div class="property-item">
-                  <div class="property-content">
-                    <div class="price mb-2"><span>Web개발 고민</span></div>
-                    <div>                      
-                      <span class="city d-block mb-3">Nahi</span>
-                      <div class="specs d-flex mb-4">
-                        <span class="d-block d-flex align-items-center me-3">        
-                          <span class="caption">직무 / 프론트앤드</span><br>        
-                            <span class="caption">경력 / 미들(4~8년)</span>
-                        </span>  
-                      </div>
-                      <span><a href="property-single.html"class="btn btn-primary py-2 px-1">리뷰쓰기</a></span>&nbsp;&nbsp;
-                      <span><a href="property-single.html"class="btn btn-primary py-2 px-1">채팅방</a></span>
-                    </div>
-                  </div>
-                </div>
-                
-                <!-- .item -->
-                <div class="property-item">
-                  <div class="property-content">
-                    <div class="price mb-2"><span>Web개발 고민</span></div>
-                    <div>                      
-                      <span class="city d-block mb-3">Nahi</span>
-                      <div class="specs d-flex mb-4">
-                        <span class="d-block d-flex align-items-center me-3">        
-                          <span class="caption">직무 / 프론트앤드</span><br>        
-                            <span class="caption">경력 / 미들(4~8년)</span>
-                        </span>  
-                      </div>
-                      <span><a href="property-single.html"class="btn btn-primary py-2 px-1">리뷰쓰기</a></span>&nbsp;&nbsp;
-                      <span><a href="property-single.html"class="btn btn-primary py-2 px-1">채팅방</a></span>
-                    </div>
-                  </div>
-                </div>
-                
-               
-                <!-- .item -->
-              </div>
+<body layout:fragment="content">
+	<!-- About Start -->
+	<div class="text-center">
+		<div class="bg-primary mb-3 mx-auto" style="width: 60px; height: 2px;"></div>
+		<h1 class="display-5 mb-5">My Page</h1>
+	</div>
+	<!-- Projects Start -->
+	<div class="container-xxl py-5">
+		<div class="container">
 
-              <div
-                id="property-nav"
-                class="controls"
-                tabindex="0"
-                aria-label="Carousel Navigation"
-              >
-                <span
-                  class="prev"
-                  data-controls="prev"
-                  aria-controls="property"
-                  tabindex="-1"
-                  >Prev</span
-                >
-                <span
-                  class="next"
-                  data-controls="next"
-                  aria-controls="property"
-                  tabindex="-1"
-                  >Next</span
-                >
-              </div>
-            </div>
-          </div>
-        </div>
-        <br><br>
-            <div class="text-center">
-                <a class="btn" href="">회원탈퇴</a>/<a class="btn" href="">회원수정</a>
-            </div>
-      </div>
-    </div>
+			<div class="section">
+				<div class="container">
+					<div class="row mb-5 align-items-center">
+						<div class="col-lg-6">
+							<h2 class="font-weight-bold text-primary heading">1:1 상담</h2>
+						</div>
+					</div>
 
-    <script src="bootstrap/property/js/bootstrap.bundle.min.js"></script>
-    <script src="bootstrap/property/js/tiny-slider.js"></script>
-    <script src="bootstrap/property/js/aos.js"></script>
-    <script src="bootstrap/property/js/navbar.js"></script>
-    <script src="bootstrap/property/js/counter.js"></script>
-    <script src="bootstrap/property/js/custom.js"></script>
-            
-        </div>
-    </div>
-    <!-- Projects End -->
-    
-    
+					<div class="row" th:if="${#lists.isEmpty(consultList)}">
+						<div>
+							<div class="container text-center pt-32" >
+								<h1 class='error-title'>진행중인 1:1상담이 없습니다.</h1>
+								<p>새로운 상담을 신청해주세요.</p>
+								<a href="myPage">Go Mypage</a>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-12" th:unless="${#lists.isEmpty(consultList)}">
+							<div class="property-slider-wrap">
+								<div class="property-slider">
+
+									<div class="card col-xs-12 col-sm-6 col-md-5 col-lg-3"
+										th:each="con : ${consultList}">
+										<!-- .item -->
+										<div class="property-item">
+											<div class="property-content">
+												<div class="price mb-2">
+													<span th:text="${con.title}" class="cTitle">Web개발 고민</span>
+												</div>
+												<div>
+													<span class="city d-block mb-3" th:text="${con.guideId}">Nahi</span>
+													<div class="specs d-flex mb-4">
+														<span class="d-block d-flex align-items-center me-3">
+															<span class="caption" th:text="'직무   '+${con.cdName}">직무
+																/ 프론트앤드</span><br> <span class="caption"
+															th:text="'경력   '+${con.career}">경력 / 미들(4~8년)</span>
+														</span>
+													</div>
+													<span><a href="conReview"
+														class="btn btn-primary py-2 px-1">리뷰</a></span>&nbsp;&nbsp; <span><a
+														href="property-single.html"
+														class="btn btn-primary py-2 px-1">채팅방</a></span>
+												</div>
+											</div>
+										</div>
+									</div>
+
+
+									<!-- .item -->
+								</div>
+
+
+								<div id="property-nav" class="controls" tabindex="0"
+									aria-label="Carousel Navigation">
+									<span class="prev" data-controls="prev"
+										aria-controls="property" tabindex="-1">Prev</span> <span
+										class="next" data-controls="next" aria-controls="property"
+										tabindex="-1">Next</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<br> <br>
+
+				</div>
+			</div>
+
+			<script src="bootstrap/property/js/bootstrap.bundle.min.js"></script>
+			<script src="bootstrap/property/js/tiny-slider.js"></script>
+			<script src="bootstrap/property/js/aos.js"></script>
+			<script src="bootstrap/property/js/navbar.js"></script>
+			<script src="bootstrap/property/js/counter.js"></script>
+			<script src="bootstrap/property/js/custom.js"></script>
+
+		</div>
+	</div>
+	<!-- Projects End -->
+
+
 
 </body>
 </html>

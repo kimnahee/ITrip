@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+<head>
+<meta charset="UTF-8">
+<meta name="_csrf" th:content="${_csrf.token}"/>
+<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+<title>Insert title here</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="row" id="table-head">
+			<div class="col-12">
+				<div class="card">
+					<div class="card-header">
+						<h4 class="card-title">회원정보</h4>
+					</div>
+					<div class="card-content">
+						<div class="card-body">
+							<p>GUIDE신청한 회원입니다. 권한을 수정하세요.</p>
+						</div>
+						<div class="table-responsive">
+							<table class="table table-light mb-0">
+								<thead>
+									<tr>
+										<th>아이디</th>
+										<th>닉네임</th>
+										<th>직무</th>
+										<th>경력</th>
+										<th>설명</th>
+										<th>재직증명서 외</th>
+										<th>권한</th>
+										<th>권한수정</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="g:${pageInfo.list}">
+										<th th:text=${g.guideId}></th>
+										<td th:text=${g.nick}></td>
+										<td th:text=${g.duty}></td>
+										<td th:text=${g.career}></td>
+										<td th:text=${g.dc}></td>
+										<td><a th:href="@{/download(fileName=${g.attachDir})}"  th:text="${g.attach}" ></a></td>
+										<td th:text=${g.cdName}></td>
+										<td th:id="${g.guideId }">
+											<input type="button" th:onclick="updateFnc(this.getAttribute('id'))"
+											class="btn btn-primary btn-l" value="수정" th:name="${g.guideId}" th:id="${g.guideId}">
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					
+					<br>
+					<!-- 페이지네이션 -->
+						<nav aria-label="Page navigation example">
+							<ul class="pagination pagination-info  justify-content-center">
+								<li class="page-item disabled"
+									th:if="${pageInfo.isIsFirstPage()}"><span
+									class="page-link">«</span></li>
+								<li class="page-item"
+									th:if="${!pageInfo.isIsFirstPage() && pageInfo.getList().size() > 0}"><a
+									class="page-link"
+									th:href="|javascript:gopage([[${pageInfo.getPrePage()}]])|"
+									rel="prev">«</a></li>
+								<li
+									th:class="|page-item ${(pageInfo.pageNum eq page) ? 'active': ''} |"
+									th:each="page:${pageInfo.navigatepageNums}"><span
+									class="page-link" th:if="${pageInfo.pageNum eq page}"
+									th:text="${page}"></span> <a class="page-link"
+									th:unless="${pageInfo.pageNum eq page}"
+									th:href="|javascript:gopage(${page})|" th:text="${page}">{{$page
+										}}</a></li>
+								<li class="page-item" th:if="${pageInfo.hasNextPage}"><a
+									class="page-link"
+									th:href="|javascript:gopage([[${pageInfo.getNextPage()}]])|"
+									rel="next">»</a></li>
+								<li class="page-item disabled"
+									th:unless="${pageInfo.hasNextPage}"><span
+									class="page-link">»</span></li>
+							</ul>
+						</nav>
+					
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+		function gopage(p) {
+			location.href = '/memberAuthList.do?pageNum=' + p;
+		}
+		
+		let csrfToken=$("input[name=_csrf]").val();
+		
+		function updateFnc(memId){
+			
+			let modifyTd = document.getElementById(memId);
+			modifyTd.previousElementSibling.innerText="";
+			
+			let td = modifyTd.previousElementSibling
+			let select =  document.createElement('select');
+			select.setAttribute('id','sel');
+			select.setAttribute('class','form-select');
+			select.setAttribute('style','width:100px');
+			let author = ['=========','승인수락','승인거절'];
+			
+			author.forEach(function (ath,idx) {
+				console.log(idx)
+				select.innerHTML += '<option value='+idx+'>'+ ath +'</option>';
+			})
+			
+			td.append(select)
+			$("select option[value*='0']").prop('disabled',true);
+			
+			let btn = modifyTd.firstElementChild  
+			btn.value='수정완료';
+			
+			let opVal = "";
+			$("#sel").change(function(){
+				opVal = $(this).val();
+				console.log("선택값:"+$(this).val())
+			})
+			
+			btn.addEventListener('click',function(e){
+				e.preventDefault();
+
+				$.ajax({
+					url:'/memberAuthUpdate.do',
+					type:'post',
+			 		beforeSend:function(xhr){
+			 			xhr.setRequestHeader("AJAX", true);
+					    xhr.setRequestHeader("X-CSRF-TOKEN", csrfToken);
+					}, 
+					dataType:'json',
+					data:{'guideId':memId,'stateCd':opVal},
+					success:function result(res){
+						alert('수정이 정상적으로 완료되었습니다.')
+						location.href="memberAuthList.do"
+					},
+					error:function err(xhr,err){
+						alert('수정이 불가합니다. 다시 시도하세요')
+						location.href="memberAuthList.do"
+					}
+				}) 
+			})
+			
+			
+		}
+		
+		</script>
+	</div>
+</body>
+</html>

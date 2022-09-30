@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.itrip.prj.cs.service.mapper.CSBoardMapper">
+
+	<!-- 페이징 처리 카테고리, -->
+	<select id="findAll"
+		resultType="co.itrip.prj.cs.service.CSBoardVO">
+		select cs_no,
+		title,
+		content,
+		member_id,
+		dt,
+		hit,
+		orgno,
+		groupodr,
+		grouplyr,
+		ctgry
+		from csboard
+		<if test="ctgry.equals('공지사항') or ctgry.equals('QNA')"> where ctgry = #{ctgry} </if>
+		<if test="memberId != null">and member_id = #{memberId}</if>
+		order by orgno desc, groupodr asc
+	</select>
+
+	<!-- 단건조회 -->
+	<select id="selectCs"
+		resultType="co.itrip.prj.cs.service.CSBoardVO">
+		select cs_no,
+		title,
+		content,
+		member_id,
+		dt,
+		hit,
+		orgno,
+		groupodr,
+		grouplyr,
+		ctgry
+		from csboard
+		where cs_no = #{csNo}
+	</select>
+
+	<!-- 게시글 작성 -->
+	<insert id="csInsert">
+		<selectKey keyProperty="csNo" order="BEFORE"
+			resultType="int">
+			select
+			case when max(cs_no) is null then 1
+			else max(cs_no)
+			+
+			1 end as id
+			from csboard
+		</selectKey>
+		insert into csboard
+		values(#{csNo}, #{title}, #{content},
+		#{memberId},
+		sysdate, 0, #{csNo}, 0, 0, #{ctgry})
+	</insert>
+	
+	<!-- 게시글 수정 -->
+	<update id="csUpdate">
+		update csboard
+		<set>
+			<if test="content != null">content = #{content}</if>
+		</set>
+		where cs_no = #{csNo}
+	</update>
+	
+	<!-- 게시글 삭제 -->
+	<delete id="csDelete">
+		delete from csboard
+		where orgno = #{orgNo}
+	</delete>
+
+	<!-- 답글 작성 -->
+	<insert id="repInsert">
+		<selectKey keyProperty="csNo" order="BEFORE" resultType="int">
+			select
+			case when max(cs_no) is null then 1
+			else max(cs_no)
+			+
+			1 end as id
+			from csboard
+		</selectKey>
+		insert into csboard
+		values(#{csNo}, 'RE:' || #{title}, #{content}, #{memberId}, sysdate, 0, #{orgNo}, #{groupOdr}+1, #{groupLyr}+1, 'QNA')
+	</insert>
+	
+	<!-- 답글 상태 수정 -->
+	<update id="repUpdate">
+		update csboard set groupodr = groupodr + 1 where orgno = #{orgNo} and groupodr > #{groupOdr}
+	</update>
+
+	
+</mapper>

@@ -9,8 +9,13 @@ import java.util.List;
  */
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+
+import ch.qos.logback.core.recovery.ResilientSyslogOutputStream;
+import co.itrip.prj.cbtGuide.service.CbtGuideVO;
+import co.itrip.prj.cbtGuide.service.MyCbtHderVO;
 import co.itrip.prj.member.mapper.MemberMapper;
 
 @Service
@@ -33,11 +38,24 @@ public class MemberServiceImpl implements MemberService {
 		// 유저 단건조회
 		return map.memberSelect(vo);
 	}
-
+	
+	/**
+	 * 회원가입
+	 * @author 김하은 
+	 * @Date 2022.09.28 
+	 */
 	@Override
 	public int memberInsert(MemberVO vo) {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		/* 패스워드 암호화*/
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(); // 암호화처리를 위한 인스턴스 생성
+		String result = encoder.encode(vo.getPw()); // 사용자가 입력한 pw값을 암호화처리
+		vo.setPw(result);
+		//boolean pwchk = encoder.matches(vo.getPw(), result); //사용자가 입력한 값과 암호화 처리된 값이 동일한지 확인
+
+		int r = map.memberInsert(vo);
+		
+		return r;
 	}
 	
 	/** 유저 정보수정
@@ -54,7 +72,39 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int memberDelete(MemberVO vo) {
 		// TODO Auto-generated method stub
-		return 0;
+		return map.memberDelete(vo);
 	}
+	
+	// id 중복 검사
+	@Override
+	public int ajaxIdChk(String mId) {
+		return map.ajaxIdChk(mId);
+	}
+	// 닉네임 중복검사
+	@Override
+	public int ajaxNickChk(String mNick) {
+		return map.ajaxNickChk(mNick);
+	}
+	// 패스워드 확인
+	@Override
+	public int ajaxpwChk(String mPw) {
+		return map.ajaxpwChk(mPw);
+	}
+
+	/**
+	 * 오답노트
+	 * @author 박경아 
+	 * @Date 2022.09.29 
+	 */
+	@Override
+	public List<MyCbtHderVO> myWrongAnswerLangCd(MyCbtHderVO vo) {
+		return map.myWrongAnswerLangCd(vo);
+	}
+
+	@Override
+	public List<CbtGuideVO> myWrongAnswerNote(CbtGuideVO vo) {
+		return map.myWrongAnswerNote(vo);
+	}
+	
 
 }

@@ -1,0 +1,72 @@
+package co.itrip.prj.iclass.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import co.itrip.prj.iclass.mapper.ClassMapper;
+
+@Service
+public class ClassServiceImpl implements ClassService {
+	
+	@Autowired
+	private ClassMapper map;
+
+	@Override
+	public List<ClassVO> classList(ClassVO vo) {
+		return map.classList(vo);
+	}
+
+	@Override
+	public ClassVO classSelectOne(ClassVO vo) {
+		return map.classSelectOne(vo);
+	}
+
+	@Override
+	public int classInsert(ClassVO vo) {
+		
+		// ClassInsert처리가 먼저
+		int r = map.classInsert(vo);
+		
+		ClassDtVO dtvo = new ClassDtVO(); // ClassDtVO 호출
+		dtvo.setClassNo(vo.getClassNo());
+		
+		System.out.println("===="+vo.getClassDt().size());
+		// 클래스 날짜&시간등록
+		for(int i=0; i < vo.getClassDt().size(); i++) {
+			if(vo.getClassDt().get(i) != null) {
+				dtvo.setTerm(vo.getClassDt().get(i).getTerm());
+			//	dtvo.setCtimeNo(1+i);
+				dtvo.setBeginTime(vo.getClassDt().get(i).getBeginTime());
+				dtvo.setEndTime(vo.getClassDt().get(i).getEndTime());
+				map.classDtInsert(dtvo);
+			}
+			
+		}
+		return r;
+	}
+
+	@Override
+	public int classDelete(ClassVO vo) {
+		// TODO Auto-generated method stub
+		return map.classDelete(vo);
+	}
+
+	@Override
+	public List<ClassDtVO> classDtList(ClassDtVO vo) {
+		return map.classDtList(vo);
+	}
+
+	@Override
+	public List<ClassVO> ajaxJobSearch(ClassVO vo) {
+		return map.ajaxJobSearch(vo);
+	}
+
+	@Override
+	public List<ClassVO> myClassList(ClassVO vo) {
+		// 마이페이지 class 전체조회
+		return map.myClassList(vo);
+	}
+
+}

@@ -1,0 +1,70 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+<head>
+<meta charset="UTF-8">
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+<title>Insert title here</title>
+<script src="js/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<div layout:fragment="content">
+<img alt="" src="images/kakaopay.png" style="position:absolute; z-index:2;width: 110px; cursor: pointer;" id="kakaopay">
+<br>
+
+
+<script type="text/javascript">
+
+    $("#kakaopay").on("click", function(){
+    	var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
+        
+	      //DOM객체들에서 사용할 데이터 뽑기
+	      var paymentGoods;
+	      var money;
+	      var memberId;
+        
+    	$.ajax({
+    	    url: '/ajaxpayform.do',
+    	    type:'get',
+    	    dataType: 'json',
+    	    data:{
+		    	//"aid": "A5678901234567890123",
+			    //"tid": "T1234567890123456789",
+			    "cid": "TC0ONETIME",
+			    "partner_order_id": "partner_order_id",
+			    "partner_user_id": "partner_user_id",
+			    "payment_method_type": "MONEY",
+			    "item_name": "초코파이",
+			    "quantity": 1,
+			    "amount": {
+		        "total": 2200,
+		        "tax_free": 0,
+		        //"vat": 200,
+		        //"point": 0,
+		        //"discount": 0,
+		        //"green_deposit": 0
+    	    }},
+    	    beforeSend: function(xhr){
+    	    	xhr.setRequestHeader(header, token);
+    	    },
+    	    success: function(data){
+    	    	alert("결제가 완료 되었습니다.");
+    	    	
+    	    	console.log(data);
+    	    },
+    	    error: function searchError(xhr, err) {
+    	           console.error("Error on ajax call: " + err);
+    	           var msg = '결제에 실패했습니다.';
+    	           msg += '에러내용 : ' +err.error_msg;
+    	           alert(msg);
+    	           }
+    	     }); 
+	
+    });
+
+</script>
+</div>
+</body>
+</html>

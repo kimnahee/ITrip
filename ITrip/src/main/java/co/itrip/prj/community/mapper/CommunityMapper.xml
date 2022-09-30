@@ -54,7 +54,7 @@
 			<if test="title != null">title = #{title},</if>
 			<if test="content != null">content = #{content},</if>
 			<if test="attach != null">attach = #{attach},</if>
-			<if test="attach != null">attach_dir = #{attachDir}</if>
+			<if test="attachDir != null">attach_dir = #{attachDir}</if>
 		</set>
 		where com_no = #{comNo}
 	</update>
@@ -96,7 +96,7 @@
 			<if test="title != null">title = #{title},</if>
 			<if test="content != null">content = #{content},</if>
 			<if test="attach != null">attach = #{attach},</if>
-			<if test="attach != null">attach_dir = #{attachDir}</if>
+			<if test="attachDir != null">attach_dir = #{attachDir}</if>
 		</set>
 		where com_no = #{comNo}
 	</update>
@@ -152,10 +152,20 @@
 		update comboard set hit = hit + 1 where com_no = #{comNo}
 	</update>
 	
-	<!-- 페이징 처리 -->
+	<!-- 페이징 처리 카테고리, -->
 	<select id="findAll" resultType="co.itrip.prj.community.service.CommunityVO">
-		select *
+		select  com_no,
+				title,
+				content,
+				member_id,
+				dt,
+				hit,
+				attach,
+				attach_dir,
+				ctgry
 		from comboard
+			<if test="ctgry.equals('스터디') or ctgry.equals('자유게시판')"> where ctgry = #{ctgry} </if>
+			<if test="memberId != null">where member_id = #{memberId}</if>
 		order by com_no desc
 	</select>
 </mapper>

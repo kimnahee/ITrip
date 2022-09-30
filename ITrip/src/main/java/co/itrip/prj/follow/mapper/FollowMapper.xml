@@ -3,9 +3,13 @@
 <mapper namespace="co.itrip.prj.follow.mapper.FollowMapper">
 
 	<select id="followSelectList" parameterType="co.itrip.prj.follow.service.FollowVO"  resultType="co.itrip.prj.follow.service.FollowVO">
-		SELECT GUIDE_ID 
-		FROM FOLLOW 
-		WHERE MEMBER_ID = #{memberId}
+		SELECT  F.GUIDE_ID, M.NICK, C.CD_NAME
+        FROM FOLLOW F, MEMBER M , GUIDE G , CMMNCD C
+        WHERE F.GUIDE_ID = M.MEMBER_ID
+        AND F.MEMBER_ID = #{memberId}
+        AND F.GUIDE_ID = G.GUIDE_ID
+        AND G.DUTY = C.CD_NO
+        AND C.CD_INI = 'D'
 	</select>
 	
 	<select id="followCount" resultType="int">
@@ -15,5 +19,43 @@
 	<delete id="followDelete">
 		DELETE FOLLOW WHERE GUIDE_ID = #{guideId} and member_id = #{memberId}
 	</delete>
+	
+	
+	
+	<select id="followerSelectList" parameterType="co.itrip.prj.follow.service.FollowVO"  resultType="co.itrip.prj.follow.service.FollowVO">
+		SELECT M.MEMBER_ID , M.NICK
+		FROM FOLLOW F, MEMBER M
+		WHERE F.MEMBER_ID = M.MEMBER_ID
+		AND F.GUIDE_ID = #{guideId}
+	</select>
+	
+	<select id="followerCount" resultType="int">
+		SELECT COUNT(*) FROM FOLLOW
+	</select>
+	
+	<delete id="followerDelete">
+		DELETE FOLLOW WHERE MEMBER_ID = #{memberId} AND GUIDE_ID = #{guideId}
+	</delete>
+	
+	
+	<!-- 상담 상세페이지 팔로우 기능 -->
+	
+	<select id="heartCount" resultType="int" >
+		SELECT COUNT(*)
+		FROM CONSULT C, FOLLOW F
+		WHERE C.GUIDE_ID = F.GUIDE_ID
+		AND F.GUIDE_ID = #{guideId}
+		AND F.MEMBER_ID = #{memberId}
+		AND C.CONSULT_NO = #{consultNo}
+	</select>
+	
+	<insert id="heartInsert">
+		INSERT INTO FOLLOW VALUES (#{guideId}, #{memberId})
+	</insert>
+	
+	<delete id="heartDelete">
+		DELETE FOLLOW WHERE MEMBER_ID = #{memberId} AND GUIDE_ID = #{guideId}
+	</delete>
+	
 
 </mapper>

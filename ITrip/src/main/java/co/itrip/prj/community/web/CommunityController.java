@@ -33,14 +33,7 @@ public class CommunityController {
 	@Autowired
 	private ServletContext servletContext;
 
-	// 실시간 타임라인 게시판(일단 출력만)
-	@GetMapping("/timeline")
-	public String timeLine(Model model) {
-		model.addAttribute("communityList", dao.communityList());
-		return "community/timeLine";
-	}
-
-	// 게시글 단일출력(스터디게시판 : 작동 O)
+	// 게시글 단일출력(스터디게시판)
 	@GetMapping("/selectCommunity.do")
 	public String selectCommunity(CommunityVO vo, ReplyVO rvo, Model model, HttpServletRequest request) {
 		// System.out.println(request.getParameter("comNo")); // 글번호 확인
@@ -178,31 +171,36 @@ public class CommunityController {
 	// 페이징
 	// 페이징 처리(전체게시판)
 	@GetMapping("/pageTest.do")
-	public String findPage(Model model, HttpServletRequest request,
+	public String findPage(CommunityVO vo, Model model, HttpServletRequest request,
 			@RequestParam(required = false, defaultValue = "1") int pageNum,
 			@RequestParam(required = false, defaultValue = "10") int pageSize) {
 		PageHelper.startPage(pageNum, pageSize);
-		model.addAttribute("pageInfo", PageInfo.of(dao.findAll()));
-		return "community/timeline";
+		vo.setCtgry("''");
+		model.addAttribute("pageInfo", PageInfo.of(dao.findAll(vo)));
+		return "community/timeLine";
 	}
 
 	// 페이징 처리(스터디게시판)
 	@GetMapping("/study.do")
-	public String findStudyPage(Model model, HttpServletRequest request,
+	public String findStudyPage(CommunityVO vo, Model model, HttpServletRequest request,
 			@RequestParam(required = false, defaultValue = "1") int pageNum,
 			@RequestParam(required = false, defaultValue = "10") int pageSize) {
 		PageHelper.startPage(pageNum, pageSize);
-		model.addAttribute("pageInfo", PageInfo.of(dao.findStudy()));
+		vo.setCtgry("스터디");
+		vo.setMemberId(request.getParameter("memberId"));
+		model.addAttribute("pageInfo", PageInfo.of(dao.findAll(vo)));
 		return "community/study/study";
 	}
 
 	// 페이징 처리(자유게시판)
 	@GetMapping("/free.do")
-	public String findFreePage(Model model, HttpServletRequest request,
+	public String findFreePage(CommunityVO vo, Model model, HttpServletRequest request,
 			@RequestParam(required = false, defaultValue = "1") int pageNum,
 			@RequestParam(required = false, defaultValue = "10") int pageSize) {
 		PageHelper.startPage(pageNum, pageSize);
-		model.addAttribute("pageInfo", PageInfo.of(dao.findFree()));
+		vo.setCtgry("자유게시판");
+		vo.setMemberId(request.getParameter("memberId"));
+		model.addAttribute("pageInfo", PageInfo.of(dao.findAll(vo)));
 		return "community/free/free";
 	}
 
@@ -212,7 +210,6 @@ public class CommunityController {
 	@ResponseBody
 	public List<ReplyVO> replyList(ReplyVO vo, HttpServletRequest request, Model model) {
 		String comNo = request.getParameter("comNo");
-		// System.out.println("===============원글번호" + comNo);
 		vo.setComNo(Integer.parseInt(comNo));
 		return dao.replyList(vo);
 	}
@@ -224,7 +221,9 @@ public class CommunityController {
 		String comNo = request.getParameter("comNo");
 		String content = request.getParameter("content");
 		String memberId = request.getParameter("memberId");
-		//System.out.println("댓글insert확인" + comNo + "내용확인" + content + memberId);
+		System.out.println("comNo" + comNo);
+		System.out.println("content" + content);
+		System.out.println("memberId" + memberId);
 		vo.setComNo(Integer.parseInt(comNo));
 		vo.setContent(content);
 		vo.setMemberId(memberId);

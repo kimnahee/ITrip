@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="js/jquery-3.6.0.min.js"></script>
+
+</head>
+<body>
+	<div layout:fragment="content">
+
+		<section class="section"
+			style="margin-left: 100px; margin-right: 100px;">
+			<div class="row">
+				<div class="col-12">
+					<div class="card">
+						<div class="card-header">
+							<input type="hidden" th:name="${_csrf.parameterName}"
+								th:value="${_csrf.token}">
+							<!-- 로그인시 토큰 가져오기 -->
+							<input type="hidden" id="memberId" name="memberId"
+								th:value="${#authentication.principal.member.memberId}" />
+							<h3 class="card-title" th:text="${consultOne.title}"></h3>
+							<h4 class="card-title" id="guideId" th:text="${consultOne.guideId}"></h4>
+							<div id="heartBody"></div>
+							
+							
+
+							<div class="divider">
+								<div class="divider-text">가이드 소개</div>
+							</div>
+							<input type="text" id="consultNo" th:value="${consultOne.consultNo}">
+							<h5 class="card-title" th:text="${consultOne.career}"></h5>
+							<h5 class="card-title" th:text="${consultOne.cdName}"></h5>
+							<h5 class="card-title" th:text="${consultOne.content}"></h5>
+						</div>
+						<div class="card-body">
+							<div class="divider">
+								<div class="divider-text">상담 가능 시간</div>
+							</div>
+							<div th:each="con : ${consultDt}">
+								<span th:text=${con.week}></span> &nbsp;&nbsp;&nbsp; <span
+									th:text="${'시작시간:'+con.beginTime}"></span>~ <span
+									th:text="${'끝나는시간:'+con.endTime}"></span>
+								<h5>
+									결제 금액 : <b th:text="${con.price}"></b>원
+								</h5>
+							</div>
+						</div>
+
+						<div class="divider">
+							<div class="divider-text">비고</div>
+							<p>1회 컨설트 : 1시간/1명</p>
+						</div>
+						<div style="padding: 10px;">
+							<a href="#" class="btn btn-primary py-2 px-3 "
+								style="float: right;" data-toggle="modal"
+								data-target="#inlineForm">상담신청하기</a>
+							<div th:text="${consultOne.consultNo}" style="display: none"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<script>
+			// 삼항연산자 활용...?
+
+			$(document).ready(function() {
+				heartCount();
+			})
+
+			// 하트 카운트 개수 출력
+			function heartCount() {
+				let consultNo = $("#consultNo").val();
+				let guideId = $("#guideId").html();
+				/* console.log(id);
+				console.log(consultNo);
+				console.log(guideId); */
+				let csrfHeaderName = "${_csrf.headerName}";
+				let csrfToken = $("input[name=_csrf]").val();
+
+				$.ajax({
+					url : "/heartCount.do",
+					type : "post",
+					data : {'memberId' : id, 'guideId' : guideId, 'consultNo' : consultNo},
+					beforeSend : function(xhr) {
+						xhr.setRequestHeader("AJAX", true);
+						xhr.setRequestHeader("X-CSRF-TOKEN", csrfToken);
+					},
+					success : function(data) {
+						console.log("data========== " + data);
+						
+						if(data == 0) {
+							let a = '';
+							a += `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+								  <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+								</svg>`;
+							console.log(a);
+							$("#heartBody").html(a);
+						 
+						} else {
+							let b = '';
+							b += `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+								  <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+								</svg>`;
+							console.log(b);
+							$("#heartBody").html(b);
+
+					}
+				}
+				})
+			}
+		</script>
+	</div>
+
+
+</body>
+</html>

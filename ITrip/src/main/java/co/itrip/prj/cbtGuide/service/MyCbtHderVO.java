@@ -1,10 +1,15 @@
 package co.itrip.prj.cbtGuide.service;
 
 import java.util.Date;
-import java.util.List;
 
 import lombok.Data;
 
+/**
+* 사용자가 문제를 풀면 생성되는 변수를 담은 클래스
+* @author 김하은
+* @date 2022.09.16 
+* @version 1.1, 2022.09.23 VO 수정 (역정규화)
+*/
 @Data
 public class MyCbtHderVO {
 	private int mcNo; // 응시번호
@@ -22,4 +27,16 @@ public class MyCbtHderVO {
 	private String cnsr3; //문제1번 정답입력값
 	private String cnsr4; //문제1번 정답입력값
 	private String cnsr5; //문제1번 정답입력값
+	private int chk1; //정답체크1번
+	private int chk2; //정답체크2번
+	private int chk3; //정답체크3번
+	private int chk4; //정답체크4번
+	private int chk5; //정답체크5번
+	
+	private int chk0Cunt; // 정답카운트
+	private int chk1Cunt; // 오답카운트
+	
+	//경아 오답노트
+	private String cdNo;
+	private String cdName;
 }

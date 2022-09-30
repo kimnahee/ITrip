@@ -3,7 +3,7 @@ package co.itrip.prj.alarm.service;
 import lombok.Data;
 
 @Data
-public class alarmVO {
+public class AlarmVO {
 	
 	// 알람테이블
 	private int alarmNo; // 알람 순번 

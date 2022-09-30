@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+<head>
+ <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Layout - Voler Admin Dashboard</title>
+    
+    <link rel="stylesheet" href="assets/css/bootstrap.css">
+    
+    <link rel="stylesheet" href="assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" href="assets/css/app.css">
+    <link rel="shortcut icon" href="assets/images/favicon.svg" type="image/x-icon">
+	<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css'/>
+<style>
+#testDiv{
+	width:700px;
+	margin:0 auto;
+}
+
+
+  .star {
+    position: relative;
+    font-size: 2rem;
+    color: #ddd;
+  }
+  
+  .star input {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+  
+  .star span {
+    width: 0;
+    position: absolute; 
+    left: 0;
+    color: red;
+    overflow: hidden;
+    height: 50px;
+    pointer-events: none;
+  }
+  
+  
+.starR{
+  background: url('http://miuu227.godohosting.com/images/icon/ico_review.png') no-repeat right 0;
+  background-size: auto 100%;
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+  text-indent: -9999px;
+  cursor: pointer;
+}
+.starR.on{background-position:0 0;}
+
+
+
+.rating .rate_radio + label {
+    position: relative;
+    display: inline-block;
+    margin-left: -4px;
+    z-index: 10;
+    width: 60px;
+    height: 60px;
+    background-image: url('../images/starrate.png');
+    background-repeat: no-repeat;
+    background-size: 60px 60px;
+    cursor: pointer;
+    background-color: #f0f0f0;
+}
+.rating .rate_radio:checked + label {
+    background-color: #ff8;
+}
+
+/* 레이아웃 외곽 너비 400px 제한*/
+.wrap{
+    max-width: 480px;
+    margin: 0 auto; /* 화면 가운데로 */
+    background-color: #fff;
+    height: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+
+}
+.reviewform textarea{
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+.rating .rate_radio {
+    position: relative;
+    display: inline-block;
+    z-index: 20;
+    opacity: 0.001;
+    width: 60px;
+    height: 60px;
+    background-color: #fff;
+    cursor: pointer;
+    vertical-align: top;
+    display: none;
+}
+.rating .rate_radio + label {
+    position: relative;
+    display: inline-block;
+    margin-left: -4px;
+    z-index: 10;
+    width: 60px;
+    height: 60px;
+    background-image: url('../images/starrate.png');
+    background-repeat: no-repeat;
+    background-size: 60px 60px;
+    cursor: pointer;
+    background-color: #f0f0f0;
+}
+.rating .rate_radio:checked + label {
+    background-color: #ff8;
+}
+
+.warning_msg {
+    display: none;
+    position: relative;
+    text-align: center;
+    background: #ffffff;
+    line-height: 26px;
+    width: 100%;
+    color: red;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid #e0e0e0;
+}
+
+
+.inner-star::before{color: #FF9600;}
+.outer-star {position: relative;display: inline-block;color: #CCCCCC;}
+.inner-star {position: absolute;left: 0;top: 0;width: 0%;overflow: hidden;white-space: nowrap;}
+.outer-star::before, .inner-star::before {content: '\f005 \f005 \f005 \f005 \f005';font-family: 'Font Awesome 5 free';font-weight: 900;}
+
+
+
+
+
+
+</style>
+</head>
+<body layout:fragment="content">
+<div class="text-center">
+        <h1 class="display-5 mb-5">Consult Review</h1>
+    </div>
+<div class="col-md-6 col-12" id="testDiv">
+                <div class="card">
+                    <div class="card-header">
+                    <h4 class="card-title">1:1 Consult에 대한 리뷰를 작성해주세요.</h4>
+                    </div>
+                    <div class="card-content">
+                    <div class="card-body">
+                    
+                        <form class="form form-vertical" action="reviewConsultInsert.do" method="post">
+                         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                        <div class="form-body">
+                         <div class="row">
+                            <!-- <div class="col-12">
+                                <div class="form-group">
+                                <label for="first-name-vertical">상담 : </label>
+                                <input type="text" id="title" class="form-control" name="title" th:eacn="con : ${consultList}" th:value="${con.title}" readOnly>
+                                </div>
+                            </div> -->
+                            <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                <label for="first-name-vertical">작성자 아아디</label>
+                                <input type="text" id="memberId" class="form-control" name="memberId" th:value="${#authentication.principal.member.memberId}" readOnly>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                <label for="email-id-vertical">작성자 닉네임</label>
+                                <input type="text" id="nick" class="form-control" name="nick"  th:value="${#authentication.principal.member.nick}" readOnly>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                              <label for="email-id-vertical">별점 /</label>
+                               <span class="star">
+								  ★★★★★
+								  <span>★★★★★</span>
+								  <input type="range" oninput="drawStar(this)" name="star" value="1" step="1" min="0" max="5">
+								</span> 
+								</div>
+							</div>
+                             <div class="col-12" >
+                                <div class="form-group mb-3">
+						        <div class="review_contents">
+						            <label for="exampleFormControlTextarea1" class="form-label">리뷰내용</label>
+						            <div class="warning_msg">5자 이상으로 작성해 주세요.</div>
+						            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="content"></textarea>
+						        </div>   
+
+                             </div>
+                         </div>
+                            <div class="col-12 d-flex justify-content-end">
+                                <button type="submit" class="btn btn-primary mr-1 mb-1">제출하기</button>
+                            </div>
+                            </div>
+                        </div>
+                        </form>
+                    </div>
+                    </div>
+                </div>
+                </div>
+                
+	<script> 
+
+	    const drawStar = (target) => {
+	    	/* console.log(target);
+	    	let width = $(target).prev()[0].style.cssText//.width
+	    	console.log(width); 
+	    	$("[name='star']").val()*/
+	        document.querySelector(`.star span`).style.width = `${target.value * 20}%`;
+	      }
+	    
+	    
+    //상품평 작성 글자수 초과 체크 이벤트 리스너
+    document.querySelector('.review_textarea').addEventListener('keydown',function(){
+        //리뷰 400자 초과 안되게 자동 자름
+        let review = document.querySelector('.review_textarea');
+        let lengthCheckEx = /^.{400,}$/;
+        if(lengthCheckEx.test(review.value)){
+            //400자 초과 컷
+            review.value = review.value.substr(0,400);
+        }
+    });
+
+    //저장 전송전 필드 체크 이벤트 리스너
+    document.querySelector('#save').addEventListener('click', function(e){
+        //별점 선택 안했으면 메시지 표시
+        if(rating.rate == 0){
+            rating.showMessage('rate');
+            return false;
+        }
+        //리뷰 5자 미만이면 메시지 표시
+        if(document.querySelector('.review_textarea').value.length < 5){
+            rating.showMessage('review');
+            return false;
+        }
+        //폼 서밋
+    });
+
+    </script>     
+           
+    <script src="assets/js/feather-icons/feather.min.js"></script>
+    <script src="assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="assets/js/app.js"></script>
+    <script src="assets/js/main.js"></script>
+    
+</body>
+</html>

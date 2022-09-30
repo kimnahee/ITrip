@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="row" id="table-head">
+			<div class="col-12">
+				<div class="card">
+					<div class="card-header">
+						<h4 class="card-title">회원정보</h4>
+					</div>
+					<div class="card-content">
+						<div class="card-body">
+							<p>회원정보입니다.</p>
+						</div>
+
+						<ul class="nav nav-tabs" id="myTab" role="tablist">
+							<li class="nav-item" role="presentation"><a class="nav-link active" id="home-tab" data-toggle="tab" href="#all" role="tab" aria-controls="home"
+								aria-selected="true"><b>전체</b></a></li>
+							<li class="nav-item" role="presentation"><a class="nav-link" id="contact-tab" data-toggle="tab" href="#M1" role="tab"
+								aria-controls="contact" aria-selected="false"><b>GUIDE</b></a></li>
+							<li class="nav-item" role="presentation"><a class="nav-link" id="contact-tab" data-toggle="tab" href="#M2" role="tab"
+								aria-controls="contact" aria-selected="false"><b>USER</b></a></li>
+							<li class="nav-item" role="presentation"><a class="nav-link" id="contact-tab" data-toggle="tab" href="#M3" role="tab"
+								aria-controls="contact" aria-selected="false"><b>ADMIN</b></a></li>
+						</ul>
+
+
+						<div class="tab-content" id="myTabContent">
+							<!-- 전체 -->
+							<div class="tab-pane fade show active" id="all" role="tabpanel" aria-labelledby="home-tab">
+								<div class="table-responsive">
+									<table class="table table-striped mb-0">
+										<thead>
+											<tr>
+												<th>아이디</th>
+												<th>이름</th>
+												<th>닉네임</th>
+												<th>이메일</th>
+												<th>권한</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:each="m:${pageInfo.list}">
+												<th th:text=${m.memberId}></th>
+												<td th:text=${m.name}></td>
+												<td th:text=${m.nick}></td>
+												<td th:text=${m.email}></td>
+												<td th:text=${m.auth}></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+								<br>
+								<!-- 페이지네이션 -->
+								<nav aria-label="Page navigation example">
+									<ul class="pagination pagination-info  justify-content-center">
+										<li class="page-item disabled"
+											th:if="${pageInfo.isIsFirstPage()}"><span
+											class="page-link">«</span></li>
+										<li class="page-item"
+											th:if="${!pageInfo.isIsFirstPage() && pageInfo.getList().size() > 0}"><a
+											class="page-link"
+											th:href="|javascript:gopage([[${pageInfo.getPrePage()}]])|"
+											rel="prev">«</a></li>
+										<li
+											th:class="|page-item ${(pageInfo.pageNum eq page) ? 'active': ''} |"
+											th:each="page:${pageInfo.navigatepageNums}"><span
+											class="page-link" th:if="${pageInfo.pageNum eq page}"
+											th:text="${page}"></span> <a class="page-link"
+											th:unless="${pageInfo.pageNum eq page}"
+											th:href="|javascript:gopage(${page})|" th:text="${page}">{{$page
+												}}</a></li>
+										<li class="page-item" th:if="${pageInfo.hasNextPage}"><a
+											class="page-link"
+											th:href="|javascript:gopage([[${pageInfo.getNextPage()}]])|"
+											rel="next">»</a></li>
+										<li class="page-item disabled"
+											th:unless="${pageInfo.hasNextPage}"><span
+											class="page-link">»</span></li>
+									</ul>
+								</nav>
+							</div>
+						</div><!-- end of myTabContent -->
+					</div><!-- end of card-content -->
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+		let authView = document.getElementById("authView")
+		let all = document.getElementById("all")
+		
+		$(".nav-item").on("click","#home-tab",function(){
+			location.href="memberList.do"
+		})
+			
+		
+		$(".nav-item").on("click","#contact-tab",function(){
+			var auth = $(this).text()
+			gopageAjax(1,auth)
+			
+			
+		})
+			
+		
+			function gopageAjax(p,author){
+			
+				$.ajax({
+					url:'/memberListOf.do',
+					type:'get',
+					dataType:'json',
+					data:{'auth':author,"pageNum":p},
+					success:function result(res){
+						console.log(author)
+						all.innerHTML = "";
+						listOfAuth= '<div class="table-responsive">'
+										+'<table class="table table-striped mb-0">'
+										+'<thead><tr><th>아이디</th><th>이름</th><th>닉네임</th><th>이메일</th><th>권한</th></tr>'
+										+'</thead><tbody">'
+					
+						res.list.forEach((elem,idx,arr)=>{
+							listOfAuth += "<tr><th>"+elem.memberId+"</th><td>"+elem.name+"</td><td>"+elem.nick+"</td>"
+									+"<td>"+elem.email+"</td><td>"+elem.auth+"</td></tr>"
+						})
+						
+						listOfAuth += '</tbody></table></div></div><br>'
+						
+						all.innerHTML = listOfAuth
+						
+						
+						
+						ph ='<nav aria-label="Page navigation example">'
+						    +'<ul class="pagination pagination-info  justify-content-center">'
+						 if(res.isFirstPage==true){  
+							ph += '<li class="page-item disabled"><span class="page-link">«</span></li>'
+						 }
+						 else{
+					    	ph += `<li class="page-item"><a class="page-link" href="javascript:gopageAjax(${res.prePage},'${author}')" rel="prev">«</a></li>`
+					    }
+				
+						for(page of res.navigatepageNums){
+							ph += `<li class="page-item (${res.pageNum} eq ${page}) ? active: ''}" ></li>`
+							if(res.pageNum == page){
+								ph += `<span class='page-link'>${page}</span>`
+							}else{
+								ph+=`<a class='page-link' href='javascript:gopageAjax(${page},"${author}")'>${page}</a>`
+							}
+							ph += "</li>"
+						}
+					
+						if(res.hasNextPage ==true){
+							ph += ` <li class="page-item"><a class="page-link" href="javascript:gopageAjax(${res.nextPage},'${author}')" rel="next">»</a></li>`
+						}else{
+							ph += '<li class="page-item disabled"><span class="page-link">»</span></li></ul></nav>'
+						}
+						
+						all.innerHTML += ph
+						
+					}
+				})
+			}
+			
+			
+			
+		
+		
+		
+		 function gopage(p) {
+			location.href = '/memberList.do?pageNum=' + p;
+		} 
+		
+		</script>
+		
+	</div>
+</body>
+</html>

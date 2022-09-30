@@ -18,4 +18,6 @@ public class MemberVO {
 	private String attach_Dir; // 파일경로
 	private String auth; // 권한
 
+	private String guideId; // 아이디
+	
 }

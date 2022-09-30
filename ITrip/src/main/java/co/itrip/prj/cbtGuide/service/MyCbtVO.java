@@ -2,6 +2,12 @@ package co.itrip.prj.cbtGuide.service;
 
 import lombok.Data;
 
+/**
+* 사용자가 문제를 풀면 생성되는 변수를 담은 클래스
+* @author 김하은
+* @date 2022.09.16 
+* @version 1.0, 2022.09.23 역정규화로 인해 사용 안 할 클래스
+*/
 @Data
 public class MyCbtVO {
 	private int mc_no; // cbt번호

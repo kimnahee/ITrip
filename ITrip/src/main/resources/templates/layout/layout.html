@@ -1,19 +1,30 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>메인화면</title>
 <script src="js/jquery-3.6.0.min.js"></script>
 <link rel="stylesheet" href="bootstrap/voler/assets/css/bootstrap.css">
-<link rel="stylesheet" href="bootstrap/voler/assets/vendors/chartjs/Chart.min.css">
-<link rel="stylesheet" href="bootstrap/voler/assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
+<link rel="stylesheet"
+	href="bootstrap/voler/assets/vendors/chartjs/Chart.min.css">
+<link rel="stylesheet"
+	href="bootstrap/voler/assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
 <link rel="stylesheet" href="bootstrap/voler/assets/css/app.css">
-<link rel="shortcut icon" href="bootstrap/voler/assets/images/favicon.svg" type="image/x-icon">
+<link rel="shortcut icon"
+	href="bootstrap/voler/assets/images/favicon.svg" type="image/x-icon">
+<style>
+.dropdown-menu-large {
+	min-width: 32rem;
+}
+</style>
 </head>
 <body>
 	<div id="app">
+		<input type="hidden" th:name="${_csrf.parameterName}"
+			th:value="${_csrf.token}">
 		<div id="sidebar" class='active'>
 			<div class="sidebar-wrapper active">
 				<div class="sidebar-header">
@@ -30,39 +41,17 @@
 						</a></li>
 
 						<!-- 1:1 상담 탭 -->
-						<li class="sidebar-item  has-sub"><a href="/"
-							class='sidebar-link'> <i data-feather="triangle" width="20"></i>
-								<span>1:1 상담</span>
-						</a>
-							<ul class="submenu">
-								<li><a href="consultList.do">웹개발</a></li>
-								<li><a href="consultList.do">프론트엔드</a></li>
-								<li><a href="consultList.do">백엔드</a></li>
-								<li><a href="consultList.do">풀스택</a></li>
-								<li><a href="consultList.do">데이터베이스</a></li>
-								<li><a href="consultList.do">자격증</a></li>
-								<li><a href="consultList.do">개발도구</a></li>
-								<li><a href="consultList.do">취업.이직</a></li>
-								<li><a href="consultList.do">기타</a></li>
-							</ul></li>
+
+						<li class="sidebar-item  "><a href="consultList.do"
+							class='sidebar-link'> <i data-feather="layers" width="20"></i>
+								<span>1:1상담</span>
+						</a></li>
 
 						<!-- I-CLASS 탭 -->
-						<li class="sidebar-item  has-sub"><a href="#"
+						<li class="sidebar-item"><a href="iClassList.do"
 							class='sidebar-link'> <i data-feather="briefcase" width="20"></i>
 								<span>I-CLASS</span>
-						</a>
-							<ul class="submenu">
-								<li><a href="iClass">전체보기</a></li>
-								<li><a href="component-tooltips.html">웹개발</a></li>
-								<li><a href="component-tooltips.html">프론트엔드</a></li>
-								<li><a href="component-tooltips.html">백엔드</a></li>
-								<li><a href="component-tooltips.html">풀스택</a></li>
-								<li><a href="component-tooltips.html">데이터베이스</a></li>
-								<li><a href="component-tooltips.html">자격증</a></li>
-								<li><a href="component-tooltips.html">개발도구</a></li>
-								<li><a href="component-tooltips.html">취업.이직</a></li>
-								<li><a href="component-tooltips.html">기타</a></li>
-							</ul></li>
+						</a></li>
 
 						<!-- 커뮤니티 탭 -->
 						<li class="sidebar-item  has-sub"><a href="#"
@@ -70,8 +59,7 @@
 								<span>커뮤니티</span>
 						</a>
 							<ul class="submenu">
-								<li><a href="/pageTest.do?pageNum=1&pageSize=10">실시간
-										타임라인</a></li>
+								<li><a href="pageTest.do">실시간 타임라인</a></li>
 								<li><a href="study.do">스터디게시판</a></li>
 								<li><a href="free.do">자유게시판</a></li>
 							</ul></li>
@@ -86,9 +74,9 @@
 							class='sidebar-link'> <i data-feather="layout" width="20"></i>
 								<span>멘티 CBT</span>
 						</a></li>
-						<li class="sidebar-item  "><a href="form-editor.html"
+						<li class="sidebar-item  "><a href="answerNoteMain.do"
 							class='sidebar-link'> <i data-feather="layers" width="20"></i>
-								<span>나만의 노트</span>
+								<span>오답노트</span>
 						</a></li>
 						<li class="sidebar-item  "><a href="table.html"
 							class='sidebar-link'> <i data-feather="grid" width="20"></i>
@@ -97,12 +85,14 @@
 
 						<!-- 고객센터 탭 -->
 						<li class='sidebar-title'>고객센터</li>
-						<li class="sidebar-item"><a href="#" class='sidebar-link'>
-								<i data-feather="user" width="20"></i> <span>공지사항</span>
+						<li class="sidebar-item"><a href="noticeList.do"
+							class='sidebar-link'> <i data-feather="user" width="20"></i>
+								<span>공지사항</span>
 						</a></li>
 
-						<li class="sidebar-item"><a href="#" class='sidebar-link'>
-								<i data-feather="trending-up" width="20"></i> <span>Q&A</span>
+						<li class="sidebar-item"><a href="qnaList.do"
+							class='sidebar-link'> <i data-feather="trending-up"
+								width="20"></i> <span>Q&A</span>
 						</a></li>
 
 						<!-- 관리자 페이지 : 권한에 따라 보이게? -->
@@ -112,10 +102,11 @@
 								<span>관리자</span>
 						</a>
 							<ul class="submenu ">
-								<li><a href="auth-login.html">멘토신청 목록</a></li>
-								<li><a href="auth-register.html">회원목록</a></li>
-								<li><a href="auth-forgot-password.html">클래스 승인</a></li>
-								<li><a href="auth-forgot-password.html">회원 승인</a></li>
+								<li><a href="memberAuthList.do">멘토신청 목록</a></li>
+								<li><a href="memberList.do">회원목록</a></li>
+								<li><a href="appClass.do">클래스 승인</a></li>
+								<li><a href="appConsult.do">상담 승인</a></li>
+
 							</ul></li>
 
 					</ul>
@@ -139,89 +130,59 @@
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul
 						class="navbar-nav d-flex align-items-center navbar-light ml-auto">
-
 						<li class="dropdown">
+							<!-- 로그인x -->
 							<div sec:authorize="isAnonymous()">
-							    <a href="loginForm.do" class="d-none d-md-block d-lg-inline-block">로그인 / </a>
-							    <a href="signupForm.do" class="d-none d-md-block d-lg-inline-block">회원가입</a>
-						    </div>
-							
-							 <div sec:authorize="isAuthenticated()">
-							<p><span th:text="${#authentication.principal.member.nick}"></span>님 환영합니다! </p>
-							<div>
+								<a href="loginForm.do"
+									class="d-none d-md-block d-lg-inline-block">로그인 / </a> <a
+									href="signupForm.do"
+									class="d-none d-md-block d-lg-inline-block">회원가입</a>
+							</div> <!-- 로그인 O -->
+							<div sec:authorize="isAuthenticated()">
+								<span th:text="${#authentication.principal.member.nick}"></span>
+								님 환영합니다!
 							</div>
-							<form action="logout" method="post">
-							    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-							    <input id="memberId" type="hidden" th:value="${#authentication.principal.member.memberId}">
-							    <button class="btn btn-xxs btn-outline-primary">로그아웃</button>
-							</form>
-								<div th:switch="${#authentication.principal.member.auth}">
-								    <button th:case="ROLE_USER" id="myPage" class="btn btn-xs btn-outline-primary">마이페이지</button>
-									<button th:case="ROLE_GUIDE" id="guideMyPage" class="btn btn-xs btn-outline-primary">가이드 마이페이지</button>
-								</div>							
-							</div>
-						</li>
-
-						<li class="dropdown nav-icon"><a href="#"
-							data-toggle="dropdown"
-							class="nav-link  dropdown-toggle nav-link-lg nav-link-user">
+						</li>&nbsp;&nbsp;
+						<div>
+							<a href="#" class="badge bg-primary" id="alarmCount"></a>
+						</div>
+						<!-- 알림 리스트 출력하는 공간 -->
+						<li class="dropdown nav-icon">
+							<a href="#" data-toggle="dropdown" class="nav-link  dropdown-toggle nav-link-lg nav-link-user">
 								<div class="d-lg-inline-block">
 									<i data-feather="bell"></i>
 								</div>
-						</a>
+							</a>
+							<div class="dropdown-menu dropdown-menu-right dropdown-menu-large">
+								<h6 class='py-2 px-4'>알림</h6>
+								<ul class="list-group rounded-none" id="alarmList">
 
-
-							<div
-								class="dropdown-menu dropdown-menu-right dropdown-menu-large">
-								<h6 class='py-2 px-4'>Notifications</h6>
-								<ul class="list-group rounded-none">
-									<li class="list-group-item border-0 align-items-start">
-										<div class="avatar bg-success mr-3">
-											<span class="avatar-content"><i
-												data-feather="shopping-cart"></i></span>
-										</div>
-										<div>
-											<h6 class='text-bold'>New Order</h6>
-											<p class='text-xs'>An order made by Ahmad Saugi for
-												product Samsung Galaxy S69</p>
-										</div>
-									</li>
 								</ul>
-							</div></li>
-
-						<li class="dropdown nav-icon mr-2"><a href="#"
-							data-toggle="dropdown"
-							class="nav-link  dropdown-toggle nav-link-lg nav-link-user">
-								<div class="d-lg-inline-block">
-									<i data-feather="mail"></i>
-								</div>
-						</a>
-
-							<div class="dropdown-menu dropdown-menu-right">
-								<a class="dropdown-item" href="#"><i data-feather="user"></i>
-									Account</a> <a class="dropdown-item active" href="#"><i
-									data-feather="mail"></i> Messages</a> <a class="dropdown-item"
-									href="#"><i data-feather="settings"></i> Settings</a>
-								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="#"><i data-feather="log-out"></i>
-									Logout</a>
-							</div></li>
-						<!-- <li class="dropdown"><a href="#" data-toggle="dropdown"
-							class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-							로그인한 사람 -> session 사용
-								<div class="d-none d-md-block d-lg-inline-block">ㅎㅇ</div>
-						</a>
-							<div class="dropdown-menu dropdown-menu-right">
-								<a class="dropdown-item" href="#"><i data-feather="user"></i>
-									Account</a> <a class="dropdown-item active" href="#"><i
-									data-feather="mail"></i> Messages</a> <a class="dropdown-item"
-									href="#"><i data-feather="settings"></i> Settings</a>
-								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="#"><i data-feather="log-out"></i>
-									Logout
-								</a>
 							</div>
-						</li> -->
+							
+						</li>
+
+						<li class="dropdown">
+							<div sec:authorize="isAuthenticated()">
+								<div th:switch="${#authentication.principal.member.auth}">
+									<button th:case="ROLE_USER" id="myPage"
+										class="btn btn-xs btn-outline-primary">마이페이지</button>
+									<button th:case="ROLE_GUIDE" id="guideMyPage"
+										class="btn btn-xs btn-outline-primary">가이드 마이페이지</button>
+								</div>
+							</div>
+						</li>&nbsp;&nbsp;
+						<li class="dropdown">
+							<div sec:authorize="isAuthenticated()">
+								<form action="logout" method="post">
+									<input type="hidden" th:name="${_csrf.parameterName}"
+										th:value="${_csrf.token}"> <input id="memberId"
+										type="hidden"
+										th:value="${#authentication.principal.member.memberId}">
+									<button class="btn btn-xxs btn-outline-primary">로그아웃</button>
+								</form>
+							</div>
+						</li>
 					</ul>
 				</div>
 			</nav>
@@ -247,25 +208,122 @@
 				</div>
 			</footer>
 		</div>
-		<script>
-			let memberId = $("#memberId").val();
-			$("#myPage").on("click", function(){
+	</div>
+
+	<script>
+			let id = $("#memberId").val();
+
+			$("#myPage").on("click", function() {
 				//console.log(memberId);
-				location.href = "/myPage?memberId" + memberId;
+				location.href = "/myPage"
+
 			})
 			// 가이드가 로그인시 가이드 마이페이지 버튼이 생기고 세션값을 
-			$("#guideMyPage").on("click", function(){
+			$("#guideMyPage").on("click", function() {
 				//console.log(memberId);
 				location.href = "/gmyPage.do"
-			}) 
+			})
+			
+			$("#alarmInsert").on("click", function(){
+				location.href="/alarmInsert.do?memberId="+ id;
+			})
+			
+			//알람 상태 업데이트
+			$("#alarmList").on("click", function(e){
+				let csrfHeaderName = "${_csrf.headerName}";
+				let csrfToken=$("input[name=_csrf]").val();
+				
+				if($(e.target).hasClass("css-i6dzq1")){
+					let alarmNo = $(e.target).prev().prev().html();
+					$.ajax({ 
+						url : "/alarmUpdate.do",
+						type : "post",
+						data : {'alarmNo' : alarmNo},
+						beforeSend: function(xhr){
+							xhr.setRequestHeader("AJAX", true);
+						    xhr.setRequestHeader("X-CSRF-TOKEN", csrfToken);
+						},
+						success : function(data){
+							console.log(data);
+							alarmCount();
+							alarmList();
+						}
+					})
+				}
+				
+			})
+			
+			//헤더 알림 ajax
+			$(document).ready(function(){
+				console.log(id);    
+				if(!id){
+					//console.log("확인");  
+				} else{
+					alarmCount();//페이지 로딩시 알람 개수 출력
+					alarmList();//알람 리스트 출력
+				}
+			});
+			
+			//알람 리스트 출력
+			function alarmList(){
+				let csrfHeaderName = "${_csrf.headerName}";
+				let csrfToken=$("input[name=_csrf]").val();
+				
+				$.ajax({ 
+					url : "/alarmList.do",
+					type : "post",
+					data : {'memberId' : id},
+					beforeSend: function(xhr){
+						xhr.setRequestHeader("AJAX", true);
+					    xhr.setRequestHeader("X-CSRF-TOKEN", csrfToken);
+					},
+					success : function(data){
+						console.log(data);
+							let a = '';
+						data.forEach(element=>{
+							a += `<li class="list-group-item border-0 align-items-start">
+							<div class="avatar bg-info mr-3"><span class="avatar-content">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clipboard"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg></span></div>
+							<div style="display: none;">${element.alarmNo}</div>
+							<h6 class="text-bold">${element.alarmMsg}</h6>
+							<svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+							</li>`;
+							$("#alarmList").html(a);
+							//console.log(element.alarmMsg);
+						})
+					}
+				})
+			}
+			
+			//알람 카운트 개수 출력
+			function alarmCount(){
+				let csrfHeaderName = "${_csrf.headerName}";
+				let csrfToken=$("input[name=_csrf]").val();
+				
+				$.ajax({ 
+					url : "/alarmCount.do",
+					type : "post",
+					data : {'memberId' : id},
+					beforeSend: function(xhr){
+						xhr.setRequestHeader("AJAX", true);
+					    xhr.setRequestHeader("X-CSRF-TOKEN", csrfToken);
+					},
+					success : function(data){
+						console.log(data);
+						$("#alarmCount").html(data);
+					}
+				})
+			}
+			
 		</script>
 
-
 	<script src="bootstrap/voler/assets/js/feather-icons/feather.min.js"></script>
-	<script src="bootstrap/voler/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+	<script
+		src="bootstrap/voler/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 	<script src="bootstrap/voler/assets/js/app.js"></script>
 	<script src="bootstrap/voler/assets/vendors/chartjs/Chart.min.js"></script>
-	<script src="bootstrap/voler/assets/vendors/apexcharts/apexcharts.min.js"></script>
+	<script
+		src="bootstrap/voler/assets/vendors/apexcharts/apexcharts.min.js"></script>
 	<script src="bootstrap/voler/assets/js/pages/dashboard.js"></script>
 	<script src="bootstrap/voler/assets/js/main.js"></script>
 </body>

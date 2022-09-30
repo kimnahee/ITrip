@@ -84,8 +84,10 @@
                     <table class='form-group' >                   
                     <thead>
                         <tr>
-                            <th class='col-md-5'>guide ID</th>
-                            <th class='col-md-5'>unfollow</th>
+                            <th class='col-md-4'>GUIDE ID</th>
+                            <th class='col-md-4'>NICK NAME</th>
+                            <th class='col-md-5'>DUTY</th>
+                            <th class='col-md-5'>UNFOLL</th>
                         </tr>
                     </thead> 
                     <tbody id="followBody">
@@ -102,7 +104,6 @@
                         </div>
                     </div>
                     </div>
-                                    
                                     <div class="btn-square " id="fcount" style="width: 64px; height: 64px;"> 
                                         
                                     </div>
@@ -151,7 +152,7 @@
                         </div>
                         <h4 class="mb-3">My Writer</h4>
                         <p class="mb-4">작성한 게시물을 보는 곳 입니다.</p>
-                        <a class="btn" href="myWriter"><i class="fa fa-arrow-right text-white me-3"></i>write</a>
+                        <a class="btn" id="mywriter"><i class="fa fa-arrow-right text-white me-3"></i>write</a>
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.7s">
@@ -205,7 +206,7 @@
         </div>
     </div>
     	<input type="hidden"  id="memberId" th:value="${#authentication.principal.member.memberId}">
-
+	
     <!-- Service End -->
     
     <script type="text/javascript">
@@ -213,9 +214,14 @@
         let memberId = $("#memberId").val();   
         let csrfToken = $("input[name=_csrf]").val();
         
+        // 내가 쓴글 
+          $("#mywriter").on("click", function() {
+        	location.href = "/myWriter?"
+        })
+        
         // 가이드 신청 폼
         $("#gapply").on("click", function() {
-        	location.href = "/gApply?memberId=" + memberId;
+        	location.href = "/gApply?";
         })
         
         // 팔로우 리스트 띄우기
@@ -244,6 +250,8 @@
         
              function makeTr(data) {
         		let tr = $("<tr>").append($("<td>").html(data.guideId))
+        						  .append($("<td>").html(data.nick))
+        						  .append($("<td>").html(data.cdName))
         						  .append($("<td>").append($("<div>").append($("<button>").addClass("btn").addClass("deletF").html("unfo"))))
        	 		return tr;
         }  

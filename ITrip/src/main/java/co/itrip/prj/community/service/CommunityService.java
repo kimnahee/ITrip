@@ -21,9 +21,7 @@ public interface CommunityService {
 	int commHitUpdate(CommunityVO vo);//조회수 처리
 	
 	//페이징 처리(전체 리스트 출력)
-	List<CommunityVO> findAll(); //전체 게시판 페이징
-	List<CommunityVO> findStudy(); //스터디게시판 페이징
-	List<CommunityVO> findFree(); //자유게시판 페이징
+	List<CommunityVO> findAll(CommunityVO vo); //전체 게시판 페이징
 	
 	//댓글
 	List<ReplyVO> replyList(ReplyVO vo);//댓글 목록

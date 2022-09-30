@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+layout:decorate="~{layout/layout}">
+<head>
+<meta charset="utf-8" />
+<meta name="_csrf" th:content="${_csrf.token}"/>
+<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="author" content="Untree.co" />
+<link rel="shortcut icon" href="favicon.png" />
+
+<meta name="description" content="" />
+<meta name="keywords" content="bootstrap, bootstrap5" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link  href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&display=swap"
+  rel="stylesheet"
+/>
+
+<link rel="stylesheet" href="bootstrap/property/fonts/icomoon/style.css" />
+<link rel="stylesheet" href="bootstrap/property/fonts/flaticon/font/flaticon.css" />
+
+<link rel="stylesheet" href="bootstrap/property/css/tiny-slider.css" />
+<link rel="stylesheet" href="bootstrap/property/css/aos.css" />
+<link rel="stylesheet" href="bootstrap/property/css/style.css" />
+
+<title>♡</title>
+</head>
+<body layout:fragment="content">
+ <div class="section section-properties">
+      <div class="container">
+      
+			
+     	<button th:text="전체" class="btn btn-info round" onclick="location.href='/iClassList.do'" style="margin:5px;"></button>
+      <div style=" display:inline-block; margin:0 auto;" th:each="j:${job}">
+     	<button th:text=${j.cdName} th:id="${j.cdNo}" class="btn btn-info round" onclick="jobSearch(1,this.getAttribute('id'))"style="margin:5px;"></button>
+      </div><br><br><br>
+        <div class="row" id="classList">
+        
+          <div class="card col-xs-12 col-sm-6 col-md-5 col-lg-4" th:each="cList:${pageInfo.list}" id="searchClassList">
+
+            <div class="property-item mb-30">
+              <a href="#" class="img"><img th:src="@{*{cList.attachDir}}"alt="Image" class="img-fluid"></a>
+              <div class="property-content">
+                <div class="price mb-2"><span th:text=${cList.price} class="cPrice"></span></div>
+                <div>
+                     <img src="images/dt.png" width="20px;"></img>  
+                     <span class="caption badge bg-warning" th:text="${cList.term}"></span>
+                  <span class="city d-block mb-3" th:text="${cList.title}"></span>
+
+                    <div class="">
+                      <span class="">주요기능 </span>
+                      <h5 class="card-title" th:text="${cList.cdName}"></h5>
+                    </div>
+                    <div class="">
+                      <span class="">정원 </span>
+                      <h5 class="card-title" th:text="${cList.psncpa}+명"></h5>
+                    </div>
+                
+                    <a href="#"  class="btn btn-primary py-2 px-3 classInfo">더보기</a>
+				 	<div th:text="${cList.classNo}" style="display: none"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+        
+        <div class="row align-items-center py-5" id="pagingNav">
+      
+	
+			<!-- 페이지네이션 -->
+			<nav aria-label="Page navigation example">
+				<ul class="pagination pagination-info  justify-content-center">
+					<li class="page-item disabled"
+						th:if="${pageInfo.isIsFirstPage()}"><span
+						class="page-link">«</span></li>
+					<li class="page-item"
+						th:if="${!pageInfo.isIsFirstPage() && pageInfo.getList().size() > 0}"><a
+						class="page-link"
+						th:href="|javascript:gopage([[${pageInfo.getPrePage()}]])|"
+						rel="prev">«</a></li>
+					<li
+						th:class="|page-item ${(pageInfo.pageNum eq page) ? 'active': ''} |"
+						th:each="page:${pageInfo.navigatepageNums}"><span
+						class="page-link" th:if="${pageInfo.pageNum eq page}"
+						th:text="${page}"></span> <a class="page-link"
+						th:unless="${pageInfo.pageNum eq page}"
+						th:href="|javascript:gopage(${page})|" th:text="${page}">{{$page
+							}}</a></li>
+					<li class="page-item" th:if="${pageInfo.hasNextPage}"><a
+						class="page-link"
+						th:href="|javascript:gopage([[${pageInfo.getNextPage()}]])|"
+						rel="next">»</a></li>
+					<li class="page-item disabled"
+						th:unless="${pageInfo.hasNextPage}"><span
+						class="page-link">»</span></li>
+				</ul>
+			</nav>
+			
+        </div>
+        
+        
+      </div>
+    </div>
+ 
+            
+	<form id="frm" method="post">
+		<input type="hidden" id="classNo" name="classNo">
+		<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+	</form>
+    
+    <script type="text/javascript">
+    let cPrice = document.getElementsByClassName("cPrice")
+    for (let i = 0; i < cPrice.length; i++){
+    	cPrice[i].innerText=cPrice[i].innerText.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")
+    }
+
+	function gopage(p) {
+		location.href = '/iClassList.do?pageNum=' + p;
+	}
+	
+    $("#classList").on("click",".classInfo",function(){
+    	let no =  event.target.nextElementSibling.innerHTML
+    	frm.action ="iClassSelectOne.do"
+    	frm.classNo.value = no
+    	frm.submit()
+    }) 
+    
+    
+	let csrfToken = $("input[name=_csrf]").val();
+	
+    function jobSearch(p,jobCd) {
+    	console.log(jobCd)
+    	console.log(p)
+		$.ajax({
+			url : "ajaxJobSearch.do",
+			type : "post",
+	 		beforeSend:function(xhr){
+				xhr.setRequestHeader("AJAX", true);
+			    xhr.setRequestHeader("X-CSRF-TOKEN", csrfToken);
+			}, 
+			data : {'jobCd' : jobCd,"pageNum":p},
+			dataType : "json",
+			success : function(result){
+				console.log(result)
+				if(result.list.length > 0) {
+					makeClassList(result.list);
+					makePaging(result,jobCd)
+				}else {
+					alert("검색한 결과가 없습니다.");
+				}
+			},
+			error : function(err) {
+				console.log(err)
+			}
+		})
+	} 
+
+	function makeClassList(data) {
+		$('#classList').html("");
+		$.each(data, function(index, item){
+			console.log(item)
+			var row = '<div class="card col-xs-12 col-sm-6 col-md-5 col-lg-4">'
+				+'<div class="property-item mb-30">'
+         		+'<a href="#" class="img"><img src='+item.attachDir+' alt="Image" class="img-fluid"></a>'
+           		+'<div class="property-content">'
+           		+'<div class="price mb-2"><span class="cPrice">'+item.price+'</span></div>'
+           		+'<div><img src="images/dt.png" width="20px;"></img><span class="caption badge bg-warning">'+item.term+'</span>'
+            	+'<span class="city d-block mb-3">'+item.title+'</span>'
+				+'<div class=""><span class="">주요기능 </span><h5 class="card-title">'+item.cdName+'</h5>'
+              	+'</div><div class="">'
+               	+'<span class="">정원 </span><h5 class="card-title">'+item.psncpa+'명</h5> </div>'
+               	+'<a href="#"  class="btn btn-primary py-2 px-3 classInfo">더보기</a>'
+				+'<div style="display: none">'+item.classNo+'</div></div></div></div></div>'
+	
+				$('#classList').append(row);
+				
+				console.log(data)
+		});
+	}
+	
+	function makePaging(res,jobCd){
+		console.log(res)
+		console.log("jobCd : "+jobCd)
+		$("#pagingNav").html("");
+		
+		ph ='<nav aria-label="Page navigation example">'
+		    +'<ul class="pagination pagination-info  justify-content-center">'
+		 if(res.isFirstPage==true){  
+			ph += '<li class="page-item disabled"><span class="page-link">«</span></li>'
+		 }
+		 else{
+	    	ph += `<li class="page-item"><a class="page-link" href="javascript:makePaging(${res.prePage},'${jobCd}')" rel="prev">«</a></li>`
+	    }
+
+		for(page of res.navigatepageNums){
+			ph += `<li class="page-item (${res.pageNum} eq ${page}) ? active: ''}" ></li>`
+			if(res.pageNum == page){
+				ph += `<span class='page-link'>${page}</span>`
+			}else{
+				ph+=`<a class='page-link' href='javascript:makePaging(${page},"${jobCd}")'>${page}</a>`
+			}
+			ph += "</li>"
+		}
+	
+		if(res.hasNextPage ==true){
+			ph += ` <li class="page-item"><a class="page-link" href="javascript:makePaging(${res.nextPage},'${jobCd}')" rel="next">»</a></li>`
+		}else{
+			ph += '<li class="page-item disabled"><span class="page-link">»</span></li></ul></nav>'
+		}
+		
+		$("#pagingNav").append(ph);
+	}
+    
+    </script>
+    
+    <script src="bootstrap/property/js/bootstrap.bundle.min.js"></script>
+    <script src="bootstrap/property/js/tiny-slider.js"></script>
+    <script src="bootstrap/property/js/aos.js"></script>
+    <script src="bootstrap/property/js/navbar.js"></script>
+    <script src="bootstrap/property/js/counter.js"></script>
+    <script src="bootstrap/property/js/custom.js"></script>
+</body>
+</html>
