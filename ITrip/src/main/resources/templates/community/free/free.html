@@ -7,30 +7,6 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <script src="js/jquery-3.6.0.min.js"></script>
-<link rel="apple-touch-icon" sizes="76x76"
-	href="bootstrap/material/assets/img/apple-icon.png">
-<link rel="icon" type="image/png"
-	href="bootstrap/material/assets/img/favicon.png">
-<title>자유게시판</title>
-<!--     Fonts and icons     -->
-<link rel="stylesheet" type="text/css"
-	href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
-<!-- Nucleo Icons -->
-<link href="bootstrap/material/assets/css/nucleo-icons.css"
-	rel="stylesheet" />
-<link href="bootstrap/material/assets/css/nucleo-svg.css"
-	rel="stylesheet" />
-<!-- Font Awesome Icons -->
-<script src="https://kit.fontawesome.com/42d5adcbca.js"
-	crossorigin="anonymous"></script>
-<!-- Material Icons -->
-<link
-	href="https://fonts.googleapis.com/icon?family=Material+Icons+Round"
-	rel="stylesheet">
-<!-- CSS Files -->
-<link id="pagestyle"
-	href="bootstrap/material/assets/css/material-dashboard.css?v=3.0.0"
-	rel="stylesheet" />
 <style>
 .table {
 	margin-top: 10px;
@@ -50,6 +26,11 @@
 	float: right;
 	margin-right: 50px;
 }
+#boardName{
+	margin-top : 20px;
+	padding-top : 25px;
+	padding-bottom : 25px;
+}
 </style>
 </head>
 
@@ -58,10 +39,10 @@
 		<div class="col-12">
 			<div class="card my-4">
 				<div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-					<div
-						class="bg-gradient-info shadow-info border-radius-lg pt-4 pb-3">
-						<h4 class="text-white text-capitalize ps-5">자유게시판</h4>
-					</div>
+					<!-- <div id="boardName" class="alert alert-light-primary color-primary"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-star"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg> 자유게시판</div> -->
+					<div id="boardName" class="alert alert-primary">
+                            <h4 class="alert-heading">자유게시판</h4>
+                        </div>
 				</div>
 				<div class="card-body px-0 pb-2">
 					<div class="table-responsive p-0">
@@ -86,12 +67,12 @@
 							</tbody>
 						</table>
 						<br>
-						<button id="insertBtn" class="btn bg-gradient-info btn-md mb-0">글쓰기</button>
+						<button id="insertBtn" class="btn btn-primary btn-md mb-0">글쓰기</button>
 						<br>
 					</div>
 						<!-- 페이지네이션 -->
 						<nav aria-label="Page navigation example">
-							<ul class="pagination pagination-info  justify-content-center">
+							<ul class="pagination pagination-primary  justify-content-center">
 								<li class="page-item disabled"
 									th:if="${pageInfo.isIsFirstPage()}"><span
 									class="page-link">«</span></li>

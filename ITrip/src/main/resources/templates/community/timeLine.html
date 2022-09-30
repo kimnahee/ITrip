@@ -32,6 +32,7 @@
 </head>
 <body>
 	<div class="table-responsive" layout:fragment="content">
+	
 		<div th:each="com: ${pageInfo.list}">
 			<div class="card">
 				<div class="card-content">
@@ -40,9 +41,9 @@
 					</div>
 				</div>
 				<ul class="list-group list-group-flush">
-					<li class="list-group-item">글작성자(카테고리: 스터디면 보이고 자유면 안보임)</li>
-					<li class="list-group-item">글내용</li>
-					<li class="list-group-item">작성일자</li>
+					<li class="list-group-item" th:text=${com.memberId}></li>
+					<li class="list-group-item" th:text=${com.content}>글내용</li>
+					<li class="list-group-item" th:text=${com.dt}>작성일자</li>
 				</ul>
 			</div>
 		</div>
@@ -54,16 +55,19 @@
 					<a class="page-link" th:href="|javascript:gopage([[${pageInfo.getNextPage()}]])|" rel="next">더보기</a>
 				</li>
 			</ul>
-		</nav>
+		</nav> 
 		
 		<script>
+			
 			function gopage(p) {
 				location.href = '/pageTest.do?pageNum=' + p;
 			}
+			
 			$("#comList").on("click", function(e) {
 				let comNo = $(e.target).prev().html();
 				location.href = "/selectCommunity.do?comNo=" + comNo;
 			})
+			
 		</script>
 	</div>
 </body>

@@ -48,4 +48,10 @@ public class CSBoardServiceImpl implements CSBoardService {
 		return map.repUpdate(vo);
 	}
 
+	@Override
+	public int csHitUpdate(CSBoardVO vo) {
+		// TODO Auto-generated method stub
+		return map.csHitUpdate(vo);
+	}
+
 }
