@@ -69,7 +69,12 @@ public class ClassController {
 		public String classInsert(AlarmVO avo, FollowVO fvo, ClassVO vo, ClassDtVO dtvo, MultipartFile file) throws IllegalStateException, IOException {
 			
 
+
 			/*if(!file.getOriginalFilename().isEmpty()) {
+
+/*
+			if(!file.getOriginalFilename().isEmpty()) {
+
 				String projectpath = System.getProperty("user.dir")+"/src/main/resources/static/files";  
 				UUID uuid = UUID.randomUUID(); 
 				String filename = uuid+"_"+file.getOriginalFilename(); 
