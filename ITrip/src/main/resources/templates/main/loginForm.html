@@ -3,6 +3,10 @@
 <head>
 <meta charset="utf-8" />
 <title>로그인</title>
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+<script>
+    Kakao.init('8f113cdb4fd664d07c74a2f87b0f9452'); // ITrip JS Key
+</script>
 </head>
 <body>
 <div layout:fragment="content">
@@ -59,7 +63,8 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-6 text-center mb-5">
-                            <img alt="" src="images/kakaologin.png" style="position:absolute; z-index:2;width: 180px; cursor: pointer;" id="kakaopay" >
+                            <img alt="" src="images/kakaologin.png" style="position:absolute; z-index:2;width: 180px; cursor: pointer;" id="kakaologin" onclick="kakaoLogin()">
+                            <p id="token-result"></p>
                         </div>
                     </div>
                 </div>
@@ -67,6 +72,30 @@
         </div>
     </div>
 </div>
+	<script type="text/javascript">
+	    function kakaoLogin(){
+	    	console.log(Kakao.isInitialized()); // SDK 초기화 여부를 판단
+	    	Kakao.Auth.login({
+	    	      success: function (response) {
+	    	        Kakao.API.request({
+	    	          url: '/v2/user/me',
+	    	          success: function (response) {
+	    	        	  console.log(response);
+	    	        	  
+	    	          },
+	    	          fail: function (error) {
+	    	            console.log(error)
+	    	          },
+	    	        })
+	    	      },
+	    	      fail: function (error) {
+	    	        console.log(error)
+	    	      },
+	    	    })
+	
+	    }
+	    
+	</script>
 </div>
 </body>
 </html>

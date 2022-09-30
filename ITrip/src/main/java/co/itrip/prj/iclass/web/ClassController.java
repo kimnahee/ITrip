@@ -21,7 +21,11 @@ import org.springframework.web.multipart.MultipartFile;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
+import co.itrip.prj.alarm.service.AlarmService;
+import co.itrip.prj.alarm.service.AlarmVO;
 import co.itrip.prj.cmmncd.service.CmmnCdService;
+import co.itrip.prj.follow.service.FollowService;
+import co.itrip.prj.follow.service.FollowVO;
 import co.itrip.prj.iclass.service.ClassDtVO;
 import co.itrip.prj.iclass.service.ClassService;
 import co.itrip.prj.iclass.service.ClassVO;
@@ -35,7 +39,16 @@ public class ClassController {
 	@Autowired
 	private CmmnCdService cmService; // 공통코드서비스
 	
-	//경아,소정 - 클래스리스트
+
+	
+
+	@Autowired
+	private FollowService fService; //팔로우 서비스
+	
+	@Autowired
+	private AlarmService aService; //알람 서비스
+	
+//경아,소정 - 클래스리스트
 	@GetMapping("/iClassList.do") 
 	public String iClass(ClassVO vo,Model model, HttpServletRequest request,
 			@RequestParam(required = false, defaultValue = "1") int pageNum,
@@ -52,8 +65,10 @@ public class ClassController {
 	
 	//소정 - Class insert & 파일처리
 		@PostMapping("/classInsert.do")
-		public String classInsert(ClassVO vo, ClassDtVO dtvo, MultipartFile file) throws IllegalStateException, IOException {
-			/*
+
+		public String classInsert(AlarmVO avo, FollowVO fvo, ClassVO vo, ClassDtVO dtvo, MultipartFile file) throws IllegalStateException, IOException {
+			
+
 			if(!file.getOriginalFilename().isEmpty()) {
 				String projectpath = System.getProperty("user.dir")+"/src/main/resources/static/files";  
 				UUID uuid = UUID.randomUUID(); 
@@ -78,6 +93,8 @@ public class ClassController {
 			
 			
 			// ClassVO
+			
+			
 			System.out.println("1"+vo.getTitle());
 			System.out.println("2"+vo.getClassNo()); // 0으로나옴
 			System.out.println("3"+vo.getContent());
@@ -101,6 +118,22 @@ public class ClassController {
 			System.out.println("18"+vo.getClassDt().get(0).getCtimeNo()); // 0
 			
 			cService.classInsert(vo);
+			
+			//알람 처리
+			int classNo = vo.getClassNo(); //class 번호
+			String guideId = vo.getGuideId(); //guideId
+			
+			fvo.setGuideId(guideId); 
+			List<FollowVO> flist = fService.followerSelectList(fvo);
+			
+			for(int i=0; i<flist.size(); i++) {
+				System.out.println(flist.get(i).getMemberId().toString());
+				avo.setGuideId(guideId);
+				avo.setMemberId(flist.get(i).getMemberId().toString());
+				avo.setClassNo(classNo);
+				avo.setAlarmMsg(guideId + "님의 새로운 클래스가 개설되었습니다.");
+				aService.alarmInsert(avo);
+			} // 나를 팔로우하는 멤버 리스트(flist)
 			
 			return "guide/gclass";
 		}

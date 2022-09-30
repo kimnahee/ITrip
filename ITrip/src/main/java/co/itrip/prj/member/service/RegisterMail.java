@@ -48,6 +48,7 @@ public class RegisterMail implements MailServiceInter{
 		msgText += "CODE : <strong>";
 		msgText += ePw + "</strong><div><br/> "; // 메일에 인증번호 넣기
 		msgText += "</div>";
+		msg.setText(msgText,"utf-8","html");
 		
 		msg.setFrom(new InternetAddress("devel2022p@naver.com","ITrip_ADMIN")); //발송인
 		
