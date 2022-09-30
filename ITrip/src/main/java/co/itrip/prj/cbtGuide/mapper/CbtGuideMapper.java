@@ -17,6 +17,7 @@ import co.itrip.prj.cbtGuide.service.MyCbtLongVO;
 public interface CbtGuideMapper {
 	    
 		List<CbtGuideVO> cbtGuideList();           /* 가이드가 등록한 모든 문제 출력 */
+		List<CbtGuideVO> cbtGuideMyList(CbtGuideVO vo);         /* 가이드 한 명의 등록한 문제 출력 */
 		CbtGuideVO cbtGuideListOne(CbtGuideVO vo); /* 문제 한 건 조회 */
 		List<CbtGuideVO> cbtGuideListTab(CbtGuideVO vo); /* 문제 조회 : 공통코드 (유형, 언어) 필터를 거쳐 출력 */
 		List<Map<Integer,Object>> cbtGuideListFive(MyCbtHderVO vo); /* 사용자가 푼제 5개 조회 */ 

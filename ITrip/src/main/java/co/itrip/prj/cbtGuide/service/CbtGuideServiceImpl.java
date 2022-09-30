@@ -28,6 +28,12 @@ public class CbtGuideServiceImpl implements CbtGuideService {
 	public List<CbtGuideVO> cbtGuideList() {
 		return map.cbtGuideList();
 	}
+	
+	/* 가이드 한 명의 등록한 문제 출력 */
+	@Override
+	public List<CbtGuideVO> cbtGuideMyList(CbtGuideVO vo) {
+		return map.cbtGuideMyList(vo);
+	}
 
 	/* 문제 한 건 조회 */
 	@Override
@@ -190,6 +196,8 @@ public class CbtGuideServiceImpl implements CbtGuideService {
 		
 		return r;
 	}
+
+	
 
 
 	
