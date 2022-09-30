@@ -6,6 +6,15 @@
 	<select id="cbtGuideList" resultType="co.itrip.prj.cbtGuide.service.CbtGuideVO">
 	    SELECT * FROM CBT_GUIDE
 	</select>
+	<!--List<CbtGuideVO> cbtGuideMyList(CbtGuideVO vo);         /* 가이드 한 명의 등록한 문제 출력 */ -->
+	<select id="cbtGuideMyList" parameterType="co.itrip.prj.cbtGuide.service.CbtGuideVO" resultType="co.itrip.prj.cbtGuide.service.CbtGuideVO">
+	    SELECT CBT_NO,
+		CASE WHEN LENGTH(QUES) > 30 THEN SUBSTR(QUES,0,30)||'..'
+		     ELSE SUBSTR(QUES,0,30)
+		     END AS QUES, 
+		CNSR , CNSR_CNT, CALL, GTP_CD, LANG_CD             
+		FROM CBT_GUIDE WHERE MEMBER_ID = #{memberId} ORDER BY CBT_NO
+	</select>
 	
 	<!-- List<CbtGuideVO> cbtGuideListTab(CbtGuideVO vo); //탭 클릭시 유형별, 언어별로 조회 -->
 	<select id="cbtGuideListTab" parameterType="co.itrip.prj.cbtGuide.service.CbtGuideVO" resultType="co.itrip.prj.cbtGuide.service.CbtGuideVO">

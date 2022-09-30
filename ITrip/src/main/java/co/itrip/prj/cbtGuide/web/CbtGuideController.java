@@ -28,7 +28,7 @@ import co.itrip.prj.langcd.service.LangCdService;
 * 가이드CBT 제어하는 곳
 * @author 김하은
 * @date 2022.09.19 
-* @version 1.5
+* @version 1.6
 */
 @Controller
 public class CbtGuideController {
@@ -115,8 +115,6 @@ public class CbtGuideController {
 	
 	public String cbtGuideListTabLong(CbtGuideVO vo, Model model, HttpServletRequest request) {
 		
-		
-		
 		vo.setGtpCd(request.getParameter("gtpCd")); // 요청된 파라미터 값 유형코드 담음
 		vo.setLangCd(request.getParameter("langCd")); // 요청된 파라미터 값 언어코드 담음
 		//변수 생성
@@ -129,6 +127,19 @@ public class CbtGuideController {
 		return "cbtGuide/cbtGuideListTabLong";
 	}
 	
+	/* 로그인한 가이드의 문제 출제 목록 */
+	@GetMapping("/cbtGuideMyList.do")
+	public String cbtGuideMyList(Principal prin, CbtGuideVO vo,  Model model) {
+		vo.setMemberId(prin.getName()); //로그인된 사용자 정보 가져와 담기
+		model.addAttribute("myList", cgDao.cbtGuideMyList(vo));
+		return "cbtGuide/cbtGuideMyList";
+	}
+	/* 문제 상세 정보 */
+	@PostMapping("cbtGuideListOne.do")
+	public String cbtGuideListOne(CbtGuideVO vo, Model model) {
+		//model.addAttribute("myList", cgDao.cbtGuideListOne(vo));
+		return "cbtGuide/cbtGuideListOne";
+	}
 	
 	
 }
