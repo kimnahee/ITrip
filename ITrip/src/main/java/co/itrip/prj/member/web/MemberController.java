@@ -3,7 +3,7 @@ package co.itrip.prj.member.web;
 
 
 import java.security.Principal;
-
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -199,9 +199,12 @@ public class MemberController { //Principal
 	}
 	
 	@GetMapping("/myWrongAnswerNote.do")
-	public String myWrongAnswerNote(Model model,CbtGuideVO vo) {
+	public String myWrongAnswerNote(Model model,CbtGuideVO vo,MyCbtHderVO mvo) {
 		model.addAttribute("note", mService.myWrongAnswerNote(vo));
+		model.addAttribute("myCnsr", mService.myWrongAnswerCnsr(mvo));
 		return "answerNote/answerNoteSolve";
 	}
+
+	
 }
 

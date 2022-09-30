@@ -174,8 +174,7 @@
 </div><!-- end of th:if  -->
 
 
-
-<div id="langCd" style="display: none;" th:text="${cbtOne.langCd}"></div>
+<div id="langCd" th:if="!${#lists.isEmpty(cbtOne)}" th:text="${cbtOne.langCd}"style="display: none;" ></div>
 <div id="pageNum"></div>
 <input type="hidden" id="memberId" name="memberId" th:value="${#authentication.principal.member.memberId}">
 <input type="hidden" name="cbtNo" id="cbtNo" th:value="${cbtOne?.cbtNo}">

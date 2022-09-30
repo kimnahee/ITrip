@@ -19,37 +19,37 @@
 					<div class="card-content">
 						<div class="card-body">
 							<p>GUIDE신청한 회원입니다. 권한을 수정하세요.</p>
-						</div>
-						<div class="table-responsive">
-							<table class="table table-light mb-0">
-								<thead>
-									<tr>
-										<th>아이디</th>
-										<th>닉네임</th>
-										<th>직무</th>
-										<th>경력</th>
-										<th>설명</th>
-										<th>재직증명서 외</th>
-										<th>권한</th>
-										<th>권한수정</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr th:each="g:${pageInfo.list}">
-										<th th:text=${g.guideId}></th>
-										<td th:text=${g.nick}></td>
-										<td th:text=${g.duty}></td>
-										<td th:text=${g.career}></td>
-										<td th:text=${g.dc}></td>
-										<td><a th:href="@{/download(fileName=${g.attachDir})}"  th:text="${g.attach}" ></a></td>
-										<td th:text=${g.cdName}></td>
-										<td th:id="${g.guideId }">
-											<input type="button" th:onclick="updateFnc(this.getAttribute('id'))"
-											class="btn btn-primary btn-l" value="수정" th:name="${g.guideId}" th:id="${g.guideId}">
-										</td>
-									</tr>
-								</tbody>
-							</table>
+							<div class="table-responsive">
+								<table class="table table-light mb-0">
+									<thead>
+										<tr>
+											<th>아이디</th>
+											<th>닉네임</th>
+											<th>직무</th>
+											<th>경력</th>
+											<th>설명</th>
+											<th>재직증명서 외</th>
+											<th>권한</th>
+											<th>권한수정</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="g:${pageInfo.list}">
+											<th th:text=${g.guideId}></th>
+											<td th:text=${g.nick}></td>
+											<td th:text=${g.duty}></td>
+											<td th:text=${g.career}></td>
+											<td th:text=${g.dc}></td>
+											<td><a th:href="@{/download(fileName=${g.attachDir})}"  th:text="${g.attach}" ></a></td>
+											<td th:text=${g.cdName}></td>
+											<td th:id="${g.guideId }">
+												<input type="button" th:onclick="updateFnc(this.getAttribute('id'))"
+												class="btn btn-primary btn-l" value="수정" th:name="${g.guideId}" th:id="${g.guideId}">
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
 						</div>
 					</div>
 					

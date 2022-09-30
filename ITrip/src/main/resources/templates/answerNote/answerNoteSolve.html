@@ -12,68 +12,76 @@ layout:decorate="~{layout/layout}" xmlns:sec="http://www.thymeleaf.org/extras/sp
 <body>
 <div layout:fragment="content">
 
-	<h2 class="card-title"> >> 오답노트 << </h2><br>
+	<h2 class="card-title"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+  		<path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+	</svg> 오답노트  </h2>
+	<h4>나의 오답이 선택되어있습니다. 다시 풀어보세요</h4> <br>
 	<div th:each="cbt, st:${note}">
 		<!-- ctpCd == '1' -->
 		<div th:if="${cbt.gtpCd} == '1'">
 			<form class="form form-vertical">
-				<input type="hidden" th:name="${_csrf.parameterName}"
-					th:value="${_csrf.token}">
+				<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 				<div class="form-body">
 					<div class="row">
 						<div class="col-12">
 							<div class="form-group">
-								<h3>
-									문제 <span th:text="${cbt.cbtNo}"></span><i data-feather='star'
-										onclick="bookmark()" style="cursor: pointer;"></i>
-								</h3>
-								<input type="hidden" id="cbtNo0"
-									name="cbtNo0" th:value="${cbt.cbtNo}"> <input
-									type="hidden" id="PreGtpCd" name="PreGtpCd"
-									th:value="${tCd}"> <input type="hidden"
-									id="PreLangCd" name="PreLangCd" th:value="${lCd}">
-								<br> <span id="QUES" th:text="${cbt.ques}">문제</span> <a>&nbsp;&nbsp;[
-									출제자 : <span th:text="${cbt.memberId}"></span> ]
-								</a>
+								<h3>문제 <span th:text="${cbt.cbtNo}"></span><i data-feather='star'onclick="bookmark()" style="cursor: pointer;"></i></h3>
+								<input type="hidden" id="cbtNo0" name="cbtNo0" th:value="${cbt.cbtNo}"> 
+							<!-- 	<input type="text" id="PreGtpCd" name="PreGtpCd" th:value="${tCd}"> 
+								<input type="text" id="PreLangCd" name="PreLangCd" th:value="${lCd}"> -->
+								정답<input type="text" id="cnsr" name="cnsr" th:value="${cbt.cnsr}"><br>
+								<br> <span id="QUES" th:text="${cbt.ques}">문제</span> 
+								<a>&nbsp;&nbsp;[ 출제자 : <span th:text="${cbt.memberId}"></span> ] </a>
 							</div>
 						</div>
 						<div class="form-check">
-							<input class="form-check-input" type="radio"
-								th:id="|cbt${cbt.cbtNo}1|" th:name="|cbt${st.index}|"
-								value="1"> <label class="form-check-label"
-								th:for="|cbt${cbt.cbtNo}1|" th:text="${cbt.ex1}"></label>
+							<input class="form-check-input" type="radio" th:id="|cbt${cbt.cbtNo}1|" th:name="|cbt${st.index}|" value="1"> 
+							<label class="form-check-label" th:for="|cbt${cbt.cbtNo}1|" th:text="${cbt.ex1}"></label>
 						</div>
 						<div class="form-check">
-							<input class="form-check-input" type="radio"
-								th:id="|cbt${cbt.cbtNo}2|" th:name="|cbt${st.index}|"
-								value="2"> <label class="form-check-label"
-								th:for="|cbt${cbt.cbtNo}2|" th:text="${cbt.ex2}">
-							</label>
-
+							<input class="form-check-input" type="radio" th:id="|cbt${cbt.cbtNo}2|" th:name="|cbt${st.index}|" value="2"> 
+							<label class="form-check-label" th:for="|cbt${cbt.cbtNo}2|" th:text="${cbt.ex2}"></label>
 						</div>
 						<div class="form-check">
-							<input class="form-check-input" type="radio"
-								th:id="|cbt${cbt.cbtNo}3|" th:name="|cbt${st.index}|"
-								value="3"> <label class="form-check-label"
-								th:for="|cbt${cbt.cbtNo}3|" th:text="${cbt.ex3}">
-							</label>
+							<input class="form-check-input" type="radio" th:id="|cbt${cbt.cbtNo}3|" th:name="|cbt${st.index}|" value="3"> 
+							<label class="form-check-label" th:for="|cbt${cbt.cbtNo}3|" th:text="${cbt.ex3}"></label>
 						</div>
 						<div class="form-check">
-							<input class="form-check-input" type="radio"
-								th:id="|cbt${cbt.cbtNo}4|" th:name="|cbt${st.index}|"
-								value="4"> <label class="form-check-label"
-								th:for="|cbt${cbt.cbtNo}4|" th:text="${cbt.ex4}">
-							</label>
+							<input class="form-check-input" type="radio" th:id="|cbt${cbt.cbtNo}4|" th:name="|cbt${st.index}|" value="4"> 
+							<label class="form-check-label" th:for="|cbt${cbt.cbtNo}4|" th:text="${cbt.ex4}"></label>
 						</div>
 						<!--라디오 끝 -->
 						<!-- 풀이 ajax : 정답보기 버튼을 누르면 해당 문제 풀이글 활성화 -->
-						<div class="explnaArea"></div>
-					    </div>
+						<div class="explnaArea" style="border:1px solid red;">
+							<div th:text="${cbt.cnsr}"></div>
+							<div th:text="${cbt.explna}"></div>
+						</div>
+					</div>
 				</div>
 			</form>
 		</div>
 		
 	</div>
+	
+	내가찍은답<input type="text" id="mycnsr1" name="mycnsr" th:value="${myCnsr.cnsr1}"><br>
+	내가찍은답<input type="text" id="mycnsr2" name="mycnsr" th:value="${myCnsr.cnsr2}"><br>
+	내가찍은답<input type="text" id="mycnsr3" name="mycnsr" th:value="${myCnsr.cnsr3}"><br>
+	내가찍은답<input type="text" id="mycnsr4" name="mycnsr" th:value="${myCnsr.cnsr4}"><br>
+	<script type="text/javascript">
+		
+		
+		$.each($('input[name="cbtNo0"]'),function (idx,elem) {
+		/* 	var ans = $('input[name="cbt0"]').val()
+			var cnsr = $('input[name="cnsr"]').val()
+			console.log("순서"+idx)
+			console.log(elem.value)
+			console.log("this 문제번호 :"+elem.value) */
+			
+			$("#cbt"+elem.value+($("#mycnsr"+(idx+1)+"").val())).prop("checked",true)
+			
+			
+		})
+	</script>
 </div>
 </body>
 </html>
