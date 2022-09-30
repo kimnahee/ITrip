@@ -11,9 +11,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
-
-import ch.qos.logback.core.recovery.ResilientSyslogOutputStream;
 import co.itrip.prj.cbtGuide.service.CbtGuideVO;
 import co.itrip.prj.cbtGuide.service.MyCbtHderVO;
 import co.itrip.prj.member.mapper.MemberMapper;
@@ -105,6 +102,12 @@ public class MemberServiceImpl implements MemberService {
 	public List<CbtGuideVO> myWrongAnswerNote(CbtGuideVO vo) {
 		return map.myWrongAnswerNote(vo);
 	}
+
+	@Override
+	public MyCbtHderVO myWrongAnswerCnsr(MyCbtHderVO vo) {
+		return map.myWrongAnswerCnsr(vo);
+	}
+
 	
 
 }

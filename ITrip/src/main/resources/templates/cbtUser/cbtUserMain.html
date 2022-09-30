@@ -24,7 +24,7 @@ layout:decorate="~{layout/layout}" xmlns:sec="http://www.thymeleaf.org/extras/sp
 					<div th:each="cbt:${langCdList}"> 
 		                <div class="col mb-5">
 		                    <div class="card h-100">
-		                        <img class="card-img-top" src="images/icon-q.svg" alt="..." />
+		                        <img class="card-img-top" src="images/cbtuser.png" alt="..." />
 		                        
 		                        <div class="card-body p-4">
 		                            <div class="text-center">
@@ -61,10 +61,8 @@ layout:decorate="~{layout/layout}" xmlns:sec="http://www.thymeleaf.org/extras/sp
 <script type="text/javascript">
 $("#quesList").on("click",".question",function(e){
 	let code = event.target.nextElementSibling.innerHTML 
-	//frm.action = "cbtUserList.do"
 	frm.action ="cbtUserSelectOne.do"
 	frm.langCd.value = code
-	//frm.rownum.value = 1;
 	frm.submit()
 }) 
 $("#addCbt").on("click",function(){

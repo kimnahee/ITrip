@@ -20,4 +20,5 @@ public interface MemberMapper {
 	
 	List<MyCbtHderVO> myWrongAnswerLangCd(MyCbtHderVO vo); //오답노트 언어조회
 	List<CbtGuideVO> myWrongAnswerNote(CbtGuideVO vo);
+	MyCbtHderVO myWrongAnswerCnsr(MyCbtHderVO vo);
 }

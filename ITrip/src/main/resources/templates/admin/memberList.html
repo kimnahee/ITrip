@@ -17,7 +17,7 @@
 					<div class="card-content">
 						<div class="card-body">
 							<p>회원정보입니다.</p>
-						</div>
+						
 
 						<ul class="nav nav-tabs" id="myTab" role="tablist">
 							<li class="nav-item" role="presentation"><a class="nav-link active" id="home-tab" data-toggle="tab" href="#all" role="tab" aria-controls="home"
@@ -87,6 +87,7 @@
 								</nav>
 							</div>
 						</div><!-- end of myTabContent -->
+						</div>
 					</div><!-- end of card-content -->
 				</div>
 			</div>
@@ -99,81 +100,77 @@
 			location.href="memberList.do"
 		})
 			
-		
 		$(".nav-item").on("click","#contact-tab",function(){
 			var auth = $(this).text()
 			gopageAjax(1,auth)
-			
-			
 		})
 			
 		
-			function gopageAjax(p,author){
-			
-				$.ajax({
-					url:'/memberListOf.do',
-					type:'get',
-					dataType:'json',
-					data:{'auth':author,"pageNum":p},
-					success:function result(res){
-						console.log(author)
-						all.innerHTML = "";
-						listOfAuth= '<div class="table-responsive">'
-										+'<table class="table table-striped mb-0">'
-										+'<thead><tr><th>아이디</th><th>이름</th><th>닉네임</th><th>이메일</th><th>권한</th></tr>'
-										+'</thead><tbody">'
-					
-						res.list.forEach((elem,idx,arr)=>{
-							listOfAuth += "<tr><th>"+elem.memberId+"</th><td>"+elem.name+"</td><td>"+elem.nick+"</td>"
-									+"<td>"+elem.email+"</td><td>"+elem.auth+"</td></tr>"
-						})
-						
-						listOfAuth += '</tbody></table></div></div><br>'
-						
-						all.innerHTML = listOfAuth
-						
-						
-						
-						ph ='<nav aria-label="Page navigation example">'
-						    +'<ul class="pagination pagination-info  justify-content-center">'
-						 if(res.isFirstPage==true){  
-							ph += '<li class="page-item disabled"><span class="page-link">«</span></li>'
-						 }
-						 else{
-					    	ph += `<li class="page-item"><a class="page-link" href="javascript:gopageAjax(${res.prePage},'${author}')" rel="prev">«</a></li>`
-					    }
+		function gopageAjax(p,author){
+		
+			$.ajax({
+				url:'/memberListOf.do',
+				type:'get',
+				dataType:'json',
+				data:{'auth':author,"pageNum":p},
+				success:function result(res){
+					console.log(author)
+					all.innerHTML = "";
+					listOfAuth= '<div class="table-responsive">'
+									+'<table class="table table-striped mb-0">'
+									+'<thead><tr><th>아이디</th><th>이름</th><th>닉네임</th><th>이메일</th><th>권한</th></tr>'
+									+'</thead><tbody">'
 				
-						for(page of res.navigatepageNums){
-							ph += `<li class="page-item (${res.pageNum} eq ${page}) ? active: ''}" ></li>`
-							if(res.pageNum == page){
-								ph += `<span class='page-link'>${page}</span>`
-							}else{
-								ph+=`<a class='page-link' href='javascript:gopageAjax(${page},"${author}")'>${page}</a>`
-							}
-							ph += "</li>"
-						}
+					res.list.forEach((elem,idx,arr)=>{
+						listOfAuth += "<tr><th>"+elem.memberId+"</th><td>"+elem.name+"</td><td>"+elem.nick+"</td>"
+								+"<td>"+elem.email+"</td><td>"+elem.auth+"</td></tr>"
+					})
 					
-						if(res.hasNextPage ==true){
-							ph += ` <li class="page-item"><a class="page-link" href="javascript:gopageAjax(${res.nextPage},'${author}')" rel="next">»</a></li>`
+					listOfAuth += '</tbody></table></div></div><br>'
+					
+					all.innerHTML = listOfAuth
+					
+					
+					
+					ph ='<nav aria-label="Page navigation example">'
+					    +'<ul class="pagination pagination-info  justify-content-center">'
+					 if(res.isFirstPage==true){  
+						ph += '<li class="page-item disabled"><span class="page-link">«</span></li>'
+					 }
+					 else{
+				    	ph += `<li class="page-item"><a class="page-link" href="javascript:gopageAjax(${res.prePage},'${author}')" rel="prev">«</a></li>`
+				    }
+			
+					for(page of res.navigatepageNums){
+						ph += `<li class="page-item (${res.pageNum} eq ${page}) ? active: ''}" ></li>`
+						if(res.pageNum == page){
+							ph += `<span class='page-link'>${page}</span>`
 						}else{
-							ph += '<li class="page-item disabled"><span class="page-link">»</span></li></ul></nav>'
+							ph+=`<a class='page-link' href='javascript:gopageAjax(${page},"${author}")'>${page}</a>`
 						}
-						
-						all.innerHTML += ph
-						
+						ph += "</li>"
 					}
-				})
-			}
+				
+					if(res.hasNextPage ==true){
+						ph += ` <li class="page-item"><a class="page-link" href="javascript:gopageAjax(${res.nextPage},'${author}')" rel="next">»</a></li>`
+					}else{
+						ph += '<li class="page-item disabled"><span class="page-link">»</span></li></ul></nav>'
+					}
+					
+					all.innerHTML += ph
+					
+				}
+			})
+		}
 			
-			
-			
-		
-		
 		
 		 function gopage(p) {
 			location.href = '/memberList.do?pageNum=' + p;
 		} 
 		
+		 function deleteFnc(memId){
+			 
+		 }
 		</script>
 		
 	</div>

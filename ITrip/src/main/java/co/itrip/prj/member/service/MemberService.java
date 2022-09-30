@@ -20,5 +20,6 @@ public interface MemberService {
 
 	List<MyCbtHderVO> myWrongAnswerLangCd(MyCbtHderVO vo);
 	List<CbtGuideVO> myWrongAnswerNote(CbtGuideVO vo);
+	MyCbtHderVO myWrongAnswerCnsr(MyCbtHderVO vo);
 
 }

@@ -1,39 +1,98 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" 
-xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
-layout:decorate="~{layout/layout}">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style type="text/css">
+.content { /*컨텐츠 넓이지정*/
+	margin: 0 auto;
+	height: 750px;
+	width: 80%;
+	text-align: center;
+}
+.card-content{
+	margin: 10px;
+	overflow:auto;
+}
+</style>
 </head>
 <body>
-<div layout:fragment="content">
-오답노트입니다. <br>
-회차를 선택하여 문제를 다시풀어보세요
-<div th:each="c,st:${langCdList}" id="noteList">
-	<h3 th:text="${st.index}+회차오답노트"></h3>
-	<button th:text="${c.cdName}" class="goNote"></button>
-	<input th:value="${c.mcNo}" >
+	<div layout:fragment="content">
+		
+		<div id="noteList">
+
+			<div th:if="${#lists.isEmpty(langCdList)}">
+				<div class="content">
+					<div class="">
+						<div class="card slide_item ontheSlide">
+							<div class="card-content">
+								<div class="card-header"></div>
+								<div class="card-body">
+									<h4 class="form-check" style="padding: 50px;">아직 풀어본 문제가 없습니다. 문제를 풀고오세요.</h4><br><br>
+									<div class="buttons" style="text-align: center;">
+										<a href="cbtGuideMain.do" class="btn btn-primary">문제풀어보기</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				 </div>
+			</div>
+
+			<div th:unless="${#lists.isEmpty(langCdList)}">
+			<h3> 오답노트입니다. </h3> <br>
+			<h4> 회차를 선택하여 문제를 다시풀어보세요</h4><hr><br>
+				<section id="content-types">
+					<div class="row">
+						<div class="col-md-3 col-sm-8" th:each="c,st:${langCdList}">
+							<div class="card">
+								<div class="card-content">
+									<img class="card-img-top img-fluid" src="images/note1.png"
+										alt="Card image cap" />
+									<div class="card-body">
+										<h4 class="card-title" th:text="${st.index}+1+회차오답노트"></h4>
+										<b class="card-text" th:text="${c.cdName}"></b>
+										<button class="btn btn-primary block goNote"
+											style="float: right; margin-bottom: 5px;">다시풀기</button>
+										<input type="hidden" th:value="${c.mcNo}">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+			</div>
+		</div>
+		<!-- 
+	<div th:each="c,st:${langCdList}" >
+		
+		<button class="btn icon icon-left goNote" th:text="${st.index}+1+회차오답노트" style="width: 220px; font-size: x-large; margin:15px;"></button>
+		<div class="badge bg-dark text-white" style="top: 0.5rem; right: 0.5rem" th:text="${c.cdName}"> </div>		
+		<input type="hidden" th:value="${c.mcNo}" >
+	</div><br>
 </div>
+ -->
+		<form id="frm">
+			<!-- 로그인 시큐리티 -->
+			<!-- <input type="text" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"> -->
+			<input type="hidden" id="memberId" name="memberId"
+				th:value="${#authentication.principal.member.memberId}"> <input
+				type="hidden" id="mcNo" name="mcNo">
+			<!-- <input type="hidden" id="rownum" name="rownum"> -->
+		</form>
 
+		<script type="text/javascript">
+			$("#noteList").on("click", ".goNote", function(e) {
 
-<form id="frm">
-	<!-- 로그인 시큐리티 -->
-	<!-- <input type="text" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"> -->
-	<input type="text" id="memberId" name="memberId" th:value="${#authentication.principal.member.memberId}">
-	<input type="text" id="mcNo" name="mcNo">
-	<!-- <input type="hidden" id="rownum" name="rownum"> -->
-</form> 
-
-<script type="text/javascript">
-$("#noteList").on("click",".goNote",function(e){
-	let mcNo = event.target.nextElementSibling.value
-	frm.action ="myWrongAnswerNote.do"
-	frm.mcNo.value = mcNo
-	frm.submit()
-}) 
-
-</script>
-</div>
+				let mcNo = event.target.nextElementSibling.value
+				console.log(mcNo)
+				frm.action = "myWrongAnswerNote.do"
+				frm.mcNo.value = mcNo
+				frm.submit()
+			})
+		</script>
+	</div>
 </body>
 </html>
