@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+layout:decorate="~{layout/layout}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<div layout:fragment="content">
+오답노트입니다. <br>
+회차를 선택하여 문제를 다시풀어보세요
+<div th:each="c,st:${langCdList}" id="noteList">
+	<h3 th:text="${st.index}+회차오답노트"></h3>
+	<button th:text="${c.cdName}" class="goNote"></button>
+	<input th:value="${c.mcNo}" >
+</div>
+
+
+<form id="frm">
+	<!-- 로그인 시큐리티 -->
+	<!-- <input type="text" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"> -->
+	<input type="text" id="memberId" name="memberId" th:value="${#authentication.principal.member.memberId}">
+	<input type="text" id="mcNo" name="mcNo">
+	<!-- <input type="hidden" id="rownum" name="rownum"> -->
+</form> 
+
+<script type="text/javascript">
+$("#noteList").on("click",".goNote",function(e){
+	let mcNo = event.target.nextElementSibling.value
+	frm.action ="myWrongAnswerNote.do"
+	frm.mcNo.value = mcNo
+	frm.submit()
+}) 
+
+</script>
+</div>
+</body>
+</html>
