@@ -15,5 +15,7 @@ public interface ConsultService {
 	
 	List<ConsultVO> myConsultList(ConsultVO vo); // 마이페이지 상담 전체조회
 	
+	List<ConsultVO> ajaxJobListSearch(ConsultVO vo); // 상담 메인페이지 카테고리별 검색기능, 페이징
+	
 
 }

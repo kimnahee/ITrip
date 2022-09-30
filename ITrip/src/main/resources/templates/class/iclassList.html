@@ -82,14 +82,12 @@ layout:decorate="~{layout/layout}">
 						class="page-link"
 						th:href="|javascript:gopage([[${pageInfo.getPrePage()}]])|"
 						rel="prev">«</a></li>
-					<li
-						th:class="|page-item ${(pageInfo.pageNum eq page) ? 'active': ''} |"
+					<li th:class="|page-item ${(pageInfo.pageNum eq page) ? 'active': ''} |"
 						th:each="page:${pageInfo.navigatepageNums}"><span
 						class="page-link" th:if="${pageInfo.pageNum eq page}"
 						th:text="${page}"></span> <a class="page-link"
 						th:unless="${pageInfo.pageNum eq page}"
-						th:href="|javascript:gopage(${page})|" th:text="${page}">{{$page
-							}}</a></li>
+						th:href="|javascript:gopage(${page})|" th:text="${page}">{{$page}}</a></li>
 					<li class="page-item" th:if="${pageInfo.hasNextPage}"><a
 						class="page-link"
 						th:href="|javascript:gopage([[${pageInfo.getNextPage()}]])|"

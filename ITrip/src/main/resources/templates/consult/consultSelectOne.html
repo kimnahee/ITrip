@@ -7,7 +7,14 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="js/jquery-3.6.0.min.js"></script>
-
+<style type="text/css">
+.bi-heart, .bi-heart a{
+	color : red;
+}
+.bi-heart-fill, bi-heart-fill b{
+	color : red;
+}
+</style>
 </head>
 <body>
 	<div layout:fragment="content">
@@ -15,27 +22,31 @@
 		<section class="section"
 			style="margin-left: 100px; margin-right: 100px;">
 			<div class="row">
+						
+						<!-- 로그인시 토큰 가져오기 -->
+							<input type="hidden" th:name="${_csrf.parameterName}"
+								th:value="${_csrf.token}">
+							<input type="hidden" id="memberId" name="memberId"
+								th:value="${#authentication.principal.member.memberId}" />
+						<!-- 글번호 가져오기 -->		
+							<input type="hidden" id="consultNo"
+								th:value="${consultOne.consultNo}">
+							
 				<div class="col-12">
 					<div class="card">
 						<div class="card-header">
-							<input type="hidden" th:name="${_csrf.parameterName}"
-								th:value="${_csrf.token}">
-							<!-- 로그인시 토큰 가져오기 -->
-							<input type="hidden" id="memberId" name="memberId"
-								th:value="${#authentication.principal.member.memberId}" />
-							<h3 class="card-title" th:text="${consultOne.title}"></h3>
-							<h4 class="card-title" id="guideId" th:text="${consultOne.guideId}"></h4>
-							
-							<div id="heartBody"></div>
-							
-							
+						
+							<h3 class="card-title text-center" th:text="${consultOne.title}"></h3>
 
+						</div>
+								
 							<div class="divider">
-								<div class="divider-text">가이드 소개</div>
-							</div>
-							<input type="text" id="consultNo" th:value="${consultOne.consultNo}">
-							<h5 class="card-title" th:text="${consultOne.career}"></h5>
-							<h5 class="card-title" th:text="${consultOne.cdName}"></h5>
+							<h4 class="card-title" id="guideId"
+								th:text="${consultOne.guideId}"></h4>
+							<div id="heartBody"> </div>
+							
+							<!-- <h5 class="card-title" th:text="${consultOne.career}"></h5> -->
+							<h5 class="card-title" th:text="${consultOne.jobName}"></h5>
 							<h5 class="card-title" th:text="${consultOne.content}"></h5>
 						</div>
 						<div class="card-body">
@@ -61,96 +72,122 @@
 								style="float: right;" data-toggle="modal"
 								data-target="#inlineForm">상담신청하기</a>
 							<div th:text="${consultOne.consultNo}" style="display: none"></div>
-							
+
 						</div>
 					</div>
 				</div>
 			</div>
 		</section>
-	
-	
+
+
+
 		<script>
-		// 페이지 로드 시 곧바로로 함수 호출
-			$(document).ready(function() {
-				heartCount();
-			})
-
-			// 하트 카운트 갯수 출력
-			function heartCount() {
-				let consultNo = $("#consultNo").val();
-				let guideId = $("#guideId").html();
-				/* console.log(id);
-				console.log(consultNo);
-				console.log(guideId); */
-				let csrfHeaderName = "${_csrf.headerName}";
-				let csrfToken = $("input[name=_csrf]").val();
-
-				$.ajax({
-					url : "/heartCount.do",
-					type : "post",
-					data : {'memberId' : id, 'guideId' : guideId, 'consultNo' : consultNo},
-					beforeSend : function(xhr) {
-						xhr.setRequestHeader("AJAX", true);
-						xhr.setRequestHeader("X-CSRF-TOKEN", csrfToken);
-					},
-					success : function(data) {
-						console.log("data========== " + data); // 0 또는 1
-						
-						if(data == 0) {
-							let x = '';
-							x += `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
-								  <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
-								</svg>`;
-							console.log(x);
-							$("#heartBody").html(x);
-						 
-						} else {
-							let y = '';
-							y += `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
-								  <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
-								</svg>`;
-							console.log(y);
-							$("#heartBody").html(y);
-						}
-					}
-					})
-				}
 		
-		$("#heartBody").on(click, e => {
-			console.log("하트반응보기")
-			e.preventDefault();
-			
-			
+		let consultNo = $("#consultNo").val();
+		let guideId = $("#guideId").html();
+		let csrfHeaderName = "${_csrf.headerName}";
+		let csrfToken = $("input[name=_csrf]").val();
+		
+		
+		// 페이지 로드 시 곧바로로 함수 호출
+		$(document).ready(function() {
+			console.log(consultNo)
+			console.log(guideId)
+			console.log(csrfHeaderName)
+			console.log(csrfToken)
+			heartCount();
+		})
+
+		/*------------------------------
+		// 하트 카운트 갯수 출력
+		--------------------------------*/
+		function heartCount() {
+
 			$.ajax({
-				url:"/heartInsert.do",
+				url : "/ajaxHeartCount.do",
+				data : {'memberId' : id, 'guideId' : guideId, 'consultNo' : consultNo},
+				success : function(data) {
+					console.log("data========== " + data); // 0 또는 1
+					
+					let x = '';
+					if(data == 0) { // 빈 하트
+						x = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+							  <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+							</svg>`;					 
+					} else { // 꽉찬 하트
+						x = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+							  <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+							</svg>`;
+					}
+					$("#heartBody").html(x);
+				}
+			})
+		}
+		
+		
+		/*------------------------------
+		// 빈 하트를 클릭하여 팔로우 리스트에 추가
+		--------------------------------*/		
+
+		$("#heartBody").on("click", e => {
+			// console.log("하트반응보기")
+			//e.preventDefault();
+			
+			console.log($(e.target));
+			if($(e.target).hasClass("bi-heart")){
+				console.log("빈하트");
+				heartInsert();
+			} else{
+				heartDelete();
+			}
+			
+		})
+		
+		function heartInsert() {
+			$.ajax({
+				url:"/ajaxHeartInsert.do",
 				type : "post",
 				data : {'memberId' : id, 'guideId' : guideId, 'consultNo' : consultNo},
 				beforeSend : function(xhr) {
 					xhr.setRequestHeader("AJAX", true);
 					xhr.setRequestHeader("X-CSRF-TOKEN", csrfToken);
 				},success : function(data) {
-					if(result=="SUCESS"){
-						console.log("찜 성공!")
-						if (confirm("가이드를 팔로우했습니다. 목록 페이지로 이동하시겠습니까?")) {
+						console.log(data);
+						if (confirm("가이드를 팔로우했습니다.")) { //. 목록 페이지로 이동하시겠습니까?"
                                 // 승낙하면 마이페이지의 찜하기 리스트로 이동
-                                location.href = '/myPage';
-                            } else {
-                                // 거부하면 해당 페이지 새로고침하여 찜한거 반영되게하기(HTTP의 속성 때문...)
-                                location.reload();
-                            }
-					}
+                                 // location.href = '/myPage'; 
+							let x = '';
+							x = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+								  <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+								</svg>`;
+							$("#heartBody").html(x);	
+                            } 
 				},
-				 error : function(e) {
-                     console.log(e);
-                     alert('팔로우 할 수 없습니다.');
-                     location.reload(); // 실패시 새로고침하기
-				 }
 			}) 
-		})
+		}
+		
+		
+		/*------------------------------
+		// 꽉찬 하트를 클릭하여 팔로우 리스트에서 삭제
+		--------------------------------*/	
+		function heartDelete() {
+			$.ajax({
+				url:"/ajaxHeartDelete.do",
+				data : {'memberId' : id, 'guideId' : guideId, 'consultNo' : consultNo},
+				success : function(data) {
+					// console.log("data========== " + data); // 0 또는 1
+					let x = '';
+					if(confirm("가이드를 언팔로우했습니다.")) { // 빈 하트
+						x = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+							  <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+							</svg>`;					 
+					$("#heartBody").html(x);
+					} 
+				}
+			})
+		}
 		
 		</script>
-</div>
-
-
+	</div>
 </body>
 </html>

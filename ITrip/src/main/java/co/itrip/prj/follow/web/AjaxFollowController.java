@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -16,29 +17,40 @@ public class AjaxFollowController { // 유저가 가이드 ♡ 눌러서 팔로�
 	@Autowired
 	private FollowService fService;
 	
-	// 해당 가이드 찜(팔로우) 여부 확인용 데이터 가져오기
-	@PostMapping("/heartCount.do")
+	// 해당 가이드 찜(팔로우) 여부 확인용 데이터 가져오기 (리스트 GetMapping)
+	@GetMapping("/ajaxHeartCount.do") 
 	@ResponseBody
 	public int heartCount(FollowVO vo, HttpServletRequest request) {
 		String memberId = request.getParameter("memberId");
 		String guideId = request.getParameter("guideId");
 		int consultNo = Integer.parseInt(request.getParameter("consultNo"));
-		System.out.println(memberId+guideId+consultNo);
+			System.out.println(memberId+guideId+consultNo);
 		vo.setMemberId(memberId);
 		vo.setGuideId(guideId);
 		vo.setConsultNo(consultNo);
 		return fService.heartCount(vo);
 	}
 	
-	// 찜(팔로우) 기능
-	@PostMapping("/heartInsert.do")
+	// 찜(팔로우)기능 등록 (등록 PostMapping)
+	@PostMapping("/ajaxHeartInsert.do")
 	@ResponseBody
 	public int heartInsert(FollowVO vo, HttpServletRequest request) {
 		String memberId = request.getParameter("memberId");
-	String guideId = request.getParameter("guideId");
-	int consultNo = Integer.parseInt(request.getParameter("consultNo"));
-		System.out.println(memberId+guideId+consultNo);
+		String guideId = request.getParameter("guideId");
+		int consultNo = Integer.parseInt(request.getParameter("consultNo"));
+			System.out.println(memberId+guideId+consultNo);
 		return fService.heartInsert(vo);
+	}
+	
+	// 찜(언팔로우)기능 삭제 (삭제 GetMapping)
+	@GetMapping("/ajaxHeartDelete.do")
+	@ResponseBody
+	public int heartDelete(FollowVO vo, HttpServletRequest request) {
+		String memberId = request.getParameter("memberId");
+		String guideId = request.getParameter("guideId");
+		int consultNo = Integer.parseInt(request.getParameter("consultNo"));
+			System.out.println(memberId+guideId+consultNo);
+		return fService.heartDelete(vo);
 	}
 	
 	
