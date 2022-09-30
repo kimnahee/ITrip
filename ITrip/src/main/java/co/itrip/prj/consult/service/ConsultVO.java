@@ -18,6 +18,7 @@ public class ConsultVO {
 	private String stateCd; // 상담승인 여부코드
 	private String guideId; // 가이드 아이디
 	private String jobCd; // 업무카테고리코드
+	private String jobName; 
 
 	//private int price; // 결제금액
 
@@ -25,8 +26,8 @@ public class ConsultVO {
 	private Date beginDate; // 시작일자
 	private Date endDate; // 종료일자
 	private String career; // 가이드 경력
-	private String cdName; // 가이드 직무 //consultMapper에서 조인구문으로 가져와서 목록에 뿌려주기
-
+	private String dutyName; // 가이드 직무 //consultMapper에서 조인구문으로 가져와서 목록에 뿌려주기
+	
 	private List<ConsultDtVO> consultDt; // ConsultDtVO
 	private String week; // 요일
 	private String beginTime; // 시작시간

@@ -48,18 +48,23 @@
 
 	<div class="container-fluid pt-5">
 		<div class="container">
-		<div class="text-center pb-2" ></div> 
+		
+		<div class="text-center pb-2" >
+	 <button th:text="전체" class="btn btn-primary round" onclick="location.href='/consultList.do'" style="margin:5px;"></button>
+      <div style=" display:inline-block; margin:0 auto;" th:each="j : ${job}">
+     	<button th:text=${j.cdName} th:id="${j.cdNo}" class="btn btn-primary round" onclick="jobSearch(1, this.getAttribute('id'))" style="margin:5px;"></button></div> 
 		
 		<!-- 활성화 상태의 카드를 반복하여 생성하고 상담 리스트 화면에 뿌려주기 -->
-				<div class="row pb-3 list" >
+				<div class="row pb-3 list" id="consultList">
 				
 				<div class="card "  th:each="consultList : ${pageInfo.list}" th:if="${consultList.ennc} == '활성화'">
 				  <div class="card-body" >
 				    <h5 class="card-title" th:text="${consultList.title}"></h5>
 				  </div>
 					  <ul class="list-group list-group-flush">
-					    <li class="list-group-item" th:text="'직무   '+${consultList.cdName}"></li>
+					    <li class="list-group-item" th:text="'직무   '+${consultList.dutyName}"></li>
 					    <li class="list-group-item" th:text="'경력   '+${consultList.career}"></li>
+					    <li class="list-group-item" >[[${consultList.jobName}]]</li>
 					  	<li class="list-group-item"><a href="" class="btn btn-primary px-4 mx-auto my-2 consultListInfo">더보기</a></li>
 					  </ul>
 					  <input type="text" th:value="${consultList.consultNo}">
@@ -69,6 +74,7 @@
 	</div>
 	
 <!-- 페이지네이션 -->
+ 	<div class="row align-items-center py-5" id="pagingNav">
 			<nav aria-label="Page navigation example">
 				<ul class="pagination pagination-info  justify-content-center">
 					<li class="page-item disabled"
@@ -94,6 +100,7 @@
 						class="page-link">»</span></li>
 				</ul>
 			</nav>
+		</div>
 		
 		<!-- 더보기 버튼 클릭 시 상세보기 넘어갈때 글번호 가져가려고 만든 히든폼 -->	
 		<form id="frm" method="post">
@@ -119,8 +126,86 @@
 		frm.consultNo.value = no;
 		frm.action = "consultSelectOne.do";
 		frm.submit();
-		
 	})
+	
+	 function jobSearch(p,jobCd) {
+    	console.log(jobCd)
+    	console.log(p)
+		$.ajax({
+			url : "ajaxJobListSearch.do",
+			data : {'jobCd' : jobCd,"pageNum":p},
+			dataType : "json",
+			success : function(result){
+				console.log(result)
+				if(result.list.length > 0) {
+					makeConsultList(result.list);
+					makePaging(result,jobCd)
+				}else {
+					alert("검색한 결과가 없습니다.");
+				}
+			},
+			error : function(err) {
+				console.log(err)
+			}
+		})
+	} 
+	
+	 function makeConsultList(data) {
+		$('#consultList').html("");
+		$.each(data, function(index, item){
+			console.log(item)
+			var row = `<div class="card">
+					  <div class="card-body">
+				      <h5 class="card-title">${item.title}</h5>
+					  <ul class="list-group list-group-flush">
+					  <li class="list-group-item">직무${item.dutyName}</li>
+					  <li class="list-group-item">경력${item.career}</li>
+					  <li class="list-group-item">${item.jobName}</li>
+					  <li class="list-group-item">
+					  <a href="" class="btn btn-primary px-4 mx-auto my-2 consultListInfo">더보기</a></li>
+					  </ul>
+					  <input type="text" value="${item.consultNo}">
+					 </div>`
+	
+				$('#consultList').append(row);
+				
+				console.log(data)
+		});
+	} 
+	
+	function makePaging(res,jobCd){
+		console.log(res)
+		console.log("jobCd : "+jobCd)
+		$("#pagingNav").html("");
+		
+		ph ='<nav aria-label="Page navigation example">'
+		    +'<ul class="pagination pagination-info  justify-content-center">'
+		 if(res.isFirstPage==true){  
+			ph += '<li class="page-item disabled"><span class="page-link">«</span></li>'
+		 }
+		 else{
+	    	ph += `<li class="page-item"><a class="page-link" href="javascript:makePaging(${res.prePage},'${jobCd}')" rel="prev">«</a></li>`
+	    }
+
+		for(page of res.navigatepageNums){
+			ph += `<li class="page-item (${res.pageNum} eq ${page}) ? active: ''}" ></li>`
+			if(res.pageNum == page){
+				ph += `<span class='page-link'>${page}</span>`
+			}else{
+				ph+=`<a class='page-link' href='javascript:makePaging(${page},"${jobCd}")'>${page}</a>`
+			}
+			ph += "</li>"
+		}
+	
+		if(res.hasNextPage ==true){
+			ph += ` <li class="page-item"><a class="page-link" href="javascript:makePaging(${res.nextPage},'${jobCd}')" rel="next">»</a></li>`
+		}else{
+			ph += '<li class="page-item disabled"><span class="page-link">»</span></li></ul></nav>'
+		}
+		
+		$("#pagingNav").append(ph);
+	}
+	
 	
 	</script> <a href="#" class="btn btn-primary p-3 back-to-top"><i class="fa fa-angle-double-up"></i></a>
 

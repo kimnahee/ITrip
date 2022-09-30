@@ -151,11 +151,6 @@ public class ClassController {
 			return "class/iclassSelectOne";
 		}
 		
-		//경아 - 클래스신청 아직안함결제랑연결시켜야됨
-		@GetMapping("/iClassInsert.do")
-		public String iClassInsert() {
-			return "class/iClassList";//말고 마이페이지로 넘어가야됨
-		}
 		
 		//경아 - 클래스 검색
 		@RequestMapping("/ajaxJobSearch.do")

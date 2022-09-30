@@ -68,6 +68,14 @@ public class ConsultServiceImpl implements ConsultService{
 		return map.myConsultList(vo);
 	}
 
+	@Override
+	public List<ConsultVO> ajaxJobListSearch(ConsultVO vo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
 	
 
 
