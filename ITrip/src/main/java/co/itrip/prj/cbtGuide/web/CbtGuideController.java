@@ -3,6 +3,7 @@ package co.itrip.prj.cbtGuide.web;
 import java.io.File;
 import java.io.IOException;
 import java.security.Principal;
+import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,11 +17,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+
 import co.itrip.prj.cbtGuide.service.CbtGuideService;
 import co.itrip.prj.cbtGuide.service.CbtGuideVO;
 import co.itrip.prj.cbtGuide.service.CbtKeywordVO;
 import co.itrip.prj.cbtGuide.service.MyCbtHderVO;
-import co.itrip.prj.cbtGuide.service.MyCbtLongVO;
 import co.itrip.prj.gtpcd.service.GtpCdService;
 import co.itrip.prj.langcd.service.LangCdService;
 
@@ -28,7 +31,7 @@ import co.itrip.prj.langcd.service.LangCdService;
 * 가이드CBT 제어하는 곳
 * @author 김하은
 * @date 2022.09.19 
-* @version 1.6
+* @version 1.7
 */
 @Controller
 public class CbtGuideController {
@@ -113,7 +116,7 @@ public class CbtGuideController {
 	/* 서술형 리스트 출력 */
 	@PostMapping("/cbtGuideListTabLong.do")
 	
-	public String cbtGuideListTabLong(CbtGuideVO vo, Model model, HttpServletRequest request) {
+	public String cbtGuideListTabLong(CbtGuideVO vo, Model model, HttpServletRequest request ) {
 		
 		vo.setGtpCd(request.getParameter("gtpCd")); // 요청된 파라미터 값 유형코드 담음
 		vo.setLangCd(request.getParameter("langCd")); // 요청된 파라미터 값 언어코드 담음
@@ -127,13 +130,24 @@ public class CbtGuideController {
 		return "cbtGuide/cbtGuideListTabLong";
 	}
 	
-	/* 로그인한 가이드의 문제 출제 목록 */
+	/* 로그인한 가이드의 문제 출제 목록 + 페이징 처리 */
 	@GetMapping("/cbtGuideMyList.do")
-	public String cbtGuideMyList(Principal prin, CbtGuideVO vo,  Model model) {
+	public String cbtGuideMyList(Principal prin, CbtGuideVO vo, Model model, HttpServletRequest request,
+			@RequestParam(required = false, defaultValue = "1") int pageNum,
+			@RequestParam(required = false, defaultValue = "10") int pageSize) {
+		
 		vo.setMemberId(prin.getName()); //로그인된 사용자 정보 가져와 담기
-		model.addAttribute("myList", cgDao.cbtGuideMyList(vo));
+		//페이징 처리
+		PageHelper.startPage(pageNum, pageSize); 
+		// 리턴 된 여러값을 담기위해서는 service에서 값을 담아서 for문 돌려서 처리를 해야함
+		List<CbtGuideVO> list = cgDao.cbtGuideMyList(vo);
+		//model.addAttribute("myList", list);
+		
+	
+		model.addAttribute("pageInfo", PageInfo.of(list));
 		return "cbtGuide/cbtGuideMyList";
 	}
+	
 	/* 문제 상세 정보 */
 	@PostMapping("cbtGuideListOne.do")
 	public String cbtGuideListOne(CbtGuideVO vo, Model model) {

@@ -1,36 +1,14 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{layout/layout}">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
 <head>
 <meta charset="utf-8" />
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <script src="js/jquery-3.6.0.min.js"></script>
-<link rel="apple-touch-icon" sizes="76x76"
-	href="bootstrap/material/assets/img/apple-icon.png">
-<link rel="icon" type="image/png"
-	href="bootstrap/material/assets/img/favicon.png">
+<link rel="apple-touch-icon" sizes="76x76" href="bootstrap/material/assets/img/apple-icon.png">
+<link rel="icon" type="image/png" href="bootstrap/material/assets/img/favicon.png">
 <title>출제한 문제 관리 목록</title>
-<!--     Fonts and icons     -->
-<link rel="stylesheet" type="text/css"
-	href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
-<!-- Nucleo Icons -->
-<link href="bootstrap/material/assets/css/nucleo-icons.css"
-	rel="stylesheet" />
-<link href="bootstrap/material/assets/css/nucleo-svg.css"
-	rel="stylesheet" />
-<!-- Font Awesome Icons -->
-<script src="https://kit.fontawesome.com/42d5adcbca.js"
-	crossorigin="anonymous"></script>
-<!-- Material Icons -->
-<link
-	href="https://fonts.googleapis.com/icon?family=Material+Icons+Round"
-	rel="stylesheet">
-<!-- CSS Files -->
-<link id="pagestyle"
-	href="bootstrap/material/assets/css/material-dashboard.css?v=3.0.0"
-	rel="stylesheet" />
 <style>
 .table {
 	margin-top: 10px;
@@ -62,32 +40,71 @@
 					<table class="table align-items-center mb-0">
 						<thead>
 							<tr>
-								<th class="text-uppercase text-secondary text-md font-weight-bolder opacity-7">출제유형</th>
+								<th class="text-uppercase text-secondary text-md font-weight-bolder opacity-7" >출제유형</th>
 								<th class="text-uppercase text-secondary text-md font-weight-bolder opacity-7 ps-2">언어</th>
 								<th class="text-uppercase text-secondary text-md font-weight-bolder opacity-7 ps-2">문제번호</th>
 								<th class="text-uppercase text-secondary text-md font-weight-bolder opacity-7 ps-2">문제</th>
-								<th class="text-center text-uppercase text-secondary text-md font-weight-bolder opacity-7">정답률</th>
 							</tr>
 						</thead>
 						<tbody id="myTbody" >
-						<tr th:each="my:${myList}">
-							<td><p class="text-md text-secondary mb-0" th:text="${my.gtpCd}">출제유형</p></td>
-							<td><p class="text-md text-secondary mb-0" th:text="${my.langCd}">언어</p></td>
-							<td><p class="text-md text-secondary mb-0" th:text="${my.cbtNo}">문제번호</p></td>
-							<td><p class="text-md text-secondary mb-0" th:text="${my.ques}">문제번호</p></td>
-							<td><p class="text-md text-secondary mb-0" ></p></td>
+						<tr th:each="my:${pageInfo.list}">
+      						<input type="hidden" id="gtpCd0" name="gtpCd0" th:value="${my.gtpCd}">
+							<input type="hidden" id="langCd0" name="langCd0" th:value="${my.langCd}">
+							<td><p class="text-md text-secondary mb-0" id="gtpCdName" name="gtpCdName" th:text="${my.gtpCdName}">출제유형</p></td>
+							<td><p class="text-md text-secondary mb-0" id="langCdName" name="langCdName" th:text="${my.langCdName}">언어</p></td>
+							<td><p class="text-md text-secondary mb-0" id="cbtNo0" name="cbtNo0" th:text="${my.cbtNo}">문제번호</p></td>
+							<td><p class="text-md text-secondary mb-0" id="cnsr" name="cnsr" th:text="${my.ques}">문제</p></td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
+				<!-- 페이지네이션 -->
+				 <nav aria-label="Page navigation example">
+					<ul class="pagination pagination-primary  justify-content-center">
+						<li class="page-item disabled" th:if="${pageInfo.isIsFirstPage()}">
+						    <span class="page-link">«</span>
+						</li>
+						<li class="page-item" th:if="${!pageInfo.isIsFirstPage() && pageInfo.getList().size() > 0}">
+					    	<a class="page-link" th:href="|javascript:gopage([[${pageInfo.getPrePage()}]])|" rel="prev">«</a>
+					    </li>
+						<li th:class="|page-item ${(pageInfo.pageNum eq page) ? 'active': ''} |" th:each="page:${pageInfo.navigatepageNums}">
+						    <span class="page-link" th:if="${pageInfo.pageNum eq page}" th:text="${page}"></span>
+						    <a class="page-link" th:unless="${pageInfo.pageNum eq page}" th:href="|javascript:gopage(${page})|" th:text="${page}">{{$page}}</a>
+						</li>
+						<li class="page-item" th:if="${pageInfo.hasNextPage}">
+						    <a class="page-link" th:href="|javascript:gopage([[${pageInfo.getNextPage()}]])|" rel="next">»</a>
+						</li>
+						<li class="page-item disabled" th:unless="${pageInfo.hasNextPage}">
+						    <span class="page-link">»</span>
+						</li>
+					</ul>
+				</nav> 
 			</div>
+		</div>
 	</div>
     <!-- Bootstrap Select end -->
+    <div>
+        <form id="frm" method="post" action="/cbtGuideListOne.do">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+            <input type="hidden" id="cbtNo" name="cbtNo">
+            <input type="hidden" id="gtpCd" name="gtpCd">
+            <input type="hidden" id="langCd" name="langCd">
+        </form>
+    </div>
 <script>
+    function gopage(p) {
+	    location.href = '/cbtGuideMyList.do?pageNum=' + p;
+    }
     $("#myTbody").on("click","tr",function(e){
         let tg = e.currentTarget;
-        console.log("클릭됨");
-        console.log(tg);
+        currGtpNo = tg.childNodes[1].value; // 상세보기를 처리를 위한 gtpCd 추출
+        currLnagNo = tg.childNodes[3].value; // 상세보기를 처리를 위한 langCd 추출
+        currCbtNo = tg.childNodes[9].childNodes[0].innerHTML; // 상세보기를 처리를 위한 cbtNo 추출
+        
+        $("#cbtNo").val(currCbtNo);
+        $("#gtpCd").val(currGtpNo);
+        $("#langCd").val(currLnagNo);
+        frm.submit();
        })
     
 </script>
