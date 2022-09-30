@@ -3,11 +3,14 @@ package co.itrip.prj.cbtGuide.service;
 import java.util.List;
 import java.util.Map;
 
+import co.itrip.prj.community.service.CommunityVO;
+import co.itrip.prj.gtpcd.service.GtpCdVO;
+
 /**
 * 가이드CBT 구현시 필요한 기능을 기재
 * @author 김하은
 * @date 2022.09.16
-* @version 1.8
+* @version 1.9
 */
 public interface CbtGuideService {
 	
@@ -22,7 +25,7 @@ public interface CbtGuideService {
 	MyCbtHderVO myCbtHderList(MyCbtHderVO vo); /* 내가 푼 문제 조회 */
 	public List<CbtGuideVO> cbtGuideListO(CbtGuideVO vo); /* 문제 조회 : 사용자가 푼 문제 중 정답처리 된 문제조회 */
 	public List<CbtGuideVO> cbtGuideListX(CbtGuideVO vo); /* 문제 조회 : 사용자가 푼 문제 중 정답처리 된 오답조회 */
-	
+	public GtpCdVO gtpNameList(String gtpNo); /* 사용자가 푼 문제 리스트의 유형 코드네임 출력 */
 	
 	public CbtKeywordVO keywordList(CbtKeywordVO vo); /* 키워드 조회 */ 
 	

@@ -28,7 +28,7 @@ hr {
 			<div th:switch="${#authentication.principal.member.auth}">
 				<div class="buttons" th:case="ROLE_GUIDE" id="insertFrmCall">
 				<a href="/cbtGuideInsertForm.do" class="btn btn-primary">문제출제하기</a>
-				<small><a href="/cbtGuideMyList.do" class="primary">문제관리</a><small>
+				<a href="/cbtGuideMyList.do" class="primary">문제관리</a>
 				</div>
 			</div>
 		</div>

@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import co.itrip.prj.cbtGuide.mapper.CbtGuideMapper;
+import co.itrip.prj.cmmncd.mapper.CmmnCdMapper;
+import co.itrip.prj.cmmncd.service.CmmnCdVO;
+import co.itrip.prj.gtpcd.service.GtpCdVO;
 
 /**
  * 가이드CBT 구현시 필요한 기능을 구체적으로 기재
@@ -22,6 +25,9 @@ public class CbtGuideServiceImpl implements CbtGuideService {
 
 	@Autowired
 	private CbtGuideMapper map;
+	
+	@Autowired
+	private CmmnCdMapper cdMap;
 
 	/* 가이드가 등록한 모든 문제 출력 */
 	@Override
@@ -31,9 +37,18 @@ public class CbtGuideServiceImpl implements CbtGuideService {
 	
 	/* 가이드 한 명의 등록한 문제 출력 */
 	@Override
-	public List<CbtGuideVO> cbtGuideMyList(CbtGuideVO vo) {
-		return map.cbtGuideMyList(vo);
-	}
+	public List<CbtGuideVO> cbtGuideMyList(CbtGuideVO vo) {	
+		List<CbtGuideVO> list = map.cbtGuideMyList(vo);
+		String gcds;
+		String lcds;
+		for (int  i = 0; i < list.size(); i++) {
+			gcds = cdMap.cdNameList("G", list.get(i).getGtpCd()); 
+		    lcds = cdMap.cdNameList("L", list.get(i).getLangCd());
+				list.get(i).setGtpCdName(gcds);
+				list.get(i).setLangCdName(lcds);
+			}
+		return list;
+    }
 
 	/* 문제 한 건 조회 */
 	@Override
@@ -196,13 +211,15 @@ public class CbtGuideServiceImpl implements CbtGuideService {
 		
 		return r;
 	}
-
 	
-
-
+	 /* 사용자가 푼 문제 리스트의 유형 코드네임 출력 */
+	@Override
+	public GtpCdVO gtpNameList(String gtpNo) {
+		CbtGuideVO vo = new CbtGuideVO();
+		System.out.println("gtpNameList Serviceimpl vo.getGtpCd()"+vo.getGtpCd());
+		
+		return map.gtpNameList(gtpNo);
+	}
 	
-
-	
-	 
 
 }

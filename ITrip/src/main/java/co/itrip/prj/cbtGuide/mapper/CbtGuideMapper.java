@@ -7,6 +7,7 @@ import co.itrip.prj.cbtGuide.service.CbtGuideVO;
 import co.itrip.prj.cbtGuide.service.CbtKeywordVO;
 import co.itrip.prj.cbtGuide.service.MyCbtHderVO;
 import co.itrip.prj.cbtGuide.service.MyCbtLongVO;
+import co.itrip.prj.gtpcd.service.GtpCdVO;
 
 /**
 * 가이드CBT Mapping
@@ -26,6 +27,7 @@ public interface CbtGuideMapper {
 		List<CbtGuideVO> cbtGuideListX(CbtGuideVO vo); /* 문제 조회 : 사용자가 푼 문제 중 정답처리 된 오답조회 */
 		public CbtKeywordVO keywordList(CbtKeywordVO vo); /* 키워드 조회 */ //작업 아직 X
 		public int KeywordListCount(CbtKeywordVO vo); /* 키워드 갯수 조회 */
+		public GtpCdVO gtpNameList(String gtpNo); /* 사용자가 푼 문제 리스트의 유형 코드네임 출력 */
 		
 		public int cbtGuideInsert(CbtGuideVO vo);   /* 문제 등록 */
 		public int cbtGuideUpdate(CbtGuideVO vo);   /* 문제 수정 */ //작업 아직 X
