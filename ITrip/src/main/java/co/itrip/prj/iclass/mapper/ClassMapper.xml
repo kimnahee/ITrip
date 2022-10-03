@@ -75,9 +75,16 @@
         on c.class_no = pay.no
 		where cm.cd_ini = 'J' 
         and dt.ctime_no=1 
-        and ennc ='활성화'
         and pay.category = 'CLASS'
         and pay.member_id = #{memberId}	
         order by 1
 	</select>
+	
+	<select id="alreadyClass" resultType="co.itrip.prj.iclass.service.ClassVO">
+		select distinct class_no, title, dt, job_cd, psncpa, class_cnt, price
+		from class 
+		where confm_cd ='1'
+		and guide_id = #{guideId}
+	</select>
+	
 </mapper>
