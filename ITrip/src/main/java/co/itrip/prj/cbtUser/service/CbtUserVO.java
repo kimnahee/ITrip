@@ -21,4 +21,8 @@ public class CbtUserVO {
 	String memberId; //제출자아이디
 	String cdName; //공통코드 
 	int rownum;
+	
+
+	private String utpCdName; //utpCd의 한글명
+	private String langCdName; //langCd의 한글명
 }
