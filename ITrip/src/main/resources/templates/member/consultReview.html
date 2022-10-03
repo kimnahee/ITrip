@@ -156,17 +156,12 @@
                     <div class="card-content">
                     <div class="card-body">
                     
-                        <form class="form form-vertical" action="reviewConsultInsert.do" method="post">
+                        <form class="form form-vertical" action="reviewConsultInsert.do" onsubmit="return formCheck()" method="post">
                          <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
                         <div class="form-body">
-                         <div class="row">
-                            <!-- <div class="col-12">
-                                <div class="form-group">
-                                <label for="first-name-vertical">상담 : </label>
-                                <input type="text" id="title" class="form-control" name="title" th:eacn="con : ${consultList}" th:value="${con.title}" readOnly>
-                                </div>
-                            </div> -->
                             <div class="row">
+                             	<input th:value="${guideId}" name="guideId" type="hidden">
+                                <!-- <input th:value="${no}" name="88" type="hidden"> -->
                             <div class="col-12">
                                 <div class="form-group">
                                 <label for="first-name-vertical">작성자 아아디</label>
@@ -194,13 +189,13 @@
 						        <div class="review_contents">
 						            <label for="exampleFormControlTextarea1" class="form-label">리뷰내용</label>
 						            <div class="warning_msg">5자 이상으로 작성해 주세요.</div>
-						            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="content"></textarea>
+						            <textarea class="form-control review_textarea" id="content" rows="3" name="content"></textarea>
 						        </div>   
 
                              </div>
                          </div>
                             <div class="col-12 d-flex justify-content-end">
-                                <button type="submit" class="btn btn-primary mr-1 mb-1">제출하기</button>
+                                <button name="save" id="save" type="submit" class="btn btn-primary mr-1 mb-1">제출하기</button>
                             </div>
                             </div>
                         </div>
@@ -220,32 +215,90 @@
 	        document.querySelector(`.star span`).style.width = `${target.value * 20}%`;
 	      }
 	    
+ 		 /* function formCheck(){
+			    	
+			    	var consult = $("#content").val();
+			    	var con = $("#content");
+			    	
+			    	if (consult == "") {
+			    		alert("내용을 입력해주세요.");
+			    		con.focus();
+			    		return false;
+			    	}
+			    	
+			    	 if (consult != "") {
+			    		
+			    		var count = /^[\w\Wㄱ-ㅎㅏ-ㅣ가-힣]{5,400}$/;
+			    		
+			    		if(count.test(consult) == false) {
+			    			alert("리뷰는 5자 이상 400자 미만으로 작성가능합니다.");
+			    			con.focus();
+			    			return false;
+			    		}
+			    		
+			    	} 
+			    	
+			    	
+			    	return true;
+			    }  */
 	    
     //상품평 작성 글자수 초과 체크 이벤트 리스너
-    document.querySelector('.review_textarea').addEventListener('keydown',function(){
+    //let review = $('.review_textarea')
+    $('.review_textarea').on('keydown', e => {
         //리뷰 400자 초과 안되게 자동 자름
-        let review = document.querySelector('.review_textarea');
-        let lengthCheckEx = /^.{400,}$/;
-        if(lengthCheckEx.test(review.value)){
+        let lengthCheckEx = /^[\w\Wㄱ-ㅎㅏ-ㅣ가-힣]{5,400}$/;
+        let review = e.target.value;
+        if(lengthCheckEx.test(review)){
             //400자 초과 컷
-            review.value = review.value.substr(0,400);
+            review = review.substr(0,400);
         }
+        if(review > 400){
+        	aleart("내용은 200자 이상은 작성하실 수 없습니다.\r\n초과된 부분은 자동으로 삭제됩니다.");
+        }
+
+       
     });
+			    
+			    
+	let rating = new drawStar();
+	
+	drawStar.prototype.showMessage = function(type){//경고메시지 표시
+    switch(type){
+        case 'rate':
+            //안내메시지 표시
+            document.querySelector('.review_rating .warning_msg').style.display = 'block';
+            //지정된 시간 후 안내 메시지 감춤
+            setTimeout(function(){
+                document.querySelector('.review_rating .warning_msg').style.display = 'none';
+            },1000);            
+            break;
+        case 'review':
+            //안내메시지 표시
+            document.querySelector('.review_contents .warning_msg').style.display = 'block';
+            //지정된 시간 후 안내 메시지 감춤
+            setTimeout(function(){
+                document.querySelector('.review_contents .warning_msg').style.display = 'none';
+            },1000);    
+            break;
+    }
+}
 
     //저장 전송전 필드 체크 이벤트 리스너
-    document.querySelector('#save').addEventListener('click', function(e){
+    $('#save').on('click', function(e){
         //별점 선택 안했으면 메시지 표시
         if(rating.rate == 0){
             rating.showMessage('rate');
             return false;
         }
+        
         //리뷰 5자 미만이면 메시지 표시
-        if(document.querySelector('.review_textarea').value.length < 5){
+        if(review.length < 5){
             rating.showMessage('review');
             return false;
         }
+
         //폼 서밋
-    });
+    }); 
 
     </script>     
            
