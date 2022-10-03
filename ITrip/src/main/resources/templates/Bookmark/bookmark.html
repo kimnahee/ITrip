@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<title>즐겨찾기</title>
+<script src="js/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<div layout:fragment="content">
+<div class="col-md-6">
+    <h5 class="card-title mb-10">즐겨찾기</h5><br>
+        <!-- 탭 사이드 -->
+        <div class="col-4">
+            <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                <a class="nav-link active text-center" id="v-pills-home-tab" data-toggle="pill" href="#bookmark1" role="tab"
+                    aria-controls="bookmark1" aria-selected="true">중요한 문제</a>
+                <a class="nav-link text-center" id="v-pills-profile-tab" data-toggle="pill" href="#bookmark2" role="tab"
+                    aria-controls="bookmark2" aria-selected="false">개념이 부족한 문제</a>
+                <a class="nav-link text-center" id="v-pills-messages-tab" data-toggle="pill" href="#bookmark3" role="tab"
+                    aria-controls="bookmark3" aria-selected="false">실수</a>
+            </div>
+        </div>
+        <!-- 탭 사이드 끝 -->
+        <!-- 탭 내용 -->
+        <div class="col-9">
+            <div class="tab-content" id="v-pills-tabContent">
+                <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="bookmark1">
+                    중요한 문제 내용 영역
+                </div>
+                <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="bookmark2">
+                    개념이 부족한 문제 영역
+                </div>
+                <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="bookmark3">
+                    실수 내용 영역
+                </div>
+            </div>
+        </div>
+        <!-- 탭 내용 끝 -->
+    </div>
+</div>
+
+<div>
+</body>
+</html>
