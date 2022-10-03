@@ -4,7 +4,7 @@
 	layout:decorate="~{layout/layout}">
 <head>
 <meta charset="utf-8" />
-<title>KidKinder - Kindergarten Website Template</title>
+<title>1:1 상담</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 <meta content="Free HTML Templates" name="keywords" />
 <meta content="Free HTML Templates" name="description" />
@@ -62,12 +62,12 @@
 				    <h5 class="card-title" th:text="${consultList.title}"></h5>
 				  </div>
 					  <ul class="list-group list-group-flush">
-					    <li class="list-group-item" th:text="'직무   '+${consultList.dutyName}"></li>
-					    <li class="list-group-item" th:text="'경력   '+${consultList.career}"></li>
+					    <li class="list-group-item" th:text="'직무 : '+${consultList.dutyName}"></li>
+					    <li class="list-group-item" th:text="'경력 : '+${consultList.career}"></li>
 					    <li class="list-group-item" >[[${consultList.jobName}]]</li>
 					  	<li class="list-group-item"><a href="" class="btn btn-primary px-4 mx-auto my-2 consultListInfo">더보기</a></li>
 					  </ul>
-					  <input type="text" th:value="${consultList.consultNo}">
+					  <input type="hidden" th:value="${consultList.consultNo}">
 				</div>
 			</div>
 		</div>
@@ -76,7 +76,7 @@
 <!-- 페이지네이션 -->
  	<div class="row align-items-center py-5" id="pagingNav">
 			<nav aria-label="Page navigation example">
-				<ul class="pagination pagination-info  justify-content-center">
+				<ul class="pagination pagination-primary  justify-content-center">
 					<li class="page-item disabled"
 						th:if="${pageInfo.isIsFirstPage()}"><span
 						class="page-link">«</span></li>
@@ -107,106 +107,126 @@
 			<input type="hidden" id="consultNo" name="consultNo">
 			<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"> <!-- 시큐리티에서 설정하고 Application쿠키에 담기는 name과 토큰 -->
 		</form>	
+	</div>
+	
 			
 	<script>
 	
-	// 페이징
-	function gopage(p) {
-		location.href = '/consultList.do?pageNum=' + p;
-	}
-	
-	// 상담 더보기버튼 클릭시 (상세보기)
-	$(".list").on("click",".consultListInfo",function(e){
-		//console.log("클릭이벤트 실행됌")
-		e.preventDefault();
-		let tg = e.currentTarget;
-		let no = $(tg).parent().closest("ul").next().val();
-		//console.log(tg)
-		//console.log(no)
-		frm.consultNo.value = no;
-		frm.action = "consultSelectOne.do";
-		frm.submit();
-	})
-	
-	 function jobSearch(p,jobCd) {
-    	console.log(jobCd)
-    	console.log(p)
-		$.ajax({
-			url : "ajaxJobListSearch.do",
-			data : {'jobCd' : jobCd,"pageNum":p},
-			dataType : "json",
-			success : function(result){
-				console.log(result)
-				if(result.list.length > 0) {
-					makeConsultList(result.list);
-					makePaging(result,jobCd)
-				}else {
-					alert("검색한 결과가 없습니다.");
-				}
-			},
-			error : function(err) {
-				console.log(err)
-			}
+		/*-------------------------
+		  상담 메인 페이지헬퍼로 페이징 처리
+		---------------------------*/
+		function gopage(p) {
+			location.href = '/consultList.do?pageNum=' + p;
+		}
+		
+		
+		/*-------------------------
+      	  상담 더보기버튼 클릭시 (상세보기)
+		-----------------------*/
+		$(".list").on("click",".consultListInfo",function(e){
+			//console.log("클릭이벤트 실행됌")
+			e.preventDefault();
+			let tg = e.currentTarget;
+			let no = $(tg).parent().closest("ul").next().val();
+			//console.log(tg)
+			//console.log(no)
+			frm.consultNo.value = no;
+			frm.action = "consultSelectOne.do";
+			frm.submit();
 		})
-	} 
-	
-	 function makeConsultList(data) {
-		$('#consultList').html("");
-		$.each(data, function(index, item){
-			console.log(item)
-			var row = `<div class="card">
-					  <div class="card-body">
-				      <h5 class="card-title">${item.title}</h5>
-					  <ul class="list-group list-group-flush">
-					  <li class="list-group-item">직무${item.dutyName}</li>
-					  <li class="list-group-item">경력${item.career}</li>
-					  <li class="list-group-item">${item.jobName}</li>
-					  <li class="list-group-item">
-					  <a href="" class="btn btn-primary px-4 mx-auto my-2 consultListInfo">더보기</a></li>
-					  </ul>
-					  <input type="text" value="${item.consultNo}">
-					 </div>`
-	
-				$('#consultList').append(row);
-				
-				console.log(data)
-		});
-	} 
-	
-	function makePaging(res,jobCd){
-		console.log(res)
-		console.log("jobCd : "+jobCd)
-		$("#pagingNav").html("");
 		
-		ph ='<nav aria-label="Page navigation example">'
-		    +'<ul class="pagination pagination-info  justify-content-center">'
-		 if(res.isFirstPage==true){  
-			ph += '<li class="page-item disabled"><span class="page-link">«</span></li>'
-		 }
-		 else{
-	    	ph += `<li class="page-item"><a class="page-link" href="javascript:makePaging(${res.prePage},'${jobCd}')" rel="prev">«</a></li>`
-	    }
-
-		for(page of res.navigatepageNums){
-			ph += `<li class="page-item (${res.pageNum} eq ${page}) ? active: ''}" ></li>`
-			if(res.pageNum == page){
-				ph += `<span class='page-link'>${page}</span>`
-			}else{
-				ph+=`<a class='page-link' href='javascript:makePaging(${page},"${jobCd}")'>${page}</a>`
+		
+		
+		/*------------------------------
+	              카테고리별 검색 기능
+		--------------------------------*/
+		 function jobSearch(p,jobCd) {
+	    	console.log(jobCd)
+	    	console.log(p)
+			$.ajax({
+				url : "ajaxJobListSearch.do",
+				data : {'jobCd' : jobCd,"pageNum":p},
+				dataType : "json",
+				success : function(result){
+					console.log(result)
+					if(result.list.length > 0) {
+						makeConsultList(result.list);
+						makePaging(result,jobCd)
+					}else {
+						alert("검색한 결과가 없습니다.");
+					}
+				},
+				error : function(err) {
+					console.log(err)
+				}
+			})
+		} 
+		
+		
+		
+		/*------------------------------------------
+		  검색 결과별로 ajax 호출하여 카드 다시 만들어서 뿌려주기
+		-------------------------------------------*/
+		 function makeConsultList(data) {
+			$('#consultList').html("");
+			$.each(data, function(index, item){
+				console.log(item)
+				var row = `<div class="card">
+							   <div class="card-body">
+						       <h5 class="card-title">${item.title}</h5>
+							   <ul class="list-group list-group-flush">
+							   <li class="list-group-item">직무 : ${item.dutyName}</li>
+							   <li class="list-group-item">경력 : ${item.career}</li>
+							   <li class="list-group-item">${item.jobName}</li>
+							   <li class="list-group-item">
+							   <a href="" class="btn btn-primary px-4 mx-auto my-2 consultListInfo">더보기</a></li>
+							   </ul>
+							   <input type="hidden" value="${item.consultNo}">
+						   </div>`
+					$('#consultList').append(row);
+					console.log(data)
+			});
+		} 
+		
+		
+		
+		 /*--------------------------------------
+		  검색 결과별로 ajax 호출하여 다시 페이징처리해주기
+		----------------------------------------*/
+		function makePaging(res,jobCd){
+			console.log(res)
+			console.log("jobCd : "+jobCd)
+			$("#pagingNav").html("");
+			
+			ph ='<nav aria-label="Page navigation example">'
+			    +'<ul class="pagination pagination-info  justify-content-center">'
+			 if(res.isFirstPage==true){  
+				ph += '<li class="page-item disabled"><span class="page-link">«</span></li>'
+			 }
+			 else{
+		    	ph += `<li class="page-item"><a class="page-link" href="javascript:makePaging(${res.prePage},'${jobCd}')" rel="prev">«</a></li>`
+		    }
+	
+			for(page of res.navigatepageNums){
+				ph += `<li class="page-item (${res.pageNum} eq ${page}) ? active: ''}" ></li>`
+				if(res.pageNum == page){
+					ph += `<span class='page-link'>${page}</span>`
+				}else{
+					ph+=`<a class='page-link' href='javascript:makePaging(${page},"${jobCd}")'>${page}</a>`
+				}
+				ph += "</li>"
 			}
-			ph += "</li>"
-		}
-	
-		if(res.hasNextPage ==true){
-			ph += ` <li class="page-item"><a class="page-link" href="javascript:makePaging(${res.nextPage},'${jobCd}')" rel="next">»</a></li>`
-		}else{
-			ph += '<li class="page-item disabled"><span class="page-link">»</span></li></ul></nav>'
+		
+			if(res.hasNextPage ==true){
+				ph += ` <li class="page-item"><a class="page-link" href="javascript:makePaging(${res.nextPage},'${jobCd}')" rel="next">»</a></li>`
+			}else{
+				ph += '<li class="page-item disabled"><span class="page-link">»</span></li></ul></nav>'
+			}
+			
+			$("#pagingNav").append(ph);
 		}
 		
-		$("#pagingNav").append(ph);
-	}
-	
-	
+		
 	</script> <a href="#" class="btn btn-primary p-3 back-to-top"><i class="fa fa-angle-double-up"></i></a>
 
 	<!-- JavaScript Libraries -->
