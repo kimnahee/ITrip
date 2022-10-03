@@ -28,10 +28,32 @@
 	float: right;
 	margin-right: 50px;
 }
+.content { /*컨텐츠 넓이지정*/
+	position: relative;
+	width: 700px;
+	margin: 0 auto;
+}
 </style>
 </head>
 <body>
 	<div layout:fragment="content">
+	
+	
+<div th:if="${#lists.isEmpty(pageInfo.list)}">
+	<div class="content">
+		<div class="col-12">
+			<div class="card my-4">
+				<div class="card-body px-0 pb-2" style="margin: 0 auto;">
+					<h4 class="form-check" style="padding-top: 20%;">아직 출제한 문제가 없습니다. 문제를 등록해주세요.</h4><br><br>
+					<div class="buttons" style="text-align: center;">
+						<a href="cbtUserInsertForm.do" class="btn btn-primary">문제출제하기</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div th:unless="${#lists.isEmpty(pageInfo.list)}">	
 	<!-- Bootstrap Start-->
 	<div class="col-12">
 		<div class="card my-4">
@@ -46,20 +68,17 @@
 								<th class="text-uppercase text-secondary text-md font-weight-bolder opacity-7 ps-2">문제</th>
 							</tr>
 						</thead>
-						<tbody id="myTbody"  >
-						<tr  th:each="my:${pageInfo.list}" style="cursor: pointer;">
-      						<input type="hidden" id="gtpCd0" name="gtpCd0" th:value="${my.gtpCd}">
+						<tbody id="myTbody" >
+						<tr th:each="my:${pageInfo.list}">
+      						<input type="hidden" id="utpCd0" name="utpCd0" th:value="${my.utpCd}">
 							<input type="hidden" id="langCd0" name="langCd0" th:value="${my.langCd}">
-							<td><p class="text-md text-secondary mb-0" id="gtpCdName" name="gtpCdName" th:text="${my.gtpCdName}">출제유형</p></td> 
-							<td><p class="text-md text-secondary mb-0" id="langCdName" name="langCdName" th:text="${my.langCdName}">언어</p></td>
-							<td><p class="text-md text-secondary mb-0" id="cbtNo0" name="cbtNo0" th:text="${my.cbtNo}">문제번호</p></td>
+							<td><p class="text-md text-secondary mb-0" id="utpCd" name="utpCdName" th:text="${my.utpCdName}">출제유형</p></td>
+							<td><p class="text-md text-secondary mb-0" id="langCd" name="langCdName" th:text="${my.langCdName}">언어</p></td>
+							<td><p class="text-md text-secondary mb-0" id="cbtNo" name="cbtNo" th:text="${my.cbtNo}">문제번호</p></td>
 							<td><p class="text-md text-secondary mb-0" id="cnsr" name="cnsr" th:text="${my.ques}">문제</p></td>
 							</tr>
 						</tbody>
 					</table>
-					<!--문제가 없는 경우 -->
-					    <img class="mx-auto d-block mb-4" th:if="${#lists.isEmpty(pageInfo.list)}" alt="문제가 없습니다." src="images/nothing.png" style="width: 300px;">
-						<h3 class="text-center mb-5" th:if="${#lists.isEmpty(pageInfo.list)}">등록한 문제가 없습니다.</h3>
 				</div>
 				<!-- 페이지네이션 -->
 				 <nav aria-label="Page navigation example">
@@ -85,28 +104,30 @@
 			</div>
 		</div>
 	</div>
+</div>
     <!-- Bootstrap Select end -->
     <div>
-        <form id="frm" method="post" action="/cbtGuideListOne.do">
+        <form id="frm" method="post" action="/cbtUserMyOne.do">
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
             <input type="hidden" id="cbtNo" name="cbtNo">
-            <input type="hidden" id="gtpCd" name="gtpCd">
-            <input type="hidden" id="langCd" name="langCd">
+            <input type="hidden" id="utpCd" name="utpCd">
+            <input type="hidden" id="langCd" name="langCd"> 
         </form>
     </div>
 <script>
     function gopage(p) {
-	    location.href = '/cbtGuideMyList.do?pageNum=' + p;
+	    location.href = '/cbtUserMyList.do?pageNum=' + p;
     }
     $("#myTbody").on("click","tr",function(e){
         let tg = e.currentTarget;
-        currGtpNo = tg.childNodes[1].value; // 상세보기를 처리를 위한 gtpCd 추출
-        currLnagNo = tg.childNodes[3].value; // 상세보기를 처리를 위한 langCd 추출
-        currCbtNo = tg.childNodes[9].childNodes[0].innerHTML; // 상세보기를 처리를 위한 cbtNo 추출
+        let currUtpNo = tg.childNodes[1].value; // 상세보기를 처리를 위한 utpCd 추출
+        let currLangNo = tg.childNodes[3].value; // 상세보기를 처리를 위한 langCd 추출
+        let currCbtNo = tg.childNodes[9].childNodes[0].innerHTML; // 상세보기를 처리를 위한 cbtNo 추출
         
-        $("#cbtNo").val(currCbtNo);
-        $("#gtpCd").val(currGtpNo);
-        $("#langCd").val(currLnagNo);
+        frm.utpCd.value = currUtpNo
+        frm.langCd.value = currLangNo
+        frm.cbtNo.value = currCbtNo
+        
         frm.submit();
        })
     

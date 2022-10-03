@@ -19,13 +19,12 @@
 			<div class="col-md-10 col-12 cbtNoSelc">
 				<div class="card">
 					<div class="card-header">
-						<h4 class="card-title">문제</h4>
+						<h4 class="card-title">랜덤 문제</h4>
 					</div>
 					<div class="card-content">
-						<div>
-							<h5 th:if="${#lists.isEmpty(cbtList)}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;문제가
-								없습니다...</h5>
-						</div>
+						 <!--문제가 없는 경우 -->
+						    <img class="mx-auto d-block mb-4"  th:if="${#lists.isEmpty(cbtList)}" alt="문제가 없습니다." src="images/nothing.png" style="width: 300px;">
+							<h3 class="text-center mb-5"th:if="${#lists.isEmpty(cbtList)}">문제가 없습니다...</h3>
 						<!-- gtpCd에 따른 처리 -->
 						<div class="card-body" th:each="cbt, st:${cbtList}">
 							<!-- ctpCd == '3' -->

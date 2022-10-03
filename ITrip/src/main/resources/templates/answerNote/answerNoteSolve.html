@@ -8,14 +8,18 @@ layout:decorate="~{layout/layout}" xmlns:sec="http://www.thymeleaf.org/extras/sp
 <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
 <title>Insert title here</title>
 <script src="js/jquery-3.6.0.min.js"></script>
+<style type="text/css">
+.form-check{
+	margin-left:20px;
+}
+</style>
 </head>
 <body>
 <div layout:fragment="content">
-
 	<h2 class="card-title"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
   		<path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
 	</svg> 오답노트  </h2>
-	<h4>나의 오답이 선택되어있습니다. 다시 풀어보세요</h4> <br>
+	<h4>오답이 기록되어있습니다. 다시 풀어보세요</h4> <br>
 	<div th:each="cbt, st:${note}">
 		<!-- ctpCd == '1' -->
 		<div th:if="${cbt.gtpCd} == '1'">
@@ -27,9 +31,7 @@ layout:decorate="~{layout/layout}" xmlns:sec="http://www.thymeleaf.org/extras/sp
 							<div class="form-group">
 								<h3>문제 <span th:text="${cbt.cbtNo}"></span><i data-feather='star'onclick="bookmark()" style="cursor: pointer;"></i></h3>
 								<input type="hidden" id="cbtNo0" name="cbtNo0" th:value="${cbt.cbtNo}"> 
-							<!-- 	<input type="text" id="PreGtpCd" name="PreGtpCd" th:value="${tCd}"> 
-								<input type="text" id="PreLangCd" name="PreLangCd" th:value="${lCd}"> -->
-								정답<input type="text" id="cnsr" name="cnsr" th:value="${cbt.cnsr}"><br>
+								<input type="hidden" th:id="|cnsr${st.index}|" name="cnsr" th:value="${cbt.cnsr}">
 								<br> <span id="QUES" th:text="${cbt.ques}">문제</span> 
 								<a>&nbsp;&nbsp;[ 출제자 : <span th:text="${cbt.memberId}"></span> ] </a>
 							</div>
@@ -51,36 +53,121 @@ layout:decorate="~{layout/layout}" xmlns:sec="http://www.thymeleaf.org/extras/sp
 							<label class="form-check-label" th:for="|cbt${cbt.cbtNo}4|" th:text="${cbt.ex4}"></label>
 						</div>
 						<!--라디오 끝 -->
-						<!-- 풀이 ajax : 정답보기 버튼을 누르면 해당 문제 풀이글 활성화 -->
-						<div class="explnaArea" style="border:1px solid red;">
-							<div th:text="${cbt.cnsr}"></div>
-							<div th:text="${cbt.explna}"></div>
+						<div th:class="|explnaArea${st.index}|" style="display: none">
+							<div class='alert alert-light-primary color-primary'>
+		      					 <a>[ 정답 ] : <span th:text="${cbt.cnsr}"></span>번</a><br>
+		     					 <a>[ 풀이 ]<br><span th:text="${cbt.explna}"></span></a>
+		     				</div> 
 						</div>
-					</div>
+					</div><hr>
 				</div>
 			</form>
 		</div>
+		<!-- gtpCd=='1'끝 -->
+		<!-- ctpCd == '2' -->
+		<div th:if="${cbt.gtpCd} == '2'">
+			<form class="form form-vertical">
+				<div class="form-body">
+					<div class="row">
+						<div class="col-12">
+							<div class="form-group">
+								<!-- 정답 <input type="text" th:id="|cnsr${st.index}|" name="cnsr" th:value="${cbt.cnsr}"> -->
+								<h3>문제 <span th:text="${cbt.cbtNo}"></span>
+								<i data-feather='star' onclick="bookmark()"style="cursor: pointer;"></i></h3>
+								<h5 id="QUES" th:text="${cbt.ques}">문제</h5> 
+								<input type="hidden" th:id="|cnsr${st.index}|" name="cnsr" th:value="${cbt.cnsr}">
+								<input type="hidden" id="cbtNo0" name="cbtNo0" th:value="${cbt.cbtNo}"> 
+								<a>&nbsp;&nbsp;[ 출제자 : <span th:text="${cbt.memberId}"></span> ]</a><br>
+								[ 나의 오답 : <span class="myans" th:id="|myans${cbt.cbtNo}|" ></span> ]
+								<span>&nbsp;&nbsp; 새로운답변을 입력해보세요.</span><br>
+							</div>
+						</div>
+						<div class="input-group mb-3 " style="width: 450px;">
+							<input class="form-control form-control-sm" type="text" th:id="|newAnswer${cbt.cbtNo}|">
+							<button type="button" class="btn btn-sm btn-outline-primary" th:name=${st.index} th:id="${cbt.cbtNo}" th:onclick="reCheck(this.getAttribute('id'),this.getAttribute('name'))">확인</button>
+						</div>
+						<div th:class="|explnaArea${st.index}|" style="display: none">
+							<div class='alert alert-light-primary color-primary'>
+		      					 <a>[ 정답 ] : <span th:text="${cbt.cnsr}"></span></a><br>
+		     					 <a>[ 풀이 ]<br><span th:text="${cbt.explna}"></span></a>
+		     				</div> 
+						</div>
+					</div>
 		
+				</div>
+			</form>
+		</div>
+		<!-- gtpCd=='2'끝 -->
+							
 	</div>
+	<!-- 객관식정답비교용 -->
+	<input type="hidden" id="mycnsr1" name="mycnsr" th:value="${myCnsr.cnsr1}"><br>
+	<input type="hidden" id="mycnsr2" name="mycnsr" th:value="${myCnsr.cnsr2}"><br>
+	<input type="hidden" id="mycnsr3" name="mycnsr" th:value="${myCnsr.cnsr3}"><br>
+	<input type="hidden" id="mycnsr4" name="mycnsr" th:value="${myCnsr.cnsr4}"><br>
+	<input type="hidden" id="mycnsr5" name="mycnsr" th:value="${myCnsr.cnsr5}"><br>
 	
-	내가찍은답<input type="text" id="mycnsr1" name="mycnsr" th:value="${myCnsr.cnsr1}"><br>
-	내가찍은답<input type="text" id="mycnsr2" name="mycnsr" th:value="${myCnsr.cnsr2}"><br>
-	내가찍은답<input type="text" id="mycnsr3" name="mycnsr" th:value="${myCnsr.cnsr3}"><br>
-	내가찍은답<input type="text" id="mycnsr4" name="mycnsr" th:value="${myCnsr.cnsr4}"><br>
+	<!-- 단답정답비교용 -->
+	<input type="hidden" th:id="|myans${myCnsr.cbtNo1}|" name="myans" th:value="${myCnsr.cnsr1}"><br>
+	<input type="hidden" th:id="|myans${myCnsr.cbtNo2}|" name="myans" th:value="${myCnsr.cnsr2}"><br>
+	<input type="hidden" th:id="|myans${myCnsr.cbtNo3}|" name="myans" th:value="${myCnsr.cnsr3}"><br>
+	<input type="hidden" th:id="|myans${myCnsr.cbtNo4}|" name="myans" th:value="${myCnsr.cnsr4}"><br>
+	<input type="hidden" th:id="|myans${myCnsr.cbtNo5}|" name="myans" th:value="${myCnsr.cnsr5}"><br>
+	
 	<script type="text/javascript">
-		
-		
+		//객관식 정답비교 
 		$.each($('input[name="cbtNo0"]'),function (idx,elem) {
-		/* 	var ans = $('input[name="cbt0"]').val()
-			var cnsr = $('input[name="cnsr"]').val()
-			console.log("순서"+idx)
-			console.log(elem.value)
-			console.log("this 문제번호 :"+elem.value) */
-			
 			$("#cbt"+elem.value+($("#mycnsr"+(idx+1)+"").val())).prop("checked",true)
-			
-			
 		})
+		
+		$.each($('.row'),function(idx,elem){
+			$("input[name=cbt"+idx+"]").on("click",function(){
+				if($(this).val() == $("#cnsr"+idx).val()){
+					alert("정답입니다.")
+					$(".explnaArea"+idx).removeAttr("style")
+				}else{
+					alert("오답입니다. 다시풀어보세요. ")
+				}
+			
+			})
+		})
+		
+		
+		//단답정답비교 
+		$.each($('input[name="myans"]'),function(idx,elem){
+			name = $('input[name='+(elem.id)+']').attr("name")
+			if(elem.id == name){
+				preAnswer = $('input[id='+(elem.id)+']').val()
+				$('input[name='+(elem.id)+']').val(preAnswer)
+			}
+			console.log(elem.id)
+		})
+		
+		//div에  틀렸던 답변 넣기 
+		$.each($('.myans'),function(idx,elem){
+			name = $('#'+elem.id).attr("id")
+			if(elem.id == name){
+				preAnswer = $('input[id='+(elem.id)+']').val()
+				$('#'+elem.id).html(preAnswer)
+			}
+		})
+		
+		//확인버튼클릭시 정답비교 후 풀이보여주기 
+		function reCheck(cNo,idx){
+			newAnswer = $("#newAnswer"+cNo).val()
+			realCnsr = $('input[id=cnsr'+(idx)+']').val()
+			
+			if(newAnswer == realCnsr){
+				alert("정답입니다.")
+			}else{
+				alert("오답입니다.")
+			}
+			$(".explnaArea"+idx).removeAttr("style")
+			
+		}
+		
+		
+		
 	</script>
 </div>
 </body>

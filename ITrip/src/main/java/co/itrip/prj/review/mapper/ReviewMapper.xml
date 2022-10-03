@@ -10,7 +10,7 @@
 			   END 
 			 FROM REVIEW
 	</selectKey> 
-	INSERT INTO REVIEW VALUES (#{reviewNo},'enji','소라미',#{content}, sysdate, 'consult', #{memberId}, #{star} )
+	INSERT INTO REVIEW VALUES (#{reviewNo},'enji','소라미',#{content}, sysdate, 'CONSULT', #{memberId}, #{star}, 88 )
 	</insert>
 	
 	<insert id="classReviewInsert">
