@@ -325,11 +325,11 @@ function compareCnsrAjax(myChoice){
 		success:function result(res){
 			 if(res.cnsr == myChoice){
 				imgArea.innerHTML +=`<img alt="" src="images/O.png" style="position:absolute; z-index:2;width: 100px;">`
-				alert("정답입니다.다시풀기버튼만들기");
+				alert("정답입니다.");
 				
 			}else{
 				imgArea.innerHTML +=`<img alt="" src="images/X.png" style="position:absolute; z-index:2;width: 100px;">`	
-				alert("오답입니다.다시풀기버튼만들기")	
+				alert("오답입니다.")	
 			} 
 			$(".form-check").addClass("disabledDiv");
 			 moreInfo(res);
@@ -354,7 +354,7 @@ function moreInfo(res){
 			</ul>
 			<div class="tab-content">
 				<div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="home-tab">
-					<div style="padding: 20px;">정답 : ${res.cnsr} 번<br>${res.explna}</div>
+					<div style="padding: 20px;">[ 정답 ] ${res.cnsr} 번<br> [ 풀이 ] ${res.explna}</div>
 				</div>
 				<div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="contact-tab">
 					

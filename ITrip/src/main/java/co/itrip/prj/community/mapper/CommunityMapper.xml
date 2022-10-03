@@ -112,6 +112,7 @@
 		from reply
 		where
 		com_no = #{comNo}
+		order by re_no
 	</select>
 
 	<!-- 댓글 입력 -->

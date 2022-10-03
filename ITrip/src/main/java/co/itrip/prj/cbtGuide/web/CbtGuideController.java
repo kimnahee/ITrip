@@ -9,6 +9,7 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +25,7 @@ import co.itrip.prj.cbtGuide.service.CbtGuideService;
 import co.itrip.prj.cbtGuide.service.CbtGuideVO;
 import co.itrip.prj.cbtGuide.service.CbtKeywordVO;
 import co.itrip.prj.cbtGuide.service.MyCbtHderVO;
+import co.itrip.prj.cmmncd.service.CmmnCdService;
 import co.itrip.prj.gtpcd.service.GtpCdService;
 import co.itrip.prj.langcd.service.LangCdService;
 
@@ -31,7 +33,7 @@ import co.itrip.prj.langcd.service.LangCdService;
 * 가이드CBT 제어하는 곳
 * @author 김하은
 * @date 2022.09.19 
-* @version 1.7
+* @version 1.8
 */
 @Controller
 public class CbtGuideController {
@@ -41,6 +43,8 @@ public class CbtGuideController {
 	private GtpCdService gtpDao;
 	@Autowired
 	private LangCdService langDao;
+	@Autowired
+	private CmmnCdService cdDao;
 	
 	/* 가이드 CBT 메인화면 */
 	@RequestMapping("/cbtGuideMain.do")
@@ -73,6 +77,8 @@ public class CbtGuideController {
 		model.addAttribute("langCdList", langDao.langCdList());
 		return "cbtGuide/cbtGuideInsertForm";
 	}
+	@Value("${file.dir}")
+	private File fileDir;
 	
 	/* 가이드가 문제 등록 */ 
 	@PostMapping("/cbtGuideInsert.do")
@@ -80,12 +86,11 @@ public class CbtGuideController {
 			@RequestParam("file") MultipartFile file) throws IllegalStateException, IOException {
 		
 		
-		// 파일처리 
-		String projectPath = System.getProperty("user.dir")+"/src/main/resources/static/files"; //프로젝트 경로
+		// 파일처리 (static 폴더로 업로드 됨)
+		/*String projectPath = System.getProperty("user.dir")+"/src/main/resources/static/files"; //프로젝트 경로
 		UUID uuid = UUID.randomUUID(); // 랜덤으로 고유의 값 생성
 		
 		if(!file.isEmpty()) { //파일이 등록되어있다면...
-			
 			String filename= uuid +"_"+file.getOriginalFilename(); //파일명 충돌방지를 위한 파일별명만듦
 			File saveFile = new File(projectPath, filename);
 			//파일 물리적 위치에 저장
@@ -93,7 +98,20 @@ public class CbtGuideController {
 			vo.setAttach(filename);
 			String path ="/files/"+filename;
 			vo.setAttachDir(path);
+		}*/
+		
+		// 파일처리 : C에 파일이 업로드 되도록 수정
+		String saveFolder=("");
+		File sfile = new File(saveFolder);
+		String oFileName = file.getOriginalFilename();
+		if(!oFileName.isEmpty()) {
+			String sFileName = UUID.randomUUID().toString()+oFileName.substring(oFileName.lastIndexOf("."));
+			String path = fileDir+"/cbtGuide/"+sFileName;
+		    file.transferTo(new File(path));
+		    vo.setAttach(oFileName);
+		    vo.setAttachDir(saveFolder+"/cbtGuide/"+sFileName);
 		}
+		
 		
 		cgDao.cbtGuideInsert(vo); //파일 처리를 진행 후 등록함
 
@@ -143,17 +161,49 @@ public class CbtGuideController {
 		List<CbtGuideVO> list = cgDao.cbtGuideMyList(vo);
 		//model.addAttribute("myList", list);
 		
-	
 		model.addAttribute("pageInfo", PageInfo.of(list));
 		return "cbtGuide/cbtGuideMyList";
 	}
 	
 	/* 문제 상세 정보 */
-	@PostMapping("cbtGuideListOne.do")
-	public String cbtGuideListOne(CbtGuideVO vo, Model model) {
-		//model.addAttribute("myList", cgDao.cbtGuideListOne(vo));
+	@PostMapping("/cbtGuideListOne.do")
+	public String cbtGuideListOne(CbtGuideVO vo, CbtKeywordVO kVo, Model model, HttpServletRequest request) {
+		model.addAttribute("myList", cgDao.cbtGuideListOne(vo));
+		model.addAttribute("keyword", cgDao.keywordList(kVo));
 		return "cbtGuide/cbtGuideListOne";
 	}
+	/* 문제 수정 폼 */
+	@PostMapping("/cbtGuideUpdateForm.do")
+	public String cbtGuideUpdateForm(CbtGuideVO vo,  CbtKeywordVO kVo, Model model, HttpServletRequest request) { 
+			//Get으로 어케넘겨....!!!! @RequestParam int cbtNo, @RequestParam String gtpCd, @RequestParam String langCd) 
+		//System.out.println("==========================cbtNo : "+cbtNo);
+		//System.out.println("==========================gtpCd : "+gtpCd);
+		//System.out.println("==========================langCd : "+langCd);
+		model.addAttribute("myList", cgDao.cbtGuideListOne(vo));
+		model.addAttribute("keyword", cgDao.keywordList(kVo));
+		return "cbtGuide/cbtGuideUpdateForm";
+	}
 	
+	/* 문제 수정 */
+	@PostMapping("/cbtGuideUpdate.do")
+	public String cbtGuideUpdate(CbtGuideVO vo, CbtKeywordVO kVo, HttpServletRequest request) {
+		
+		cgDao.cbtGuideUpdate(vo);
+		return "redirect:/cbtGuideMyList";
+	}
+	
+	/* 문제 삭제 */
+	@GetMapping("/cbtGuideDelete.do")
+	public String cbtGuideDelete(CbtGuideVO vo, HttpServletRequest request) {
+		vo.setCbtNo(Integer.parseInt(request.getParameter("cbtNo")));
+		cgDao.cbutGuideDelet(vo);
+		return "redirect:/cbtGuideMain.do";
+	}
+	/* 즐겨 찾기 */
+	@GetMapping("/bookmark.do")
+	public String bookmark(Principal prin) {
+		//vo.setMemberId(prin.getName()); //로그인된 사용자 정보 가져와 담기
+		return "bookmark/bookmark";
+	}
 	
 }
