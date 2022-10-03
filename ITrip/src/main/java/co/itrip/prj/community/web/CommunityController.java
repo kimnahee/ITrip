@@ -9,6 +9,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,6 +34,14 @@ public class CommunityController {
 	@Autowired
 	private ServletContext servletContext;
 
+	// 게시글 리스트(타임라인용)
+	@GetMapping("/timeLine.do")
+	public String timeLine(CommunityVO vo, Model model, HttpServletRequest request) {
+		model.addAttribute("comList", dao.communityList());
+		return "community/timeLine";
+	}
+	
+	
 	// 게시글 단일출력(스터디게시판)
 	@GetMapping("/selectCommunity.do")
 	public String selectCommunity(CommunityVO vo, ReplyVO rvo, Model model, HttpServletRequest request) {
@@ -59,19 +68,22 @@ public class CommunityController {
 	public String studyInsertForm() {
 		return "community/study/studyInsertForm";
 	}
-
+	
+	@Value("${file.dir}")
+	private File fileDir;
+	
 	// 스터디게시판 글 작성(파일업로드)
 	@PostMapping("/studyInsert.do")
 	public String studyInsert(CommunityVO vo, MultipartFile file) throws IllegalStateException, IOException {
-		if (!file.getOriginalFilename().isEmpty()) {
-			String projectPath = System.getProperty("user.dir") + "/src/main/resources/static/files"; // 프로젝트 경로
-			UUID uuid = UUID.randomUUID();
-			String filename = uuid + "_" + file.getOriginalFilename();
-			File saveFile = new File(projectPath, filename);
-			file.transferTo(saveFile);
-			vo.setAttach(filename);
-			String path = "/files/" + filename;
-			vo.setAttachDir(path);
+		String saveFolder = ("upload");
+		File sfile = new File(saveFolder);
+		String oFileName = file.getOriginalFilename();
+		if(!oFileName.isEmpty()) {
+			String sFileName = UUID.randomUUID().toString()+oFileName.substring(oFileName.lastIndexOf("."));
+			String path = fileDir+"/"+sFileName;
+			file.transferTo(new File(path));
+			vo.setAttach(oFileName); 
+			vo.setAttachDir(saveFolder+"/"+sFileName);
 		}
 		dao.studyInsert(vo);
 		return "redirect:study.do";
@@ -170,15 +182,15 @@ public class CommunityController {
 
 	// 페이징
 	// 페이징 처리(전체게시판)
-	@GetMapping("/pageTest.do")
-	public String findPage(CommunityVO vo, Model model, HttpServletRequest request,
-			@RequestParam(required = false, defaultValue = "1") int pageNum,
-			@RequestParam(required = false, defaultValue = "10") int pageSize) {
-		PageHelper.startPage(pageNum, pageSize);
-		vo.setCtgry("''");
-		model.addAttribute("pageInfo", PageInfo.of(dao.findAll(vo)));
-		return "community/timeLine";
-	}
+//	@GetMapping("/pageTest.do")
+//	public String findPage(CommunityVO vo, Model model, HttpServletRequest request,
+//			@RequestParam(required = false, defaultValue = "1") int pageNum,
+//			@RequestParam(required = false, defaultValue = "10") int pageSize) {
+//		PageHelper.startPage(pageNum, pageSize);
+//		vo.setCtgry("''");
+//		model.addAttribute("pageInfo", PageInfo.of(dao.findAll(vo)));
+//		return "community/timeLine";
+//	}
 
 	// 페이징 처리(스터디게시판)
 	@GetMapping("/study.do")
