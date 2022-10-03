@@ -69,4 +69,12 @@ public class ClassServiceImpl implements ClassService {
 		return map.myClassList(vo);
 	}
 
+	@Override
+	public List<ClassVO> alreadyClass(ClassVO vo) {
+		// 가이드가 신청한 승인대기중인 클래스
+		return map.alreadyClass(vo);
+	}
+
+	
+
 }

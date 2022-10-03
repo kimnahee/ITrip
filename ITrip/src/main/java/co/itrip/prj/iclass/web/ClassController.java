@@ -2,6 +2,7 @@ package co.itrip.prj.iclass.web;
 
 import java.io.File;
 import java.io.IOException;
+import java.security.Principal;
 import java.util.List;
 import java.util.UUID;
 
@@ -48,7 +49,7 @@ public class ClassController {
 	@Autowired
 	private AlarmService aService; //알람 서비스
 	
-//경아,소정 - 클래스리스트
+	//클래스리스트
 	@GetMapping("/iClassList.do") 
 	public String iClass(ClassVO vo,Model model, HttpServletRequest request,
 			@RequestParam(required = false, defaultValue = "1") int pageNum,
@@ -60,10 +61,11 @@ public class ClassController {
 		return "class/iclassList";
 	}
 
+	
 	@Value("${file.dir}")
 	private File fileDir;
 	
-	//소정 - Class insert & 파일처리
+	    // Class insert & 파일처리
 		@PostMapping("/classInsert.do")
 
 		public String classInsert(AlarmVO avo, FollowVO fvo, ClassVO vo, ClassDtVO dtvo, MultipartFile file) throws IllegalStateException, IOException {
@@ -92,30 +94,6 @@ public class ClassController {
 				vo.setAttach(oFileName); 
 				vo.setAttachDir(saveFolder+"/"+sFileName);
 			}
-			
-			
-			// ClassVO
-			System.out.println("1"+vo.getTitle());
-			System.out.println("2"+vo.getClassNo()); // 0으로나옴
-			System.out.println("3"+vo.getContent());
-			System.out.println("4"+vo.getCrclm());
-			System.out.println("5"+vo.getDt());  // null
-			System.out.println("6"+vo.getPrice());
-			System.out.println("7"+vo.getConfmCd()); // null
-			System.out.println("8"+vo.getGuideId());
-			System.out.println("9"+vo.getJobCd());
-			System.out.println("10"+vo.getPsncpa());
-			System.out.println("11"+vo.getClassCnt());
-			System.out.println("12"+vo.getAttach());
-			System.out.println("13"+vo.getAttachDir());
-			System.out.println("19"+vo.getEnnc());
-			
-			// ClassDtVO
-			System.out.println("14"+vo.getClassDt().get(0).getClassNo()); // 0으로나옴
-			System.out.println("15"+vo.getClassDt().get(0).getTerm());
-			System.out.println("16"+vo.getClassDt().get(0).getBeginTime());
-			System.out.println("17"+vo.getClassDt().get(0).getEndTime());
-			System.out.println("18"+vo.getClassDt().get(0).getCtimeNo()); // 0
 			
 			cService.classInsert(vo);
 			
@@ -157,5 +135,12 @@ public class ClassController {
 			
 			//return cService.ajaxJobSearch(vo);
 			return PageInfo.of(cService.ajaxJobSearch(vo));
+		}
+		
+		@GetMapping("/alreadyClass")
+		public String alreadyClass(Principal principal, Model model, ClassVO vo) {
+			vo.setGuideId(principal.getName());
+			model.addAttribute("alreadyList",cService.alreadyClass(vo) );
+			return"guide/alreadyclass";
 		}
 }
