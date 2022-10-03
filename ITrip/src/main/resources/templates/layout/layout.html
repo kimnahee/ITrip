@@ -35,7 +35,7 @@
 				<div class="sidebar-menu">
 					<ul class="menu">
 						<li class='sidebar-title'>메뉴</li>
-						<li id="main" class="sidebar-item active "><a href="/"
+						<li class="sidebar-item"><a href="/"
 							class='sidebar-link'> <i data-feather="home" width="20"></i>
 								<span>Main</span>
 						</a></li>
@@ -59,7 +59,7 @@
 								<span>커뮤니티</span>
 						</a>
 							<ul class="submenu">
-								<li><a href="pageTest.do">실시간 타임라인</a></li>
+								<li><a href="timeLine.do">실시간 타임라인</a></li>
 								<li><a href="study.do">스터디게시판</a></li>
 								<li><a href="free.do">자유게시판</a></li>
 							</ul></li>
@@ -78,7 +78,7 @@
 							class='sidebar-link'> <i data-feather="layers" width="20"></i>
 								<span>오답노트</span>
 						</a></li>
-						<li id="myCBT"class="sidebar-item  "><a href="table.html"
+						<li id="myCBT" class="sidebar-item  "><a href="table.html"
 							class='sidebar-link'> <i data-feather="grid" width="20"></i>
 								<span>나만의 CBT</span>
 						</a></li>
@@ -106,7 +106,6 @@
 								<li><a href="memberList.do">회원목록</a></li>
 								<li><a href="appClass.do">클래스 승인</a></li>
 								<li><a href="appConsult.do">상담 승인</a></li>
-
 							</ul></li>
 
 					</ul>
@@ -195,7 +194,7 @@
 			<footer>
 				<div class="footer clearfix mb-0 text-muted">
 					<div class="float-left">
-						<p>2020 &copy; Voler</p>
+						<p>2022 &copy; NAVI</p>
 					</div>
 					<div class="float-right">
 						<p>
@@ -231,11 +230,9 @@
 			$("#alarmList").on("click", function(e){
 				let csrfHeaderName = "${_csrf.headerName}";
 				let csrfToken=$("input[name=_csrf]").val();
-				//console.log($(e.target).prop('tagName'));
 				
 				if($(e.target).prop('tagName') == 'SPAN'){
 					let alarmNo = $(e.target).closest("div").prev().html();
-					//console.log(alarmNo);
 					$.ajax({ 
 						url : "/alarmUpdate.do",
 						type : "post",
