@@ -35,49 +35,51 @@
                             </div>
                             <div class="form-group mb-3">
                                 <label class="form-label">문제</label>
-                                <textarea class="form-control" rows="3" id="ques" name="ques" th:text="${my.ques}" readonly="readonly"></textarea>
+                                <textarea class="form-control" rows="3" id="ques" name="ques" th:text="${my.ques}" ></textarea>
                             </div>
                             <div class="form-group mb-3"> 
                                 <label class="form-label">정답</label>
-                                <textarea class="form-control" rows="2" id="cnsr" name="cnsr" th:text="${my.cnsr}" readonly="readonly"></textarea>
+                                <textarea class="form-control" rows="2" id="cnsr" name="cnsr" th:text="${my.cnsr}"></textarea>
                             </div>
                             <!-- 키워드가 있다면 키워드 노출 !-->
                             <div th:each="key:${keyword}" th:if="${key.cKwrd}" != null>
                                 <div class="col-sm-6">
 	                                <div class="form-group position-relative has-icon-right">
-	                                    <input type="text" class="form-control"  id="keyword" name="keyword" th:value="${key.cKwrd}" readonly="readonly">
+	                                    <input type="text" class="form-control"  id="keyword" name="keyword" th:value="${key.cKwrd}">
+	                                    <div class="form-control-icon"><a style="cursor: pointer;" onclick="add()"><h1>+</h1></a></div>
 	                                </div>
                                 </div>
                             </div>
+                            <div id="answer"></div><!-- add누르면 키워드input 추가되는 영억-->
                             <!-- 보기가 있다면 보기 노출 -->
                             <div th:if="${my.ex4}" != null>
 	                            <div class="form-group mb-3">
 	                                <label class="form-label">보기1</label>
-	                                <textarea class="form-control" rows="1" id="ex1" name="ex1" th:text="${my.ex1}" readonly="readonly"></textarea>
+	                                <textarea class="form-control" rows="1" id="ex1" name="ex1" th:text="${my.ex1}" ></textarea>
 	                            </div>
 	                            <div class="form-group mb-3">
 	                                <label class="form-label">보기2</label>
-	                                <textarea class="form-control" rows="1" id="ex2" name="ex2" th:text="${my.ex2}" readonly="readonly"></textarea>
+	                                <textarea class="form-control" rows="1" id="ex2" name="ex2" th:text="${my.ex2}" ></textarea>
 	                            </div>
 	                            <div class="form-group mb-3">
 	                                <label class="form-label">보기3</label>
-	                                <textarea class="form-control" rows="1" id="ex3" name="ex3" th:text="${my.ex3}" readonly="readonly"></textarea>
+	                                <textarea class="form-control" rows="1" id="ex3" name="ex3" th:text="${my.ex3}" ></textarea>
 	                            </div>
 	                            <div class="form-group mb-3">
 	                                <label class="form-label">보기4</label>
-	                                <textarea class="form-control" rows="1" id="ex4" name="ex4" th:text="${my.ex4}" readonly="readonly"></textarea>
+	                                <textarea class="form-control" rows="1" id="ex4" name="ex4" th:text="${my.ex4}" ></textarea>
 	                            </div>
 	                        </div> <!-- 보기영억 끝 -->
                              <div class="form-group mb-3">
                                 <label class="form-label">풀이</label>
-                                <textarea class="form-control" id="explna" name="explna" rows="3" th:text="${my.explna}" readonly="readonly"></textarea>
+                                <textarea class="form-control" id="explna" name="explna" rows="3" th:text="${my.explna}" ></textarea>
                             </div>
-                            <!--파일-->
+                             <!--파일-->
                             <div class="col-md-6 mb-1">
                                     <div class="input-group mb-8">
                                         <span class="input-group-text" id="inputGroupFileAddon01"><i data-feather="upload"></i></span>
                                         <div class="form-file">
-                                            <input type="text" class="form-file-input" id="attach" name="file" aria-describedby="attach"  readonly="readonly">
+                                            <input type="file" class="form-file-input" id="attach" name="file" aria-describedby="attach">
 		                                     <label class="form-file-label" for="inputGroupFile01">
                                                 <span class="form-file-text"th:text="${my.attach}" readonly="readonly"></span>
 		                                     </label> 
@@ -85,29 +87,9 @@
                                     </div>
       					   </div>
                             <div class="col-12 d-flex justify-content-end">
-                                <button type="button" class="btn btn-primary mr-2 mb-3" id="updateBtn">수정</button>
-                                <button type="button" class="btn btn-outline-primary mr-2 mb-3"
-                                        data-toggle="modal" data-target="#border-less">삭제</button>
-                                <button type="button" class="btn btn-outline-primary mr-3 mb-3" id="listBtn">목록</button>
+                                <button type="button" class="btn btn-primary mr-2 mb-3" id="update">수정</button>
+                                <button type="reset" class="btn btn-light-secondary mr-1 mb-3">초기화</button>
                             </div>
-                            
-                            <!-- 삭제버튼 누르면 모달창 뜸 -->
-								<!--BorderLess Modal Modal -->
-								<div class="modal fade text-left modal-borderless" id="border-less" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
-									<div class="modal-dialog modal-dialog-scrollable" role="document">
-										<div class="modal-content">
-											<div class="modal-body">등록한 문제를 삭제하시겠습니까?</div>
-											<div class="modal-footer">
-												<button type="button" class="btn btn-primary ml-1" data-dismiss="modal" id="deleteBtn">
-													<i class="bx bx-check d-block d-sm-none"></i> <span class="d-none d-sm-block">확인</span>
-												</button>
-												<button type="button" class="btn btn-light-primary" data-dismiss="modal">
-													<i class="bx bx-x d-block d-sm-none"></i> <span class="d-none d-sm-block">취소</span>
-												</button>
-											</div>
-										</div>
-									</div>
-								</div> <!--삭제버튼 끝-->
                             </div><!--card body끝-->
                             </form>
                         </div>
@@ -122,25 +104,25 @@
 	    <input type="hidden" id="langCd" name="langCd" >
     </form>
 <script>
-    //수정버튼    
-    $("#updateBtn").on("click", function() {
+        
+    $("#update").on("click", function() {
 	     $("#cbtNo").val($("#cbtNo0").val());
 	     $("#gtpCd").val($("#gtpCd0").val());
 	     $("#langCd").val($("#langCd0").val());
-	     hiddenFrm.submit();
-		//location.href = "/cbtGuideUpdate.do?cbtNo="+cbtNo"&gtpCd="+gtpCd+"&langCd="langCd;
-	})
-	//삭제버튼
-	$("#deleteBtn").on("click",function(){
-	    let cNo = $("#cbtNo0").val();
-	    console.log(cNo+"삭제예정 ㅇㅇ");
-	    location.href = "/cbtGuideDelete.do?cbtNo="+cNo;
-	})
-	//목록버튼
-	$("#listBtn").on("click",function(){
-	   location.href = "/cbtGuideMyList.do";
+	     console.log("실행됨");
 	})
 	
+	 function add(){ 
+        let answer = document.getElementById("answer");
+        	answer.innerHTML+=`
+        	<div class="col-sm-6">
+            <div class="form-group position-relative has-icon-right">
+                <input type="text" class="form-control" id="keyword" name="keyword" placeholder="정답 키워드를 입력해주세요.">
+                    <div class="form-control-icon"><a style="cursor: pointer;" onclick="add()"><h1>+</h1></a>
+                </div>
+            </div>
+        </div>`;
+    }  
 </script>
 </div>
 </body>

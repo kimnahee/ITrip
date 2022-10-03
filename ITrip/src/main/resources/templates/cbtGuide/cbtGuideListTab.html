@@ -22,10 +22,11 @@
 						<h4 class="card-title">문제</h4>
 					</div>
 					<div class="card-content">
-						<div>
-							<h5 th:if="${#lists.isEmpty(cbtList)}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;문제가
-								없습니다...</h5>
-						</div>
+						 <!--문제가 없는 경우 -->
+						 <!--문제가 없는 경우 -->
+			     
+						   <img class="mx-auto d-block mb-4"  th:if="${#lists.isEmpty(cbtList)}" alt="문제가 없습니다." src="images/nothing.png" style="width: 300px;">
+							<h3 class="text-center mb-5"th:if="${#lists.isEmpty(cbtList)}">문제가 없습니다...</h3>
 						<!-- gtpCd에 따른 처리 -->
 						<div class="card-body" th:each="cbt, st:${cbtList}">
 							<!-- ctpCd == '1' -->
@@ -51,6 +52,19 @@
 													</a>
 												</div>
 											</div>
+											<!-- 이미지가 있으면 이미지 출력-->
+											<div id="atch" class="form-group" th:if="${not #strings.isEmpty(cbt.attach)}">
+												<span class="mb-2 text-md">
+													<div style="text-align: center;">
+															<img th:src="@{*{attachDir}}" style="margin-bottom: 10px;">
+													</div>
+												</span>
+												<div class="form-group mb-3">
+													<label for="basicInput">첨부파일(이미지)</label>
+													<input type="text" id="file" class="form-control" name="file" th:field=*{attach}
+														readonly="readonly">
+												</div>
+											</div> <!-- 이미지 출력 끝 -->
 											<div class="form-check">
 												<input class="form-check-input" type="radio"
 													th:id="|cbt${cbt.cbtNo}1|" th:name="|cbt${st.index}|"

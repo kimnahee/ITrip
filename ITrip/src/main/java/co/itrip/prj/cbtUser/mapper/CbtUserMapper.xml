@@ -53,4 +53,44 @@ and U.rowno = #{rownum}
 </select>
 <!-- ORDER BY DBMS_RANDOM.VALUE  <![CDATA[AND ROWNUM <= 1]]> -->
  
+ 
+ 	<select id="cbtUserMyList" parameterType="co.itrip.prj.cbtUser.service.CbtUserVO" resultType="co.itrip.prj.cbtUser.service.CbtUserVO">
+		SELECT CBT_NO,
+	           CASE WHEN LENGTH(QUES) > 30 THEN SUBSTR(QUES,0,30)||'..'
+	                ELSE SUBSTR(QUES,0,30)
+	           END AS QUES, 
+	           CNSR , CNSR_CNT, CALL,
+	           UTP_CD,
+	           LANG_CD
+	    FROM CBT_USER 
+	    WHERE MEMBER_ID = #{memberId}
+        ORDER BY CBT_NO
+	</select>
+	
+	<select id="cbtUserMyOne" parameterType="co.itrip.prj.cbtUser.service.CbtUserVO" resultType="co.itrip.prj.cbtUser.service.CbtUserVO">
+		  SELECT * FROM CBT_USER WHERE CBT_NO = ${cbtNo}
+	</select>
+	
+	
+	<update id="cbtUserMyUpdate">
+		update cbt_user
+		<set>
+			<if test="ques != null">ques = #{ques},</if>
+			<if test="utpCd != null">utp_cd = #{utpCd},</if>
+			<if test="langCd != null">lang_cd = #{langCd},</if>
+			<if test="ex1 != null">ex1 = #{ex1},</if>
+			<if test="ex2 != null">ex2 = #{ex2},</if>
+			<if test="ex3 != null">ex3 = #{ex3},</if>
+			<if test="ex4 != null">ex4 = #{ex4},</if>
+			<if test="cnsr != null">cnsr = #{cnsr},</if>
+			<if test="explna != null">explna = #{explna},</if>
+			<if test="attach != null">attach = #{attach},</if>
+			<if test="attachDir != null">attach_dir = #{attachDir}</if>
+		</set>
+		where CBT_NO = #{cbtNo}
+	</update> 
+	
+	<delete id="cbtUserMyDelete">
+		delete from cbt_user where cbt_no = #{cbtNo}
+	</delete>
 </mapper>

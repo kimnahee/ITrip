@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+<head>
+<meta charset="UTF-8">
+<meta name="_csrf" th:content="${_csrf.token}"/>
+<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+<title></title>
+</head>
+<body>
+<div layout:fragment="content">
+    <!-- Section -->
+	<section class="input-group-select">
+			<div class="row">
+				<div class="col-12" style="margin: 0 auto;width: 60%">
+					<div class="card">
+						<div class="card-header">
+							<h4 class="card-title">나의 CBT 문제</h4>
+						</div>
+						<div class="card-content">
+							<input type="hidden" th:value="${myCbt.langCd}" id="preLangCd">
+							<input type="hidden" th:value="${myCbt.cnsr}" id="preCnsr">
+							<form action="cbtUserMyUpdate.do" method="post" enctype="multipart/form-data">
+							<!-- 로그인 시큐리티 -->
+							<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+							<div class="card-body">
+							
+								<div class="row">
+									<div class="form-group mb-3">
+										<div class="input-group mb-2">
+											<label class="input-group-text" for="utpCd">유형</label>
+											<select class="form-select" id="utpCd" name="utpCd">
+												<option disabled="disabled" selected th:value="${myCbt.utpCd}" th:utext="${myCbt.utpCdName}"></option>
+											</select>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="form-group mb-3">
+										<div class="input-group mb-2">
+											<label class="input-group-text" for="langCd">언어</label>
+											<select class="form-select" id="langCd" name="langCd">
+												<option th:each="lang : ${langCdList}" id="newLangCd" th:value="${lang.cdNo}" th:utext="${lang.cdName}"></option>
+											</select>
+										</div>
+									</div>
+								</div>
+								<div class="form-group mb-3">
+									<label for="ques" class="form-label">문제</label>
+									<textarea class="form-control" id="ques" name="ques" rows="3" th:text=${myCbt.ques}></textarea>
+								</div>
+
+
+
+								<div class="form-group mb-3" id="exList">
+									<div th:if="${myCbt.utpCd}=='1'">
+										<label for="ex1" class="form-label">보기①</label>
+										<textarea class="form-control" id="ex1" name="ex1" rows="1" th:text=${myCbt.ex1}></textarea>
+										<label for="ex3" class="form-label">보기②</label>
+										<textarea class="form-control" id="ex2" name="ex2" rows="1" th:text=${myCbt.ex2}></textarea>
+										<label for="ex4" class="form-label">보기③</label>
+										<textarea class="form-control" id="ex3" name="ex3" rows="1" th:text=${myCbt.ex3}></textarea>
+										<label for="ex5" class="form-label">보기④</label>
+										<textarea class="form-control" id="ex4" name="ex4" rows="1" th:text=${myCbt.ex4}></textarea>
+									</div>
+									
+									<div th:if="${myCbt.utpCd}=='2'">
+										<label for="cnsr" class="form-label">정답</label>
+										<div class="form-check">
+											<input class="form-check-input" type="radio" name="cnsr" id="cnsr" value="O"> O
+										</div>
+										<div class="form-check">
+											<input class="form-check-input" type="radio" name="cnsr" id="cnsr" value="X"> X
+										</div>
+									</div>
+								</div>
+
+								
+								<div class="form-group mb-3">
+									<label for="explna" class="form-label">풀이</label>
+									<textarea class="form-control" id="explna" name="explna" rows="3" th:text=${myCbt.explna}></textarea>
+								</div>
+								<div class="col-md-6 mb-1">
+									<div class="input-group mb-8">
+										<span class="input-group-text" id="inputGroupFileAddon01">
+											<i data-feather="upload"></i>
+										</span>
+										<div class="form-file">
+											<input type="file" id="attach" name="file" aria-describedby="attach"> <!--  class="form-file-input" -->
+											<!-- <label class="form-file-label" for="attach"> 
+											<span class="form-file-text"></span> 
+											<span class="form-file-button">Upload File</span>
+											</label> -->
+										</div>
+									</div>
+								</div>
+								<input id="memberId" name="memberId" th:value="${#authentication.principal.member.memberId}"  type="hidden">
+								<input id="cbtNo" name="cbtNo" th:value="${myCbt.cbtNo}"  type="hidden">
+							</div>
+							<!-- 풀이내용까지 끝 -->
+							<div class="col-12 d-flex justify-content-end">
+								<button type="submit" class="btn btn-primary mr-1 mb-1">수정</button>
+								<button type="button" class="btn btn-primary mr-1 mb-1"th:id="${myCbt.cbtNo}" onclick="deleteCbt(this.getAttribute('id'))">삭제</button>
+								<button type="reset" class="btn btn-light-secondary mr-1 mb-1">취소</button>
+							</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			<form id="frm" action="" method="post">
+				<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+				<input type="hidden" name="cbtNo" th:value="${myCbt.cbtNo}" >
+			</form>
+		</section>
+		
+		<script type="text/javascript">
+			let preLangCd = document.getElementById("preLangCd").value
+			let preCnsr = document.getElementById("preCnsr").value
+			$("select option[value*="+preLangCd+"]").prop('selected',true);
+			$("input[value*="+preCnsr+"]").prop('checked',true);
+			
+			function deleteCbt(cbtNo){
+				// alert("삭제하시겠습니까???")
+		    	frm.action ="cbtUserMyDelete.do"
+		    	frm.submit()
+			}
+		</script>
+</div>
+</body>
+</html>
