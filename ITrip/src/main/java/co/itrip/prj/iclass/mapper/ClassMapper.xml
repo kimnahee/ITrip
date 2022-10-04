@@ -92,4 +92,5 @@
 		from class_chat
 		where class_no = #{classNo}
 	</select>
+
 </mapper>
