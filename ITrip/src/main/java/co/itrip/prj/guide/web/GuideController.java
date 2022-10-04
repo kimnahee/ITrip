@@ -13,8 +13,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 
 import co.itrip.prj.cmmncd.service.CmmnCdService;
 import co.itrip.prj.consult.service.ConsultService;
@@ -23,6 +27,7 @@ import co.itrip.prj.follow.service.FollowService;
 import co.itrip.prj.follow.service.FollowVO;
 import co.itrip.prj.guide.service.GuideService;
 import co.itrip.prj.guide.service.GuideVO;
+import co.itrip.prj.iclass.service.ClassVO;
 import co.itrip.prj.member.service.MemberService;
 import co.itrip.prj.member.service.MemberVO;
 
@@ -81,13 +86,7 @@ public class GuideController {
 		return "guide/cstart";
 	}
 	
-	
-	// 가이드 마이페이지 -가이드가 개설한 클래스 리스트
-	@GetMapping("/gclass.do")
-	public String gclass() {
-		return "guide/gclass";
-	}
-	
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	// 은지 - 가이드 마이페이지 
@@ -112,6 +111,14 @@ public class GuideController {
 		model.addAttribute("consultList", conservice.consultList(vo));
 		return "guide/gconsult";
 	}
+	
+	
+	// 은지 - 가이드 마이페이지 -가이드가 개설한 클래스 리스트
+	@GetMapping("/gclass.do")
+	public String gclass() {
+		return "guide/gclass";
+	}
+	
 	// 은지 - 가이드 정보 수정페이지
 	@RequestMapping("/grevice.do")
 	public String grevice(Model model, GuideVO vo, Principal principal) {
@@ -147,11 +154,21 @@ public class GuideController {
 		return "redirect:gmyPage.do";
 	}
 	
-	// 은지 - 클래스 수강생 리스트
-	@GetMapping("/traveler.do")
-	public String traveler() {
-		return "guide/traveler";
+	@GetMapping("/userList.do")
+	public String userList() {
+		return "guide/userList";
 	}
 	
+	// 은지 - 클래스 수강생 리스트(페이징)
+	@RequestMapping("/ajaxUserList.do")
+	@ResponseBody
+	public PageInfo<ClassVO> userList(ClassVO vo, Principal principal, Model model, HttpServletRequest request,
+			@RequestParam(required = false, defaultValue = "1") int pageNum,
+			@RequestParam(required = false, defaultValue = "8") int pageSize){
+		PageHelper.startPage(pageNum, pageSize);
+		vo.setGuideId(principal.getName());
+		model.addAttribute("pageInfo", PageInfo.of(guService.userList(vo)));
+		return PageInfo.of(guService.userList(vo));
+	}
 
 }
