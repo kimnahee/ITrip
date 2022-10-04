@@ -75,6 +75,11 @@ public class ClassServiceImpl implements ClassService {
 		return map.alreadyClass(vo);
 	}
 
+	@Override
+	public int classAttendInsert(ClassAttendVO vo) {
+		return map.classAttendInsert(vo);
+	}
+
 	
 
 }

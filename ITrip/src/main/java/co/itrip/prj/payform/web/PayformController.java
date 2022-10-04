@@ -1,10 +1,15 @@
 package co.itrip.prj.payform.web;
 
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import co.itrip.prj.iclass.service.ClassAttendVO;
+import co.itrip.prj.iclass.service.ClassService;
 import co.itrip.prj.payform.service.PayformService;
 import co.itrip.prj.payform.service.PayformVO;
 
@@ -18,13 +23,16 @@ import co.itrip.prj.payform.service.PayformVO;
 public class PayformController {
 	
 	@Autowired
-	private PayformService dao;
+	private PayformService payformService;
+
 	
 	//경아 - 클래스구입
 	@PostMapping("/ClPayformInsert.do")
-	public String ClPayformInsert(PayformVO vo) {
-		dao.clPayformInsert(vo);
-		return "member/mypage";
+	public String ClPayformInsert(PayformVO vo,ClassAttendVO cvo,Principal prin) {
+		cvo.setMemberId(prin.getName());
+		payformService.clPayformInsert(vo,cvo);
+		
+		return "redirect:myPage";
 	}
 	
 	/*

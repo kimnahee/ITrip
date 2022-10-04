@@ -42,7 +42,9 @@ layout:decorate="~{layout/layout}">
           <div class="card col-xs-12 col-sm-6 col-md-5 col-lg-4" th:each="cList:${pageInfo.list}" id="searchClassList">
 
             <div class="property-item mb-30">
-              <a href="#" class="img"><img th:src="@{*{cList.attachDir}}"alt="Image" class="img-fluid"></a>
+             <!--  <a href="#" class="img"><img th:src="@{*{cList.attachDir}}"alt="Image" class="img-fluid"></a> -->
+              
+               <a href="#" class="img"><img th:src="@{/download(fileName=${cList.attachDir})}" alt="Image" class="img-fluid"/></a>
               <div class="property-content">
                 <div class="price mb-2"><span th:text=${cList.price} class="cPrice"></span></div>
                 <div>

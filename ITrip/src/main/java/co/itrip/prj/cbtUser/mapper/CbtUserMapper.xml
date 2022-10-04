@@ -32,7 +32,7 @@ cbt_no, ques, lang_cd, cnsr, ex1, ex2,
 			explna, utp_cd, member_id  FROM cbt_user where lang_cd=#{langCd}) U,cmmncd C
 WHERE C.cd_ini = 'L' 
 and C.cd_no = U.lang_cd 
-and rownum = 1
+and rownum = #{rownum}
 
 
 </select>
