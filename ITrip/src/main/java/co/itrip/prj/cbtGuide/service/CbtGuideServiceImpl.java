@@ -89,40 +89,28 @@ public class CbtGuideServiceImpl implements CbtGuideService {
 	/* 문제 수정  */
 	@Override
 	public int cbtGuideUpdate(CbtGuideVO vo) {
-		return map.cbtGuideUpdate(vo);
-	}
-	
-   /* 키워드 수정 */
-	@Override
-	public int keywordUpdate(CbtKeywordVO vo) {
-	
-	    int r = map.keywordUpdate(vo);
-	    
-	    // 해당 글의 키워드 목록을 조회
-	    List<CbtKeywordVO> viewList = map.keywordList(vo);
-	    
-	    int cunt = map.KeywordListCount(vo); // 기존 키워드의 갯수 확인
-	   // if (cunt == vo.getCKwrd().size()) {} //넘어온 키워드 크기가 기존 키워드 크기와 동일하면
-	    	
-	    
-	    
-	    /*if 넘어온 키워드 크기가 기존 키워드 크기와 동일하면 {
-	        update
-	     } else{
-	        if (kyNo 와 넘어온 kyNo가 동일하면){
-	            update
-	        }else if(넘어온 데이터에 출력값 kyNo가 없으면 등록 또는 삭제(
-	         만약에 넘어온 키워드가 출력값의 값보다 작으면 삭제고 크면 등록{
-	        }
-	      }*/
-    	// 입력 받은 vo.getKeyword 갯수만큼 반복문 실행
-		/*
-		 * if (vo.getCKwrd() != null) { for (cunt < vo.getCKwrd().size(); i++) { if
-		 * (vo.getKeyword().get(i) != null) { // 여러값 입력 시 null이 들어갈 수 있으므로 처리
-		 * map.keywordInsert(kvo); // Mapping된 메소드 찾아 실행 } } }
-		 */
+		int r =  map.cbtGuideUpdate(vo);
+		
+		
+		/* 키워드 삭제하고 다시 등록 */
+		CbtKeywordVO kvo = new CbtKeywordVO(); // keyword 인스턴스 생성
+		kvo.setCbtNo(vo.getCbtNo()); // CBT_KEYWORD의 FK인 CBT_NO를 CBT_GUIDE CBT_NO에서 가져와 담음
+
+		/* 키워드 등록 */
+		// 입력 받은 vo.getKeyword 갯수만큼 반복문 실행
+		map.keywordDelete(vo);
+		if (vo.getKeyword() != null) {
+			for (int i = 0; i < vo.getKeyword().size(); i++) {
+				if (vo.getKeyword().get(i) != null) { // 여러값 입력 시 null이 들어갈 수 있으므로 처리
+					kvo.setCKwrd(vo.getKeyword().get(i)); // vo.getKeyword()에 담긴 것들을 i만큼 돌면서 대입
+					map.keywordInsert(kvo); 
+				}
+			}
+		}
+		
 		return r;
 	}
+	
 	
 	/* 문제 삭제 */
 	@Override
@@ -150,11 +138,7 @@ public class CbtGuideServiceImpl implements CbtGuideService {
 	/* 2022.09.26 객관식 문제 ajax로 전부 처리 */
 	@Override
 	public MyCbtLongVO ajaxMyCbtLongList(MyCbtLongVO myVo) {
-		
-		//map.ajaxMyCbtLongChkList(vo); // 키워드 기준으로 사용자의 답이 있으면 0, 없으면 1 반환(복수형태)
-		// return 값이 CbtKeywordVO의 List<Integer>chklist 필드에 담김..?
-
-		return map.ajaxMyCbtLongList(myVo);
+		return map.ajaxMyCbtLongList(myVo);// 키워드 기준으로 사용자의 답이 있으면 0, 없으면 1 반환(복수형태)
 	} 
 
 
