@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.github.pagehelper.PageHelper;
@@ -37,19 +38,21 @@ public class CbtUserController {
 	@Autowired
 	CmmnCdService cmmnCdService;
 	
-
+	//cbt메인화면 
 	@RequestMapping("/cbtUserMain.do")
 	public String langCdList(Model model) {
 		model.addAttribute("langCdList",cmmnCdService.cdList("L"));
 		return "cbtUser/cbtUserMain";
 	}
 	
+	//cbt문제한건씩불러오기 
 	@RequestMapping("/cbtUserSelectOne.do")
 	public String cbtUserSelectOne(CbtUserVO vo,Model model) {
 		model.addAttribute("cbtOne", cbtUserService.cbtUserSelectOne(vo));
 		return "cbtUser/cbtUserList";
 	}
 	
+	//문제등록폼
 	@GetMapping("/cbtUserInsertForm.do")
 	public String cbtUserInsertForm(Model model) {
 		model.addAttribute("utpCdList", cmmnCdService.cdList("U"));
@@ -58,6 +61,7 @@ public class CbtUserController {
 	}
 
 	
+	//문제등록
 	@PostMapping("/cbtUserInsert.do")
 	public String cbtUserInsert(CbtUserVO vo, Model  model, MultipartFile file,HttpServletRequest request) throws IllegalStateException, IOException {
 		
@@ -90,7 +94,7 @@ public class CbtUserController {
 		return "cbtUser/cbtUserMyList";
 	}
 	
-	// 나의 문제 상세보기
+	// 내가 제출한 문제 1건 상세보기
 	@PostMapping("/cbtUserMyOne.do")
 	public String cbtUserListOne(CbtUserVO vo, Model model) {
 		model.addAttribute("langCdList",cmmnCdService.cdList("L"));
@@ -102,7 +106,8 @@ public class CbtUserController {
 		model.addAttribute("myCbt", cbtUserService.cbtUserMyOne(vo));
 		return "cbtUser/cbtUserMyOne";
 	}
-	
+
+	//내가 제출한 cbt문제수정
 	@PostMapping("/cbtUserMyUpdate.do")
 	public String cbtUserMyUpdate(CbtUserVO vo, Model  model, MultipartFile file,HttpServletRequest request) throws IllegalStateException, IOException {
 		
@@ -121,14 +126,17 @@ public class CbtUserController {
 		return "redirect:cbtUserMyList.do";
 	}
 	
+	//내가 제출한 cbt문제삭제 
 	@PostMapping("/cbtUserMyDelete.do")
 	public String cbtUserMyDelete(CbtUserVO vo) {
 		cbtUserService.cbtUserMyDelete(vo);
 		return "redirect:cbtUserMyList.do";
 	}
-	
-	@RequestMapping("/cbtCustomMain.do")
-	public String cbtCustomMain(Model model) {
-		return "cbtCustom/cbtCustomInsertForm";
+
+	//다음문제,이전문제가져오는 아작스
+	@RequestMapping("/ajaxQuestion.do")
+	@ResponseBody
+	public CbtUserVO AjaxQuestion(CbtUserVO vo) {
+		return cbtUserService.ajaxQuestion(vo);
 	}
 }
