@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<title>즐겨찾기</title>
+<script src="js/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<div layout:fragment="content">
+<section class="section">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">즐겨찾기</h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <!-- 탭 사이드 -->
+                            <div class="col-3">
+                                <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                                    <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab"
+                                        aria-controls="v-pills-home" aria-selected="true">중요한 문제</a>
+                                    <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab"
+                                        aria-controls="v-pills-profile" aria-selected="false">개념이 부족한 문제</a>
+                                    <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab"
+                                        aria-controls="v-pills-messages" aria-selected="false">실수</a>
+                                </div>
+                            </div>
+                            <!-- 탭 사이드 끝-->
+                            <!-- 탭 내용 -->
+                            <div class="col-9" th:each="bm:${bookmark}">
+                                <div class="tab-content" id="v-pills-tabContent">
+                                    <!-- 중요한 문제 -->
+                                    <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                                        <!-- 내용-->
+                                        <div th:if="${bm.bmCd} == '1'">
+                                        <span th:text="${bm.cbtNo}"></span>
+                                        
+                                        
+                                        </div>
+                                    </div>
+                                    <!-- 개념이 부족한 문제 -->
+                                    <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                                        <div th:if="${bm.bmCd} == '2'">
+                                        <span th:text="${bm.cbtNo}"></span>
+                                        
+                                        </div>
+                                    </div>
+                                    <!-- 실수 -->
+                                    <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+                                        <div th:if="${bm.bmCd} == '3'">
+                                            <span th:text="${bm.cbtNo}"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 탭 내용 끝 -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</section>
+</div>
+
+</body>
+</html>

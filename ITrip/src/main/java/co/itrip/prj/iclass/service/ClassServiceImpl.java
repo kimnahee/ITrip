@@ -86,6 +86,10 @@ public class ClassServiceImpl implements ClassService {
 
 	}
 
-	
+	@Override
+	public int classChk(ClassAttendVO vo) {
+		//클래스 출석체크
+		return map.classChk(vo);
+	}
 
 }

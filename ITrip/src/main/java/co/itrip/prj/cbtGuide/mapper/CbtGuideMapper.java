@@ -3,17 +3,17 @@ package co.itrip.prj.cbtGuide.mapper;
 import java.util.List;
 import java.util.Map;
 
+import co.itrip.prj.cbtGuide.service.BookmarkVO;
 import co.itrip.prj.cbtGuide.service.CbtGuideVO;
 import co.itrip.prj.cbtGuide.service.CbtKeywordVO;
 import co.itrip.prj.cbtGuide.service.MyCbtHderVO;
 import co.itrip.prj.cbtGuide.service.MyCbtLongVO;
-import co.itrip.prj.gtpcd.service.GtpCdVO;
 
 /**
 * 가이드CBT Mapping
 * @author 김하은
 * @date 2022.09.16
-* @version 1.6
+* @version 1.7
 */
 public interface CbtGuideMapper {
 	    
@@ -27,7 +27,8 @@ public interface CbtGuideMapper {
 		List<CbtGuideVO> cbtGuideListX(CbtGuideVO vo); /* 문제 조회 : 사용자가 푼 문제 중 정답처리 된 오답조회 */
 		public List<CbtKeywordVO> keywordList(CbtKeywordVO vo); /* 키워드 조회 */
 		public int KeywordListCount(CbtKeywordVO vo); /* 키워드 갯수 조회 */
-		public GtpCdVO gtpNameList(String gtpNo); /* 사용자가 푼 문제 리스트의 유형 코드네임 출력 */
+		//public GtpCdVO gtpNameList(String gtpNo); /* 사용자가 푼 문제 리스트의 유형 코드네임 출력 */
+		List<CbtGuideVO> bookmarkList(CbtGuideVO vo); /* 즐겨찾기 조회 */
 		
 		public int cbtGuideInsert(CbtGuideVO vo);   /* 문제 등록 */
 		public int cbtGuideUpdate(CbtGuideVO vo);   /* 문제 수정 */ 
@@ -40,10 +41,10 @@ public interface CbtGuideMapper {
 		
 		public int chkCuntUpdate(MyCbtHderVO vo); /* 정답카운트 조회 */
 		
-		/* 정답률 */
 		/* 2022.09.26 ajax 처리*/
 		public MyCbtLongVO ajaxMyCbtLongList(MyCbtLongVO myVo); /* 객관식 문제 채점시 ajax로 정답 출력 */
 		public int ajaxMyCbtLongInsert(MyCbtLongVO vo); /* 사용자가 푼 서술형 문제 등록 */
 		public int ajaxMyCbtLongChkList(CbtGuideVO vo); /* REGEXP_COUNT를 이용하여 사용자가 입력한 값과 키워드를 비교하여 키워드 기준으로 존재하면 1 없으면 0 출력*/
 		public int ajaxMyCbLongChkUpdate(Map<String,Integer> map); /*  사용자가 입력한 값과 가이드가 등록한 키워드들을 비교하여(AND) 정답유무 처리 */
+		public int ajaxBookmarkInsert(BookmarkVO vo);   /* 즐겨찾기 추가 */ 
 }

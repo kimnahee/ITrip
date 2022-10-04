@@ -1,6 +1,8 @@
 package co.itrip.prj.cbtGuide.web;
 
 
+import java.security.Principal;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import co.itrip.prj.cbtGuide.service.BookmarkVO;
 import co.itrip.prj.cbtGuide.service.CbtGuideService;
 import co.itrip.prj.cbtGuide.service.CbtGuideVO;
 import co.itrip.prj.cbtGuide.service.MyCbtLongVO;
@@ -33,6 +36,12 @@ public class AjaxCbtGuideController {
 		//model.addAttribute("cbtList", cgDao.ajaxMyCbtLongList(vo));
 		//model.addAttribute("myList", cgDao.myCbtLongInsert(myVo));
 		return cgDao.ajaxMyCbtLongList(myVo);
+	}
+	/* 즐겨찾기 등록 */
+	@PostMapping("/ajaxBookmarkInsert.do")
+	public int ajaxBookmarkInsert(BookmarkVO vo, Principal prin) {
+		vo.setMemberId(prin.getName()); //로그인된 사용자 정보 가져와 담기
+		return cgDao.ajaxBookmarkInsert(vo);
 	}
 	
 	

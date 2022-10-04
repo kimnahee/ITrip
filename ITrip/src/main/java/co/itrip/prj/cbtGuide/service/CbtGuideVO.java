@@ -36,5 +36,7 @@ public class CbtGuideVO {
 	private String gtpCdName; //gtpCd의 한글명
 	private String langCdName; //langCd의 한글명
 	
+	
+	private String bmCd; // 즐겨찾기 join으로 인해 리턴 값 담을 변수
 
 }
