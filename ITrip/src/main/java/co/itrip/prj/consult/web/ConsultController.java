@@ -19,6 +19,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
 import co.itrip.prj.cmmncd.service.CmmnCdService;
+import co.itrip.prj.consult.service.ConsultChatVO;
 import co.itrip.prj.consult.service.ConsultDtVO;
 import co.itrip.prj.consult.service.ConsultService;
 import co.itrip.prj.consult.service.ConsultVO;
@@ -75,6 +76,7 @@ public class ConsultController {
 		return "consult/consultSelectOne";
 	}
 	
+
 	
 	
 	// 카테고리별 검색 - 상담메인페이지
@@ -96,6 +98,16 @@ public class ConsultController {
 		System.out.println(vo);
 		// vo.setConsultNo(get)
 		return conService.consultState(vo);
+
+	//채팅방 연결
+	@GetMapping("/consultChat.do")
+	public String consultChat(ConsultVO vo, ConsultChatVO chatvo, Model model, HttpServletRequest request) {
+		int consultNo = Integer.parseInt(request.getParameter("consultNo"));
+		System.out.println("==========" + consultNo);
+		chatvo.setConsultNo(consultNo);
+		model.addAttribute("chat", conService.consultChat(chatvo));
+		return "chat/consultChat";
+
 	}
 	
 }

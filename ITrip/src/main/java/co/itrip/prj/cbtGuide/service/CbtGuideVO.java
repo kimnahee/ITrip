@@ -33,7 +33,6 @@ public class CbtGuideVO {
 	private int mkyNo; // 사용자가 푼 서술형 문제 번호
 	private int chklist; // 키워드 기준올 사용자 정답여부를 체크할 임시 변수
 	
-	
 	private String gtpCdName; //gtpCd의 한글명
 	private String langCdName; //langCd의 한글명
 	

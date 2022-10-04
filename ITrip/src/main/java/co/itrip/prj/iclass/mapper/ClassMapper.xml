@@ -87,5 +87,10 @@
 		and guide_id = #{guideId}
 	</select>
 	
-	
+	<select id="classChatLink" resultType="co.itrip.prj.iclass.service.ClassChatVO">
+		select chat_link
+		from class_chat
+		where class_no = #{classNo}
+	</select>
+
 </mapper>

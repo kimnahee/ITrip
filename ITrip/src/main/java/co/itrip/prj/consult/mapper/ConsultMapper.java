@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Select;
 
+import co.itrip.prj.consult.service.ConsultChatVO;
 import co.itrip.prj.consult.service.ConsultDtVO;
 import co.itrip.prj.consult.service.ConsultVO;
 
@@ -19,6 +20,10 @@ public interface ConsultMapper {
 	ConsultVO consultSelectOne(ConsultVO vo); // 상담 단건조회
 	List<ConsultDtVO> consultDtList(ConsultDtVO vo); // 상담 단건조회 (서비스에는 없음)
 	
+
 	List<ConsultVO> myConsultList(ConsultVO vo); // 마이페이지 상담 전체조회 - 소정
+
+	
+	ConsultChatVO consultChat(ConsultChatVO vo); //채팅방 연결
 
 }

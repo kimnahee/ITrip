@@ -19,15 +19,16 @@
                         <h4 class="card-title">문제<span th:text="${my.cbtNo}">번호</span></h4>
                     </div>
                     <div class="card-content">
-                    <form id="frm">
+                    <form id="frm" method="post" action="/cbtGuideUpdate.do" enctype="multipart/form-data">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-6 mb-1">
                                 <input type="hidden" id="memberId" name="memberId" th:value="${#authentication.principal.member.memberId}">
                                     <div class="input-group mb-2" >
-	                                    <input type="hidden" id="cbtNo0" name="cbtNo0" th:value="${my.cbtNo}">
-	                                    <input type="hidden" id="gtpCd0" name="gtpCd0" th:value="${my.gtpCd}">
-	                                    <input type="hidden" id="langCd0" name="langCd0" th:value="${my.langCd}">
+	                                    <input type="hidden" id="cbtNo" name="cbtNo" th:value="${my.cbtNo}">
+	                                    <input type="hidden" id="gtpCd" name="gtpCd" th:value="${my.gtpCd}">
+	                                    <input type="hidden" id="langCd" name="langCd" th:value="${my.langCd}">
 	                                    <label class="input-group-text" id="gtpCdName" nane="gtpCdName" th:text="${my.gtpCdName}">유형</label>&nbsp;&nbsp;&nbsp;
 	                                    <label class="input-group-text" id="langCdName" nane="langCdName" th:text="${my.langCdName}">유형</label>
                                     </div>
@@ -42,15 +43,15 @@
                                 <textarea class="form-control" rows="2" id="cnsr" name="cnsr" th:text="${my.cnsr}"></textarea>
                             </div>
                             <!-- 키워드가 있다면 키워드 노출 !-->
-                            <div th:each="key:${keyword}" th:if="${key.cKwrd}" != null>
+                            <div th:each="key : ${keyword}" th:if="${key.cKwrd}" != null>
                                 <div class="col-sm-6">
 	                                <div class="form-group position-relative has-icon-right">
-	                                    <input type="text" class="form-control"  id="keyword" name="keyword" th:value="${key.cKwrd}">
+	                                    <input type="text" class="form-control"  id="cKwrd" name="keyword" th:value="${key.cKwrd}">
 	                                    <div class="form-control-icon"><a style="cursor: pointer;" onclick="add()"><h1>+</h1></a></div>
 	                                </div>
                                 </div>
                             </div>
-                            <div id="answer"></div><!-- add누르면 키워드input 추가되는 영억-->
+                            <div id="answer" th:each="key , i: ${keyword}"></div><!-- add누르면 키워드input 추가되는 영억-->
                             <!-- 보기가 있다면 보기 노출 -->
                             <div th:if="${my.ex4}" != null>
 	                            <div class="form-group mb-3">
@@ -97,19 +98,13 @@
                 </div>
          </div>
     </section>
-    <form id="hiddenFrm" method="post" action="/cbtGuideUpdateForm.do">
-     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-     	<input type="hidden" id="cbtNo" name="cbtNo">
-	    <input type="hidden" id="gtpCd" name="gtpCd" >
-	    <input type="hidden" id="langCd" name="langCd" >
-    </form>
+
 <script>
         
     $("#update").on("click", function() {
-	     $("#cbtNo").val($("#cbtNo0").val());
-	     $("#gtpCd").val($("#gtpCd0").val());
-	     $("#langCd").val($("#langCd0").val());
-	     console.log("실행됨");
+	   alert("수정하시겠습니까?");
+	   
+	   frm.submit();
 	})
 	
 	 function add(){ 
@@ -117,7 +112,7 @@
         	answer.innerHTML+=`
         	<div class="col-sm-6">
             <div class="form-group position-relative has-icon-right">
-                <input type="text" class="form-control" id="keyword" name="keyword" placeholder="정답 키워드를 입력해주세요.">
+                <input type="text" class="form-control" id="cKwrd" name="keyword" placeholder="정답 키워드를 입력해주세요.">
                     <div class="form-control-icon"><a style="cursor: pointer;" onclick="add()"><h1>+</h1></a>
                 </div>
             </div>

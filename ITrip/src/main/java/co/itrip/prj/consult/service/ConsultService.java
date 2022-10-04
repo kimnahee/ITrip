@@ -25,5 +25,5 @@ public interface ConsultService {
 	
 	
 	
-
+	ConsultChatVO consultChat(ConsultChatVO vo); //채팅방 연결
 }

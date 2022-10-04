@@ -75,9 +75,10 @@ public class ConsultServiceImpl implements ConsultService{
 		return map.consultState(vo);
 	}
 
-
-
-	
-
+	@Override
+	public ConsultChatVO consultChat(ConsultChatVO vo) {
+		//채팅방 연결
+		return map.consultChat(vo);
+	}
 
 }

@@ -69,7 +69,7 @@
 						<span><h4 th:text=${com.title} style="color: white;"></h4></span>
 						<hr>
 						<span th:text=${com.memberId} th:if="${com.ctgry}=='스터디'"></span>
-						<hr>
+						<hr th:if="${com.ctgry}=='스터디'">
 						<span th:text=${com.content}></span>
 						<hr>
 						<span th:text=${com.dt}></span>

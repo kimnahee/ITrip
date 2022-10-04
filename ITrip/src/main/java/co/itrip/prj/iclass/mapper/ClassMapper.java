@@ -2,6 +2,7 @@ package co.itrip.prj.iclass.mapper;
 
 import java.util.List;
 
+import co.itrip.prj.iclass.service.ClassChatVO;
 import co.itrip.prj.iclass.service.ClassDtVO;
 import co.itrip.prj.iclass.service.ClassVO;
 
@@ -22,4 +23,6 @@ public interface ClassMapper {
 	
 	List<ClassVO> myClassList(ClassVO vo); // 마이페이지 클래스 전체조회
 	List<ClassVO> alreadyClass(ClassVO vo); // 가이드가 신청한 클래스 전체조회
+	
+	ClassChatVO classChatLink(ClassChatVO vo); //채팅방 연결
 }

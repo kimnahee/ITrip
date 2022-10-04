@@ -1,7 +1,5 @@
 package co.itrip.prj.cbtGuide.service;
 
-import java.util.List;
-
 import lombok.Data;
 
 /**
