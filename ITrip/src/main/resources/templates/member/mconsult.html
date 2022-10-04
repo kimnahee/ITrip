@@ -136,11 +136,12 @@
 					 									 </ul>
 													</div>
 													<span>
-													<a href="property-single.html" class="btn btn-primary py-2 px-1">채팅방</a>
+														<button class="btn btn-primary py-2 px-3 consultChat">채팅방</button>
 													</span>
 													<span>
 													<a href="conReview"class="btn btn-primary py-2 px-1">리뷰</a>
 													</span>
+													 <div th:text="${con.consultNo}" style="display: none"></div>
 												</div>
 											</div>
 										</div>
@@ -187,6 +188,14 @@
 					<br> <br>
 
 				</div>
+				<script>
+					//채팅방 연결
+					$(".consultChat").on("click", function(e){
+				    	let consultNo = $(e.target).parent().next().next().html();
+				    	console.log(consultNo);
+				    	location.href="/consultChat.do?consultNo="+consultNo;
+				    })
+				</script>
 			</div>
 
 			<script src="bootstrap/property/js/bootstrap.bundle.min.js"></script>
