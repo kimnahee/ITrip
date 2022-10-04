@@ -64,7 +64,13 @@ public class ClassController {
 		return "class/iclassList";
 	}
 
-	    // Class insert & 파일처리 - 소정
+
+	
+	     @Value("${file.dir}")
+	     private String fileDir;
+	
+	    // Class insert & 파일처리
+
 		@PostMapping("/classInsert.do")
 		public String classInsert(AlarmVO avo, FollowVO fvo, ClassVO vo, ClassDtVO dtvo, MultipartFile file) throws IllegalStateException, IOException {
 			
@@ -85,7 +91,7 @@ public class ClassController {
 			String oFileName = file.getOriginalFilename();
 			if(!oFileName.isEmpty()) {
 				String sFileName = UUID.randomUUID().toString()+oFileName.substring(oFileName.lastIndexOf("."));
-				String path = fileDir+"/"+sFileName;
+				String path = fileDir+"/Thumbnail/"+sFileName;
 				file.transferTo(new File(path));
 				vo.setAttach(oFileName); 
 				vo.setAttachDir(sFileName);
@@ -132,13 +138,34 @@ public class ClassController {
 			return PageInfo.of(cService.ajaxJobSearch(vo));
 		}
 		
+
+		// 이미 신청한 클래스 리스트
+
 		//소정
+
 		@GetMapping("/alreadyClass")
 		public String alreadyClass(Principal principal, Model model, ClassVO vo) {
 			vo.setGuideId(principal.getName());
 			model.addAttribute("alreadyList",cService.alreadyClass(vo) );
 			return"guide/alreadyclass";
 		}
+
+		
+		// 이미 신청한 클래스 리스트 상세보기
+		@RequestMapping("/alreadyClassOne.do")
+		public String alreadyClassOne(ClassVO vo, Model model, ClassDtVO dtvo) {
+			model.addAttribute("class", cService.classSelectOne(vo));
+			model.addAttribute("classdt", cService.classDtList(dtvo));
+			return "class/alreadyclassone";
+		}
+		
+		// 수료증 띄우기(pdf 다운로드)
+		@GetMapping("/certificate.do")
+		public String certificate() {
+			
+			return "class/certificate";
+		}
+
     
 		// 채팅방 연결
 		@GetMapping("/classChat.do")
@@ -149,5 +176,6 @@ public class ClassController {
 			model.addAttribute("chat", cService.classChatLink(chatvo));
 			return "chat/classChat";
 		}
+
 
 }
