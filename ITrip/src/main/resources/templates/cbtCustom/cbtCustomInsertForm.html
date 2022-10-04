@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}" 
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<meta name="_csrf" th:content="${_csrf.token}"/>
+<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+<title>나만의 CBT 문제 제출하기</title>
+<style>
+p {
+	font-size: '1px';
+}
+</style>
+</head>
+<body>
+	<div layout:fragment="content">
+		<!-- Section -->
+		<!-- Input Group Select start -->
+		<section class="input-group-select">
+			<div class="row">
+				<div class="col-12" style="margin: 0 auto;width: 60%">
+					<div class="card">
+						<div class="card-header">
+							<h4 class="card-title">나만의 CBT 문제 제출하기</h4>
+						</div>
+						<div class="card-content">
+							<form id="Frm" action="cbtCustomInsert.do" method="post">
+							<!-- 로그인 시큐리티 -->
+							<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+							<div class="card-body">
+								<div class="row">
+									<div class="form-group mb-3">
+										<div class="input-group mb-2">
+											<label class="input-group-text" for="utpCd">유형</label>
+											<select class="form-select" id="utpCd" name="utpCd" onchange="mySel(this.value)">
+												<option>==== 유형 선택 ====</option>
+												<option th:each="utp : ${utpCdList}" th:value="${utp.cdNo}" th:utext="${utp.cdName}"></option>
+											</select>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="form-group mb-3">
+										<div class="input-group mb-2">
+											<label class="input-group-text" for="langCd">언어</label>
+											<select class="form-select" id="langCd" name="langCd">
+												<option selected>==== 언어 선택 ====</option>
+												<option th:each="lang : ${langCdList}" th:value="${lang.cdNo}" th:utext="${lang.cdName}"></option>
+											</select>
+										</div>
+									</div>
+								</div>
+								<div class="form-group mb-3">
+									<label for="" class="form-label">시간</label>
+									<div class="form-check">
+										<input class="form-check-input" type="radio" name="" id="" value=""> 1분
+									</div>
+									<div class="form-check">
+										<input class="form-check-input" type="radio" name="" id="" value=""> 5분
+									</div>
+									<div class="form-check">
+										<input class="form-check-input" type="radio" name="" id="" value=""> 10분
+									</div>
+								</div>
+
+								<div class="form-group mb-3">
+									<label for="" class="form-label">문제갯수</label>
+									<div class="form-check">
+										<input class="form-check-input" type="radio" name="" id="" value=""> 5개
+									</div>
+									<div class="form-check">
+										<input class="form-check-input" type="radio" name="" id="" value=""> 10개
+									</div>
+									<div class="form-check">
+										<input class="form-check-input" type="radio" name="" id="" value=""> 20개
+									</div>
+								</div>
+
+
+								<div class="form-group mb-3" id="exList">
+								</div>
+
+
+
+
+
+								<div class="form-group mb-3" id="answer">
+									<!-- 정답들어가는곳 -->
+								</div>
+								
+							
+								<input id="memberId" name="memberId" th:value="${#authentication.principal.member.memberId}"  type="hidden">
+							</div>
+							<!-- 풀이내용까지 끝 -->
+							<div class="col-12 d-flex justify-content-end">
+								<button type="submit" class="btn btn-primary mr-1 mb-1">제출</button>
+								<button type="reset" class="btn btn-light-secondary mr-1 mb-1">초기화</button>
+							</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- Bootstrap Select end -->
+		
+	<script type="text/javascript">
+	
+	</script>
+	</div>
+</body>
+</html>

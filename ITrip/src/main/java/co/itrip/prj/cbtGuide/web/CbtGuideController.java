@@ -27,7 +27,6 @@ import co.itrip.prj.cbtGuide.service.CbtKeywordVO;
 import co.itrip.prj.cbtGuide.service.MyCbtHderVO;
 import co.itrip.prj.cmmncd.service.CmmnCdService;
 import co.itrip.prj.gtpcd.service.GtpCdService;
-import co.itrip.prj.langcd.service.LangCdService;
 
 /**
 * 가이드CBT 제어하는 곳
@@ -41,8 +40,8 @@ public class CbtGuideController {
 	private CbtGuideService cgDao;
 	@Autowired
 	private GtpCdService gtpDao;
-	@Autowired
-	private LangCdService langDao;
+	//@Autowired
+	//private LangCdService langDao;
 	@Autowired
 	private CmmnCdService cdDao;
 	
@@ -51,7 +50,7 @@ public class CbtGuideController {
 	public String cbtGuideMain(Model model) {
 		model.addAttribute("cbtList", cgDao.cbtGuideList()); // 모든 문제 출력
 	    model.addAttribute("gtpCdList", gtpDao.gtpCdList()); // 모든 타입코드 출력
-		model.addAttribute("langCdList", langDao.langCdList()); //모든 언어코드 출력
+		model.addAttribute("langCdList", cdDao.cdList("L")); //모든 언어코드 출력 -- 수정했음 확인요망
 	    return "cbtGuide/cbtGuideMain";
 	}
 	
@@ -74,7 +73,7 @@ public class CbtGuideController {
 	@GetMapping("/cbtGuideInsertForm.do")
 	public String cbtGuideInsertForm(Model model) {
 	    model.addAttribute("gtpCdList", gtpDao.gtpCdList());
-		model.addAttribute("langCdList", langDao.langCdList());
+		model.addAttribute("langCdList", cdDao.cdList("L")); //모든 언어코드 출력 -- 수정했음 확인요망
 		return "cbtGuide/cbtGuideInsertForm";
 	}
 	@Value("${file.dir}")

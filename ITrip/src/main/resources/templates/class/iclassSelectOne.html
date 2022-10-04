@@ -20,8 +20,9 @@ layout:decorate="~{layout/layout}">
                         <h5 class="card-title" th:text="${classOne.guideId}"></h5>
                     </div>
                     <div class="card-body">
-                        <div> 
-                        	<img th:src="@{*{classOne.attachDir}}"alt="Image" class="img-fluid" width="500px" style="float: right;">
+                        <div> <!-- @{C:/Temp}+ -->
+                        	<!-- <img th:src="@{*{classOne.attachDir}}"alt="Image" class="img-fluid" width="500px" style="float: right;"> -->
+                     		<img th:src="@{/download(fileName=${'/CLASS/'+classOne.attachDir})}" width="500px" style="float: right;" />
                         </div>
                         <div class="divider">
                             <div class="divider-text">기본정보</div>
@@ -62,21 +63,20 @@ layout:decorate="~{layout/layout}">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header">
-            <h4 class="modal-title" id="myModalLabel33">클래스신청 </h4>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <i data-feather="x"></i>
-            </button>
+	            <h4 class="modal-title" id="myModalLabel33">클래스신청 </h4>
+	            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	                <i data-feather="x"></i>
+	            </button>
             </div>
-            <form action="#">
             <div class="modal-body">
                 <div class="form-group">
                  <h5>클래스명 : <b id="title" th:text="${classOne.title}"></b></h5>
                 </div>
                 <div class="form-group" th:each="cdt,i:${classDt}">
-          	<b th:text=${i.count+'회차'}></b> : 
-           <span th:text=${cdt.term}></span> &nbsp;&nbsp;&nbsp;
-           <span th:text=${'시작시간:'+cdt.beginTime}></span>~ 
-           <span th:text=${'끝나는시간:'+cdt.endTime}></span> 
+		          	<b th:text=${i.count+'회차'}></b> : 
+		           <span th:text=${cdt.term}></span> &nbsp;&nbsp;&nbsp;
+		           <span th:text=${'시작시간:'+cdt.beginTime}></span>~ 
+		           <span th:text=${'끝나는시간:'+cdt.endTime}></span> 
                 </div>
                 <div class="form-group">
                  <h5>주요언어 : <b th:text="${classOne.cdName}"></b></h5>
@@ -92,34 +92,39 @@ layout:decorate="~{layout/layout}">
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-light-secondary" data-dismiss="modal">
-                <i class="bx bx-x d-block d-sm-none"></i>
-                <span class="d-none d-sm-block">취소</span>
+	                <i class="bx bx-x d-block d-sm-none"></i>
+	                <span class="d-none d-sm-block">취소</span>
                 </button>
                 <button type="button" class="btn btn-primary ml-1 " data-dismiss="modal">
-                <i class="bx bx-check d-block d-sm-none"></i>
-                <span class="d-none d-sm-block" id="payForm">신청하기</span>
+	                <i class="bx bx-check d-block d-sm-none"></i>
+	                <span class="d-none d-sm-block" id="payForm">신청하기</span>
                 </button>
             </div>
-            </form>
+           
         </div>
         </div>
     </div>
     <form action="" id="frm" method="post">
     	<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-		<input type="text" id="memberId" name="member_id" th:value="${#authentication.principal.member.memberId}">
-    	<input type="text" id="classNo" name="merchant_uid" th:value="'CL'+${classOne.classNo}">
-    	<input type="text" id="no" name="no" th:value="${classOne.classNo}">
-    	<input type="text" name="name" th:value=${classOne.title}>
-    	<input type="text" name="amount" th:value=${classOne.price}>
-    	<input type="text" name="category" th:value="CLASS">
+		<input type="hidden" id="memberId" name="member_id" th:value="${#authentication.principal.member.memberId}">
+    	<input type="hidden" id="classNo" name="merchant_uid" th:value="'CL'+${classOne.classNo}">
+    	<input type="hidden" name="classNo" th:value="${classOne.classNo}">
+    	<input type="hidden" id="no" name="no" th:value="${classOne.classNo}">
+    	<input type="hidden"  name="name" th:value=${classOne.title}>
+    	<input type="hidden"  name="amount" th:value=${classOne.price}>
+    	<input type="hidden"  name="category" th:value="CLASS">
     </form>
-    
     
     <script type="text/javascript">
 	let mId = document.getElementById("memberId").value
 	let cNo = document.getElementById("classNo").value
 	let price = document.getElementById("price").innerHTML
 	let title = document.getElementById("title").innerHTML
+
+	console.log(mId)
+	console.log(cNo)
+	console.log(price)
+	console.log(title)
 	
 	$("#payForm").on("click",function(data) {
 	    IMP.init('imp21718783');//'가맹점 식별코드' 
@@ -131,18 +136,19 @@ layout:decorate="~{layout/layout}">
 	        buyer_email : "testiamport@naver.com", 
 	        buyer_name : mId,
 	    }, function (rsp) { // callback
+	    	console.log(rsp)
 	        if (rsp.success) {
-	        	//payFormInsert.do
 	        	frm.action = "ClPayformInsert.do"
-	        	frm.submit()
+	        	frm.submit()//결제및신청테이블에 추가
 	        	
 	        	alert("결제가 정상적으로 완료되었습니다. 마이페이지에서 확인하세요.")
-	           // alert("완료 -> imp_uid : "+rsp.imp_uid+" / merchant_uid(orderKey) : " +rsp.merchant_uid);
+	        	
 	        } else {
 	            alert("결제실패 / 메세지(" + rsp.error_msg + ")");
 	        }
 	    });
 	});
+	 // alert("완료 -> imp_uid : "+rsp.imp_uid+" / merchant_uid(orderKey) : " +rsp.merchant_uid);
     </script>
 </div>
 </body>

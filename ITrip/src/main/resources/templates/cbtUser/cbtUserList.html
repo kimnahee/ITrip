@@ -81,7 +81,6 @@
     border-radius: 0 5px 0 0;
 }
 .feedbackList tr td:last-child {
-    color: crimson;
     font-weight: 400;
 }
 #fbDelete{border:0px;}
@@ -121,7 +120,8 @@
 						</div>
 						<div class="card-body"> 
 							<div th:if="${cbtOne.attachDir !=null}">
-								<img th:src="@{*{cbtOne.attachDir}}"style="margin-bottom: 10px;">
+								<!-- <img th:src="@{*{cbtOne.attachDir}}"style="margin-bottom: 10px;"> -->
+                     			<img th:src="@{/download(fileName=${'/CBT_USER/'+cbtOne.attachDir})}" alt="이미지" style="margin-bottom: 10px;"/><br>
 							</div>
 							<div class="form-check">
 								<b>1</b>. <a href="#" class="ex" th:text="${cbtOne.ex1}"></a><br> 
@@ -153,7 +153,8 @@
 							<br><h3 th:text="Q.+${cbtOne.ques}"></h3>
 						</div>
 						<div class="card-body cnsrOX"> 
-							<img th:src="@{*{cbtOne.attachDir}}"style="margin-bottom: 10px;">
+						<!-- 	<img th:src="@{*{cbtOne.attachDir}}"style="margin-bottom: 10px;"> -->
+                     			<img th:src="@{/download(fileName=${'/CBT_USER/'+cbtOne.attachDir})}" alt="이미지" style="margin-bottom: 10px;"/><br>
 							<label for="cnsr" class="form-label">O 또는 X를 선택하세요.</label>
 							<div class="form-check">
 								<input class="form-check-input" type="radio" name="cnsr" id="cnsrO" value="O"> O
@@ -216,7 +217,7 @@ nextButton.addEventListener('click', function() {
 	savePage = page;
 	
 	let cardContent = document.getElementById("cardContent")
-		imgArea.innerHTML = "";
+	//	imgArea.innerHTML = "";
 	
 	 $.ajax({
 		url:'/ajaxQuestion.do',
@@ -228,6 +229,7 @@ nextButton.addEventListener('click', function() {
 		data:{'langCd':langCd,'rownum':savePage},
 		success:function result(res){
 			cardContent.innerHTML = "";
+			imgArea.innerHTML="";
 			newQuestion(res);
 			choiceResult();
 		},
@@ -276,8 +278,8 @@ function newQuestion(res){
 			 	<div id="cbtNos" style="display:none;">${res.cbtNo}</div>
 			 </div>`
 			if(res.attachDir != null){
-					cardContent.innerHTML += `<img src="${res.attachDir}"style="margin-bottom: 10px;">`
-				}
+				cardContent.innerHTML += `<img src="${'/download?fileName=/CBT_USER/'+res.attachDir}" alt="이미지" style="margin-bottom: 10px;"/><br>`
+			}
 		cardContent.innerHTML += 
 			`<div class="card-body">
 				<div class="form-check">
@@ -296,7 +298,8 @@ function newQuestion(res){
 			 </div> 
 			 `
 			if(res.attachDir != null){
-				cardContent.innerHTML += `<img src="${res.attachDir}"style="margin-bottom: 10px;">`
+				//cardContent.innerHTML += `<img src="${res.attachDir}"style="margin-bottom: 10px;">`
+				cardContent.innerHTML +=`<img src="${'/download?fileName=/CBT_USER/'+res.attachDir}" alt="이미지" style="margin-bottom: 10px;"/><br>`
 			}
 		cardContent.innerHTML += 
 				`<div class="card-body cnsrOX"> 
@@ -401,43 +404,45 @@ function gopage(p){
 			feedbackArea.innerHTML = "";
 			if(res.total==0){
 				feedbackArea.innerHTML+= "<tr><td colspan='4'>댓글이 없습니다 .....</td></tr>"
-			}
-			res.list.forEach((elem,idx,arr)=>{
-				
-				feedbackArea.innerHTML+= 
-					"<tr><td>"+(idx+1)+"</td><td>"+elem.content+"</td><td>"
-					+elem.nick+"</td><td><button type='button' class='badge bg-warning fbDelete' id='fbDelete' value="+elem.feedbackNo+">x</button></td></tr>"
-			})
-			
-			//paging..start
-			ph ='<nav aria-label="Page navigation example">'
-			    +'<ul class="pagination pagination-info  justify-content-center">'
-			 if(res.isFirstPage==true){  
-				ph+= '<li class="page-item disabled"><span class="page-link">«</span></li>'
-			 }
-			 else{
-		    	ph+='<li class="page-item">'
-				+'<a class="page-link" href="javascript:gopage('+res.prePage+')" rel="prev">«</a></li>'
-		    }
-	
-			for(page of res.navigatepageNums){
-				ph+="<li class='page-item ("+res.pageNum +" eq "+ page+") ? 'active': ''} '></li>"
-				if(res.pageNum == page){
-					ph+="<span class='page-link'>"+page+"</span>"
-				}else{
-					ph+="<a class='page-link' href='javascript:gopage("+page+")'>"+page+"</a>"
-				}
-				ph+="</li>"
-			}
-		
-			if(res.hasNextPage ==true){
-				ph+=' <li class="page-item"><a class="page-link" href="javascript:gopage('+res.nextPage+')" rel="next">»</a></li>'
 			}else{
-				ph+='<li class="page-item disabled"><span class="page-link">»</span></li></ul></nav>'
-			}
+				
 			
-			pageArea.innerHTML = ph
-			//paging..end	
+				res.list.forEach((elem,idx,arr)=>{
+					feedbackArea.innerHTML+= 
+						"<tr><td>"+(idx+1)+"</td><td>"+elem.content+"</td><td>"
+						+elem.nick+"</td><td><button type='button' class='badge bg-warning fbDelete' id='fbDelete' value="+elem.feedbackNo+">x</button></td></tr>"
+				})
+				
+				//paging..start
+				ph ='<nav aria-label="Page navigation example">'
+				    +'<ul class="pagination pagination-info  justify-content-center">'
+				 if(res.isFirstPage==true){  
+					ph+= '<li class="page-item disabled"><span class="page-link">«</span></li>'
+				 }
+				 else{
+			    	ph+='<li class="page-item">'
+					+'<a class="page-link" href="javascript:gopage('+res.prePage+')" rel="prev">«</a></li>'
+			    }
+		
+				for(page of res.navigatepageNums){
+					ph+="<li class='page-item ("+res.pageNum +" eq "+ page+") ? 'active': ''} '></li>"
+					if(res.pageNum == page){
+						ph+="<span class='page-link'>"+page+"</span>"
+					}else{
+						ph+="<a class='page-link' href='javascript:gopage("+page+")'>"+page+"</a>"
+					}
+					ph+="</li>"
+				}
+			
+				if(res.hasNextPage ==true){
+					ph+=' <li class="page-item"><a class="page-link" href="javascript:gopage('+res.nextPage+')" rel="next">»</a></li>'
+				}else{
+					ph+='<li class="page-item disabled"><span class="page-link">»</span></li></ul></nav>'
+				}
+				
+				pageArea.innerHTML = ph
+				//paging..end	
+			}
 					
 		},
 		error:function err(xhr,err){

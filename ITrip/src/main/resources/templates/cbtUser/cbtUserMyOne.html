@@ -63,6 +63,9 @@
 										<textarea class="form-control" id="ex3" name="ex3" rows="1" th:text=${myCbt.ex3}></textarea>
 										<label for="ex5" class="form-label">보기④</label>
 										<textarea class="form-control" id="ex4" name="ex4" rows="1" th:text=${myCbt.ex4}></textarea>
+										
+										<label for="cnsr" class="form-label">정답</label>
+										<textarea class="form-control" id="cnsr" name="cnsr" rows="1" th:text=${myCbt.cnsr}></textarea>
 									</div>
 									
 									<div th:if="${myCbt.utpCd}=='2'">
@@ -82,17 +85,12 @@
 									<textarea class="form-control" id="explna" name="explna" rows="3" th:text=${myCbt.explna}></textarea>
 								</div>
 								<div class="col-md-6 mb-1">
-									<div class="input-group mb-8">
-										<span class="input-group-text" id="inputGroupFileAddon01">
-											<i data-feather="upload"></i>
-										</span>
+									<div class="input-group mb-3">
 										<div class="form-file">
-											<input type="file" id="attach" name="file" aria-describedby="attach"> <!--  class="form-file-input" -->
-											<!-- <label class="form-file-label" for="attach"> 
-											<span class="form-file-text"></span> 
-											<span class="form-file-button">Upload File</span>
-											</label> -->
-										</div>
+                                             <img th:src="@{/download(fileName=${'/CBT_USER/'+myCbt.attachDir})}" th:text="${myCbt.attach}" style="width: 100px;"/>
+                                             <input type="file" id="attach" class="form-control form-group" name="file" >
+                                        </div>
+                                        
 									</div>
 								</div>
 								<input id="memberId" name="memberId" th:value="${#authentication.principal.member.memberId}"  type="hidden">
