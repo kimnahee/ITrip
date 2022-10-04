@@ -13,8 +13,7 @@ import co.itrip.prj.iclass.service.ClassVO;
 
 public interface GuideMapper {
 	
-	List<GuideVO> guideSelectList(); // 은지 - 가이드 전체조회
-	GuideVO guideSelect(GuideVO vo); // 은지 - 가이드 단건조회
+	GuideVO guideSelect(GuideVO vo); // 은지 - 가이드 마이페이지(단건조회)
 	int guideInsert(GuideVO vo); // 가이드 입력
 	int guideUpdate(GuideVO vo); // 은지 - 가이드 수정
 	

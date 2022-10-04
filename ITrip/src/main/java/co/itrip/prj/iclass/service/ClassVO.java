@@ -34,7 +34,10 @@ public class ClassVO {
 	private String endTime;
 	
 	// 수강생 리스트에서 추가로 필요한 정보 -> 은지
-	private String memberId; 
+	private String memberId; // 수강생
+	private String setlede; // 결제일
+	private String category; //카테고리
+	private int no; // 번호
 	
 	
 }

@@ -20,11 +20,7 @@ public class GuideServiceImpl implements GuideService {
 	@Autowired
 	private GuideMapper map;
 	
-	@Override
-	public List<GuideVO> guideSelectList() {
-		// 가이드 전체조회
-		return map.guideSelectList();
-	}
+
 
 	/** 가이드 단건조회
 	 *  @param GuideVO vo

@@ -2,9 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="co.itrip.prj.guide.mapper.GuideMapper">
 
-<select id="guideSelectList" >
-	
-</select>
 
 <!-- 가이드 마이페이지 버튼 누르고 들어갈때 [박은지]-->
 <select id="guideSelect" resultType="co.itrip.prj.guide.service.GuideVO">
@@ -31,10 +28,15 @@
               AND GUIDE_ID = #{guideId}
 </select>
 
-<!-- 유저 가이드 신청 [권소정] -->
-<insert id="guideInsert" parameterType="co.itrip.prj.guide.service.GuideVO">
-	INSERT INTO GUIDE VALUES(#{guideId},#{career},#{dc},#{duty},#{attach},#{attachDir},'1',sysdate,0)
-</insert>
+<!-- 클래스 수강생 리스트 [박은지] -->
+<select id="userList" resultType="co.itrip.prj.iclass.service.ClassVO">
+		SELECT C.TITLE, P.MEMBER_ID, P.SETLEDE
+		FROM CLASS C, PAYFORM P
+		WHERE C.CLASS_NO = P.NO
+		AND UPPER(P.CATEGORY) = 'CLASS'
+		AND C.GUIDE_ID = #{guideId}
+</select> 
+
 
 <!-- 가이드 정보수정 [박은지] -->
 <update id="guideUpdate"> 
@@ -47,11 +49,15 @@
 	WHERE GUIDE_ID = #{guideId}
 </update>
 
-<!-- <select id="userList">
-select c.guide_id, c.class_no, p.no, c.title, p.member_id
-from class c, payform p
-where c.class_no = p.no
-and upper(p.category) = 'CLASS';
-</select> -->
+
+<!-- ========================================================================= -->
+
+<!-- 유저 가이드 신청 [권소정] -->
+<insert id="guideInsert" parameterType="co.itrip.prj.guide.service.GuideVO">
+	INSERT INTO GUIDE VALUES(#{guideId},#{career},#{dc},#{duty},#{attach},#{attachDir},'1',sysdate,0)
+</insert>
+
+
+
 
 </mapper>
