@@ -18,7 +18,7 @@ public interface ClassService {
 
 	int classAttendInsert(ClassAttendVO vo);//클래스 결제 후 출석테이블에 출결0으로 추가
 
-
 	ClassChatVO classChatLink(ClassChatVO vo); //채팅방 연결
+	int classChk(ClassAttendVO vo);//출석체크
 
 }

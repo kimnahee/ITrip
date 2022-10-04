@@ -93,12 +93,19 @@
 		insert into class_attend values(#{memberId},#{classNo},0,0)
 	</insert>
 	
-
+	<!-- 강의장 연결 -->
 	<select id="classChatLink" resultType="co.itrip.prj.iclass.service.ClassChatVO">
-		select chat_link
+		select *
 		from class_chat
 		where class_no = #{classNo}
 	</select>
-
-
+	
+	<!-- 출석체크(수정하기) -->
+	<update id="classChk">
+		update class_attend
+		set attend_cnt = attend_cnt + 1 
+		where member_id = #{memberId}
+		and class_no = #{classNo}
+	</update>
+	
 </mapper>

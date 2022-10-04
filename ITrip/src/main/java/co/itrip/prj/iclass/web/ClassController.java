@@ -27,6 +27,7 @@ import co.itrip.prj.alarm.service.AlarmVO;
 import co.itrip.prj.cmmncd.service.CmmnCdService;
 import co.itrip.prj.follow.service.FollowService;
 import co.itrip.prj.follow.service.FollowVO;
+import co.itrip.prj.iclass.service.ClassAttendVO;
 import co.itrip.prj.iclass.service.ClassChatVO;
 import co.itrip.prj.iclass.service.ClassDtVO;
 import co.itrip.prj.iclass.service.ClassService;
@@ -167,11 +168,21 @@ public class ClassController {
 		@GetMapping("/classChat.do")
 		public String classChat(ClassVO vo, ClassChatVO chatvo, Model model, HttpServletRequest request) {
 			int classNo = Integer.parseInt(request.getParameter("classNo"));
-			System.out.println("===========" + classNo);
 			chatvo.setClassNo(classNo);
 			model.addAttribute("chat", cService.classChatLink(chatvo));
 			return "chat/classChat";
 		}
-
+		
+		//출석체크
+		@PostMapping("/classChk.do")
+		@ResponseBody
+		public int classChk(ClassAttendVO vo, Model model, HttpServletRequest request) {
+			int classNo = Integer.parseInt(request.getParameter("classNo"));
+			String memberId = request.getParameter("memberId");
+			System.out.println("classNo : " + classNo + ", memberId : " + memberId);
+			vo.setClassNo(classNo);
+			vo.setMemberId(memberId);
+			return cService.classChk(vo);
+		}
 
 }
