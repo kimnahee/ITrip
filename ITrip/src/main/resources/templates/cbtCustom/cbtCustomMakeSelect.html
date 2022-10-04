@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+
+.form-check{margin-left: 1.5em;}
+
+#timeArea {position:absolute;top:100px;margin-top:-50px;right:10px;}
+</style>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="row match-height">
+			<div class="col-md-10 col-12 cbtNoSelc">
+				<div class="card">
+					<div class="card-header">
+						<h4 class="card-title">몇문제 제한시간은어쩌구 </h4>
+						<div id="timeArea" class="btn btn-danger round"></div>
+					</div>
+					<div class="card-content">
+						<div class="card-body">
+							<form class="form form-vertical">
+								<input type="hidden" th:name="${_csrf.parameterName}"
+									th:value="${_csrf.token}">
+								<div class="form-body">
+									<div class="row" th:each="cbt, st:${cbtList}">
+										<div class="col-12">
+											<div class="form-group">
+												<h4 style="float: left;">
+													<span th:text=${st.index+1}></span>번.   
+													<span id="QUES" th:text="${cbt.ques}"></span> 
+												</h4>
+												<a>&nbsp;&nbsp;[ 출제자 :<span th:text="${cbt.memberId}"></span> ]</a>
+												<!-- 북마크 -->
+												<!-- 북마크끝 -->
+
+												<input type="hidden" id="cbtNo0" name="cbtNo0"
+													th:value="${cbt.cbtNo}"> <input type="hidden"
+													id="PreGtpCd" name="PreGtpCd" th:value="${tCd}"> <input
+													type="hidden" id="PreLangCd" name="PreLangCd"
+													th:value="${lCd}"> <br> 
+											</div>
+										</div>
+										<!-- 이미지가 있으면 이미지 출력-->
+										<div id="atch" class="form-group"
+											th:if="${not #strings.isEmpty(cbt.attach)}">
+											<span class="mb-2 text-md">
+												<div style="text-align: center;">
+													<img th:src="@{*{attachDir}}" style="margin-bottom: 10px;">
+												</div>
+											</span>
+											<div class="form-group mb-3">
+												<label for="basicInput">첨부파일(이미지)</label> <input type="text"
+													id="file" class="form-control" name="file"
+													th:field=*{attach} readonly="readonly">
+											</div>
+										</div>
+										<!-- 이미지 출력 끝 -->
+										<div class="form-check">
+											<input class="form-check-input" type="radio"
+												th:id="|cbt${cbt.cbtNo}1|" th:name="|cbt${st.index}|"
+												value="1"> <label class="form-check-label"
+												th:for="|cbt${cbt.cbtNo}1|" th:text="${cbt.ex1}"></label>
+										</div>
+										<div class="form-check">
+											<input class="form-check-input" type="radio"
+												th:id="|cbt${cbt.cbtNo}2|" th:name="|cbt${st.index}|"
+												value="2"> <label class="form-check-label"
+												th:for="|cbt${cbt.cbtNo}2|" th:text="${cbt.ex2}"> </label>
+
+										</div>
+										<div class="form-check">
+											<input class="form-check-input" type="radio"
+												th:id="|cbt${cbt.cbtNo}3|" th:name="|cbt${st.index}|"
+												value="3"> <label class="form-check-label"
+												th:for="|cbt${cbt.cbtNo}3|" th:text="${cbt.ex3}"> </label>
+										</div>
+										<div class="form-check">
+											<input class="form-check-input" type="radio"
+												th:id="|cbt${cbt.cbtNo}4|" th:name="|cbt${st.index}|"
+												value="4"> <label class="form-check-label"
+												th:for="|cbt${cbt.cbtNo}4|" th:text="${cbt.ex4}"> </label>
+										</div> 
+										<br><hr style="margin:5px;"><br>
+										<!--라디오 끝 -->
+									</div>
+								</div>	
+							</form>
+						</div>
+						<a><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<button type="button" class="btn btn-outline-primary myCbtCall">제출하기</button>
+							<br> <br></a>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+
+
+<script type="text/javascript">
+var time = 600; //기준시간작성 
+var min = "";
+var sec = "";
+
+//setinterval(함수,시간) : 주기적인 실행 
+var x = setInterval(function(){
+	//parseint :정수를 반환 
+	min = parseInt(time/60);//몫을계산 
+	sec = time%60;//나머지계산 
+	
+	document.getElementById("timeArea").innerHTML = min+"분 "+sec+"초"
+	time -- ;
+	
+	//타임아웃시 
+	if(time <0){
+		clearInterval(x);//x 실행끝 
+		alert("시간종료")
+	}
+},1000);
+
+$(document).ready(function(){
+	  var currentPosition = parseInt($("#timeArea").css("top"));
+	  $(window).scroll(function() {
+	    var position = $(window).scrollTop(); 
+	    $("#timeArea").stop().animate({"top":position+currentPosition+"px"},1000);
+	  });
+	});
+</script>
+	</div>
+</body>
+</html>

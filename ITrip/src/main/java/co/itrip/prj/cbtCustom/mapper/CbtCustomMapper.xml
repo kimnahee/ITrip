@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.itrip.prj.cbtCustom.mapper.CbtCustomMapper">
+	<select id="cbtCustomMakeSelect" resultType="co.itrip.prj.cbtCustom.service.CbtCustomVO" 
+	parameterType="co.itrip.prj.cbtCustom.service.CbtCustomVO">
+	
+ 		select * from cbt_guide where lang_cd=#{langCd} and gtp_cd='1' <![CDATA[AND ROWNUM <= #{pcs}]]>
+	
+	</select>
+</mapper>
