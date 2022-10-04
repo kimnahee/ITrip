@@ -26,6 +26,7 @@ public class GuideVO {
 	private String cdName; // 직무 설명
 	private String care; // 경력 설명 
 
+	
 
 
 }

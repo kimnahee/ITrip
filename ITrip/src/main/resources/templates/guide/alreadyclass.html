@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+<head>
+<meta charset="UTF-8">
+</head>
+<body>
+<div  layout:fragment="content">
+<!-- Table head options start -->
+<div class="row" id="table-head">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">신청한 클래스(승인대기중)</h4>
+      </div>
+      <div class="card-content">
+        <!-- table head dark -->
+        <div class="table-responsive">
+          <table class="table table-light mb-0"> 
+            <thead>
+              <tr>
+                <th>클래스제목</th>
+                <th>정원/수업횟수</th>
+                <th>가격</th>
+                <th>신청일자</th>
+              </tr>
+            </thead>
+            <tbody id="classList">
+              <tr th:each="list : ${alreadyList}" >
+                <td class="text-bold-500 hidden" th:text="${list.classNo}"></td>
+                <td class="text-bold-500" th:text="${list.title}"></td>
+                <td class="text-bold-500" th:text="${list.psncpa}+'명 / '+${list.classCnt}+'주'"></td>
+                <td class="text-bold-500" th:text="${list.price}+'원'"></td>
+                <td class="text-bold-500" th:text="${list.dt}"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Table head options end -->
+<form id="frm" action="alreadyClassOne.do" method="post">
+	<input type="text" id="classNo" name="classNo">
+	<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+</form>
+			
+		<script type="text/javascript">
+		
+			$("#classList").on("click", function(e) {
+				let no = $(e.target).closest("tr").children().html();
+				console.log(no);
+				frm.classNo.value = no;
+				frm.submit();
+			})
+			
+			function hiddenList() {
+				row = $(".hidden");
+				console.log(row);
+				row.css('display', 'none');
+			}
+			
+			$(document).ready(function(){    
+				hiddenList(); //페이지 로딩시 follow목록, follow수 출력
+			});
+		</script>
+	</div>
+</body>
+</html>

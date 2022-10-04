@@ -46,17 +46,20 @@
 								<th class="text-uppercase text-secondary text-md font-weight-bolder opacity-7 ps-2">문제</th>
 							</tr>
 						</thead>
-						<tbody id="myTbody" >
-						<tr th:each="my:${pageInfo.list}">
+						<tbody id="myTbody"  >
+						<tr  th:each="my:${pageInfo.list}" style="cursor: pointer;">
       						<input type="hidden" id="gtpCd0" name="gtpCd0" th:value="${my.gtpCd}">
 							<input type="hidden" id="langCd0" name="langCd0" th:value="${my.langCd}">
-							<td><p class="text-md text-secondary mb-0" id="gtpCdName" name="gtpCdName" th:text="${my.gtpCdName}">출제유형</p></td>
+							<td><p class="text-md text-secondary mb-0" id="gtpCdName" name="gtpCdName" th:text="${my.gtpCdName}">출제유형</p></td> 
 							<td><p class="text-md text-secondary mb-0" id="langCdName" name="langCdName" th:text="${my.langCdName}">언어</p></td>
 							<td><p class="text-md text-secondary mb-0" id="cbtNo0" name="cbtNo0" th:text="${my.cbtNo}">문제번호</p></td>
 							<td><p class="text-md text-secondary mb-0" id="cnsr" name="cnsr" th:text="${my.ques}">문제</p></td>
 							</tr>
 						</tbody>
 					</table>
+					<!--문제가 없는 경우 -->
+					    <img class="mx-auto d-block mb-4" th:if="${#lists.isEmpty(pageInfo.list)}" alt="문제가 없습니다." src="images/nothing.png" style="width: 300px;">
+						<h3 class="text-center mb-5" th:if="${#lists.isEmpty(pageInfo.list)}">등록한 문제가 없습니다.</h3>
 				</div>
 				<!-- 페이지네이션 -->
 				 <nav aria-label="Page navigation example">

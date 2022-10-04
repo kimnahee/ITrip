@@ -30,8 +30,8 @@
 		on c.job_cd = cm.cd_no
 		left join class_dt dt
 		on c.class_no = dt.class_no
-		where cm.cd_ini = 'J' and dt.ctime_no=1 and ennc = '활성화' order by 1
-	</select>
+		where cm.cd_ini = 'J' and dt.ctime_no=1  order by 1
+	</select><!-- and ennc = '활성화' -->
 	
 	<select id="classDtList" resultType="co.itrip.prj.iclass.service.ClassDtVO"
 		parameterType="co.itrip.prj.iclass.service.ClassDtVO">
@@ -75,9 +75,30 @@
         on c.class_no = pay.no
 		where cm.cd_ini = 'J' 
         and dt.ctime_no=1 
-        and ennc ='활성화'
         and pay.category = 'CLASS'
         and pay.member_id = #{memberId}	
         order by 1
 	</select>
+	
+	<select id="alreadyClass" resultType="co.itrip.prj.iclass.service.ClassVO">
+		select distinct class_no, title, dt, job_cd, psncpa, class_cnt, price
+		from class 
+		where confm_cd ='1'
+		and guide_id = #{guideId}
+	</select>
+	
+
+	<!-- 클래스 결제 시 출결테이블에 출결상태0으로 추가 -->
+	<insert id="classAttendInsert">
+		insert into class_attend values(#{memberId},#{classNo},0,0)
+	</insert>
+	
+
+	<select id="classChatLink" resultType="co.itrip.prj.iclass.service.ClassChatVO">
+		select chat_link
+		from class_chat
+		where class_no = #{classNo}
+	</select>
+
+
 </mapper>

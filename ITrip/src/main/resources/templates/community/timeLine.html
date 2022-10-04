@@ -20,54 +20,87 @@
 	margin-left: auto;
 	margin-right: auto;
 	text-align: center;
-	width: 80%;
+	width: 90%;
 }
+
 .card {
 	margin-left: auto;
 	margin-right: auto;
 	text-align: center;
-	width: 80%;
+	width: 90%;
+}
+
+.js-load {
+	display: none;
+}
+
+.js-load.active {
+	display: block;
+}
+
+.is_comp.js-load:after {
+	display: none;
+}
+
+.btn-wrap, .lists, .main {
+	display: block;
+}
+
+.main {
+	max-width: 640px;
+	margin: 0 auto;
+}
+
+.lists {
+	margin-bottom: 4rem;
+}
+
+.btn-wrap {
+	text-align: center;
 }
 </style>
 </head>
 <body>
-	<div class="table-responsive" layout:fragment="content">
-	
-		<div th:each="com: ${pageInfo.list}">
-			<div class="card">
-				<div class="card-content">
-					<div class="card-body">
-						<h6 class="card-title" th:text=${com.title}>글제목</h6>
-					</div>
-				</div>
-				<ul class="list-group list-group-flush">
-					<li class="list-group-item" th:text=${com.memberId}></li>
-					<li class="list-group-item" th:text=${com.content}>글내용</li>
-					<li class="list-group-item" th:text=${com.dt}>작성일자</li>
+	<div id="js-load" class="table-responsive" layout:fragment="content">
+		<div th:each="com: ${comList}">
+			<div class="card main">
+				<ul class="lists list-group list-group-flush">
+					<li class="list-group-item js-load">
+						<span><h4 th:text=${com.title} style="color: white;"></h4></span>
+						<hr>
+						<span th:text=${com.memberId} th:if="${com.ctgry}=='스터디'"></span>
+						<hr th:if="${com.ctgry}=='스터디'">
+						<span th:text=${com.content}></span>
+						<hr>
+						<span th:text=${com.dt}></span>
+					</li>
 				</ul>
 			</div>
 		</div>
 		<br>
-		<!-- 페이지네이션 / hasNextPage 버튼 나중에 보고 수정 -->
-		<nav aria-label="Page navigation example">
-			<ul class="pagination pagination-info  justify-content-center" th:if="${pageInfo.hasNextPage}">
-				<li class="page-item" th:if="${pageInfo.hasNextPage}">
-					<a class="page-link" th:href="|javascript:gopage([[${pageInfo.getNextPage()}]])|" rel="next">더보기</a>
-				</li>
-			</ul>
-		</nav> 
-		
+		<div id="js-btn-wrap" class="btn-wrap">
+			<a href="javascript:;" class="button">더보기</a>
+		</div>
 		<script>
-			
-			function gopage(p) {
-				location.href = '/pageTest.do?pageNum=' + p;
+			$(window).on("load", function() {
+				load("#js-load", "6");
+				$("#js-btn-wrap .button").on("click", function() {
+					load("#js-load", "6", "#js-btn-wrap");
+				})
+			});
+
+			function load(id, cnt, btn) {
+				var list = id + " .js-load:not(.active)";
+				var length = $(list).length;
+				var total_cnt;
+				if (cnt < length) {
+					total_cnt = cnt;
+				} else {
+					total_cnt = length;
+					$('.button').hide()
+				}
+				$(list + ":lt(" + total_cnt + ")").addClass("active");
 			}
-			
-			$("#comList").on("click", function(e) {
-				let comNo = $(e.target).prev().html();
-				location.href = "/selectCommunity.do?comNo=" + comNo;
-			})
-			
 		</script>
 	</div>
 </body>

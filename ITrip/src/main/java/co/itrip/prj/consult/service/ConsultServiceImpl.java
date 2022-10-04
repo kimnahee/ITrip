@@ -15,9 +15,9 @@ public class ConsultServiceImpl implements ConsultService{
 	private ConsultMapper map;
 	
 	@Override
-	public List<ConsultVO> consultList() {
+	public List<ConsultVO> consultList(ConsultVO vo) {
 		// 상담 전체조회
-		return map.consultList();
+		return map.consultList(vo);
 	}
 
 	@Override
@@ -68,15 +68,17 @@ public class ConsultServiceImpl implements ConsultService{
 		return map.myConsultList(vo);
 	}
 
+
 	@Override
-	public List<ConsultVO> ajaxJobListSearch(ConsultVO vo) {
-		// TODO Auto-generated method stub
-		return null;
+	public int consultState(ConsultVO vo) {
+		// 상담 상태 수정 (활성화, 비활성화)
+		return map.consultState(vo);
 	}
 
-
-
-	
-
+	@Override
+	public ConsultChatVO consultChat(ConsultChatVO vo) {
+		//채팅방 연결
+		return map.consultChat(vo);
+	}
 
 }

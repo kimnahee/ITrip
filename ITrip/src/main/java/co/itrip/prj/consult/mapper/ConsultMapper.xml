@@ -2,35 +2,33 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="co.itrip.prj.consult.mapper.ConsultMapper">
 	
-	<select id="consultList" resultType="co.itrip.prj.consult.service.ConsultVO">
-
-         SELECT C.CONSULT_NO
-	            ,C.TITLE
-	            ,C.CONTENT
-	            ,C.DT
-	            ,C.STATE_CD
-	            ,C.GUIDE_ID
-	            ,C.JOB_CD
-	            ,C.ENNC
-	            ,C.BEGIN_DATE
-	            ,C.END_DATE
-	            ,CM.CD_NAME
-	            ,CASE  WHEN G.CAREER= '1' THEN '신입(1년 이하)'
-	                   WHEN G.CAREER= '2' THEN '주니어(1년 ~ 3년)'
-	                   WHEN G.CAREER= '3' THEN '미들(4년 ~ 8년)'
-	                   WHEN G.CAREER= '4' THEN '시니어(9년 이상)'
-	                   WHEN G.CAREER= '5' THEN 'Lead레벨(15년 이상)'
-	                ELSE ' '
-	            END AS CAREER
-      FROM CONSULT C, GUIDE G, CMMNCD CM
-      WHERE C.GUIDE_ID=G.GUIDE_ID  
-      AND G.DUTY= CM.CD_NO
-      AND CM.CD_INI='D'
-      ORDER BY CONSULT_NO DESC
+	<!-- 가이드마이페이지에 내가 등록한 상담리스트 -->
+	<select id="consultList" resultType="co.itrip.prj.consult.service.ConsultVO" parameterType="co.itrip.prj.consult.service.ConsultVO">
+			SELECT C.CONSULT_NO
+		            ,C.TITLE
+		            ,C.CONTENT
+		            ,C.DT
+		            ,C.STATE_CD
+		            ,C.GUIDE_ID
+		            ,C.JOB_CD
+		            ,C.ENNC
+		            ,C.BEGIN_DATE
+		            ,C.END_DATE
+		            ,FUN_CODENAME('D', G.DUTY) AS DUTY_NAME
+		            ,FUN_CODENAME('R', G.CAREER) AS CAREER
+		            ,FUN_CODENAME('J', C.JOB_CD) AS JOB_NAME
+	      FROM CONSULT C, GUIDE G
+	      <where>	C.GUIDE_ID=G.GUIDE_ID  
+			   <if test="stateCd == '2'"> <!-- 승인완료 상태인것 -->
+			   AND STATE_CD =#{stateCd}
+			   </if>
+		  </where>
+		   AND C.GUIDE_ID=#{guideId}
+        ORDER BY CONSULT_NO DESC
 
 	</select> 
 	
-	<!-- 페이징 처리 카테고리 -->
+	<!-- 상담메인페이지 페이징 처리, 카테고리 검색기능 -->
 	<select id="findAll" resultType="co.itrip.prj.consult.service.ConsultVO" parameterType="co.itrip.prj.consult.service.ConsultVO">
 	   	 SELECT C.CONSULT_NO
 		            ,C.TITLE
@@ -50,7 +48,7 @@
 		       <if test="jobCd != null">
 				AND JOB_CD = #{jobCd}
 				</if>
-			   <if test="ennc.equals('활성화')">
+			   <if test="ennc.equals('활성화')"> <!-- 활성화인 경우에만 리스트로 띄우기 -->
 			   AND ENNC =#{ennc}
 			   </if>
 		  </where>
@@ -58,6 +56,7 @@
 	
 	</select>
 	
+	<!-- 상담 상세보기 -->
 	<select id="consultSelectOne" parameterType="co.itrip.prj.consult.service.ConsultVO" resultType="co.itrip.prj.consult.service.ConsultVO">
 	SELECT C.CONSULT_NO
 	            ,C.TITLE
@@ -85,6 +84,7 @@
       ORDER BY CONSULT_NO DESC
 	</select>
 	
+	<!-- 상담상세보기 상담가능시간 -->
 	<select id="consultDtList" resultType="co.itrip.prj.consult.service.ConsultDtVO">
 	SELECT CDT_NO, CONSULT_NO, CASE WHEN WEEK = '0' THEN '월'
 			 WHEN WEEK = '1' THEN '화'
@@ -100,7 +100,7 @@
 	WHERE CONSULT_NO=#{consultNo}
 	</select>
 	
-
+	<!-- 가이드 상담 등록 -->
 	<insert id="consultInsert" parameterType="co.itrip.prj.consult.service.ConsultVO">
 		<selectKey keyProperty="consultNo" order="BEFORE" resultType="int">
 			SELECT CASE WHEN MAX(CONSULT_NO) IS NULL THEN 1 ELSE MAX(CONSULT_NO)+1 END FROM CONSULT
@@ -109,6 +109,7 @@
 		VALUES(#{consultNo}, #{title}, #{content}, sysdate, '1', #{guideId}, #{jobCd}, '비활성화', #{beginDate}, #{endDate})
 	</insert>
 	
+	<!-- 가이드 상담 등록 -->
 	<insert id="consultDtInsert">
 		<selectKey keyProperty="cdtNo" order="BEFORE" resultType="int">
 		SELECT 
@@ -120,40 +121,36 @@
 		</selectKey>
 
 		INSERT INTO CONSULT_DT VALUES (#{cdtNo}, #{consultNo},#{week}, #{beginTime}, #{endTime}, #{price})
-
 	</insert>
 	
+	<!-- 가이드 상담 상태 수정 (활성화/비활성화) -->
+	<update id="consultState">
+		UPDATE CONSULT
+		<set>
+			<if test="ennc != null">ENNC = #{ennc}</if>
+		</set>
+		WHERE CONSULT_NO = #{consultNo}
+	</update>
+	
+	
 	<select id="myConsultList" resultType="co.itrip.prj.consult.service.ConsultVO">
-		SELECT C.CONSULT_NO
-		            ,C.TITLE
-		            ,C.CONTENT
-		            ,C.DT
-		            ,C.STATE_CD
-		            ,C.GUIDE_ID
-		            ,C.JOB_CD
-		            ,C.ENNC
-		            ,C.BEGIN_DATE
-		            ,C.END_DATE
-		            ,CM.CD_NAME
-		            ,CASE  WHEN G.CAREER= '1' THEN '신입(1년 이하)'
-		                   WHEN G.CAREER= '2' THEN '주니어(1년 ~ 3년)'
-		                   WHEN G.CAREER= '3' THEN '미들(4년 ~ 8년)'
-		                   WHEN G.CAREER= '4' THEN '시니어(9년 이상)'
-		                   WHEN G.CAREER= '5' THEN 'Lead레벨(15년 이상)'
-		                ELSE ' '
-		            END AS CAREER
-	      FROM CONSULT C, GUIDE G, CMMNCD CM, payform pay
-	      where
-				C.GUIDE_ID=G.GUIDE_ID  
-		        AND G.DUTY= CM.CD_NO
-                and c.consult_no = pay.no
-		        AND CM.CD_INI='D'
-			   and ennc ='활성화'
-			   and pay.category = 'CONSULT'
-               and pay.member_id = #{memberId}
-        ORDER BY CONSULT_NO DESC
+		SELECT C.CONSULT_NO, C.TITLE, C.CONTENT, C.DT ,C.STATE_CD, C.GUIDE_ID, C.JOB_CD, C.ENNC, C.BEGIN_DATE, C.END_DATE, pay.member_id
+		            ,FUN_CODENAME('D', G.DUTY) AS DUTY_NAME
+		            ,FUN_CODENAME('R', G.CAREER) AS CAREER
+		            ,FUN_CODENAME('J', C.JOB_CD) AS JOB_NAME
+		FROM CONSULT C, GUIDE G, payform pay
+		where C.GUIDE_ID=G.GUIDE_ID  
+		and c.consult_no = pay.no
+		and pay.category = 'CONSULT'
+		and pay.member_id = #{memberId}
+		ORDER BY CONSULT_NO DESC
 	</select>
 	
-	
+	<!-- 채팅방 연결 -->
+	<select id="consultChat" resultType="co.itrip.prj.consult.service.ConsultChatVO">
+		select chat_link
+		from consult_chat
+		where consult_no = #{consultNo}
+	</select>
 
 </mapper>

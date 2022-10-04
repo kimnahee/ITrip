@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import co.itrip.prj.guide.mapper.GuideMapper;
+import co.itrip.prj.iclass.service.ClassVO;
 
 /**
  * 
@@ -49,14 +50,16 @@ public class GuideServiceImpl implements GuideService {
 	 */
 	@Override
 	public int guideUpdate(GuideVO vo) {
-		// 가이드 정보 수정
+		// 은지 -가이드 정보 수정
 		return map.guideUpdate(vo);
 	}
 
 	@Override
-	public int guideDelete(GuideVO vo) {
-		// 가이드 삭제
-		return map.guideDelete(vo);
+	public List<ClassVO> userList(ClassVO vo) {
+		//  은지 - 클래스 수강생 리스트
+		return map.userList(vo);
 	}
+
+
 
 }

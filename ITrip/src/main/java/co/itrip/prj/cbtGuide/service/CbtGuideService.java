@@ -25,14 +25,13 @@ public interface CbtGuideService {
 	MyCbtHderVO myCbtHderList(MyCbtHderVO vo); /* 내가 푼 문제 조회 */
 	public List<CbtGuideVO> cbtGuideListO(CbtGuideVO vo); /* 문제 조회 : 사용자가 푼 문제 중 정답처리 된 문제조회 */
 	public List<CbtGuideVO> cbtGuideListX(CbtGuideVO vo); /* 문제 조회 : 사용자가 푼 문제 중 정답처리 된 오답조회 */
+	public List<CbtKeywordVO> keywordList(CbtKeywordVO vo); /* 키워드 조회 */
 	public GtpCdVO gtpNameList(String gtpNo); /* 사용자가 푼 문제 리스트의 유형 코드네임 출력 */
 	
-	public CbtKeywordVO keywordList(CbtKeywordVO vo); /* 키워드 조회 */ 
-	
 	public int cbtGuideInsert(CbtGuideVO vo);   /* 문제 등록 */
-	public int cbtGuideUpdate(CbtGuideVO vo);   /* 문제 수정 */ //작업 아직 X
+	public int cbtGuideUpdate(CbtGuideVO vo);   /* 문제 수정 */
 	
-	public int cbutGuideDelet(CbtGuideVO vo);   /* 문제 삭제 */ //작업 아직 X
+	public int cbutGuideDelet(CbtGuideVO vo);   /* 문제 삭제 */
 	public int myCbtHderInsert(MyCbtHderVO vo); /* 사용자가 푼 문제 등록 */
 	
 	

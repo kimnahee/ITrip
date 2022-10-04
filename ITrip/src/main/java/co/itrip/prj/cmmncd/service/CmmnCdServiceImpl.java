@@ -17,6 +17,12 @@ public class CmmnCdServiceImpl implements CmmnCdService {
 	private CmmnCdMapper map; // 공통코드 맵퍼
 	
 	@Override
+	public List<CmmnCdVO> cdList(String val) {
+		// 공통코드 리스트
+		return map.cdList(val);
+	}
+
+	@Override
 	public List<CmmnCdVO> careerCdList() {
 		// 경력 공통코드 리스트
 		return map.careerCdList();

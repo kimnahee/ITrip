@@ -20,36 +20,21 @@ public class AjaxFollowController { // 유저가 가이드 ♡ 눌러서 팔로�
 	// 해당 가이드 찜(팔로우) 여부 확인용 데이터 가져오기 (리스트 GetMapping)
 	@GetMapping("/ajaxHeartCount.do") 
 	@ResponseBody
-	public int heartCount(FollowVO vo, HttpServletRequest request) {
-		String memberId = request.getParameter("memberId");
-		String guideId = request.getParameter("guideId");
-		int consultNo = Integer.parseInt(request.getParameter("consultNo"));
-			System.out.println(memberId+guideId+consultNo);
-		vo.setMemberId(memberId);
-		vo.setGuideId(guideId);
-		vo.setConsultNo(consultNo);
+	public int heartCount(FollowVO vo) {
 		return fService.heartCount(vo);
 	}
 	
 	// 찜(팔로우)기능 등록 (등록 PostMapping)
 	@PostMapping("/ajaxHeartInsert.do")
 	@ResponseBody
-	public int heartInsert(FollowVO vo, HttpServletRequest request) {
-		String memberId = request.getParameter("memberId");
-		String guideId = request.getParameter("guideId");
-		int consultNo = Integer.parseInt(request.getParameter("consultNo"));
-			System.out.println(memberId+guideId+consultNo);
+	public int heartInsert(FollowVO vo) {
 		return fService.heartInsert(vo);
 	}
 	
 	// 찜(언팔로우)기능 삭제 (삭제 GetMapping)
 	@GetMapping("/ajaxHeartDelete.do")
 	@ResponseBody
-	public int heartDelete(FollowVO vo, HttpServletRequest request) {
-		String memberId = request.getParameter("memberId");
-		String guideId = request.getParameter("guideId");
-		int consultNo = Integer.parseInt(request.getParameter("consultNo"));
-			System.out.println(memberId+guideId+consultNo);
+	public int heartDelete(FollowVO vo) {
 		return fService.heartDelete(vo);
 	}
 	

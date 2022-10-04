@@ -6,29 +6,29 @@
 	
 </select>
 
-<!-- 가이드 마이페이지 들어갈때, 가이드 상담 신청할때 단건조회 [박은지]-->
+<!-- 가이드 마이페이지 버튼 누르고 들어갈때 [박은지]-->
 <select id="guideSelect" resultType="co.itrip.prj.guide.service.GuideVO">
-	 select g.guide_id
-		,g.career
-		,g.dc
-		,g.duty
-		,g.attach
-		,g.attach_dir
-		,g.state_cd
-		,g.dt
-		,star
-              ,c.cd_name
-              ,case  when g.career= '1' then '신입(1년 이하)'
-                  when g.career= '2' then '주니어(1년 ~ 3년)'
-                  when g.career= '3' then '미들(4년 ~ 8년)'
-                  when g.career= '4' then '시니어(9년 이상)'
-                  when g.career= '5' then 'Lead레벨(15년 이상)'
-               else ' '
-           end as care
-		from guide g, cmmncd c 
-		where g.duty = c.cd_no
-              and c.cd_ini='D'
-              and guide_id = #{guideId}
+	 SELECT G.GUIDE_ID
+		,G.CAREER
+		,G.DC
+		,G.DUTY
+		,G.ATTACH
+		,G.ATTACH_DIR
+		,G.STATE_CD
+		,G.DT
+		,STAR
+              ,C.CD_NAME
+              ,CASE  WHEN G.CAREER= '1' THEN '신입(1년 이하)'
+                  WHEN G.CAREER= '2' THEN '주니어(1년 ~ 3년)'
+                  WHEN G.CAREER= '3' THEN '미들(4년 ~ 8년)'
+                  WHEN G.CAREER= '4' THEN '시니어(9년 이상)'
+                  WHEN G.CAREER= '5' THEN 'Lead레벨(15년 이상)'
+               ELSE ' '
+           END AS CARE
+		FROM GUIDE G, CMMNCD C 
+		WHERE G.DUTY = C.CD_NO
+              AND C.CD_INI='D'
+              AND GUIDE_ID = #{guideId}
 </select>
 
 <!-- 유저 가이드 신청 [권소정] -->
@@ -38,14 +38,20 @@
 
 <!-- 가이드 정보수정 [박은지] -->
 <update id="guideUpdate"> 
-	update guide
+	UPDATE GUIDE
 	<set>
-		<if test="career != null ">career = #{career},</if>
-		<if test="dc != null">dc = #{dc},</if>
-		<if test="duty != null">duty = #{duty}</if>
+		<if test="career != null ">CAREER = #{career},</if>
+		<if test="dc != null">DC = #{dc},</if>
+		<if test="duty != null">DUTY = #{duty}</if>
 	</set>
-	where guide_id = #{guideId}
+	WHERE GUIDE_ID = #{guideId}
 </update>
 
-<delete id="guideDelete"></delete>
+<!-- <select id="userList">
+select c.guide_id, c.class_no, p.no, c.title, p.member_id
+from class c, payform p
+where c.class_no = p.no
+and upper(p.category) = 'CLASS';
+</select> -->
+
 </mapper>

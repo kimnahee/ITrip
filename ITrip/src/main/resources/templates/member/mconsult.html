@@ -52,10 +52,10 @@
      font-size: xx-large; 
 	}
 	
-	@media (min-width: 1200px)
+	/* @media (min-width: 1200px)
 	h1, .h1 {
      font-size: 2.25rem; 
-	}
+	} */
 	
 	#error{
 	 width: 120em;
@@ -66,6 +66,19 @@
 		margin-top: 1%;
 	}
 	
+	.Title {
+		height: 100px;
+	}
+	
+	.conCard{
+		text-align: center;
+	}
+	
+	ul {
+		margin-left: auto;
+		margin-right: auto;
+	}
+
 </style>
 </head>
 <body layout:fragment="content">
@@ -85,7 +98,8 @@
 							<h2 class="font-weight-bold text-primary heading">1:1 상담</h2>
 						</div>
 					</div>
-
+					
+					<!-- 진행중인 상담이 없을 때 -->
 					<div class="row" th:if="${#lists.isEmpty(consultList)}">
 						<div>
 							<div class="container text-center pt-32" >
@@ -96,40 +110,69 @@
 						</div>
 					</div>
 
+					<!-- 진행중인 상담이 있을 때 -->
 					<div class="row">
 						<div class="col-12" th:unless="${#lists.isEmpty(consultList)}">
 							<div class="property-slider-wrap">
+							
+									<!-- 상담이 활성화일 때 -->
 								<div class="property-slider">
-
-									<div class="card col-xs-12 col-sm-6 col-md-5 col-lg-3"
-										th:each="con : ${consultList}">
+									<div class="card col-xs-12 col-sm-6 col-md-5 col-lg-3 cCard" th:each="con : ${consultList}">
+										
+										<!-- 상담이 활성화일때 -->
 										<!-- .item -->
-										<div class="property-item">
-											<div class="property-content">
-												<div class="price mb-2">
+										<div class="property-item"  th:if="${con.ennc == '활성화'}">
+											<div class="property-content conCard">
+												<div class="city mb-2 Title">
 													<span th:text="${con.title}" class="cTitle">Web개발 고민</span>
 												</div>
 												<div>
-													<span class="city d-block mb-3" th:text="${con.guideId}">Nahi</span>
-													<div class="specs d-flex mb-4">
-														<span class="d-block d-flex align-items-center me-3">
-															<span class="caption" th:text="'직무   '+${con.cdName}">직무
-																/ 프론트앤드</span><br> <span class="caption"
-															th:text="'경력   '+${con.career}">경력 / 미들(4~8년)</span>
-														</span>
+
+													<div class="specs d-flex mb-4 spanM">
+														<ul class="list-group list-group-flush conBody">
+					    									<li class="list-group-item" th:text="'직무   '+${con.dutyName}"></li>
+					   										 <li class="list-group-item" th:text="'경력   '+${con.career}"></li>
+					   										 <li class="list-group-item" >[[${con.jobName}]]</li>
+					 									 </ul>
 													</div>
-													<span><a href="conReview"
-														class="btn btn-primary py-2 px-1">리뷰</a></span>&nbsp;&nbsp; <span><a
-														href="property-single.html"
-														class="btn btn-primary py-2 px-1">채팅방</a></span>
+													<span>
+														<button class="btn btn-primary py-2 px-3 consultChat">채팅방</button>
+													</span>
+													<span>
+													<a href="conReview"class="btn btn-primary py-2 px-1">리뷰</a>
+													</span>
+													 <div th:text="${con.consultNo}" style="display: none"></div>
+												</div>
+											</div>
+										</div>
+										
+										<!-- 상담이 비활성화일 때 -->
+										<div class="property-item"  th:if="${con.ennc == '비활성화'}">
+											<div class="property-content conCard">
+												<div class="city mb-2 Title">
+													<span th:text="${con.title}" class="cTitle">Web개발 고민</span>
+												</div>
+												<div>
+													<div class="specs d-flex mb-4 spanM">
+														<ul class="list-group list-group-flush conBody">
+					    									<li class="list-group-item">비활성화된 상담입니다.</li>
+					 									 </ul>
+													</div>
+					 									 <h6>가이드의 요청에 의해 비활성화중입니다.<br> 문의할 점이 있으시면<br> Q&A센터로 문의해주시기바랍니다.</h6>
+													<br>
+													<span>
+													<a href="qnaList.do"class="btn btn-primary py-2 px-1">Q&A</a>
+													</span>
 												</div>
 											</div>
 										</div>
 									</div>
-
-
+									
 									<!-- .item -->
 								</div>
+								
+								
+								
 
 
 								<div id="property-nav" class="controls" tabindex="0"
@@ -145,6 +188,14 @@
 					<br> <br>
 
 				</div>
+				<script>
+					//채팅방 연결
+					$(".consultChat").on("click", function(e){
+				    	let consultNo = $(e.target).parent().next().next().html();
+				    	console.log(consultNo);
+				    	location.href="/consultChat.do?consultNo="+consultNo;
+				    })
+				</script>
 			</div>
 
 			<script src="bootstrap/property/js/bootstrap.bundle.min.js"></script>

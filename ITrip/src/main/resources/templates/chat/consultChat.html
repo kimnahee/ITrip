@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+<head>
+<meta charset="UTF-8">
+<title>상담 채팅방</title>
+<style>
+iframe {
+	min-height: 600px;
+	margin-left: auto;
+	margin-right: auto;
+}
+#chat{
+	overflow:hidden;
+}
+</style>
+</head>
+<body>
+<div id="chat" layout:fragment="content" th:object="${chat}">
+	<div class="divider">
+		<div class="divider-text">1:1 상담</div>
+	</div>
+	<!-- 유튜브 링크가 없는 iframe -->
+	<iframe th:src="|https://www.vchatcloud.com/chat-demo/iframe/iframe_kakao/index.html?channelKey=${chat.chatLink}|"
+		frameborder='no' scrolling='no' marginwidth='0' marginheight='0' width='391' height='691'></iframe>
+</div>
+</body>
+</html>

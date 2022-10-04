@@ -1,5 +1,7 @@
 package co.itrip.prj.payform.service;
 
+import co.itrip.prj.iclass.service.ClassAttendVO;
+
 /**
 * 결제 및 신청 기능 모아놓은 인터페이스
 * @author 김하은
@@ -11,5 +13,5 @@ public interface PayformService {
 	public void addPay(PayformVO vo);
 
 	//경아 - 클래스결제테이블insert
-	int clPayformInsert(PayformVO vo);
+	int clPayformInsert(PayformVO vo,ClassAttendVO cvo);
 }

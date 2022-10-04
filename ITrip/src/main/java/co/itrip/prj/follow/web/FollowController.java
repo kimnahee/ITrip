@@ -39,23 +39,17 @@ public class FollowController {
 			return fService.followDelete(vo);
 		}
 		
-		// 가이드 마이페이지에서 가이드를 팔로우한 유저리스트
+		// 은지 - 가이드 마이페이지에서 가이드를 팔로우한 유저리스트
 		@GetMapping("/followerList.do")
 		@ResponseBody
-		public List<FollowVO> followerList(FollowVO vo, HttpServletRequest request, Model model) {
-			System.out.println(request.getParameter("guideId"));
-			vo.setMemberId(request.getParameter("guideId"));
+		public List<FollowVO> followerList(FollowVO vo) {
 			return fService.followerSelectList(vo);
 		}
 		
-		//  가이드 마이페이지에서 가이드가 유저의 팔로우 취소하기 (언팔로우)
+		//  은지 - 가이드 마이페이지에서 가이드가 유저의 팔로우 취소하기 (언팔로우)
 		@GetMapping("/followerDelete.do")
 		@ResponseBody
 		public int followerDelete(FollowVO vo, HttpServletRequest request) {
-			System.out.println(request.getParameter("guideId"));
-			System.out.println(request.getParameter("deleteF")); // 유저 아이디
-			vo.setGuideId(request.getParameter("guideId"));
-			vo.setMemberId(request.getParameter("deleteF")); // 유저 아이디 담기
 			return fService.followerDelete(vo);
 		}
 	
