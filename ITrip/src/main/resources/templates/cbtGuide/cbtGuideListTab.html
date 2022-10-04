@@ -32,8 +32,7 @@
 							<!-- ctpCd == '1' -->
 							<div th:if="${cbt.gtpCd} == '1'">
 								<form class="form form-vertical">
-									<input type="hidden" th:name="${_csrf.parameterName}"
-										th:value="${_csrf.token}">
+									<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 									<div class="form-body">
 										<div class="row">
 											<div class="col-12">
@@ -50,12 +49,9 @@
 													     </ul>
 					                                </div>
 												    <!-- 북마크끝 -->
-						    							
-													<input type="hidden" id="cbtNo0"
-														name="cbtNo0" th:value="${cbt.cbtNo}"> <input
-														type="hidden" id="PreGtpCd" name="PreGtpCd"
-														th:value="${tCd}"> <input type="hidden"
-														id="PreLangCd" name="PreLangCd" th:value="${lCd}">
+													<input type="hidden" id="cbtNo0" name="cbtNo0" th:value="${cbt.cbtNo}">
+													<input type="hidden" id="PreGtpCd" name="PreGtpCd" th:value="${tCd}">
+													<input type="hidden" id="PreLangCd" name="PreLangCd" th:value="${lCd}">
 													<br> <span id="QUES" th:text="${cbt.ques}">문제</span> <a>&nbsp;&nbsp;[
 														출제자 : <span th:text="${cbt.memberId}"></span> ]
 													</a>
@@ -63,15 +59,8 @@
 											</div>
 											<!-- 이미지가 있으면 이미지 출력-->
 											<div id="atch" class="form-group" th:if="${not #strings.isEmpty(cbt.attach)}">
-												<span class="mb-2 text-md">
-													<div style="text-align: center;">
-															<img th:src="@{*{attachDir}}" style="margin-bottom: 10px;">
-													</div>
-												</span>
-												<div class="form-group mb-3">
-													<label for="basicInput">첨부파일(이미지)</label>
-													<input type="text" id="file" class="form-control" name="file" th:field=*{attach}
-														readonly="readonly">
+												<div class="form-file">
+												    <img th:src="@{/download(fileName=${'/cbtGuide/'+cbt.attachDir})}" style="margin-bottom: 10px;">
 												</div>
 											</div> <!-- 이미지 출력 끝 -->
 											<div class="form-check">
@@ -122,17 +111,32 @@
 															data-feather='star' onclick="bookmark()"
 															style="cursor: pointer;"></i>
 													</h3>
-													<span id="QUES" th:text="${cbt.ques}">문제</span> <input
-														type="hidden" id="cbtNo0"
-														name="cbtNo0" th:value="${cbt.cbtNo}"> <input
-														type="hidden" id="PreGtpCd" name="PreGtpCd"
-														th:value="${tCd}"> <input type="hidden"
-														id="PreLangCd" name="PreLangCd" th:value="${lCd}">
+													<!-- 북마크 -->
+						                                <a href="#" data-toggle="dropdown" class="nav-link  dropdown-toggle nav-link-lg nav-link-user" >
+													    <i data-feather="star" ></i></a>
+													     <div class="dropdown-menu dropdown-menu-right dropdown-menu-large">
+													     <ul class="bookmark">
+															<li class="list-group py-2 px-4" id="bookmark1" name="bookmark1" value="1" style="cursor: pointer;"><span><i data-feather="star"></i> 중요한 문제 내용</span></li>
+															<li class="list-group py-2 px-4" id="bookmark2" name="bookmark2" value="2" style="cursor: pointer;"><span><i data-feather="star"></i> 개념이 부족한 문제</span></li>
+															<li class="list-group  py-2 px-4" id="bookmark3" name="bookmark3" value="3" style="cursor: pointer;"><span><i data-feather="star"></i> 실수 내용</span></li>
+													     </ul>
+					                                </div>
+												    <!-- 북마크끝 -->
+													<input type="hidden" id="cbtNo0" name="cbtNo0" th:value="${cbt.cbtNo}">
+													<input type="hidden" id="PreGtpCd" name="PreGtpCd" th:value="${tCd}">
+													<input type="hidden" id="PreLangCd" name="PreLangCd" th:value="${lCd}">
+													<span id="QUES" th:text="${cbt.ques}">문제</span>
 													<br> <a>&nbsp;&nbsp;[ 출제자 : <span
 														th:text="${cbt.memberId}"></span> ]
 													</a>
 												</div>
 											</div>
+											<!-- 이미지가 있으면 이미지 출력-->
+											<div id="atch" class="form-group" th:if="${not #strings.isEmpty(cbt.attach)}">
+												<div class="form-file">
+												    <img class ="img-fluid" width="500"th:src="@{/download(fileName=${'/cbtGuide/'+cbt.attachDir})}" style="margin-bottom: 10px;">
+												</div>
+											</div> <!-- 이미지 출력 끝 -->
 											<div class="col-sm-4">
 												<input class="form-control form-control-sm" type="text"
 													id="inputCNSR" name="inputCNSR" placeholder="↵">
@@ -156,15 +160,7 @@
 
 			</div>
 		</div>
-		<!-- 히든frm -->
-		<div>
-			<form id="frm" method="post">
-				<input type="hidden" th:name="${_csrf.parameterName}"
-					th:value="${_csrf.token}"> <input type="hidden" id="cbtNo"
-					name="cbtNo"></input>
-			</form>
-		</div>
-		<!-- 히든frm2 -->
+		<!-- 히든frm : 문제 풀기 -->
 		<div>
 			<form id="myFrm" method="post" action="/myCbtHderInsert.do">
 				<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
@@ -184,21 +180,38 @@
 				<!-- cbtNo값과 내가 입력한 값이 넘어가면 정답유무를 알려줌 -->
 			</form>
 		</div>
-		<!-- 히든frm3 : bookmark-->
-		<div>
-		    <form id="bookFrm" method="post" action="/bookmarkInsert.do">
+		<!-- 히든frm2 : bookmark-->
+		<!--<div>
+		    <form id="bmFrm" method="post" action="/bookmarkInsert.do">
+		    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 		        <input type="text" id="cbtNo" name="cbtNo">
 		        <input type="text" id="bmCd" name="bmCd">
 		    </form>
-		</div>
+		</div>-->
 		<script>
 		//북마크
 		$('.bookmark').on("click","li",function(e) {
-			let tg = e.currentTarget;
-			$("#bmCd").val(tg.value);
-			console.log(tg.value);
+		    var token = $("meta[name='_csrf']").attr("content");
+	        var header = $("meta[name='_csrf_header']").attr("content");
 			
-		})
+			let tg = e.currentTarget; 
+			let bCd = tg.value; // 즐겨찾기코드 (1,2,3 중 클릭한 값으로 담김)
+			let cNo = tg.parentElement.parentElement.nextElementSibling.value; // 즐겨찾기 한 문제번호
+		    
+		    $.ajax({
+		        url: '/ajaxBookmarkInsert.do',
+		        type: 'post',
+		        dataType: 'json',
+		        data: { 'cbtNo':cNo , 'bmCd' : bCd },
+		        beforeSend: function(xhr){
+		            xhr.setRequestHeader(header, token);
+		        },
+		        success: function insertSuccess(resp){
+		            alert('즐겨찾기에 등록했습니다.');
+		        },
+		        error: function insertError(xhr, err) {
+		           console.error("Error on ajax call: " + err); }}); 
+		}) 
 		
 		//객관식, 단답형
 		    $('.myCbtCall').click(function() {

@@ -9,14 +9,13 @@ import org.springframework.stereotype.Service;
 
 import co.itrip.prj.cbtGuide.mapper.CbtGuideMapper;
 import co.itrip.prj.cmmncd.mapper.CmmnCdMapper;
-import co.itrip.prj.gtpcd.service.GtpCdVO;
 
 /**
  * 가이드CBT 구현시 필요한 기능을 구체적으로 기재
  * 
  * @author 김하은
  * @date 2022.09.16
- * @version 2.2 , 2022.09.23 가이드가 문제 제출시 테이블 두개
+ * @version 2.3 , 2022.09.23 가이드가 문제 제출시 테이블 두개
  * 
  */
 @Service
@@ -236,14 +235,6 @@ public class CbtGuideServiceImpl implements CbtGuideService {
 		return r;
 	}
 	
-	 /* 사용자가 푼 문제 리스트의 유형 코드네임 출력 */
-	@Override
-	public GtpCdVO gtpNameList(String gtpNo) {
-		CbtGuideVO vo = new CbtGuideVO();
-		System.out.println("gtpNameList Serviceimpl vo.getGtpCd()"+vo.getGtpCd());
-		
-		return map.gtpNameList(gtpNo);
-	}
     /* 키워드 조회 */
 	@Override
 	public List<CbtKeywordVO> keywordList(CbtKeywordVO vo) {
@@ -256,6 +247,17 @@ public class CbtGuideServiceImpl implements CbtGuideService {
 			System.out.println("================== 등록된 키워드가 없습니다.");
 		}
 		return kList;
+	}
+	
+	@Override
+	public List<CbtGuideVO> bookmarkList(CbtGuideVO vo){
+		return map.bookmarkList(vo);
+	}
+	/* 즐겨찾기 등록*/
+	@Override
+	public int ajaxBookmarkInsert(BookmarkVO vo) {
+		//ORA-00001: 무결성 제약 조건(ADMIN.BOOKMARK_PK)에 위배됩니다 이거 처리해야됨니다...!
+		return map.ajaxBookmarkInsert(vo);
 	}
  
 

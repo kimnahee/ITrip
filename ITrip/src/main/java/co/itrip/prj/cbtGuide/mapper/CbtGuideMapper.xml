@@ -19,11 +19,7 @@
 	    WHERE MEMBER_ID = #{memberId}
         ORDER BY CBT_NO
 	</select>
-	
-	<!-- public GtpCdVO gtpNameList(String gtpNo); /* 사용자가 푼 문제 리스트의 유형 코드네임 출력 */-->
-	<select id="gtpNameList" parameterType="String" resultType="co.itrip.prj.gtpcd.service.GtpCdVO">
-	    SELECT CD_NAME FROM CMMNCD WHERE CD_INI = 'G' AND CD_NO = #{cdNo}
-	</select>
+
 	
 	<!-- List<CbtGuideVO> cbtGuideListTab(CbtGuideVO vo); //탭 클릭시 유형별, 언어별로 조회 -->
 	<select id="cbtGuideListTab" parameterType="co.itrip.prj.cbtGuide.service.CbtGuideVO" resultType="co.itrip.prj.cbtGuide.service.CbtGuideVO">
@@ -190,5 +186,18 @@
 	<update id="ajaxMyCbLongChkUpdate" parameterType="map" >
 	    update mycbt_long set chk = ${chkOX}  where mky_no = ${mkyNo} and cbt_no = ${cbtNo}
 	</update>
+	
+	<!-- List<BookmarkVO> bookmarkList(BookmarkVO vo); /* 즐겨찾기 조회 */ -->
+	<select id="bookmarkList" parameterType="co.itrip.prj.cbtGuide.service.CbtGuideVO" resultType="co.itrip.prj.cbtGuide.service.CbtGuideVO">
+	    SELECT B.BM_CD, C.CBT_NO, C.QUES  
+        FROM CBT_GUIDE C, BOOKMARK B
+        WHERE B.CBT_NO = C.CBT_NO AND B.MEMBER_ID =#{memberId}
+	</select>
+	
+	<!-- public int ajaxBookmarkInsert(BookmarkVO vo);   /* 즐겨찾기 추가 */  -->
+	<insert id="ajaxBookmarkInsert">
+	    INSERT INTO BOOKMARK(BM_CD, MEMBER_ID, CBT_NO) VALUES (#{bmCd}, #{memberId}, ${cbtNo}) 
+	</insert>
+	
 	
 </mapper>

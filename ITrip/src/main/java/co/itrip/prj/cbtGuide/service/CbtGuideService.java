@@ -3,8 +3,6 @@ package co.itrip.prj.cbtGuide.service;
 import java.util.List;
 import java.util.Map;
 
-import co.itrip.prj.community.service.CommunityVO;
-import co.itrip.prj.gtpcd.service.GtpCdVO;
 
 /**
 * 가이드CBT 구현시 필요한 기능을 기재
@@ -26,7 +24,7 @@ public interface CbtGuideService {
 	public List<CbtGuideVO> cbtGuideListO(CbtGuideVO vo); /* 문제 조회 : 사용자가 푼 문제 중 정답처리 된 문제조회 */
 	public List<CbtGuideVO> cbtGuideListX(CbtGuideVO vo); /* 문제 조회 : 사용자가 푼 문제 중 정답처리 된 오답조회 */
 	public List<CbtKeywordVO> keywordList(CbtKeywordVO vo); /* 키워드 조회 */
-	public GtpCdVO gtpNameList(String gtpNo); /* 사용자가 푼 문제 리스트의 유형 코드네임 출력 */
+	List<CbtGuideVO> bookmarkList(CbtGuideVO vo); /* 즐겨찾기 조회 */
 	
 	public int cbtGuideInsert(CbtGuideVO vo);   /* 문제 등록 */
 	public int cbtGuideUpdate(CbtGuideVO vo);   /* 문제 수정 */
@@ -35,11 +33,8 @@ public interface CbtGuideService {
 	public int myCbtHderInsert(MyCbtHderVO vo); /* 사용자가 푼 문제 등록 */
 	
 	
-
-	
-	/* 정답률 */
-	
 	public MyCbtLongVO ajaxMyCbtLongList(MyCbtLongVO myVo); /* 객관식 문제 채점시 ajax로 정답 출력 */
 	public int ajaxMyCbtLongInsert(MyCbtLongVO vo); /* 사용자가 푼 서술형 문제 등록 */
+	public int ajaxBookmarkInsert(BookmarkVO vo);   /* 즐겨찾기 추가 */ 
 	
 }

@@ -21,12 +21,12 @@ import org.springframework.web.multipart.MultipartFile;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
+import co.itrip.prj.cbtGuide.service.BookmarkVO;
 import co.itrip.prj.cbtGuide.service.CbtGuideService;
 import co.itrip.prj.cbtGuide.service.CbtGuideVO;
 import co.itrip.prj.cbtGuide.service.CbtKeywordVO;
 import co.itrip.prj.cbtGuide.service.MyCbtHderVO;
 import co.itrip.prj.cmmncd.service.CmmnCdService;
-import co.itrip.prj.gtpcd.service.GtpCdService;
 
 /**
 * 가이드CBT 제어하는 곳
@@ -39,17 +39,13 @@ public class CbtGuideController {
 	@Autowired
 	private CbtGuideService cgDao;
 	@Autowired
-	private GtpCdService gtpDao;
-	//@Autowired
-	//private LangCdService langDao;
-	@Autowired
 	private CmmnCdService cdDao;
 	
 	/* 가이드 CBT 메인화면 */
 	@RequestMapping("/cbtGuideMain.do")
 	public String cbtGuideMain(Model model) {
 		model.addAttribute("cbtList", cgDao.cbtGuideList()); // 모든 문제 출력
-	    model.addAttribute("gtpCdList", gtpDao.gtpCdList()); // 모든 타입코드 출력
+	    model.addAttribute("gtpCdList", cdDao.cdList("G")); // 모든 타입코드 출력
 		model.addAttribute("langCdList", cdDao.cdList("L")); //모든 언어코드 출력 -- 수정했음 확인요망
 	    return "cbtGuide/cbtGuideMain";
 	}
@@ -72,7 +68,7 @@ public class CbtGuideController {
 	/* 가이드가 문제 등록 폼 */
 	@GetMapping("/cbtGuideInsertForm.do")
 	public String cbtGuideInsertForm(Model model) {
-	    model.addAttribute("gtpCdList", gtpDao.gtpCdList());
+	    model.addAttribute("gtpCdList",  cdDao.cdList("G"));
 		model.addAttribute("langCdList", cdDao.cdList("L")); //모든 언어코드 출력 -- 수정했음 확인요망
 		return "cbtGuide/cbtGuideInsertForm";
 	}
@@ -81,34 +77,16 @@ public class CbtGuideController {
 	
 	/* 가이드가 문제 등록 */ 
 	@PostMapping("/cbtGuideInsert.do")
-	public String cbtGuideInsert(CbtGuideVO vo, CbtKeywordVO kvo, Model model,
-			@RequestParam("file") MultipartFile file) throws IllegalStateException, IOException {
-		
-		
-		// 파일처리 (static 폴더로 업로드 됨)
-		/*String projectPath = System.getProperty("user.dir")+"/src/main/resources/static/files"; //프로젝트 경로
-		UUID uuid = UUID.randomUUID(); // 랜덤으로 고유의 값 생성
-		
-		if(!file.isEmpty()) { //파일이 등록되어있다면...
-			String filename= uuid +"_"+file.getOriginalFilename(); //파일명 충돌방지를 위한 파일별명만듦
-			File saveFile = new File(projectPath, filename);
-			//파일 물리적 위치에 저장
-			file.transferTo(saveFile);
-			vo.setAttach(filename);
-			String path ="/files/"+filename;
-			vo.setAttachDir(path);
-		}*/
+	public String cbtGuideInsert(CbtGuideVO vo, CbtKeywordVO kvo, Model model, MultipartFile file) throws IllegalStateException, IOException {
 		
 		// 파일처리 : C에 파일이 업로드 되도록 수정
-		String saveFolder=("");
-		File sfile = new File(saveFolder);
-		String oFileName = file.getOriginalFilename();
+		String oFileName=file.getOriginalFilename();
 		if(!oFileName.isEmpty()) {
 			String sFileName = UUID.randomUUID().toString()+oFileName.substring(oFileName.lastIndexOf("."));
 			String path = fileDir+"/cbtGuide/"+sFileName;
 		    file.transferTo(new File(path));
 		    vo.setAttach(oFileName);
-		    vo.setAttachDir(saveFolder+"/cbtGuide/"+sFileName);
+		    vo.setAttachDir(sFileName);
 		}
 		
 		
@@ -209,11 +187,13 @@ public class CbtGuideController {
 		cgDao.cbutGuideDelet(vo);
 		return "redirect:/cbtGuideMain.do";
 	}
-	/* 즐겨 찾기 */
-	@GetMapping("/bookmark.do")
-	public String bookmark(Principal prin) {
-		//vo.setMemberId(prin.getName()); //로그인된 사용자 정보 가져와 담기
-		return "bookmark/bookmark";
+	/* 즐겨찾기 목록*/
+	@GetMapping("/bookmarkList.do")
+	public String bookmarkList(CbtGuideVO vo,Principal prin, Model model, HttpServletRequest request) {
+		vo.setMemberId(prin.getName()); //로그인된 사용자 정보 가져와 담기
+		model.addAttribute("bookmark", cgDao.bookmarkList(vo));
+		return "bookmark/bookmarkList";
 	}
+	
 	
 }
