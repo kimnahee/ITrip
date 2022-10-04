@@ -27,6 +27,7 @@ import co.itrip.prj.alarm.service.AlarmVO;
 import co.itrip.prj.cmmncd.service.CmmnCdService;
 import co.itrip.prj.follow.service.FollowService;
 import co.itrip.prj.follow.service.FollowVO;
+import co.itrip.prj.iclass.service.ClassChatVO;
 import co.itrip.prj.iclass.service.ClassDtVO;
 import co.itrip.prj.iclass.service.ClassService;
 import co.itrip.prj.iclass.service.ClassVO;
@@ -39,10 +40,12 @@ public class ClassController {
 	
 	@Autowired
 	private CmmnCdService cmService; // 공통코드서비스
+
 	
 	@Value("${file.dir}")
 	private  String fileDir;
 	
+
 	@Autowired
 	private FollowService fService; //팔로우 서비스
 	
@@ -135,6 +138,16 @@ public class ClassController {
 			vo.setGuideId(principal.getName());
 			model.addAttribute("alreadyList",cService.alreadyClass(vo) );
 			return"guide/alreadyclass";
+		}
+    
+		// 채팅방 연결
+		@GetMapping("/classChat.do")
+		public String classChat(ClassVO vo, ClassChatVO chatvo, Model model, HttpServletRequest request) {
+			int classNo = Integer.parseInt(request.getParameter("classNo"));
+			System.out.println("===========" + classNo);
+			chatvo.setClassNo(classNo);
+			model.addAttribute("chat", cService.classChatLink(chatvo));
+			return "chat/classChat";
 		}
 
 }

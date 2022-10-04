@@ -91,15 +91,8 @@
 	<!-- public int cbtGuideUpdate(CbtGuideVO VO); //수정(U) -->
 	<update id="cbtGuideUpdate">
 	    UPDATE CBT_GUIDE 
-	    SET QUES = #{ques}, CNSR = #{cnsr}, EX1 = #{ex1}, EX2 = #{ex2}, EX3 = #{ex3},  EX4 = #{ex4}, ATTACH =#{attach}, ATTACH_DIR =#{atach_dir}, EXPLNA =#{explna}
-        WHERE CBT_NO = ${cbtNo};
-	</update>
-	
-	<!--  public int keywordUpdate(CbtKeywordVO vo);  /* 키워드 수정 */ -->
-	<update id="keywordUpdate">
-	    UPDATE CBT_KEYWORD
-		SET C_KWRD = #{cKwrd}
-		WHERE CBT_NO = ${cbtNo} AND KY_NO
+	    SET QUES = #{ques}, CNSR = #{cnsr}, EX1 = #{ex1}, EX2 = #{ex2}, EX3 = #{ex3},  EX4 = #{ex4}, ATTACH =#{attach}, ATTACH_DIR =#{attachDir}, EXPLNA =#{explna}
+        WHERE CBT_NO = ${cbtNo}
 	</update>
 	
 	<!-- public int cbutGuideDelet(CbtGuideVO VO);//삭제(D) -->
@@ -110,6 +103,7 @@
 	<delete id="keywordDelete">
 	    DELETE FROM CBT_KEYWORD WHERE CBT_NO =  ${cbtNo}
 	</delete>
+	
 	<!-- public MyCbtHderVO myCbtHderInsert(MyCbtHderVO vo); // myCBtHder에 담기 -->
 	<insert id="myCbtHderInsert" parameterType="co.itrip.prj.cbtGuide.service.MyCbtHderVO">
 	    <selectKey keyProperty="mcNo" order="BEFORE" resultType="int">
@@ -135,7 +129,7 @@
 	</update>
 	<!-- public List<CbtKeywordVO> keywordList(CbtKeywordVO vo); /* 키워드 조회 */ -->
 	<select id="keywordList" parameterType="co.itrip.prj.cbtGuide.service.CbtKeywordVO" resultType="co.itrip.prj.cbtGuide.service.CbtKeywordVO">
-	    SELECT C_KWRD
+	    SELECT KY_NO,C_KWRD
 	    FROM CBT_KEYWORD 
 	    WHERE CBT_NO= ${cbtNo}
 	</select> 

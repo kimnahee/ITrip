@@ -76,8 +76,14 @@ public class ClassServiceImpl implements ClassService {
 	}
 
 	@Override
+
 	public int classAttendInsert(ClassAttendVO vo) {
 		return map.classAttendInsert(vo);
+  }
+	public ClassChatVO classChatLink(ClassChatVO vo) {
+		//클래스 채팅방 연결
+		return map.classChatLink(vo);
+
 	}
 
 	

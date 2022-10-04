@@ -141,19 +141,21 @@
 	              카테고리별 검색 기능
 		--------------------------------*/
 		 function jobSearch(p,jobCd) {
-	    	console.log(jobCd)
-	    	console.log(p)
+
 			$.ajax({
 				url : "ajaxJobListSearch.do",
 				data : {'jobCd' : jobCd,"pageNum":p},
 				dataType : "json",
 				success : function(result){
-					console.log(result)
+					$('#consultList').html("");
+					$("#pagingNav").html("");
 					if(result.list.length > 0) {
 						makeConsultList(result.list);
 						makePaging(result,jobCd)
 					}else {
-						alert("검색한 결과가 없습니다.");
+						//alert("검색한 결과가 없습니다.");
+						var row = `<div class="alert alert-primary m-4" role="alert">선택하신 카테고리에 내용이 없습니다.</div>`
+					$('#consultList').append(row);
 					}
 				},
 				error : function(err) {
@@ -168,9 +170,8 @@
 		  검색 결과별로 ajax 호출하여 카드 다시 만들어서 뿌려주기
 		-------------------------------------------*/
 		 function makeConsultList(data) {
-			$('#consultList').html("");
+			
 			$.each(data, function(index, item){
-				console.log(item)
 				var row = `<div class="card">
 							   <div class="card-body">
 						       <h5 class="card-title">${item.title}</h5>
@@ -184,7 +185,6 @@
 							   <input type="hidden" value="${item.consultNo}">
 						   </div>`
 					$('#consultList').append(row);
-					console.log(data)
 			});
 		} 
 		
@@ -196,7 +196,7 @@
 		function makePaging(res,jobCd){
 			console.log(res)
 			console.log("jobCd : "+jobCd)
-			$("#pagingNav").html("");
+			
 			
 			ph ='<nav aria-label="Page navigation example">'
 			    +'<ul class="pagination pagination-info  justify-content-center">'

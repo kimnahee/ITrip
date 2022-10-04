@@ -126,7 +126,6 @@ public class CbtGuideController {
 		vo.setMcNo(mvo.getMcNo());
 		model.addAttribute("ListO", cgDao.cbtGuideListO(vo)); // 사용자가 푼 정답문제 출력
 		model.addAttribute("ListX", cgDao.cbtGuideListX(vo)); // 사용자가 푼 오답문제 출력
-		System.out.println("======controller vo.getMcNo : "+vo.getMcNo());
 		
 		return "cbtGuide/cbtScoreList";
 	};
@@ -185,10 +184,22 @@ public class CbtGuideController {
 	
 	/* 문제 수정 */
 	@PostMapping("/cbtGuideUpdate.do")
-	public String cbtGuideUpdate(CbtGuideVO vo, CbtKeywordVO kVo, HttpServletRequest request) {
+	public String cbtGuideUpdate(CbtGuideVO vo, CbtKeywordVO kVo, HttpServletRequest request,
+			@RequestParam("file") MultipartFile file) throws IllegalStateException, IOException {
+		// 파일처리 : C에 파일이 업로드 되도록 수정
+		String saveFolder=("");
+		File sfile = new File(saveFolder);
+		String oFileName = file.getOriginalFilename();
+		if(!oFileName.isEmpty()) {
+			String sFileName = UUID.randomUUID().toString()+oFileName.substring(oFileName.lastIndexOf("."));
+			String path = fileDir+"/cbtGuide/"+sFileName;
+		    file.transferTo(new File(path));
+		    vo.setAttach(oFileName);
+		    vo.setAttachDir(saveFolder+"/cbtGuide/"+sFileName);
+		}
 		
 		cgDao.cbtGuideUpdate(vo);
-		return "redirect:/cbtGuideMyList";
+		return "redirect:/cbtGuideMyList.do";
 	}
 	
 	/* 문제 삭제 */

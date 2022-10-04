@@ -31,9 +31,8 @@ public interface CbtGuideMapper {
 		
 		public int cbtGuideInsert(CbtGuideVO vo);   /* 문제 등록 */
 		public int cbtGuideUpdate(CbtGuideVO vo);   /* 문제 수정 */ 
-		public int keywordUpdate(CbtKeywordVO vo);  /* 키워드 수정 */
 		public int cbutGuideDelet(CbtGuideVO vo);   /* 문제 삭제 */
-		public int keywordDelete(CbtGuideVO vo);    /* 키워드 삭제 */ 
+		public int keywordDelete(CbtGuideVO vo);    /* 키워드 삭제(문제 삭제시) */
 		public int myCbtHderInsert(MyCbtHderVO vo); /* 사용자가 푼 문제 등록 */
 		public int keywordInsert(CbtKeywordVO kvo); /* 키워드 등록 */ //mapper에만 있음
 		

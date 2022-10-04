@@ -38,10 +38,19 @@
 										<div class="row">
 											<div class="col-12">
 												<div class="form-group">
-													<h3>
-														문제 <span th:text="${cbt.cbtNo}"></span><i data-feather='star'
-															onclick="bookmark()" style="cursor: pointer;"></i>
-													</h3>
+													<h3> 문제 <span th:text="${cbt.cbtNo}"></span></h3>
+													<!-- 북마크 -->
+						                                <a href="#" data-toggle="dropdown" class="nav-link  dropdown-toggle nav-link-lg nav-link-user" >
+													    <i data-feather="star" ></i></a>
+													     <div class="dropdown-menu dropdown-menu-right dropdown-menu-large">
+													     <ul class="bookmark">
+															<li class="list-group py-2 px-4" id="bookmark1" name="bookmark1" value="1" style="cursor: pointer;"><span><i data-feather="star"></i> 중요한 문제 내용</span></li>
+															<li class="list-group py-2 px-4" id="bookmark2" name="bookmark2" value="2" style="cursor: pointer;"><span><i data-feather="star"></i> 개념이 부족한 문제</span></li>
+															<li class="list-group  py-2 px-4" id="bookmark3" name="bookmark3" value="3" style="cursor: pointer;"><span><i data-feather="star"></i> 실수 내용</span></li>
+													     </ul>
+					                                </div>
+												    <!-- 북마크끝 -->
+						    							
 													<input type="hidden" id="cbtNo0"
 														name="cbtNo0" th:value="${cbt.cbtNo}"> <input
 														type="hidden" id="PreGtpCd" name="PreGtpCd"
@@ -175,11 +184,21 @@
 				<!-- cbtNo값과 내가 입력한 값이 넘어가면 정답유무를 알려줌 -->
 			</form>
 		</div>
+		<!-- 히든frm3 : bookmark-->
+		<div>
+		    <form id="bookFrm" method="post" action="/bookmarkInsert.do">
+		        <input type="text" id="cbtNo" name="cbtNo">
+		        <input type="text" id="bmCd" name="bmCd">
+		    </form>
+		</div>
 		<script>
 		//북마크
-		function bookmark(){
-			console.log("일단 실행됨");
-		}
+		$('.bookmark').on("click","li",function(e) {
+			let tg = e.currentTarget;
+			$("#bmCd").val(tg.value);
+			console.log(tg.value);
+			
+		})
 		
 		//객관식, 단답형
 		    $('.myCbtCall').click(function() {
