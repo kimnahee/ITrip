@@ -25,13 +25,10 @@ public class ReviewController {
 	@Autowired
 	private ConsultService conService;
 	
+	// 은지 상담 리뷰 등록
 	@PostMapping("/reviewConsultInsert.do")
 	public String reviewConsultInsert(ReviewVO vo, Principal principal, ConsultVO cvo, Model model) {
 		vo.setMemberId(principal.getName());
-		/*
-		 * cvo.setGuideId(principal.getName()); model.addAttribute("consultList",
-		 * conService.consultList());
-		 */
 		reServicce.reviewConsultInsert(vo);
 		return "redirect:myPage"; 
 	}

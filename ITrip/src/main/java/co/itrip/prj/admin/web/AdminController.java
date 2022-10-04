@@ -61,8 +61,8 @@ public class AdminController {
 	@Autowired
 	private AdminService adminService; // 1:1 상담서비스
 	
-	@Autowired
-	private AdminService dao;
+	@Value("${file.dir}")
+	private String fileDir;
 
 	
 	@GetMapping("/appClass.do") //소정 - admin-Class 승인
@@ -89,14 +89,14 @@ public class AdminController {
 	@PostMapping("/classUpdate.do")
 	@ResponseBody
 	public int classUpdate(ClassVO vo) {
-		return dao.classUpdate(vo);
+		return adminService.classUpdate(vo);
 	}
 	
 	//소정 - consult 승인
 	@PostMapping("/consultUpdate.do")
 	@ResponseBody
 	public int consultUpdate(ConsultVO vo) {
-		return dao.consultUpdate(vo);
+		return adminService.consultUpdate(vo);
 	}
 	
 	
@@ -106,7 +106,7 @@ public class AdminController {
 			@RequestParam(required = false, defaultValue = "1") int pageNum,
 			@RequestParam(required = false, defaultValue = "10") int pageSize) {
 		PageHelper.startPage(pageNum, pageSize);
-		model.addAttribute("pageInfo", PageInfo.of(dao.memberAuthList(vo)));
+		model.addAttribute("pageInfo", PageInfo.of(adminService.memberAuthList(vo)));
 		return "admin/memberAuthList";
 	}
 
@@ -116,7 +116,7 @@ public class AdminController {
 			@RequestParam(required = false, defaultValue = "1") int pageNum,
 			@RequestParam(required = false, defaultValue = "10") int pageSize) {
 		PageHelper.startPage(pageNum, pageSize);
-		model.addAttribute("pageInfo", PageInfo.of(dao.memberList(vo)));
+		model.addAttribute("pageInfo", PageInfo.of(adminService.memberList(vo)));
 		return "admin/memberList";
 	}
 
@@ -127,7 +127,7 @@ public class AdminController {
 			@RequestParam(required = false, defaultValue = "1") int pageNum,
 			@RequestParam(required = false, defaultValue = "10") int pageSize) {
 		PageHelper.startPage(pageNum, pageSize);
-		return  PageInfo.of(dao.memberListOf(vo));
+		return  PageInfo.of(adminService.memberListOf(vo));
 	}
 	
 	//경아 - 회원->가이드 권한수정
@@ -135,8 +135,8 @@ public class AdminController {
 	@ResponseBody
 	public int memberAuthUpdate(GuideVO vo,MemberVO mvo) {
 		mvo.setMemberId(vo.getGuideId());
-		dao.memberAuthUpdateTo(mvo);
-		return  dao.memberAuthUpdate(vo);
+		adminService.memberAuthUpdateTo(mvo);
+		return  adminService.memberAuthUpdate(vo);
 	}
 	
 	
@@ -144,11 +144,11 @@ public class AdminController {
     //경아 - 파일 다운로드 처리
 	 @GetMapping(value = "/download", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	 public void download(String fileName, HttpServletResponse response, HttpServletRequest request){
-
+		
 	        try {
 	        	  String originFileName = URLDecoder.decode(fileName, "UTF-8");
 	              String onlyFileName = originFileName.substring(originFileName.lastIndexOf("_") + 1);
-	              File file = new File(System.getProperty("user.dir")+"/src/main/resources/static", originFileName);
+	              File file = new File(fileDir, originFileName);
 
 	              if(file.exists()) {
 	                  String agent = request.getHeader("User-Agent");
@@ -184,4 +184,6 @@ public class AdminController {
 	        }
 
 	    }
+	 
+	 
 }

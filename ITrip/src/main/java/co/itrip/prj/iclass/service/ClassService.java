@@ -16,4 +16,9 @@ public interface ClassService {
 	List<ClassVO> alreadyClass(ClassVO vo); // 가이드가 신청한 클래스 전체조회
 	
 
+	int classAttendInsert(ClassAttendVO vo);//클래스 결제 후 출석테이블에 출결0으로 추가
+
+
+	ClassChatVO classChatLink(ClassChatVO vo); //채팅방 연결
+
 }

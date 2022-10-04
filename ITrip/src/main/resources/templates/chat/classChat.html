@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+<head>
+<meta charset="UTF-8">
+<title>Class 강의장</title>
+<style>
+iframe {
+	min-height: 1000px;
+}
+
+#btn {
+	text-align: center;
+}
+
+#chkBtn {
+	display: inline-block;
+}
+</style>
+</head>
+<body>
+	<!-- 메타버스 1형 -->
+	<div layout:fragment="content" th:object="${chat}">
+		<div class="divider">
+			<div class="divider-text">강의실</div>
+		</div>
+		<iframe
+			th:src="|https://www.vchatcloud.com/chat-demo/iframe/iframe_metaverse/type_1/index.html?channelKey=${chat.chatLink}|"
+			allow="camera *;microphone *;display-capture *" frameborder='no'
+			scrolling='no' marginwidth='0' marginheight='0' width='100%'
+			height='100%'></iframe>
+		<hr>
+		<div id="btn">
+			<button id="chkBtn" class="btn btn-primary btn-md mb-0">출석체크</button>
+		</div>
+	</div>
+</body>
+</html>

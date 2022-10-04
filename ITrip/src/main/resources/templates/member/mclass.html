@@ -105,7 +105,7 @@
                       	<span class="">정원 </span>
                       	<h5 class="card-title" th:text="${cList.psncpa}+명"></h5>
                       </div>   
-                        <a href="/"class="btn btn-primary py-2 px-3 classInfo">링크</a>
+                        <button class="btn btn-primary py-2 px-3 classInfo classChat">링크</button>
                          <div th:text="${cList.classNo}" style="display: none"></div>
                     </div>
                   </div>
@@ -133,7 +133,7 @@
                       	<button type="button" class="btn btn-primary py-2 px-3 classInfo reviewBtn">리뷰</button>
                         <a href="certificate.do"class="btn btn-primary py-2 px-3 classInfo">수료증</a>
                 	 </form>
-                         <div th:text="${cList.classNo}" style="display: none"></div>
+                         <div id="classNo" th:text="${cList.classNo}" style="display: none"></div>
                     </div>
                   </div>
                 </div>
@@ -168,21 +168,7 @@
         <br><br>
             
       </div>
-    </div>
-
-    <script src="bootstrap/property/js/bootstrap.bundle.min.js"></script>
-    <script src="bootstrap/property/js/tiny-slider.js"></script>
-    <script src="bootstrap/property/js/aos.js"></script>
-    <script src="bootstrap/property/js/navbar.js"></script>
-    <script src="bootstrap/property/js/counter.js"></script>
-    <script src="bootstrap/property/js/custom.js"></script>
-            
-        
-    
-    <!-- Projects End -->
-    
-    
-	<script type="text/javascript">
+      	<script type="text/javascript">
 	
 	let cPrice = document.getElementsByClassName("cPrice");
 	let guideId = $("#guideId").val();
@@ -226,10 +212,11 @@
 		 
     })
     
-	
-    
-		 
-	
+    //강의장 링크연결
+    $(".classChat").on("click", function(e){
+    	let classNo = $(e.target).next().html();
+    	location.href="/classChat.do?classNo="+classNo;
+    })
     
 	
 /* 	$(document).ready(function(){    
@@ -238,5 +225,20 @@
     
     
 	</script>
+    </div>
+
+    <script src="bootstrap/property/js/bootstrap.bundle.min.js"></script>
+    <script src="bootstrap/property/js/tiny-slider.js"></script>
+    <script src="bootstrap/property/js/aos.js"></script>
+    <script src="bootstrap/property/js/navbar.js"></script>
+    <script src="bootstrap/property/js/counter.js"></script>
+    <script src="bootstrap/property/js/custom.js"></script>
+            
+        
+    
+    <!-- Projects End -->
+    
+    
+
 </body>
 </html>
