@@ -24,6 +24,9 @@ iframe {
 	<div layout:fragment="content" th:object="${chat}">
 		<div class="divider">
 			<div class="divider-text">강의실</div>
+			<input type="hidden" id="classNo" class="form-control" name="classNo" th:value=${chat.classNo} readonly="readonly">
+			<input type="hidden" id="memberId" class="form-control" name="memberId" th:value=${#authentication.principal.member.memberId} readonly="readonly">
+			<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 		</div>
 		<iframe
 			th:src="|https://www.vchatcloud.com/chat-demo/iframe/iframe_metaverse/type_1/index.html?channelKey=${chat.chatLink}|"
@@ -34,6 +37,31 @@ iframe {
 		<div id="btn">
 			<button id="chkBtn" class="btn btn-primary btn-md mb-0">출석체크</button>
 		</div>
+		<script>
+			//출석체크
+			$("#chkBtn").on("click", function(){
+				let classNo = $("#classNo").val(); //클래스번호
+				let memberId = $("#memberId").val(); //수강자 이름(현재 로그인한 사람)
+				let csrfHeaderName = "${_csrf.headerName}";
+				let csrfToken=$("input[name=_csrf]").val();
+				//ajax 처리 : 클릭하면 해당유저의 attend의 attend_cnt + 1 / 만약 해당 class의 class_cnt와 비교해서 같으면 수료버튼 or 수료상태로...update
+				$.ajax({ 
+					url : "/classChk.do",
+					type : "post",
+					data : {'classNo' : classNo, 'memberId' : memberId},
+					beforeSend: function(xhr){
+						xhr.setRequestHeader("AJAX", true);
+					    xhr.setRequestHeader("X-CSRF-TOKEN", csrfToken);
+					},
+					success : function(data){
+						console.log(data);
+					}
+				})
+			})
+			
+			//수료 : update하고 class_cnt와 비교해서 같으면 수료하기...(수정)
+		
+		</script>
 	</div>
 </body>
 </html>
