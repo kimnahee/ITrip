@@ -33,6 +33,7 @@ public class ClassVO {
 	private String beginTime;
 	private String endTime;
 	
+	// 수강생 리스트에서 추가로 필요한 정보 -> 은지
 	private String memberId; 
 	
 	

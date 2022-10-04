@@ -34,7 +34,9 @@
 	</select>
 	
 	<delete id="followerDelete">
-		DELETE FOLLOW WHERE MEMBER_ID = #{memberId} AND GUIDE_ID = #{guideId}
+		DELETE FOLLOW 
+		 WHERE MEMBER_ID = #{memberId} 
+		   AND GUIDE_ID = #{guideId}
 	</delete>
 	
 	

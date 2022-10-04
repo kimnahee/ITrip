@@ -87,4 +87,5 @@
 		and guide_id = #{guideId}
 	</select>
 	
+	
 </mapper>
