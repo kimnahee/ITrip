@@ -43,7 +43,7 @@ public class ClassController {
 
 	
 	@Value("${file.dir}")
-	private  String fileDir;
+	private String fileDir; //파일 저장할 디폴트 경로 C:/Temp
 	
 
 	@Autowired
@@ -65,7 +65,6 @@ public class ClassController {
 	}
 
 
-	
 	    // Class insert & 파일처리
 
 		@PostMapping("/classInsert.do")
@@ -87,7 +86,7 @@ public class ClassController {
 			//새로운파일저장경로
 			String oFileName = file.getOriginalFilename();
 			if(!oFileName.isEmpty()) {
-				String sFileName = UUID.randomUUID().toString()+oFileName.substring(oFileName.lastIndexOf("."));
+				String sFileName = UUID.randomUUID().toString()+oFileName.substring(oFileName.lastIndexOf(".")); // 마지막.뒤에값 가져오기
 				String path = fileDir+"/Thumbnail/"+sFileName;
 				file.transferTo(new File(path));
 				vo.setAttach(oFileName); 
