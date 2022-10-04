@@ -98,7 +98,8 @@ public class ConsultController {
 		System.out.println(vo);
 		// vo.setConsultNo(get)
 		return conService.consultState(vo);
-
+	}
+	
 	//채팅방 연결
 	@GetMapping("/consultChat.do")
 	public String consultChat(ConsultVO vo, ConsultChatVO chatvo, Model model, HttpServletRequest request) {

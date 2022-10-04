@@ -66,9 +66,6 @@ public class ClassController {
 
 
 	
-	     @Value("${file.dir}")
-	     private String fileDir;
-	
 	    // Class insert & 파일처리
 
 		@PostMapping("/classInsert.do")
