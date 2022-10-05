@@ -18,7 +18,4 @@ public interface MemberMapper {
 	public int ajaxNickChk(String mNick); // 닉네임 중복검사
 	public int ajaxpwChk(String mPw);    // 패스워드 확인
 	
-	List<MyCbtHderVO> myWrongAnswerLangCd(MyCbtHderVO vo); //오답노트 언어조회
-	List<CbtGuideVO> myWrongAnswerNote(CbtGuideVO vo);
-	MyCbtHderVO myWrongAnswerCnsr(MyCbtHderVO vo);
 }

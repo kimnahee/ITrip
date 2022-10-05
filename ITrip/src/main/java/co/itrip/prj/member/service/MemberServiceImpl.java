@@ -88,26 +88,5 @@ public class MemberServiceImpl implements MemberService {
 		return map.ajaxpwChk(mPw);
 	}
 
-	/**
-	 * 오답노트
-	 * @author 박경아 
-	 * @Date 2022.09.29 
-	 */
-	@Override
-	public List<MyCbtHderVO> myWrongAnswerLangCd(MyCbtHderVO vo) {
-		return map.myWrongAnswerLangCd(vo);
-	}
-
-	@Override
-	public List<CbtGuideVO> myWrongAnswerNote(CbtGuideVO vo) {
-		return map.myWrongAnswerNote(vo);
-	}
-
-	@Override
-	public MyCbtHderVO myWrongAnswerCnsr(MyCbtHderVO vo) {
-		return map.myWrongAnswerCnsr(vo);
-	}
-
-	
 
 }
