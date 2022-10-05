@@ -68,11 +68,8 @@
 							<p>1회 컨설트 : 1시간/1명</p>
 						</div>
 						<div style="padding: 10px;">
-							<a href="#" class="btn btn-primary py-2 px-3 "
-								style="float: right;" data-toggle="modal"
-								data-target="#inlineForm">상담신청하기</a>
-							<div th:text="${consultOne.consultNo}" style="display: none"></div>
-
+							<button id="consultRegister" class="btn btn-primary btn-md mb-0" style="float: right;">상담신청하기</button>
+							<div th:text="${consultOne.consultNo}"></div>
 						</div>
 					</div>
 				</div>
@@ -82,14 +79,13 @@
 
 
 		<script>
-		
 		let consultNo = $("#consultNo").val();
 		let guideId = $("#guideId").html();
 		let csrfHeaderName = "${_csrf.headerName}";
 		let csrfToken = $("input[name=_csrf]").val();
 		
 		
-		// 페이지 로드 시 곧바로로 함수 호출
+		// 페이지 로드 시 곧바로 함수 호출
 		$(document).ready(function() {
 			console.log(consultNo)
 			console.log(guideId)
@@ -186,6 +182,11 @@
 				}
 			})
 		}
+		
+		//상담 신청 페이지로 이동
+		$("#consultRegister").on("click", function(){
+			location.href="/consultRegister.do?consultNo=" + consultNo;
+		})
 		
 		</script>
 	</div>

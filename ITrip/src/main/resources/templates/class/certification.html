@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+<head>
+<meta charset="UTF-8">
+<title>수료증</title>
+<script src="js/jquery-3.6.0.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="js/jsPDF.js"></script>
+<style>
+#download {
+	text-align: center;
+}
+
+#pdfArea {
+	position: relative;
+	margin-left: auto;
+	margin-right: auto;
+	width: 594px;
+	height: 900px;
+	background: url(/images/003.png) no-repeat center;
+	background-size: cover;
+}
+
+#title {
+	position: absolute;
+	top: 100px;
+	left: 250px;
+}
+
+#table {
+	position: absolute;
+	width: 500px;
+	top: 100px;
+	left: 46.5px;
+	text-align: center;
+	border-collapse: collapse;
+}
+</style>
+</head>
+<body layout:fragment="content">
+	<div class="divider">
+		<div class="divider-text"><h4>수료증</h4></div>
+	</div>
+	<div id="pdfArea">
+		<table id="table" th:object=${class}>
+			<thead>
+				<tr>
+					<th><h2>&nbsp;</h2></th>
+				</tr>
+				<tr>
+					<th><h1>수료증</h1></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><h2>&nbsp;</h2></td>
+				</tr>
+				<tr>
+					<td><h2>&nbsp;</h2></td>
+				</tr>
+				<tr style="text-align: right;">
+					<td><h5 style="padding-right: 40px;">성명 : [[${#authentication.principal.member.name}]]</h5></td>
+				</tr>
+				<tr>
+					<td><h2>&nbsp;</h2></td>
+				</tr>
+				<tr style="text-align: left;">
+					<td><h5 style="padding-left: 40px;" th:text="|클래스명 : *{title}|"></h5></td>
+				</tr>
+				<tr>
+					<td><h2>&nbsp;</h2></td>
+				</tr>
+				<tr>
+					<td><h2>&nbsp;</h2></td>
+				</tr>
+				<tr>
+					<td><h3>위 학생은 ITRIP의</h3></td>
+				</tr>
+				<tr>
+					<td><h6>&nbsp;</h6></td>
+				</tr>
+				<tr>
+					<td><h3>해당 교육 과정을</h3></td>
+				</tr>
+				<tr>
+					<td><h6>&nbsp;</h6></td>
+				</tr>
+				<tr>
+					<td><h3>성실히 수행하였으므로</h3></td>
+				</tr>
+				<tr>
+					<td><h6>&nbsp;</h6></td>
+				</tr>
+				<tr>
+					<td><h3> 이 수료증을 수여합니다.</h3></td>
+				</tr>
+				<tr>
+					<td><h6>&nbsp;</h6></td>
+				</tr>
+				<tr>
+					<td><h6>&nbsp;</h6></td>
+				</tr>
+				<tr>
+					<td><h2 id="date">날짜</h2></td>
+				</tr>
+				<tr>
+					<td><h6>&nbsp;</h6></td>
+				</tr>
+				<tr>
+					<td><h6>&nbsp;</h6></td>
+				</tr>
+				<tr>
+				<!-- 로고 수정하기 -->
+					<td><img src="images/logo.svg" style="width: 100px; height: 100px;"></td>
+				</tr>
+			</tbody>
+		</table>
+
+	</div>
+	<div id="download">
+		<button type="button" class="btn btn-primary btn-md mb-0"
+			onclick="savePDF()">PDF 다운로드</button>
+	</div>
+	<script type="text/javascript">
+		window.jsPDF = window.jspdf.jsPDF;
+		function savePDF() {
+			//저장 영역 div id
+			html2canvas($('#pdfArea')[0], {
+				//logging : true,		// 디버그 목적 로그
+				//proxy: "html2canvasproxy.php",
+				allowTaint : true, // cross-origin allow 
+				useCORS : true, // CORS 사용한 서버로부터 이미지 로드할 것인지 여부
+				scale : 2
+			// 기본 96dpi에서 해상도를 두 배로 증가
+
+			})
+					.then(
+							function(canvas) {
+								// 캔버스를 이미지로 변환
+								var imgData = canvas.toDataURL('image/png');
+
+								var imgWidth = 190; // 이미지 가로 길이(mm) / A4 기준 210mm
+								var pageHeight = imgWidth * 1.414; // 출력 페이지 세로 길이 계산 A4 기준
+								var imgHeight = canvas.height * imgWidth
+										/ canvas.width;
+								var heightLeft = imgHeight;
+								var margin = 10; // 출력 페이지 여백설정
+								var doc = new jsPDF('p', 'mm');
+								var position = 0;
+
+								// 첫 페이지 출력
+								doc.addImage(imgData, 'PNG', margin, position,
+										imgWidth, imgHeight);
+								heightLeft -= pageHeight;
+
+								// 한 페이지 이상일 경우 루프 돌면서 출력
+								while (heightLeft >= 20) { // 35
+									position = heightLeft - imgHeight;
+									position = position - 20; // -25
+
+									doc.addPage();
+									doc.addImage(imgData, 'PNG', margin,
+											position, imgWidth, imgHeight);
+									heightLeft -= pageHeight;
+								}
+
+								// 파일 저장
+								doc.save('수료증.pdf');
+							});
+		}
+		
+		//현재 날짜 출력(수료증에 추가)
+		let today = new Date().toISOString();
+		$(document).ready(function(){
+			let sysdate = today.substr(0, 10);
+			$("#date").html(sysdate);
+		})
+	</script>
+</body>
+</html>

@@ -36,6 +36,7 @@ iframe {
 		<hr>
 		<div id="btn">
 			<button id="chkBtn" class="btn btn-primary btn-md mb-0">출석체크</button>
+			<button id="classList" class="btn btn-outline-primary btn-md mb-0">목록으로</button>
 		</div>
 		<script>
 			//출석체크
@@ -54,13 +55,21 @@ iframe {
 					    xhr.setRequestHeader("X-CSRF-TOKEN", csrfToken);
 					},
 					success : function(data){
-						console.log(data);
+						if(data == 1){
+							alert("출석체크가 완료되었습니다.");
+							$("#chkBtn").attr("disabled", true);
+						}
 					}
 				})
 			})
 			
+			//클래스 리스트로 이동
+			$("#classList").on("click", function(){
+				location.href="/mClass";
+			})
+			
 			//수료 : update하고 class_cnt와 비교해서 같으면 수료하기...(수정)
-		
+			
 		</script>
 	</div>
 </body>
