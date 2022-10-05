@@ -20,5 +20,7 @@ public interface ClassService {
 
 	ClassChatVO classChatLink(ClassChatVO vo); //채팅방 연결
 	int classChk(ClassAttendVO vo);//출석체크
+	ClassAttendVO classAttendSelect(ClassAttendVO vo); // (if수업횟수=출석횟수) 소정
+	int classAttendUpdate(ClassAttendVO vo); // 수료여부 소정
 
 }

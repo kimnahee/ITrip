@@ -4,6 +4,12 @@
 <meta charset="UTF-8">
 <meta name="_csrf" th:content="${_csrf.token}"/>
 <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+<style type="text/css">
+	#searchTab{
+		width: 900px;
+		margin-left: 200px;
+	}
+</style>
 </head>
 <body>
 <div  layout:fragment="content">
@@ -12,13 +18,36 @@
   <div class="col-12">
     <div class="card">
       <div class="card-header">
-        <h4 class="card-title">회원정보</h4>
+          <h4 class="card-title">클래스 신청리스트</h4>
+          <p>Class를 신청한 회원입니다. 권한을 수정해주세요.</p><br>
+        <!-- 검색폼 시작 -->
+		<div id="searchTab">
+			<form class="form form-horizontal" >
+				<div class="form-body">
+					<div class="row">
+						<div class="col-2">
+						</div>
+						<div class="col">
+							<select class="form-select col-4" id="jobCd" name="jobCd">
+								<option value="" selected>-- 업무 카테고리 --</option>
+								<option th:each="job : ${joblist}" th:value="${job.cdNo}" th:selected="${job.cdNo == classVO.jobCd}"
+									th:utext="${job.cdName}"></option>
+							</select>
+						</div>
+					 <div class="col-2 d-flex justify-content-end">
+                        <button type="submit" class="btn btn-primary mr-1 mb-1">검색</button>
+                    </div>
+					</div>
+				</div>
+				
+			</form>
+		</div>
+		<!-- 검색폼 끝 -->
       </div>
-      <div class="card-content">
+      
         <div class="card-body">
-          <p>Class를 신청한 회원입니다. 권한을 수정해주세요.</p>
-        </div>
-        <!-- table head dark -->
+		
+		<!-- 신청 리스트 시작 -->
         <div class="table-responsive">
           <table class="table table-light mb-0"> 
             <thead>
@@ -48,7 +77,10 @@
             </tbody>
           </table>
         </div>
-      </div>
+        <!-- 신청 리스트 끝 -->
+         </div>
+        
+
     </div>
   </div>
 </div>

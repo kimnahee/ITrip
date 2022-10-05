@@ -67,6 +67,12 @@ public class AdminServiceImpl implements AdminService {
 		return map.memberAuthUpdateTo(vo);
 	}
 
+	@Override
+	public List<ConsultVO> consultSearch(ConsultVO vo) {
+		// 상담 검색
+		return map.consultSearch(vo);
+	}
+
 	
 
 }

@@ -14,6 +14,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -48,6 +49,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
 import co.itrip.prj.admin.service.AdminService;
+import co.itrip.prj.cmmncd.service.CmmnCdService;
 import co.itrip.prj.consult.service.ConsultVO;
 import co.itrip.prj.guide.service.GuideService;
 import co.itrip.prj.guide.service.GuideVO;
@@ -61,44 +63,59 @@ public class AdminController {
 	@Autowired
 	private AdminService adminService; // 1:1 상담서비스
 	
+	@Autowired
+	private CmmnCdService cdService; // 공통코드 서비스
+	
 	@Value("${file.dir}")
 	private String fileDir;
 
-	
-	@GetMapping("/appClass.do") //소정 - admin-Class 승인
+	//소정 - admin-Class 승인신청리스트
+	@GetMapping("/appClass.do") 
 	public String appClass(ClassVO vo, Model model, HttpServletRequest request,
 			@RequestParam(required = false, defaultValue = "1") int pageNum,
 			@RequestParam(required = false, defaultValue = "5") int pageSize) {
 		PageHelper.startPage(pageNum, pageSize);
 		model.addAttribute("pageInfo", PageInfo.of(adminService.classList(vo)));
+		
+		// job카테고리 뿌려주기
+		model.addAttribute("joblist", cdService.jobCdList());
 		return "admin/appclass";
 	}
 	
-
-	@GetMapping("/appConsult.do") //소정 - admin-Consult 승인
+	//소정 - admin-Consult 승인신청리스트
+	@GetMapping("/appConsult.do") 
 	public String appConsult(ConsultVO vo, Model model, HttpServletRequest request,
 			@RequestParam(required = false, defaultValue = "1") int pageNum,
 			@RequestParam(required = false, defaultValue = "5") int pageSize) {
 		PageHelper.startPage(pageNum, pageSize);
-		// vo.setStateCd("1");
 		model.addAttribute("pageInfo", PageInfo.of(adminService.ConsultList(vo)));
 		return "admin/appconsult";
 	}
 	
-	//소정 - class 승인
+	//소정 - class 승인처리
 	@PostMapping("/classUpdate.do")
 	@ResponseBody
 	public int classUpdate(ClassVO vo) {
 		return adminService.classUpdate(vo);
 	}
 	
-	//소정 - consult 승인
+	//소정 - consult 승인처리
 	@PostMapping("/consultUpdate.do")
 	@ResponseBody
 	public int consultUpdate(ConsultVO vo) {
 		return adminService.consultUpdate(vo);
 	}
 	
+	@GetMapping("/consultSearch.do")
+	@ResponseBody
+	private List<ConsultVO> consultSearch(@RequestParam("key") String key,
+			@RequestParam("val") String val, Model model, ConsultVO vo) {
+		vo.setVal(val);
+		vo.setKey(key);
+		return adminService.consultSearch(vo);
+	}
+	
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	//경아 - 가이드신청리스트
 	@GetMapping("/memberAuthList.do")

@@ -108,4 +108,21 @@
 		and class_no = #{classNo}
 	</update>
 	
+	<!-- 수강주차랑 출석횟수 비교 -->
+	<select id="classAttendSelect">
+		select c.class_no, c.class_cnt, a.attend_cnt
+		from class_attend a, class c
+		where c.class_no = a.class_no
+		and c.class_no = #{classNo}
+		and member_id= #{memberId}
+	</select>
+	
+	<!-- 비교한 결과로 수강완료여부 표시 -->
+	<update id="classAttendUpdate">
+		update class_attend 
+		set complete = complete + 1
+		where class_no = #{classNo}
+		and member_id = #{memberId}
+	</update>
+	
 </mapper>
