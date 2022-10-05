@@ -4,17 +4,38 @@
 
 	<!-- List<CbtGuideVO> cbtGuideList();//전체조회(R) -->
 	<select id="cbtGuideList" resultType="co.itrip.prj.cbtGuide.service.CbtGuideVO">
-	    SELECT * FROM CBT_GUIDE
+	    SELECT CBT_NO,
+				QUES,
+				CNSR,
+				EX1,
+				EX2,
+				EX3,
+				EX4,
+				ATTACH,
+				ATTACH_DIR,
+				CNSR_CNT,
+				CALL,
+				EXPLNA,
+				GTP_CD,
+				LANG_CD,
+				MEMBER_ID
+	    FROM CBT_GUIDE
 	</select>
+	
+	
 	<!--List<CbtGuideVO> cbtGuideMyList(CbtGuideVO vo);         /* 가이드 한 명의 등록한 문제 출력 */ -->
 	<select id="cbtGuideMyList" parameterType="co.itrip.prj.cbtGuide.service.CbtGuideVO" resultType="co.itrip.prj.cbtGuide.service.CbtGuideVO">
 		SELECT CBT_NO,
 	           CASE WHEN LENGTH(QUES) > 30 THEN SUBSTR(QUES,0,30)||'..'
 	                ELSE SUBSTR(QUES,0,30)
 	           END AS QUES, 
-	           CNSR , CNSR_CNT, CALL,
+	           CNSR,
+	           CNSR_CNT,
+	           CALL,
 	           GTP_CD,
-	           LANG_CD
+	           FUN_CODENAME('G',GTP_CD) GTP_CD_name,
+	           LANG_CD,
+	           FUN_CODENAME('L',LANG_CD) LANG_CD_name
 	    FROM CBT_GUIDE 
 	    WHERE MEMBER_ID = #{memberId}
         ORDER BY CBT_NO
@@ -24,55 +45,168 @@
 	<!-- List<CbtGuideVO> cbtGuideListTab(CbtGuideVO vo); //탭 클릭시 유형별, 언어별로 조회 -->
 	<select id="cbtGuideListTab" parameterType="co.itrip.prj.cbtGuide.service.CbtGuideVO" resultType="co.itrip.prj.cbtGuide.service.CbtGuideVO">
         <if test="gtpCd==4">
-	        SELECT G.CBT_NO,G.QUES,G.LANG_CD, G.CNSR, G.EX1, G.EX2, 
-		    	   G.EX3, G.EX4, G.ATTACH, G.ATTACH_DIR, G.CNSR_CNT, G.CALL, 
-		    	   G.EXPLNA, G.GTP_CD, G.MEMBER_ID
-			FROM (SELECT ROWNUM AS ROWNO, CBT_NO,QUES,LANG_CD, CNSR, 
-			             EX1, EX2, EX3, EX4, ATTACH, ATTACH_DIR, CNSR_CNT, 
-			             CALL, EXPLNA, GTP_CD, MEMBER_ID  
-			      FROM CBT_GUIDE WHERE GTP_CD IN('1','2') AND LANG_CD=#{langCd} ORDER BY DBMS_RANDOM.VALUE) G
+	        SELECT G.CBT_NO,
+	               G.QUES,
+	               G.LANG_CD,
+	               G.CNSR,
+	               G.EX1,
+	               G.EX2, 
+		    	   G.EX3,
+		    	   G.EX4,
+		    	   G.ATTACH,
+		    	   G.ATTACH_DIR,
+		    	   G.CNSR_CNT,
+		    	   G.CALL, 
+		    	   G.EXPLNA,
+		    	   G.GTP_CD,
+		    	   G.MEMBER_ID
+			FROM (SELECT ROWNUM AS ROWNO,
+			             CBT_NO,
+			             QUES,
+			             LANG_CD,
+			             CNSR, 
+			             EX1,
+			             EX2,
+			             EX3,
+			             EX4,
+			             ATTACH,
+			             ATTACH_DIR,
+			             CNSR_CNT, 
+			             CALL,
+			             EXPLNA,
+			             GTP_CD,
+			             MEMBER_ID  
+			      FROM CBT_GUIDE 
+			      WHERE GTP_CD IN('1','2') 
+			        AND LANG_CD= #{langCd} 
+			        ORDER BY DBMS_RANDOM.VALUE) G
 			<![CDATA[WHERE ROWNUM <= 5]]>
 		</if>
+		
 		<if test="gtpCd!=4">
-			SELECT G.CBT_NO,G.QUES,G.LANG_CD, G.CNSR, G.EX1, G.EX2, 
-		    	   G.EX3, G.EX4, G.ATTACH, G.ATTACH_DIR, G.CNSR_CNT, G.CALL, 
-		    	   G.EXPLNA, G.GTP_CD, G.MEMBER_ID
-			FROM (SELECT ROWNUM AS ROWNO, CBT_NO,QUES,LANG_CD, CNSR, 
-			             EX1, EX2, EX3, EX4, ATTACH, ATTACH_DIR, CNSR_CNT, 
-			             CALL, EXPLNA, GTP_CD, MEMBER_ID  
-			      FROM CBT_GUIDE WHERE  GTP_CD=#{gtpCd} AND LANG_CD=#{langCd} ORDER BY DBMS_RANDOM.VALUE) G
+			SELECT G.CBT_NO,
+			       G.QUES,
+			       G.LANG_CD,
+			       G.CNSR,
+			       G.EX1,
+			       G.EX2, 
+		    	   G.EX3,
+		    	   G.EX4,
+		    	   G.ATTACH,
+		    	   G.ATTACH_DIR,
+		    	   G.CNSR_CNT, G.CALL, 
+		    	   G.EXPLNA,
+		    	   G.GTP_CD,
+		    	   G.MEMBER_ID
+			FROM (SELECT ROWNUM AS ROWNO, 
+			             CBT_NO,
+			             QUES,
+			             LANG_CD,
+                         CNSR, 
+			             EX1,
+			             EX2,
+			             EX3,
+			             EX4,
+			             ATTACH,
+			             ATTACH_DIR,
+			             CNSR_CNT, 
+			             CALL,
+			             EXPLNA,
+			             GTP_CD,
+			             MEMBER_ID  
+			       FROM CBT_GUIDE 
+			       WHERE  GTP_CD=#{gtpCd} 
+			        AND LANG_CD=#{langCd} 
+			       ORDER BY DBMS_RANDOM.VALUE) G
 			<![CDATA[WHERE ROWNUM <= 5]]>
 	    </if>
 	</select>
 	
+	
 	<!-- public MyCbtLongVO ajaxMyCbtLong(MyCbtLongVO vo); /* 객관식 문제 채점시 ajax로 정답 출력 */ -->
 	<select id="ajaxMyCbtLongList" resultType="co.itrip.prj.cbtGuide.service.MyCbtLongVO">
-	    SELECT DISTINCT MY.CBT_NO, MY.MKY_NO, CBT.QUES, CBT.CNSR, MY.MC_KWRD, 
-	                    (SELECT LISTAGG(C_KWRD, ', ') WITHIN GROUP(ORDER BY C_KWRD) 
-		                 FROM CBT_KEYWORD WHERE CBT_NO = ${cbtNo} ) AS C_KWRD,
+	    SELECT DISTINCT MY.CBT_NO,
+	                    MY.MKY_NO,
+	                    CBT.QUES,
+	                    CBT.CNSR,
+	                    MY.MC_KWRD, 
+	                      (SELECT LISTAGG(C_KWRD, ', ')
+	                       WITHIN GROUP(ORDER BY C_KWRD) 
+		                   FROM CBT_KEYWORD
+		                   WHERE CBT_NO = ${cbtNo} ) AS C_KWRD,
 		                MY.CHK
-		FROM MYCBT_LONG MY, CBT_GUIDE CBT, CBT_KEYWORD K 
+		FROM MYCBT_LONG MY,
+		     CBT_GUIDE CBT,
+		     CBT_KEYWORD K 
 		WHERE MY.CBT_NO = CBT.CBT_NO 
-		      AND CBT.CBT_NO = K.CBT_NO 
-		      AND MY.MKY_NO= ${mkyNo}
+		  AND CBT.CBT_NO = K.CBT_NO 
+		  AND MY.MKY_NO = ${mkyNo}
 	</select>
-	
 	
 	
 	<!-- CbtGuideVO cbtGuideListOne(CbtGuideVO VO);//단건조회(R) -->
 	<select id="cbtGuideListOne" parameterType="co.itrip.prj.cbtGuide.service.CbtGuideVO" resultType="co.itrip.prj.cbtGuide.service.CbtGuideVO">
-	    SELECT * FROM CBT_GUIDE WHERE CBT_NO = ${cbtNo}
+	    SELECT  CBT_NO,
+				QUES,
+				CNSR,
+				EX1,
+				EX2,
+				EX3,
+				EX4,
+				ATTACH,
+				ATTACH_DIR,
+				CNSR_CNT,
+				CALL,
+				EXPLNA,
+	            GTP_CD,
+	            FUN_CODENAME('G',GTP_CD) GTP_CD_name,
+	            LANG_CD,
+	            FUN_CODENAME('L',LANG_CD) LANG_CD_name,
+				MEMBER_ID 
+	      FROM CBT_GUIDE 
+	        WHERE CBT_NO = ${cbtNo}
 	</select>
+	
+	
 	<!-- public int cbtGuideInsert(CbtGuideVO VO); //등록(C) -->
 	<insert id="cbtGuideInsert" >
 	   <selectKey keyProperty="cbtNo" order="BEFORE" resultType="int">
 			SELECT NVL(MAX(CBT_NO),0) + 1
 			FROM CBT_GUIDE
 		</selectKey>
-		INSERT INTO CBT_GUIDE VALUES(#{cbtNo},#{ques},#{cnsr, jdbcType=VARCHAR},#{ex1, jdbcType=VARCHAR},
-		            #{ex2, jdbcType=VARCHAR},#{ex3, jdbcType=VARCHAR},#{ex4, jdbcType=VARCHAR},
-                    #{attach, jdbcType=VARCHAR},#{attachDir, jdbcType=VARCHAR},0,0,#{explna},#{gtpCd},#{langCd},#{memberId , jdbcType=VARCHAR})
+		INSERT INTO
+		  CBT_GUIDE (CBT_NO,
+					 QUES,
+					 CNSR,
+					 EX1,
+					 EX2,
+				 	 EX3,
+					 EX4,
+					 ATTACH,
+					 ATTACH_DIR,
+					 CNSR_CNT,
+					 CALL,
+					 EXPLNA,
+					 GTP_CD,
+					 LANG_CD,
+					 MEMBER_ID)
+		VALUES(#{cbtNo},
+		        #{ques},
+		        #{cnsr, jdbcType=VARCHAR},
+		        #{ex1, jdbcType=VARCHAR},
+		        #{ex2, jdbcType=VARCHAR},
+		        #{ex3, jdbcType=VARCHAR},
+		        #{ex4, jdbcType=VARCHAR},
+                #{attach, jdbcType=VARCHAR},
+                #{attachDir, jdbcType=VARCHAR},
+                0,
+                0,
+                #{explna},
+                #{gtpCd},
+                #{langCd},
+                #{memberId , jdbcType=VARCHAR})
 	</insert>
+	
 	
 	<!-- public int keywordInsert(CbtKeywordVO kvo); //키워드 등록 -->
 	<insert id="keywordInsert" parameterType="co.itrip.prj.cbtGuide.service.CbtKeywordVO">
@@ -81,24 +215,44 @@
 				   ELSE  MAX(KY_NO)+1 END ID 
 			FROM CBT_KEYWORD
 		</selectKey>
-	    INSERT INTO CBT_KEYWORD VALUES (#{kyNo} , #{cKwrd} , ${cbtNo})    
+	    INSERT INTO
+	      CBT_KEYWORD (KY_NO,
+				  	   C_KWRD,
+					   CBT_NO)
+		VALUES (#{kyNo},
+		        #{cKwrd},
+		        ${cbtNo})    
 	</insert>
 	
 	<!-- public int cbtGuideUpdate(CbtGuideVO VO); //수정(U) -->
 	<update id="cbtGuideUpdate">
 	    UPDATE CBT_GUIDE 
-	    SET QUES = #{ques}, CNSR = #{cnsr}, EX1 = #{ex1}, EX2 = #{ex2}, EX3 = #{ex3},  EX4 = #{ex4}, ATTACH =#{attach}, ATTACH_DIR =#{attachDir}, EXPLNA =#{explna}
+	       SET QUES = #{ques}, 
+	           CNSR = #{cnsr}, 
+	           EX1 = #{ex1},
+	           EX2 = #{ex2},
+	           EX3 = #{ex3},
+	           EX4 = #{ex4},
+	           ATTACH =#{attach},
+	           ATTACH_DIR =#{attachDir},
+	           EXPLNA =#{explna}
         WHERE CBT_NO = ${cbtNo}
 	</update>
 	
+	
 	<!-- public int cbutGuideDelet(CbtGuideVO VO);//삭제(D) -->
 	<delete id="cbutGuideDelet">
-	    DELETE FROM CBT_GUIDE WHERE CBT_NO = ${cbtNo}
+	    DELETE FROM CBT_GUIDE 
+	    WHERE CBT_NO = ${cbtNo}
 	</delete>
+	
+	
 	<!-- public int keywordDelete(CbtGuideVO vo);    /* 키워드 삭제 */  -->
 	<delete id="keywordDelete">
-	    DELETE FROM CBT_KEYWORD WHERE CBT_NO =  ${cbtNo}
+	    DELETE FROM CBT_KEYWORD 
+	    WHERE CBT_NO =  ${cbtNo}
 	</delete>
+	
 	
 	<!-- public MyCbtHderVO myCbtHderInsert(MyCbtHderVO vo); // myCBtHder에 담기 -->
 	<insert id="myCbtHderInsert" parameterType="co.itrip.prj.cbtGuide.service.MyCbtHderVO">
@@ -107,97 +261,235 @@
 				   ELSE  MAX(MC_NO)+1 END MC_NO
 			FROM MYCBT_HDER
 		</selectKey>
-		INSERT INTO MYCBT_HDER (MC_NO, MEMBER_ID, DT, GTP_CD, LANG_CD,
-							CBT_NO1, CBT_NO2, CBT_NO3, CBT_NO4, CBT_NO5,    
-							CNSR1, CNSR2, CNSR3, CNSR4, CNSR5)
-		VALUES(#{mcNo},#{memberId},SYSDATE,#{gtpCd},#{langCd},
-		       #{cbtNo1}, #{cbtNo2}, #{cbtNo3}, #{cbtNo4}, #{cbtNo5},    
-			   #{cnsr1}, #{cnsr2}, #{cnsr3}, #{cnsr4}, #{cnsr5})
+		INSERT INTO
+		  MYCBT_HDER (MC_NO,
+		              MEMBER_ID,
+		              DT,
+		              GTP_CD,
+		              LANG_CD,
+					  CBT_NO1,
+					  CBT_NO2,
+					  CBT_NO3,
+					  CBT_NO4,
+					  CBT_NO5,    
+					  CNSR1,
+					  CNSR2,
+					  CNSR3,
+					  CNSR4,
+					  CNSR5)
+		VALUES(#{mcNo},
+		       #{memberId},
+		       SYSDATE,
+		       #{gtpCd},
+		       #{langCd},
+		       #{cbtNo1},
+		       #{cbtNo2},
+		       #{cbtNo3},
+		       #{cbtNo4},
+		       #{cbtNo5},    
+			   #{cnsr1},
+			   #{cnsr2},
+			   #{cnsr3},
+			   #{cnsr4},
+			   #{cnsr5})
 	</insert>
 	
 	<!-- public int myCbtHderChkUpdate(MyCbtHderVO vo); // myCbtHder의 내용을 비교하여 정답 체크 -->
 	<update id="myCbtHderChkUpdate">
-	    update mycbt_hder set CHK1 =  case when( SELECT cnsr FROM cbt_guide WHERE cbt_no = mycbt_hder.cbt_no1 )=(select cnsr1 from mycbt_hder where mc_no= ${mcNo}) then 1 else 0 end,
-		                      CHK2 =  case when( SELECT cnsr FROM cbt_guide WHERE cbt_no = mycbt_hder.cbt_no2 )=(select cnsr2 from mycbt_hder where mc_no= ${mcNo}) then 1 else 0 end,
-		                      CHK3 =  case when( SELECT cnsr FROM cbt_guide WHERE cbt_no = mycbt_hder.cbt_no3 )=(select cnsr3 from mycbt_hder where mc_no= ${mcNo}) then 1 else 0 end,
-		                      CHK4 =  case when( SELECT cnsr FROM cbt_guide WHERE cbt_no = mycbt_hder.cbt_no4 )=(select cnsr4 from mycbt_hder where mc_no= ${mcNo}) then 1 else 0 end,
-		                      CHK5 =  case when( SELECT cnsr FROM cbt_guide WHERE cbt_no = mycbt_hder.cbt_no5 )=(select cnsr5 from mycbt_hder where mc_no= ${mcNo}) then 1 else 0 end  where mc_no =${mcNo}
+	    UPDATE MYCBT_HDER SET CHK1 =  CASE WHEN( SELECT CNSR FROM CBT_GUIDE WHERE CBT_NO = MYCBT_HDER.CBT_NO1 )
+	                                          =( SELECT CNSR1 FROM MYCBT_HDER WHERE MC_NO = ${mcNo})
+	                                          THEN 1 ELSE 0 END,
+		                      CHK2 =  CASE WHEN( SELECT CNSR FROM CBT_GUIDE WHERE CBT_NO = MYCBT_HDER.CBT_NO2 )
+		                                      =( SELECT CNSR2 FROM MYCBT_HDER WHERE MC_NO = ${mcNo}) 
+		                                      THEN 1 ELSE 0 END,
+		                      CHK3 =  CASE WHEN( SELECT CNSR FROM CBT_GUIDE WHERE CBT_NO = MYCBT_HDER.CBT_NO3 )
+		                                      =( SELECT CNSR3 FROM MYCBT_HDER WHERE MC_NO = ${mcNo}) 
+		                                      THEN 1 ELSE 0 END,
+		                      CHK4 =  CASE WHEN( SELECT CNSR FROM CBT_GUIDE WHERE CBT_NO = MYCBT_HDER.CBT_NO4 )
+		                      =(SELECT CNSR4 FROM MYCBT_HDER WHERE MC_NO = ${mcNo}) 
+		                      THEN 1 ELSE 0 END,
+		                      CHK5 =  CASE WHEN( SELECT CNSR FROM CBT_GUIDE WHERE CBT_NO = MYCBT_HDER.CBT_NO5 )
+		                      =(SELECT CNSR5 FROM MYCBT_HDER WHERE MC_NO = ${mcNo}) 
+		                      THEN 1 ELSE 0 END  
+		WHERE MC_NO = ${mcNo}
 	</update>
+	
+	
 	<!-- public List<CbtKeywordVO> keywordList(CbtKeywordVO vo); /* 키워드 조회 */ -->
 	<select id="keywordList" parameterType="co.itrip.prj.cbtGuide.service.CbtKeywordVO" resultType="co.itrip.prj.cbtGuide.service.CbtKeywordVO">
-	    SELECT KY_NO,C_KWRD
+	    SELECT KY_NO,
+	           C_KWRD
 	    FROM CBT_KEYWORD 
 	    WHERE CBT_NO= ${cbtNo}
 	</select> 
 	
 	<!-- public int KeywordListCount(CbtKeywordVO vo); -->
 	<select id="KeywordListCount" parameterType="co.itrip.prj.cbtGuide.service.CbtKeywordVO" resultType="int">
-	    SELECT COUNT(C_KWRD) AS KEYWORD_CUNT FROM CBT_KEYWORD WHERE CBT_NO = ${cbtNo}
+	    SELECT COUNT(C_KWRD) AS KEYWORD_CUNT
+	    FROM CBT_KEYWORD 
+	      WHERE CBT_NO = ${cbtNo}
 	</select>
 	
 	<!--  MyCbtHderVO myCbtHderList(MyCbtHderVO vo); //myCbtHder 단건 조회-->
 	<select id="myCbtHderList" parameterType="co.itrip.prj.cbtGuide.service.MyCbtHderVO" resultType="co.itrip.prj.cbtGuide.service.MyCbtHderVO">
-	    SELECT * FROM mycbt_hder WHERE MC_NO = ${mcNo}
+	    SELECT MC_NO,
+				MEMBER_ID,
+				DT,
+				GTP_CD,
+				LANG_CD,
+				CBT_NO1,
+				CBT_NO2,
+				CBT_NO3,
+				CBT_NO4,
+				CBT_NO5,
+				CNSR1,
+				CNSR2,
+				CNSR3,
+				CNSR4,
+				CNSR5,
+				CHK1,
+				CHK2,
+				CHK3,
+				CHK4,
+				CHK5,
+				CHK0_CUNT,
+				CHK1_CUNT
+	    FROM mycbt_hder 
+	      WHERE MC_NO = ${mcNo}
 	</select>
+	
 	
 	<!--  public int chkCuntUpdate(MyCbtHderVO vo); //맞은 카운트 조회-->
 	<update id="chkCuntUpdate">
-	    UPDATE MYCBT_HDER SET CHK0_CUNT = (select 5-(chk1+chk2+chk3+chk4+chk5) FROM MYCBT_HDER WHERE MC_NO= ${mcNo}), CHK1_CUNT = (select chk1+chk2+chk3+chk4+chk5 from mycbt_hder where mc_no= ${mcNo}) WHERE MC_NO = ${mcNo}
+	    UPDATE MYCBT_HDER 
+	    SET CHK0_CUNT = ( SELECT 5-(CHK1+CHK2+CHK3+CHK4+CHK5)
+	                      FROM MYCBT_HDER 
+	                      WHERE MC_NO = ${mcNo}), 
+	        CHK1_CUNT = ( SELECT CHK1+CHK2+CHK3+CHK4+CHK5 
+	                      FROM MYCBT_HDER WHERE MC_NO = ${mcNo}) 
+	    WHERE MC_NO = ${mcNo}
 	</update>
+	
 	
 	<!-- List<Map<Integer,Object>> cbtGuideListFive(CbtGuideVO vo);//내가 푼거 5개만 한번에 찾기(채점된 문제 출력용)  -->
 	<select id="cbtGuideListFive" resultType="map">
-	    SELECT * FROM CBT_GUIDE WHERE CBT_NO IN (${cbtNo1},${cbtNo2},${cbtNo3},${cbtNo4},${cbtNo5})
+	    SELECT CBT_NO,
+				QUES,
+				CNSR,
+				EX1,
+				EX2,
+				EX3,
+				EX4,
+				ATTACH,
+				ATTACH_DIR,
+				CNSR_CNT,
+				CALL,
+				EXPLNA,
+				GTP_CD,
+				LANG_CD,
+				MEMBER_ID
+	    FROM CBT_GUIDE 
+	      WHERE CBT_NO IN (${cbtNo1},${cbtNo2},${cbtNo3},${cbtNo4},${cbtNo5})
 	</select>
+	
 	
 	<!--List<CbtGuideVO> cbtGuideListO(CbtGuideVO vo); /* 문제 조회 : 사용자가 푼 문제 중 정답처리 된 문제조회 */ -->
 	<select id="cbtGuideListO"  parameterType="co.itrip.prj.cbtGuide.service.CbtGuideVO" resultType="co.itrip.prj.cbtGuide.service.CbtGuideVO">
-	    SELECT * FROM CBT_GUIDE WHERE CBT_NO IN ((select cbt_no1 from mycbt_hder where mc_no = ${mcNo} and chk1 = 1),
-												 (select cbt_no2 from mycbt_hder where mc_no = ${mcNo} and chk2 = 1),
-												 (select cbt_no3 from mycbt_hder where mc_no = ${mcNo} and chk3 = 1),
-												 (select cbt_no4 from mycbt_hder where mc_no = ${mcNo} and chk4 = 1),
-												 (select cbt_no5 from mycbt_hder where mc_no = ${mcNo} and chk5 = 1))
+	    SELECT * 
+	    FROM CBT_GUIDE 
+	      WHERE CBT_NO IN ((select cbt_no1 from mycbt_hder where mc_no = ${mcNo} and chk1 = 1),
+						 (select cbt_no2 from mycbt_hder where mc_no = ${mcNo} and chk2 = 1),
+						 (select cbt_no3 from mycbt_hder where mc_no = ${mcNo} and chk3 = 1),
+						 (select cbt_no4 from mycbt_hder where mc_no = ${mcNo} and chk4 = 1),
+						 (select cbt_no5 from mycbt_hder where mc_no = ${mcNo} and chk5 = 1))
 	</select>
 	<!--List<CbtGuideVO> cbtGuideListX(CbtGuideVO vo); /* 문제 조회 : 사용자가 푼 문제 중 정답처리 된 오답조회 */ -->
 	<select id="cbtGuideListX"  parameterType="co.itrip.prj.cbtGuide.service.CbtGuideVO" resultType="co.itrip.prj.cbtGuide.service.CbtGuideVO">
-	    SELECT * FROM CBT_GUIDE WHERE CBT_NO IN ((select cbt_no1 from mycbt_hder where mc_no = ${mcNo} and chk1 = 0),
-												 (select cbt_no2 from mycbt_hder where mc_no = ${mcNo} and chk2 = 0),
-												 (select cbt_no3 from mycbt_hder where mc_no = ${mcNo} and chk3 = 0),
-												 (select cbt_no4 from mycbt_hder where mc_no = ${mcNo} and chk4 = 0),
-												 (select cbt_no5 from mycbt_hder where mc_no = ${mcNo} and chk5 = 0))
+	    SELECT * 
+	    FROM CBT_GUIDE 
+	      WHERE CBT_NO IN ((select cbt_no1 from mycbt_hder where mc_no = ${mcNo} and chk1 = 0),
+						 (select cbt_no2 from mycbt_hder where mc_no = ${mcNo} and chk2 = 0),
+						 (select cbt_no3 from mycbt_hder where mc_no = ${mcNo} and chk3 = 0),
+						 (select cbt_no4 from mycbt_hder where mc_no = ${mcNo} and chk4 = 0),
+						 (select cbt_no5 from mycbt_hder where mc_no = ${mcNo} and chk5 = 0))
 	</select>
+	
+	
 	<!-- public int myCbtLongInsert(MyCbtLongVO vo); /* 사용자가 푼 서술형 문제 등록 */ -->
 	<insert id="ajaxMyCbtLongInsert">
 	    <selectKey keyProperty="mkyNo" order="BEFORE" resultType="int">
 			SELECT NVL(MAX(MKY_NO),0) + 1
 			FROM MYCBT_LONG
 		</selectKey>
-		INSERT INTO MYCBT_LONG (MKY_NO, MC_KWRD, CBT_NO) VALUES (${mkyNo}, #{mcKwrd}, ${cbtNo})
+		INSERT INTO 
+		  MYCBT_LONG (MKY_NO, 
+		              MC_KWRD, 
+		              CBT_NO) 
+		VALUES (${mkyNo}, 
+		        #{mcKwrd}, 
+		        ${cbtNo})
 	</insert>
+	
 	
 	<!-- public int ajaxMyCbtLongChkList(CbtGuideVO vo); /* REGEXP_COUNT를 이용하여 사용자가 입력한 값과 키워드를 비교하여 키워드 기준으로 존재하면 1 없으면 0 출력*/ -->
 	<select id="ajaxMyCbtLongChkList" resultType="int">
-	    SELECT SUM(CHK) AS CHKLIST FROM (
-	        SELECT REGEXP_COUNT ( (SELECT MC_KWRD FROM MYCBT_LONG WHERE CBT_NO=${cbtNo} AND MKY_NO = ${mkyNo}), C_KWRD ) AS CHK
-	        FROM CBT_KEYWORD WHERE CBT_NO = ${cbtNo})
+	    SELECT SUM(CHK) AS CHKLIST 
+	    FROM ( SELECT REGEXP_COUNT ( (SELECT MC_KWRD 
+	                                  FROM MYCBT_LONG 
+	                                  WHERE CBT_NO = ${cbtNo} 
+	                                    AND MKY_NO = ${mkyNo}), C_KWRD ) AS CHK
+	           FROM CBT_KEYWORD 
+	             WHERE CBT_NO = ${cbtNo})
 	</select>
+	
 	
 	<!-- public List<Map<String,Integer>> myCbLongChkUpdate(MyCbtLongVO vo); /*  사용자가 입력한 값과 가이드가 등록한 키워드들을 비교하여(AND) 정답유무 처리 */ -->
 	<update id="ajaxMyCbLongChkUpdate" parameterType="map" >
-	    update mycbt_long set chk = ${chkOX}  where mky_no = ${mkyNo} and cbt_no = ${cbtNo}
+	    UPDATE MYCBT_LONG 
+	    SET CHK = ${chkOX}  
+	    WHERE MKY_NO = ${mkyNo} 
+	      AND CBT_NO = ${cbtNo}
 	</update>
+	
 	
 	<!-- List<BookmarkVO> bookmarkList(BookmarkVO vo); /* 즐겨찾기 조회 */ -->
 	<select id="bookmarkList" parameterType="co.itrip.prj.cbtGuide.service.CbtGuideVO" resultType="co.itrip.prj.cbtGuide.service.CbtGuideVO">
-	    SELECT B.BM_CD, C.CBT_NO, C.QUES  
-        FROM CBT_GUIDE C, BOOKMARK B
-        WHERE B.CBT_NO = C.CBT_NO AND B.MEMBER_ID =#{memberId}
+	    SELECT B.BM_CD, 
+	           C.CBT_NO,
+	           C.QUES  
+        FROM CBT_GUIDE C, 
+             BOOKMARK B
+        WHERE B.CBT_NO = C.CBT_NO 
+          AND B.MEMBER_ID = #{memberId}
 	</select>
+	
 	
 	<!-- public int ajaxBookmarkInsert(BookmarkVO vo);   /* 즐겨찾기 추가 */  -->
 	<insert id="ajaxBookmarkInsert">
-	    INSERT INTO BOOKMARK(BM_CD, MEMBER_ID, CBT_NO) VALUES (#{bmCd}, #{memberId}, ${cbtNo}) 
+	    INSERT INTO 
+	    BOOKMARK(BM_CD, 
+	             MEMBER_ID, 
+	             CBT_NO) 
+	    VALUES (#{bmCd}, 
+	            #{memberId}, 
+	            ${cbtNo}) 
 	</insert>
+	
+	
+	<!--  public int ajaxBookmarkCount(BookmarkVO vo);    /* 즐겨찾기 카운트 */-->
+	<select id="ajaxBookmarkCount" parameterType="co.itrip.prj.cbtGuide.service.BookmarkVO" resultType="int">
+		SELECT COUNT(*)
+	    FROM CBT_GUIDE C, 
+	         BOOKMARK B
+	    WHERE B.CBT_NO = C.CBT_NO 
+	      AND B.MEMBER_ID = #{memberId}
+	      AND C.CBT_NO = ${cbtNo}
+	</select>
+	
+	<!--  public int ajaxBookmarkDelete(BookmarkVO vo); /* 즐겨찾기 삭제 */-->
+	<delete id="ajaxBookmarkDelete">
+	    DELETE FROM BOOKMARK WEHERE CBT_NO = ${CBTNO} AND BM_CD = ${bmCd}
+	</delete>
 	
 	
 </mapper>

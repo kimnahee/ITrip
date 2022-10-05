@@ -40,10 +40,4 @@ public class CmmnCdServiceImpl implements CmmnCdService {
 		return map.jobCdList();
 	}
 
-	// 이니셜과 코드넘버로 네임 리스트 출력
-	@Override
-	public String cdNameList(String cdIni, String cdNo) {
-		return map.cdNameList(cdIni, cdNo);
-	}
-
 }

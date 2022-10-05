@@ -1,5 +1,6 @@
 package co.itrip.prj.cbtGuide.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import co.itrip.prj.cbtGuide.mapper.CbtGuideMapper;
-import co.itrip.prj.cmmncd.mapper.CmmnCdMapper;
 
 /**
  * 가이드CBT 구현시 필요한 기능을 구체적으로 기재
@@ -24,8 +24,6 @@ public class CbtGuideServiceImpl implements CbtGuideService {
 	@Autowired
 	private CbtGuideMapper map;
 	
-	@Autowired
-	private CmmnCdMapper cdMap;
 
 	/* 가이드가 등록한 모든 문제 출력 */
 	@Override
@@ -37,26 +35,13 @@ public class CbtGuideServiceImpl implements CbtGuideService {
 	@Override
 	public List<CbtGuideVO> cbtGuideMyList(CbtGuideVO vo) {	
 		List<CbtGuideVO> list = map.cbtGuideMyList(vo);
-		String gcds;
-		String lcds;
-		for (int  i = 0; i < list.size(); i++) {
-			gcds = cdMap.cdNameList("G", list.get(i).getGtpCd()); 
-		    lcds = cdMap.cdNameList("L", list.get(i).getLangCd());
-				list.get(i).setGtpCdName(gcds);
-				list.get(i).setLangCdName(lcds);
-			}
 		return list;
     }
 
 	/* 문제 한 건 조회 */
 	@Override
 	public CbtGuideVO cbtGuideListOne(CbtGuideVO vo) {
-		
 		CbtGuideVO list = map.cbtGuideListOne(vo);
-		
-		// 조회된 목록 중 코드번호를 이용해 이름을 추출하여 담기
-		list.setGtpCdName(cdMap.cdNameList("G",list.getGtpCd()));
-		list.setLangCdName(cdMap.cdNameList("L",list.getLangCd()));
 		return list;
 	}
 
@@ -90,7 +75,6 @@ public class CbtGuideServiceImpl implements CbtGuideService {
 	public int cbtGuideUpdate(CbtGuideVO vo) {
 		int r =  map.cbtGuideUpdate(vo);
 		
-		
 		/* 키워드 삭제하고 다시 등록 */
 		CbtKeywordVO kvo = new CbtKeywordVO(); // keyword 인스턴스 생성
 		kvo.setCbtNo(vo.getCbtNo()); // CBT_KEYWORD의 FK인 CBT_NO를 CBT_GUIDE CBT_NO에서 가져와 담음
@@ -100,7 +84,7 @@ public class CbtGuideServiceImpl implements CbtGuideService {
 		map.keywordDelete(vo);
 		if (vo.getKeyword() != null) {
 			for (int i = 0; i < vo.getKeyword().size(); i++) {
-				if (vo.getKeyword().get(i) != null) { // 여러값 입력 시 null이 들어갈 수 있으므로 처리
+				if (vo.getKeyword().get(i) != null && !vo.getKeyword().get(i).isEmpty() ) { // 여러값 입력 시 null 처리 + !isEmpty() 처리
 					kvo.setCKwrd(vo.getKeyword().get(i)); // vo.getKeyword()에 담긴 것들을 i만큼 돌면서 대입
 					map.keywordInsert(kvo); 
 				}
@@ -166,7 +150,7 @@ public class CbtGuideServiceImpl implements CbtGuideService {
 		return map.myCbtHderList(vo);
 	}
 
-	/* 사용자가 푼제 5개 조회 */
+	/* 사용자가 푼제 5개 조회 : 사용X */
 	@Override
 	public List<Map<Integer, Object>> cbtGuideListFive(MyCbtHderVO vo) {
 		/* 2022.09.23 map을 이용해 사용자가 푼 문제의 번호를 찾아 출력 */
@@ -188,8 +172,6 @@ public class CbtGuideServiceImpl implements CbtGuideService {
 	@Override
 	public List<CbtGuideVO> cbtGuideListO(CbtGuideVO vo) {
 		 /*2022.09.26 map을 이용해 사용자가 푼 문제의 번호를 담아 맞은 문제 출력*/ 
-		  //Map < String, Object > param = new HashMap < > (); 
-		  //param.put("mcNo", vo.getMcNo()); return
 		return map.cbtGuideListO(vo);
 	}
 
@@ -229,7 +211,7 @@ public class CbtGuideServiceImpl implements CbtGuideService {
 	    	param.put("chkOX", 0); // 오답처리 
 	    }
 	    
-		/* 정답유무 처리 업데이트 0 또는 i1*/
+		/* 정답유무 처리 업데이트 0 또는 1*/
 		map.ajaxMyCbLongChkUpdate(param); 
 		
 		return r;
@@ -253,11 +235,33 @@ public class CbtGuideServiceImpl implements CbtGuideService {
 	public List<CbtGuideVO> bookmarkList(CbtGuideVO vo){
 		return map.bookmarkList(vo);
 	}
+	
 	/* 즐겨찾기 등록*/
 	@Override
 	public int ajaxBookmarkInsert(BookmarkVO vo) {
-		//ORA-00001: 무결성 제약 조건(ADMIN.BOOKMARK_PK)에 위배됩니다 이거 처리해야됨니다...!
 		return map.ajaxBookmarkInsert(vo);
+	}
+
+	/* 즐겨찾기 카운트 */
+	@Override
+	public List<Integer>  ajaxBookmarkCount(BookmarkVO vo) {
+		System.out.println("=========================ServiceImpl"+ vo);
+		List<Integer> r = new ArrayList<>();
+		for(int i = 0; i < vo.getCbtNos().size(); i++) {
+			vo.setCbtNo(vo.getCbtNos().get(i)); 
+			System.out.println("=========================vo.getCbtNo()"+vo.getCbtNos().get(i));
+		    r.add(map.ajaxBookmarkCount(vo));
+		    System.out.println("===========================+r : " +r);
+			
+		}
+		
+		return r;
+	}
+	
+	/* 즐겨찾기 삭제 */ 
+	@Override
+	public int ajaxBookmarkDelete(BookmarkVO vo) {
+		return map.ajaxBookmarkDelete(vo);
 	}
  
 

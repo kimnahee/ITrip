@@ -172,7 +172,7 @@ public class MemberController { //Principal
 //	}
 
 	
-	/* 회원가입*/
+	/* 김하은 : 회원가입*/
 	@PostMapping("/memberInsert.do")
 	public String memberInsert(MemberVO vo) {
 		mService.memberInsert(vo);

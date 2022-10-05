@@ -11,5 +11,4 @@ public interface CmmnCdMapper {
 
 	
 	List<CmmnCdVO> cdList(String cdIni); // 경력 공통코드 리스트
-	String cdNameList(String cdIni, String cdNo); // 이니셜과 코드넘버로 네임 리스트 출력
 }

@@ -40,26 +40,27 @@ public class CbtUserServiceImpl implements CbtUserService {
 	@Override
 	public List<CbtUserVO> cbtUserMyList(CbtUserVO vo) {	
 		List<CbtUserVO> list = map.cbtUserMyList(vo);
-		String gcds;
-		String lcds;
-		for (int  i = 0; i < list.size(); i++) {
+		/* 공통코드 작성 방법 변경으로 인해 주석처리함 (하은)
+		 *String gcds;
+		  String lcds;
+		 for (int  i = 0; i < list.size(); i++) {
 			gcds = cdMap.cdNameList("U", list.get(i).getUtpCd()); 
 		    lcds = cdMap.cdNameList("L", list.get(i).getLangCd());
 				list.get(i).setUtpCdName(gcds);
 				list.get(i).setLangCdName(lcds);
-				
-			}
+			}*/ 
 		return list;
     }
 
 	@Override
 	public CbtUserVO cbtUserMyOne(CbtUserVO vo) {
+		/* 공통코드 작성 방법 변경으로 인해 주석처리함 (하은)
 		String ucd = cdMap.cdNameList("U", vo.getUtpCd()); 
 	    String lcd = cdMap.cdNameList("L", vo.getLangCd());
 	    vo= map.cbtUserMyOne(vo);
 	    vo.setUtpCdName(ucd);
 		vo.setLangCdName(lcd);
-		
+		*/
 		return vo;
 	}
 
