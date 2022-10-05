@@ -461,6 +461,7 @@
              BOOKMARK B
         WHERE B.CBT_NO = C.CBT_NO 
           AND B.MEMBER_ID = #{memberId}
+         
 	</select>
 	
 	
@@ -488,7 +489,9 @@
 	
 	<!--  public int ajaxBookmarkDelete(BookmarkVO vo); /* 즐겨찾기 삭제 */-->
 	<delete id="ajaxBookmarkDelete">
-	    DELETE FROM BOOKMARK WEHERE CBT_NO = ${CBTNO} AND BM_CD = ${bmCd}
+	    DELETE FROM BOOKMARK 
+	    WHERE CBT_NO = ${cbtNo} 
+	      AND MEMBER_ID = #{memberId}
 	</delete>
 	
 	
