@@ -22,9 +22,9 @@ public class CbtCustomVO {
 	private String langCd; // cbt언어코드
 	private String memberId; // 출제자
 	private int rownum; //가상의 순번 
+	
 	private int time; //문제풀시간 
 	private int pcs; //문제갯수 
 	
-	private String gtpCdName; //gtpCd의 한글명
 	private String langCdName; //langCd의 한글명
 }
