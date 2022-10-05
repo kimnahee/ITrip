@@ -75,15 +75,13 @@ public class CommunityController {
 	// 스터디게시판 글 작성(파일업로드)
 	@PostMapping("/studyInsert.do")
 	public String studyInsert(CommunityVO vo, MultipartFile file) throws IllegalStateException, IOException {
-		String saveFolder = ("upload");
-		File sfile = new File(saveFolder);
 		String oFileName = file.getOriginalFilename();
 		if(!oFileName.isEmpty()) {
 			String sFileName = UUID.randomUUID().toString()+oFileName.substring(oFileName.lastIndexOf("."));
-			String path = fileDir+"/"+sFileName;
+			String path = fileDir+"/STUDY/"+sFileName;
 			file.transferTo(new File(path));
 			vo.setAttach(oFileName); 
-			vo.setAttachDir(saveFolder+"/"+sFileName);
+			vo.setAttachDir(sFileName);
 		}
 		dao.studyInsert(vo);
 		return "redirect:study.do";
@@ -104,15 +102,13 @@ public class CommunityController {
 			throws IllegalStateException, IOException {
 		System.out.println("==============" + request.getParameter("comNo")); // 글번호 확인
 		vo.setComNo(Integer.parseInt(request.getParameter("comNo")));
-		if (!file.getOriginalFilename().isEmpty()) {
-			String projectPath = System.getProperty("user.dir") + "/src/main/resources/static/files"; // 프로젝트 경로
-			UUID uuid = UUID.randomUUID();
-			String filename = uuid + "_" + file.getOriginalFilename();
-			File saveFile = new File(projectPath, filename);
-			file.transferTo(saveFile);
-			vo.setAttach(filename);
-			String path = "/files/" + filename;
-			vo.setAttachDir(path);
+		String oFileName = file.getOriginalFilename();
+		if(!oFileName.isEmpty()) {
+			String sFileName = UUID.randomUUID().toString()+oFileName.substring(oFileName.lastIndexOf("."));
+			String path = fileDir+"/STUDY/"+sFileName;
+			file.transferTo(new File(path));
+			vo.setAttach(oFileName); 
+			vo.setAttachDir(sFileName);
 		}
 		dao.studyUpdate(vo);
 		return "redirect:study.do";
@@ -137,16 +133,13 @@ public class CommunityController {
 	// 자유게시판 글 작성(파일업로드)
 	@PostMapping("/freeInsert.do")
 	public String freeInsert(CommunityVO vo, MultipartFile file) throws IllegalStateException, IOException {
-		if (!file.getOriginalFilename().isEmpty()) {
-			String projectPath = System.getProperty("user.dir") + "/src/main/resources/static/files"; // 프로젝트 경로
-			UUID uuid = UUID.randomUUID();
-			String filename = uuid + "_" + file.getOriginalFilename();
-
-			File saveFile = new File(projectPath, filename);
-			file.transferTo(saveFile);
-			vo.setAttach(filename);
-			String path = "/files/" + filename;
-			vo.setAttachDir(path);
+		String oFileName = file.getOriginalFilename();
+		if(!oFileName.isEmpty()) {
+			String sFileName = UUID.randomUUID().toString()+oFileName.substring(oFileName.lastIndexOf("."));
+			String path = fileDir+"/FREE/"+sFileName;
+			file.transferTo(new File(path));
+			vo.setAttach(oFileName); 
+			vo.setAttachDir(sFileName);
 		}
 		dao.freeInsert(vo);
 		return "redirect:free.do";
@@ -166,15 +159,13 @@ public class CommunityController {
 	public String freeUpdate(CommunityVO vo, MultipartFile file, HttpServletRequest request)
 			throws IllegalStateException, IOException {
 		vo.setComNo(Integer.parseInt(request.getParameter("comNo")));
-		if (!file.getOriginalFilename().isEmpty()) {
-			String projectPath = System.getProperty("user.dir") + "/src/main/resources/static/files"; // 프로젝트 경로
-			UUID uuid = UUID.randomUUID();
-			String filename = uuid + "_" + file.getOriginalFilename();
-			File saveFile = new File(projectPath, filename);
-			file.transferTo(saveFile);
-			vo.setAttach(filename);
-			String path = "/files/" + filename;
-			vo.setAttachDir(path);
+		String oFileName = file.getOriginalFilename();
+		if(!oFileName.isEmpty()) {
+			String sFileName = UUID.randomUUID().toString()+oFileName.substring(oFileName.lastIndexOf("."));
+			String path = fileDir+"/FREE/"+sFileName;
+			file.transferTo(new File(path));
+			vo.setAttach(oFileName); 
+			vo.setAttachDir(sFileName);
 		}
 		dao.freeUpdate(vo);
 		return "redirect:free.do";

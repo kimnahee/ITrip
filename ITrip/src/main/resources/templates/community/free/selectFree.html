@@ -82,7 +82,7 @@
 									th:if="${not #strings.isEmpty(selectCommunity.attach)}">
 									<span class="mb-2 text-md"><div
 											style="text-align: center;">
-											<img th:src="@{*{attachDir}}" style="margin-bottom: 10px;">
+											<img th:src="@{/download(fileName=${'/FREE/'+selectCommunity.attachDir})}" style="margin-bottom: 10px;">
 										</div></span>
 									<div class="form-group mb-3">
 										<label for="basicInput">첨부파일(이미지)</label> <input type="text"

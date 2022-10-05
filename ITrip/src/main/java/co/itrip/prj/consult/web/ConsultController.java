@@ -76,9 +76,6 @@ public class ConsultController {
 		return "consult/consultSelectOne";
 	}
 	
-
-	
-	
 	// 카테고리별 검색 - 상담메인페이지
 	@RequestMapping("/ajaxJobListSearch.do")
 	@ResponseBody
@@ -111,4 +108,14 @@ public class ConsultController {
 
 	}
 	
+	//상담 신청 상세 페이지
+	@GetMapping("/consultRegister.do")
+	public String consultRegister(ConsultVO vo, ConsultDtVO dtvo, Model model, HttpServletRequest request) {
+		int consultNo = Integer.parseInt(request.getParameter("consultNo"));
+		vo.setConsultNo(consultNo);
+		model.addAttribute("consult", conService.consultSelectOne(vo)); //단건조회(신청한 상담)
+		dtvo.setConsultNo(consultNo);
+		model.addAttribute("consultDT", conService.consultDtList(dtvo)); //시간조회(신청한 상담의)
+		return "consult/consultRegister";
+	}
 }

@@ -158,9 +158,13 @@ public class ClassController {
 		
 		// 수료증 띄우기(pdf 다운로드)
 		@GetMapping("/certificate.do")
-		public String certificate() {
-			
-			return "class/certificate";
+		public String certificate(ClassVO vo, ClassAttendVO avo, Model model, HttpServletRequest request) {
+			int classNo = Integer.parseInt(request.getParameter("classNo")); //클래스번호
+			String memberId = request.getParameter("memberId"); //이름
+			vo.setClassNo(classNo);
+			model.addAttribute("class", cService.classSelectOne(vo));
+			avo.setMemberId(memberId);
+			return "class/certification";
 		}
 
     
