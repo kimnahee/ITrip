@@ -139,5 +139,42 @@
 		  </choose>		
 		  ORDER BY C.DT 
 	</select>
+	
+	<select id="classSearch" resultType="co.itrip.prj.iclass.service.ClassVO">
+		SELECT  DISTINCT C.CLASS_NO, 
+	        C.TITLE, 
+	        C.CONTENT, 
+	        C.CRCLM, 
+	        C.DT, 
+	        C.PRICE, 
+	        C.ATTACH, 
+	        C.ATTACH_DIR, 
+	        C.JOB_CD, 
+	        C.PSNCPA, 
+	        C.CLASS_CNT, 
+	        C.ENNC, C.GUIDE_ID, CM.CD_INI, CM.CD_NO, CM.CD_NAME, DT.TERM, DT.BEGIN_TIME, DT.END_TIME,
+            CASE WHEN C.CONFM_CD = '1' THEN '승인대기' ELSE ' '
+               END AS CONFMCD
+	  FROM  CLASS C
+	  
+	  LEFT  JOIN CMMNCD CM
+		ON  C.JOB_CD = CM.CD_NO
+		
+	  LEFT  JOIN CLASS_DT DT
+		ON  C.CLASS_NO = DT.CLASS_NO
+		
+	 WHERE  CM.CD_INI = 'J' 
+	   AND  DT.CTIME_NO = 1 
+       AND  C.CONFM_CD = '1'
+       		<choose>
+		  	<when test="sdate != null ">
+		  	 <![CDATA[and c.dt >= #{sdate}]]>
+		  	</when>
+		  	<when test="edate != null ">
+		  	and c.dt <![CDATA[<=]]> #{edate}
+		  	</when>
+		  </choose>	
+     ORDER BY C.DT
+	</select>
 
 </mapper>

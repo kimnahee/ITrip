@@ -102,13 +102,6 @@ public class ClassController {
 	}
 
 		
-		// 이미 신청한 클래스 리스트 상세보기
-		@RequestMapping("/alreadyClassOne.do")
-		public String alreadyClassOne(ClassVO vo, Model model, ClassDtVO dtvo) {
-			model.addAttribute("class", cService.classSelectOne(vo));
-			model.addAttribute("classdt", cService.classDtList(dtvo));
-			return "class/alreadyclassone";
-		}
 		
 		// 수료증 띄우기(pdf 다운로드)
 		@GetMapping("/certificate.do")
@@ -141,12 +134,6 @@ public class ClassController {
 		return PageInfo.of(cService.ajaxJobSearch(vo));
 	}
 
-	// 수료증 띄우기(pdf 다운로드)
-	@GetMapping("/certificate.do")
-	public String certificate() {
-
-		return "class/certificate";
-	}
 
 	// 채팅방 연결
 	@GetMapping("/classChat.do")

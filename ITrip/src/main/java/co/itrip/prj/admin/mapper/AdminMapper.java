@@ -22,4 +22,5 @@ public interface AdminMapper {
 	int consultUpdate(ConsultVO vo); // 상담 승인변경
 	
 	List<ConsultVO> consultSearch(ConsultVO vo); // 상담 검색
+	List<ClassVO> classSearch(ClassVO vo); // 클래스 검색
 }
