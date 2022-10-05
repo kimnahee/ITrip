@@ -3,7 +3,7 @@
 <mapper namespace="co.itrip.prj.guide.mapper.GuideMapper">
 
 
-<!-- 가이드 마이페이지 버튼 누르고 들어갈때 [박은지]-->
+<!-- 가이드 정보 수정 페이지 [박은지]-->
 <select id="guideSelect" resultType="co.itrip.prj.guide.service.GuideVO">
 	 SELECT G.GUIDE_ID
 		,G.CAREER
@@ -14,18 +14,33 @@
 		,G.STATE_CD
 		,G.DT
 		,STAR
-              ,C.CD_NAME
-              ,CASE  WHEN G.CAREER= '1' THEN '신입(1년 이하)'
-                  WHEN G.CAREER= '2' THEN '주니어(1년 ~ 3년)'
-                  WHEN G.CAREER= '3' THEN '미들(4년 ~ 8년)'
-                  WHEN G.CAREER= '4' THEN '시니어(9년 이상)'
-                  WHEN G.CAREER= '5' THEN 'Lead레벨(15년 이상)'
-               ELSE ' '
+             ,C.CD_NAME
+             ,CASE  WHEN G.CAREER= '1' THEN '신입(1년 이하)'
+                 WHEN G.CAREER= '2' THEN '주니어(1년 ~ 3년)'
+                 WHEN G.CAREER= '3' THEN '미들(4년 ~ 8년)'
+                 WHEN G.CAREER= '4' THEN '시니어(9년 이상)'
+                 WHEN G.CAREER= '5' THEN 'Lead레벨(15년 이상)'
+              ELSE ' '
            END AS CARE
 		FROM GUIDE G, CMMNCD C 
 		WHERE G.DUTY = C.CD_NO
               AND C.CD_INI='D'
               AND GUIDE_ID = #{guideId}
+</select>
+
+<!-- 가이드마이페이지에 내가 등록한 클래스 리스트 [박은지] -->
+<select id='myIClassList' resultType="co.itrip.prj.iclass.service.ClassVO">
+     SELECT C.* , DT.MINDT, DT.MAXDT, 
+     				CASE WHEN  SYSDATE BETWEEN MINDT AND MAXDT THEN '진행중'
+                    <![CDATA[WHEN  SYSDATE < MINDT THEN '개설전']]> <!--  Query안에 사용되고 있는 부등호가 문자열이라는 것을 의미 -->
+                    ELSE '종료'
+                    END ST
+        FROM CLASS C , ( SELECT CLASS_NO, MIN(TERM) MINDT , MAX(TERM) MAXDT 
+                            FROM CLASS_DT
+                            GROUP BY CLASS_NO) DT
+        WHERE C.CLASS_NO = DT.CLASS_NO
+        AND C.CONFM_CD = '2'
+        AND C.GUIDE_ID= #{guideId}
 </select>
 
 <!-- 클래스 수강생 리스트 [박은지] -->
@@ -38,7 +53,9 @@
 </select> 
 
 
-<!-- 가이드 정보수정 [박은지] -->
+
+
+<!-- 가이드 정보수정 처리 [박은지] -->
 <update id="guideUpdate"> 
 	UPDATE GUIDE
 	<set>

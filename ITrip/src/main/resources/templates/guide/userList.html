@@ -32,12 +32,9 @@
 
 <body>
  <div class="row" layout:fragment="content">
- <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"> <!-- 시큐리티에서 설정하고 Application쿠키에 담기는 name과 토큰 -->
- <input type="text" class="form-control" id="guideId" name="guideId"  th:value="${#authentication.principal.member.memberId}" readOnly>
 		<div class="col-12">
 			<div class="card my-4">
 				<div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-					<div id="boardName" class="alert alert-light-primary color-primary"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-star"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>수강생목록</div>
 					<div id="boardName" class="alert alert-primary">
                             <h4 class="alert-heading">수강생목록</h4>
                         </div>
@@ -97,7 +94,7 @@
 		
 		<script>
 			function gopage(p) {
-				location.href = '/ajaxUserList.do?pageNum=' + p;
+				location.href = '/userList.do?pageNum=' + p;
 			}
 
 		</script>
