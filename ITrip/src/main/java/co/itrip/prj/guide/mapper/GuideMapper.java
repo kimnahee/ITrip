@@ -18,5 +18,6 @@ public interface GuideMapper {
 	int guideUpdate(GuideVO vo); // 은지 - 가이드 수정
 	
 	List<ClassVO> userList(ClassVO vo); // 은지 - 클래스 수강생 리스트
+	List<ClassVO> myIClassList(ClassVO vo); // 은지 - 가이드 마이클래스 전체조회
 
 }

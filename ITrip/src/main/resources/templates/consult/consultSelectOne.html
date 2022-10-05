@@ -68,14 +68,66 @@
 							<p>1회 컨설트 : 1시간/1명</p>
 						</div>
 						<div style="padding: 10px;">
+
 							<button id="consultRegister" class="btn btn-primary btn-md mb-0" style="float: right;">상담신청하기</button>
 							<div th:text="${consultOne.consultNo}"></div>
+
+							<button type="button" data-target="#inlineForm" class="btn btn-outline-primary ml-1"  data-dismiss="modal" data-toggle="modal">
+								<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="gold" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                      <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                </svg> 리뷰보기
+                            </button >
+							<a href="#" class="btn btn-primary py-2 px-3 "
+								style="float: right;" data-toggle="modal"
+								data-target="#inlineForm">상담신청하기</a>
+							<div th:text="${consultOne.consultNo}" style="display: none"></div>
+
 						</div>
 					</div>
 				</div>
 			</div>
+			
+			
 		</section>
+		<div class="modal fade text-left" id="inlineForm" tabindex="-1" role="dialog"
+	        aria-labelledby="myModalLabel33" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+	            <h4 class="modal-title" id="myModalLabel33">리뷰</h4>
+	            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	                <i data-feather="x"></i>
+	            </button>
+            </div>
+            <div class="modal-body">
 
+
+                <div class="form-group">
+                
+                </div>
+                <div class="form-group">
+               		
+                </div>
+                <div class="form-group">
+         
+                </div>
+                <br><br>
+                <span>리뷰는 상담과 클래스를 마친 후 마이페이지에서 작성 가능합니다.</span>
+            </div>
+            <!-- <div class="modal-footer">
+                <button type="button" class="btn btn-light-secondary" data-dismiss="modal">
+	                <i class="bx bx-x d-block d-sm-none"></i>
+	                <span class="d-none d-sm-block">취소</span>
+                </button>
+                <button type="button" class="btn btn-primary ml-1 " data-dismiss="modal">
+	                <i class="bx bx-check d-block d-sm-none"></i>
+	                <span class="d-none d-sm-block" id="payForm">신청하기</span>
+                </button>
+            </div> -->
+           
+        </div>
+        </div>
+    </div>
 
 
 		<script>
@@ -83,6 +135,13 @@
 		let guideId = $("#guideId").html();
 		let csrfHeaderName = "${_csrf.headerName}";
 		let csrfToken = $("input[name=_csrf]").val();
+		
+		var myModal = document.getElementById('myModal')
+		var myInput = document.getElementById('myInput')
+
+		myModal.addEventListener('shown.bs.modal', function () {
+		  myInput.focus()
+		})
 		
 		
 		// 페이지 로드 시 곧바로 함수 호출
