@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -47,15 +48,13 @@ public class AjaxCbtGuideController {
 	@RequestMapping("/ajaxBookmarkCount.do")
 	public List<Integer> ajaxBookmarkCount(BookmarkVO vo, @RequestParam(value="cbtNos[]") List<Integer> cbtNos, Principal prin) {
 		//파라미터 값 : memberId, cbtNo
-		System.out.println("==========================vo"+vo);
-		System.out.println("==========================cbtNos"+cbtNos);
 		vo.setMemberId(prin.getName());
 		return cgService.ajaxBookmarkCount(vo);
 	}
 	
-	@PostMapping("/ajaxBookmarDelete.do")
+	@GetMapping("/ajaxBookmarDelete.do")
 	public int ajaxBookmarkDelete(BookmarkVO vo, Principal prin) {
-		//파라미터 값 : bmCd, cbtNo
+		//파라미터 값 : memberId, cbtNo
 		vo.setMemberId(prin.getName());
 		return cgService.ajaxBookmarkDelete(vo);
 	}
