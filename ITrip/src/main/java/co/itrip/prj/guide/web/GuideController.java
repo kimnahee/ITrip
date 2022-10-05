@@ -115,7 +115,10 @@ public class GuideController {
 	
 	// 은지 - 가이드 마이페이지 -가이드가 개설한 클래스 리스트
 	@GetMapping("/gclass.do")
-	public String gclass() {
+	public String gclass(ClassVO vo, Model model, Principal principal) {
+		vo.setGuideId(principal.getName());
+		vo.setConfmCd("2");
+		model.addAttribute("classList", guService.myIClassList(vo));
 		return "guide/gclass";
 	}
 	
@@ -154,21 +157,15 @@ public class GuideController {
 		return "redirect:gmyPage.do";
 	}
 	
-	@GetMapping("/userList.do")
-	public String userList() {
-		return "guide/userList";
-	}
-	
 	// 은지 - 클래스 수강생 리스트(페이징)
-	@RequestMapping("/ajaxUserList.do")
-	@ResponseBody
-	public PageInfo<ClassVO> userList(ClassVO vo, Principal principal, Model model, HttpServletRequest request,
+	@GetMapping("/userList.do")
+	public String userList(ClassVO vo, Principal principal, Model model, HttpServletRequest request,
 			@RequestParam(required = false, defaultValue = "1") int pageNum,
 			@RequestParam(required = false, defaultValue = "8") int pageSize){
 		PageHelper.startPage(pageNum, pageSize);
 		vo.setGuideId(principal.getName());
 		model.addAttribute("pageInfo", PageInfo.of(guService.userList(vo)));
-		return PageInfo.of(guService.userList(vo));
+		return "guide/userList";
 	}
 
 }
