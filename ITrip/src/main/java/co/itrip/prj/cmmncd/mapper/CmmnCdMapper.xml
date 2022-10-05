@@ -30,12 +30,5 @@
 		AND CD_INI='J' 
 		ORDER BY CD_NO
 	</select>
-	
-	<!-- String cdNameList(String cdIni, String cdNo); // 이니셜과 코드넘버로 네임 리스트 출력-->
-	<select id="cdNameList" parameterType="String" resultType="String">
-	    SELECT DISTINCT
-        FUN_CODENAME(#{cdIni},#{cdNo}) AS CD_NAME
-        FROM CMMNCD
-	</select>
-	
+
 </mapper>

@@ -2,9 +2,65 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="co.itrip.prj.cbtCustom.mapper.CbtCustomMapper">
 	<select id="cbtCustomMakeSelect" resultType="co.itrip.prj.cbtCustom.service.CbtCustomVO" 
-	parameterType="co.itrip.prj.cbtCustom.service.CbtCustomVO">
+		parameterType="co.itrip.prj.cbtCustom.service.CbtCustomVO">
+<!--  		SELECT * FROM CBT_GUIDE 
+ 			WHERE LANG_CD=#{langCd} 
+ 			AND GTP_CD = '1' 
+ 			<![CDATA[AND ROWNUM <= #{pcs}]]> -->
+ 			 
+ 			SELECT CBT_NO,
+	            QUES,
+	            CNSR,
+	            EX1,
+	            EX2,
+	            EX3,
+	            EX4,
+	            ATTACH,
+	            ATTACH_DIR,
+	            CNSR_CNT,
+	            CALL,
+	            EXPLNA,
+                GTP_CD,
+                FUN_CODENAME('G',GTP_CD) GTP_CD_name,
+                LANG_CD,
+                FUN_CODENAME('L',LANG_CD) LANG_CD_name,
+            	MEMBER_ID  
+             FROM (SELECT *  FROM CBT_GUIDE ORDER BY DBMS_RANDOM.RANDOM()) 
+ 			WHERE LANG_CD = #{langCd} 
+ 			AND GTP_CD = '1' 
+ 			<![CDATA[AND ROWNUM <= #{pcs}]]>
+	</select>
 	
- 		select * from cbt_guide where lang_cd=#{langCd} and gtp_cd='1' <![CDATA[AND ROWNUM <= #{pcs}]]>
+	<insert id="cbtCustomHderInsert">
+		<selectKey keyProperty="mcSn" order="BEFORE" resultType="int">
+			SELECT CASE WHEN MAX(MC_SN) IS NULL THEN 1 
+			ELSE  MAX(MC_SN)+1 END ID 
+		    FROM CBT_CUSTOM_HDER
+		</selectKey>
+		INSERT INTO CBT_CUSTOM_HDER VALUES(#{mcSn},#{mcNo},#{cbtNo},#{cnsr},sysdate,#{memberId},0,#{langCd})
+	</insert>
 	
+	<select id="selectMcNo" resultType="int">
+		select nvl(max(mc_no),0)+1 from cbt_custom_hder
+	</select>
+	
+	<update id="cbtCustomHderChkUpdate">
+		 update cbt_custom_hder set CHK = 
+		    case when( SELECT cnsr FROM cbt_guide WHERE cbt_no = cbt_custom_hder.cbt_no )
+		        =(select cnsr from cbt_custom_hder where mc_sn= #{mcSn}) then 1 else 0 end  where mc_no= #{mcNo}
+	</update>
+	
+	<select id="cbtCustomHderList" parameterType="co.itrip.prj.cbtCustom.service.CbtCustomHderVO" 
+		resultType="co.itrip.prj.cbtCustom.service.CbtCustomHderVO">
+	    SELECT * FROM cbt_custom_hder WHERE MC_NO = ${mcNo}
+	</select>
+	
+	<select id="cbtCustomListO" parameterType="co.itrip.prj.cbtGuide.service.CbtGuideVO" 
+		resultType="co.itrip.prj.cbtGuide.service.CbtGuideVO">
+		 SELECT * FROM CBT_GUIDE WHERE CBT_NO IN ((select cbt_no from cbt_custom_hder where mc_no = #{mcNo} and chk = 1))
+	</select>
+	<select id="cbtCustomListX" parameterType="co.itrip.prj.cbtGuide.service.CbtGuideVO" 
+		resultType="co.itrip.prj.cbtGuide.service.CbtGuideVO">
+		 SELECT * FROM CBT_GUIDE WHERE CBT_NO IN ((select cbt_no from cbt_custom_hder where mc_no = #{mcNo} and chk = 0))
 	</select>
 </mapper>

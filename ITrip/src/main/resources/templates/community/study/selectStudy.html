@@ -78,11 +78,10 @@
 										name="content" rows="3" th:field=*{content}
 										readonly="readonly"></textarea>
 								</div>
-								<div id="atch" class="form-group"
+								<div id="atch" class="form-file"
 									th:if="${not #strings.isEmpty(selectCommunity.attach)}">
-									<span class="mb-2 text-md"><div
-											style="text-align: center;">
-											<img th:src="|/display?filename=@{*{attachDir}}|" style="margin-bottom: 10px;">
+									<span class="mb-2 text-md"><div style="text-align: center;">
+											<img th:src="@{/download(fileName=${'/STUDY/'+selectCommunity.attachDir})}" style="margin-bottom: 10px;">
 										</div></span>
 									<div class="form-group mb-3">
 										<label for="basicInput">첨부파일(이미지)</label> <input type="text"

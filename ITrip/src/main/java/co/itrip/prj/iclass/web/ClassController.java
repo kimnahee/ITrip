@@ -97,8 +97,30 @@ public class ClassController {
 			aService.alarmInsert(avo);
 		} // 나를 팔로우하는 멤버 리스트(flist)
 
+
 		return "guide/gclass";
 	}
+
+		
+		// 이미 신청한 클래스 리스트 상세보기
+		@RequestMapping("/alreadyClassOne.do")
+		public String alreadyClassOne(ClassVO vo, Model model, ClassDtVO dtvo) {
+			model.addAttribute("class", cService.classSelectOne(vo));
+			model.addAttribute("classdt", cService.classDtList(dtvo));
+			return "class/alreadyclassone";
+		}
+		
+		// 수료증 띄우기(pdf 다운로드)
+		@GetMapping("/certificate.do")
+		public String certificate(ClassVO vo, ClassAttendVO avo, Model model, HttpServletRequest request) {
+			int classNo = Integer.parseInt(request.getParameter("classNo")); //클래스번호
+			String memberId = request.getParameter("memberId"); //이름
+			vo.setClassNo(classNo);
+			model.addAttribute("class", cService.classSelectOne(vo));
+			avo.setMemberId(memberId);
+			return "class/certification";
+		}
+
 
 	// 경아 - 클래스상세보기
 	@RequestMapping("/iClassSelectOne.do")

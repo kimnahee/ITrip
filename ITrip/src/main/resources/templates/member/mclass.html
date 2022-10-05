@@ -60,7 +60,7 @@
         <h1 class="display-5 mb-5">My Page</h1>
     </div>
      <!-- Projects Start -->
-           
+           <input type="hidden" id="memberId" class="form-control" name="memberId" th:value=${#authentication.principal.member.memberId} readonly="readonly">
     <div class="section ">
       <div class="container">
         <div class="row mb-5 align-items-center">
@@ -131,7 +131,7 @@
                       	<input name="guideId" id="guideId" th:value="${cList.guideId}" type="hidden">
                       	<input name="no" class="no" id="no" th:value="${cList.classNo}" type="hidden">
                       	<button type="button" class="btn btn-primary py-2 px-3 classInfo reviewBtn">리뷰</button>
-                        <a href="certificate.do"class="btn btn-primary py-2 px-3 classInfo">수료증</a>
+                      	<button type="button" class="btn btn-primary py-2 px-3" id="certificate">수료증</button>
                 	 </form>
                          <div id="classNo" th:text="${cList.classNo}" style="display: none"></div>
                     </div>
@@ -210,6 +210,12 @@
 			
 			})
 		 
+    })
+    //수료증
+    $("#certificate").on("click", function(e){
+    	let classNo = $(e.target).parent().next().html();
+    	let memberId = $("#memberId").val(); //수강자 이름(현재 로그인한 사람)
+    	location.href="/certificate.do?classNo=" + classNo + "&&memberId=" + memberId;
     })
     
     //강의장 링크연결

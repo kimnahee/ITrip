@@ -76,195 +76,30 @@
               <div class="property-slider">
               
                 <!-- .item -->
-                <div class="property-item">
+                <div class="property-item" th:each="classlist : ${classList}" th:if="${classlist.confmCd == '2'}">
                   <a href="property-single.html" class="img">
                     <img src="bootstrap/property/images/img_1.jpg" alt="Image" class="img-fluid" />
                   </a>
                   <div class="property-content">
-                    <div class="price mb-2"><span>DB 관리자의 <br>핵심업무</span></div>
+                    <div class="price mb-2"><span th:text="${classlist.title}"></span></div>
                     <div>                     
-                      <span class="city d-block mb-3">Kyunga</span>
-                      <div class="specs d-flex mb-4">
-                        <span class="d-block d-flex align-items-center me-3">                                                 
-                          <span class="caption">4 weeks</span><br>        
-                            <span class="caption">9월 14일부터</span>
-                        </span>                     
+                      <span class="city d-block mb-3 statement" th:text="${classlist.st}" ></span>                                              
+                      <div class="">
+                      	<span class="">정원 </span>
+                      	<h5 class="card-title" th:text="${classlist.psncpa}+명"></h5>                   
                       </div>
-                       <span><a href="mcReview"class="btn btn-primary py-2 px-1">리뷰보기</a></span>&nbsp;&nbsp;
-                        <span><a href="property-single.html"class="btn btn-primary py-2 px-1">링크</a></span>&nbsp;&nbsp;
+                  	<div th:if="${classlist.st} == '진행중'" >
+                       <span><button  onclick="location.href='mcReview'" class="btn btn-primary py-2 px-1 link"  >링크입력</button></span>&nbsp;&nbsp;
+                       <span><button onclick="location.href='#'" class="btn btn-primary py-2 px-1" >게더타운 입장</button></span>&nbsp;&nbsp;
+               		</div>
+               		 <div th:unless="${classlist.st} == '진행중'">
+                       <span><button  class="btn btn-primary py-2 px-1 link" disabled='disabled'>링크입력</button></span>&nbsp;&nbsp;
+                       <span><button class="btn btn-primary py-2 px-1" disabled='disabled' >게더타운 입장</button></span>&nbsp;&nbsp;
+               		</div>
                     </div>
                   </div>
                 </div>
                 
-                 <!-- .item -->
-                <div class="property-item">
-                  <a href="property-single.html" class="img">
-                    <img src="bootstrap/property/images/img_1.jpg" alt="Image" class="img-fluid" />
-                  </a>
-                  <div class="property-content">
-                    <div class="price mb-2"><span>DB 관리자의 <br>핵심업무</span></div>
-                    <div>                     
-                      <span class="city d-block mb-3">Kyunga</span>
-                      <div class="specs d-flex mb-4">
-                        <span class="d-block d-flex align-items-center me-3">                                                 
-                          <span class="caption">4 weeks</span><br>        
-                            <span class="caption">9월 14일부터</span>
-                        </span>                     
-                      </div>
-                       <span><a href="mcReview"class="btn btn-primary py-2 px-1">리뷰</a></span>&nbsp;&nbsp;
-                        <span><a href="property-single.html"class="btn btn-primary py-2 px-1">링크</a></span>&nbsp;&nbsp;
-                    </div>
-                  </div>
-                </div>
-                
-                 <!-- .item -->
-                <div class="property-item">
-                  <a href="property-single.html" class="img">
-                    <img src="bootstrap/property/images/img_1.jpg" alt="Image" class="img-fluid" />
-                  </a>
-                  <div class="property-content">
-                    <div class="price mb-2"><span>DB 관리자의 <br>핵심업무</span></div>
-                    <div>                     
-                      <span class="city d-block mb-3">Kyunga</span>
-                      <div class="specs d-flex mb-4">
-                        <span class="d-block d-flex align-items-center me-3">                                                 
-                          <span class="caption">4 weeks</span><br>        
-                            <span class="caption">9월 14일부터</span>
-                        </span>                     
-                      </div>
-                       <span><a href="mcReview"class="btn btn-primary py-2 px-1">리뷰</a></span>&nbsp;&nbsp;
-                        <span><a href="property-single.html"class="btn btn-primary py-2 px-1">링크</a></span>&nbsp;&nbsp;
-                    </div>
-                  </div>
-                </div>
-                
-                 <!-- .item -->
-                <div class="property-item">
-                  <a href="property-single.html" class="img">
-                    <img src="bootstrap/property/images/img_1.jpg" alt="Image" class="img-fluid" />
-                  </a>
-                  <div class="property-content">
-                    <div class="price mb-2"><span>DB 관리자의 <br>핵심업무</span></div>
-                    <div>                     
-                      <span class="city d-block mb-3">Kyunga</span>
-                      <div class="specs d-flex mb-4">
-                        <span class="d-block d-flex align-items-center me-3">                                                 
-                          <span class="caption">4 weeks</span><br>        
-                            <span class="caption">9월 14일부터</span>
-                        </span>                     
-                      </div>
-                       <span><a href="mcReview"class="btn btn-primary py-2 px-1">리뷰</a></span>&nbsp;&nbsp;
-                        <span><a href="property-single.html"class="btn btn-primary py-2 px-1">링크</a></span>&nbsp;&nbsp;
-                    </div>
-                  </div>
-                </div>
-                
-                 <!-- .item -->
-                <div class="property-item">
-                  <a href="property-single.html" class="img">
-                    <img src="bootstrap/property/images/img_1.jpg" alt="Image" class="img-fluid" />
-                  </a>
-                  <div class="property-content">
-                    <div class="price mb-2"><span>DB 관리자의 <br>핵심업무</span></div>
-                    <div>                     
-                      <span class="city d-block mb-3">Kyunga</span>
-                      <div class="specs d-flex mb-4">
-                        <span class="d-block d-flex align-items-center me-3">                                                 
-                          <span class="caption">4 weeks</span><br>        
-                            <span class="caption">9월 14일부터</span>
-                        </span>                     
-                      </div>
-                       <span><a href="mcReview"class="btn btn-primary py-2 px-1">리뷰</a></span>&nbsp;&nbsp;
-                        <span><a href="property-single.html"class="btn btn-primary py-2 px-1">링크</a></span>&nbsp;&nbsp;
-                    </div>
-                  </div>
-                </div>
-                
-                 <!-- .item -->
-                <div class="property-item">
-                  <a href="property-single.html" class="img">
-                    <img src="bootstrap/property/images/img_1.jpg" alt="Image" class="img-fluid" />
-                  </a>
-                  <div class="property-content">
-                    <div class="price mb-2"><span>DB 관리자의 <br>핵심업무</span></div>
-                    <div>                     
-                      <span class="city d-block mb-3">Kyunga</span>
-                      <div class="specs d-flex mb-4">
-                        <span class="d-block d-flex align-items-center me-3">                                                 
-                          <span class="caption">4 weeks</span><br>        
-                            <span class="caption">9월 14일부터</span>
-                        </span>                     
-                      </div>
-                       <span><a href="mcReview"class="btn btn-primary py-2 px-1">리뷰</a></span>&nbsp;&nbsp;
-                        <span><a href="property-single.html"class="btn btn-primary py-2 px-1">링크</a></span>&nbsp;&nbsp;
-                    </div>
-                  </div>
-                </div>
-                
-                 <!-- .item -->
-                <div class="property-item">
-                  <a href="property-single.html" class="img">
-                    <img src="bootstrap/property/images/img_1.jpg" alt="Image" class="img-fluid" />
-                  </a>
-                  <div class="property-content">
-                    <div class="price mb-2"><span>DB 관리자의 <br>핵심업무</span></div>
-                    <div>                     
-                      <span class="city d-block mb-3">Kyunga</span>
-                      <div class="specs d-flex mb-4">
-                        <span class="d-block d-flex align-items-center me-3">                                                 
-                          <span class="caption">4 weeks</span><br>        
-                            <span class="caption">9월 14일부터</span>
-                        </span>                     
-                      </div>
-                       <span><a href="mcReview"class="btn btn-primary py-2 px-1">리뷰</a></span>&nbsp;&nbsp;
-                        <span><a href="property-single.html"class="btn btn-primary py-2 px-1">링크</a></span>&nbsp;&nbsp;
-                    </div>
-                  </div>
-                </div>
-                
-                 <!-- .item -->
-                <div class="property-item">
-                  <a href="property-single.html" class="img">
-                    <img src="bootstrap/property/images/img_1.jpg" alt="Image" class="img-fluid" />
-                  </a>
-                  <div class="property-content">
-                    <div class="price mb-2"><span>DB 관리자의 <br>핵심업무</span></div>
-                    <div>                     
-                      <span class="city d-block mb-3">Kyunga</span>
-                      <div class="specs d-flex mb-4">
-                        <span class="d-block d-flex align-items-center me-3">                                                 
-                          <span class="caption">4 weeks</span><br>        
-                            <span class="caption">9월 14일부터</span>
-                        </span>                     
-                      </div>
-                       <span><a href="mcReview"class="btn btn-primary py-2 px-1">리뷰</a></span>&nbsp;&nbsp;
-                        <span><a href="property-single.html"class="btn btn-primary py-2 px-1">링크</a></span>&nbsp;&nbsp;
-                         <span><a href="property-single.html"class="btn btn-primary py-2 px-1">수료증</a></span>
-                    </div>
-                  </div>
-                </div>
-                
-                 <!-- .item -->
-                <div class="property-item">
-                  <a href="property-single.html" class="img">
-                    <img src="bootstrap/property/images/img_1.jpg" alt="Image" class="img-fluid" />
-                  </a>
-                  <div class="property-content">
-                    <div class="price mb-2"><span>DB 관리자의 <br>핵심업무</span></div>
-                    <div>                     
-                      <span class="city d-block mb-3">Kyunga</span>
-                      <div class="specs d-flex mb-4">
-                        <span class="d-block d-flex align-items-center me-3">                                                 
-                          <span class="caption">4 weeks</span><br>        
-                            <span class="caption">9월 14일부터</span>
-                        </span>                     
-                      </div>
-                       <span><a href="mcReview"class="btn btn-primary py-2 px-1">리뷰</a></span>&nbsp;&nbsp;
-                        <span><a href="property-single.html"class="btn btn-primary py-2 px-1">링크</a></span>&nbsp;&nbsp;
-                         <span><a href="property-single.html"class="btn btn-primary py-2 px-1">수료증</a></span>
-                    </div>
-                  </div>
-                </div>
                 
                 
                 <!-- .item -->
@@ -294,21 +129,21 @@
             </div>
           </div>
         </div>
-        <br><br>
-            <div class="text-center">
-                <a class="btn" href="">회원탈퇴</a>/<a class="btn" href="">회원수정</a>
-            </div>
+          
       </div>
     </div>
-	<input  id="memberId" th:value="${#authentication.principal.member.memberId}">
+	<input type='hidden' id="memberId" th:value="${#authentication.principal.member.memberId}">
      <script type="text/javascript">
          	
  			let memberId = $("#memberId").val();  
          	
+
          	$("#startClass").on("click", function() {
          		location.href = "/startClass.do?memberId=" + memberId;
-         	})
+         	}) 
  			
+         	
+         	
          </script>
     <script src="bootstrap/property/js/bootstrap.bundle.min.js"></script>
     <script src="bootstrap/property/js/tiny-slider.js"></script>

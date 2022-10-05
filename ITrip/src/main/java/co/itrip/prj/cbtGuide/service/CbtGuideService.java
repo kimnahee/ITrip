@@ -36,5 +36,7 @@ public interface CbtGuideService {
 	public MyCbtLongVO ajaxMyCbtLongList(MyCbtLongVO myVo); /* 객관식 문제 채점시 ajax로 정답 출력 */
 	public int ajaxMyCbtLongInsert(MyCbtLongVO vo); /* 사용자가 푼 서술형 문제 등록 */
 	public int ajaxBookmarkInsert(BookmarkVO vo);   /* 즐겨찾기 추가 */ 
+	public List<Integer> ajaxBookmarkCount(BookmarkVO vo);    /* 즐겨찾기 카운트 */
+	public int ajaxBookmarkDelete(BookmarkVO vo);   /* 즐겨찾기 삭제 */ 
 	
 }

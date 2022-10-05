@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+<head>
+<meta charset="UTF-8">
+<title>상담 신청 상세페이지</title>
+<style>
+th {
+	text-align: center;
+}
+</style>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+	$(function() {
+		$('.datepicker').datepicker();
+	})
+</script>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="row">
+			<div class="col-12">
+				<div class="card">
+					<div class="card-header">
+						<h4 class="card-title">상담 상세 신청 페이지</h4>
+					</div>
+					<div class="card-body">
+						<div class="row" th:object=${consult}>
+							<table class="table table-bordered mb-0">
+								<tr>
+									<th style="display: none;">상담번호</th>
+									<td style="display: none;" th:text=${consult.consultNo}>1234</td>
+									<th>상담명</th>
+									<td colspan="5" th:text=${consult.title}>1234</td>
+								</tr>
+								<tr>
+									<th>등록일자</th>
+									<td th:text=${consult.dt}>1234</td>
+									<th>가이드</th>
+									<td colspan="3" th:text=${consult.guideId}>1234</td>
+								</tr>
+								<tr>
+									<th>상세내용</th>
+									<td colspan="5" th:text=${consult.content}>1234</td>
+								</tr>
+								<tr>
+									<th>신청 가능 날짜</th>
+									<td id="beginDate" th:text=${consult.beginDate}>1234</td>
+									<td id="endDate" th:text=${consult.endDate}>1234</td>
+									<td colspan="3"><input id="registerDate" type="text" class="datepicker"></td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</div>
+				<script>
+					$.datepicker.setDefaults({
+						dateFormat : 'yy-mm-dd',
+						prevText : '이전 달',
+						nextText : '다음 달',
+						monthNames : [ '1월', '2월', '3월', '4월', '5월', '6월',
+								'7월', '8월', '9월', '10월', '11월', '12월' ],
+						monthNamesShort : [ '1월', '2월', '3월', '4월', '5월', '6월',
+								'7월', '8월', '9월', '10월', '11월', '12월' ],
+						dayNames : [ '일', '월', '화', '수', '목', '금', '토' ],
+						dayNamesShort : [ '일', '월', '화', '수', '목', '금', '토' ],
+						dayNamesMin : [ '일', '월', '화', '수', '목', '금', '토' ],
+						showMonthAfterYear : true,
+						yearSuffix : '년'
+					});
+					
+					$(document).ready(function(){
+						let beginDate = $("#beginDate").html();
+						let endDate = $("#endDate").html();
+					})
+					
+					$("#registerDate").datepicker({
+						dateFormat: 'yy-mm-dd',
+						minDate: new Date(beginDate),
+						maxDate: new Date(endDate)
+					})
+
+				</script>
+
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

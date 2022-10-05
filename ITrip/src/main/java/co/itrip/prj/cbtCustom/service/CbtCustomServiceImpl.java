@@ -18,4 +18,39 @@ public class CbtCustomServiceImpl implements CbtCustomService {
 		return map.cbtCustomMakeSelect(vo);
 	}
 
+	@Override
+	public int cbtCustomHderInsert(CbtCustomHderVO vo) {
+		//int r = map.cbtCustomHderInsert(vo); // 먼저 myCbtHder 등록함
+	//	map.cbtCustomHderChkUpdate(vo);
+		//map.cbtCustomHderList(vo);
+		return map.cbtCustomHderInsert(vo);
+		
+	}
+
+	@Override
+	public int selectMcNo() {
+		return map.selectMcNo();
+	}
+
+	@Override
+	public List<CbtCustomHderVO> cbtCustomHderList(CbtCustomHderVO vo) {
+		return map.cbtCustomHderList(vo);
+	}
+
+	@Override
+	public int cbtCustomHderChkUpdate(CbtCustomHderVO vo) {
+		return map.cbtCustomHderChkUpdate(vo);
+	}
+
+	@Override
+	public List<CbtGuideVO> cbtCustomListO(CbtGuideVO vo) {
+		return map.cbtCustomListO(vo);
+	}
+
+	@Override
+	public List<CbtGuideVO> cbtCustomListX(CbtGuideVO vo) {
+		return map.cbtCustomListX(vo);
+	}
+
+
 }

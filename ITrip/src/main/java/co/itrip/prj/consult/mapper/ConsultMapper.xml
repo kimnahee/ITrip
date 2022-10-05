@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="co.itrip.prj.consult.mapper.ConsultMapper">
 	
-	<!-- 가이드마이페이지에 내가 등록한 상담리스트 -->
+	<!-- 가이드마이페이지에 내가 등록한 상담리스트 [박은지] -->
 	<select id="consultList" resultType="co.itrip.prj.consult.service.ConsultVO" parameterType="co.itrip.prj.consult.service.ConsultVO">
 			SELECT C.CONSULT_NO
 		            ,C.TITLE
@@ -28,7 +28,7 @@
 
 	</select> 
 	
-	<!-- 상담메인페이지 페이징 처리, 카테고리 검색기능 -->
+	<!-- 상담메인페이지 페이징 처리, 카테고리 검색기능  [박은지]-->
 	<select id="findAll" resultType="co.itrip.prj.consult.service.ConsultVO" parameterType="co.itrip.prj.consult.service.ConsultVO">
 	   	 SELECT C.CONSULT_NO
 		            ,C.TITLE
@@ -56,7 +56,7 @@
 	
 	</select>
 	
-	<!-- 상담 상세보기 -->
+	<!-- 상담 상세보기 [박은지]-->
 	<select id="consultSelectOne" parameterType="co.itrip.prj.consult.service.ConsultVO" resultType="co.itrip.prj.consult.service.ConsultVO">
 	SELECT C.CONSULT_NO
 	            ,C.TITLE
@@ -84,7 +84,7 @@
       ORDER BY CONSULT_NO DESC
 	</select>
 	
-	<!-- 상담상세보기 상담가능시간 -->
+	<!-- 상담상세보기 상담가능시간 [박은지]-->
 	<select id="consultDtList" resultType="co.itrip.prj.consult.service.ConsultDtVO">
 	SELECT CDT_NO, CONSULT_NO, CASE WHEN WEEK = '0' THEN '월'
 			 WHEN WEEK = '1' THEN '화'
@@ -100,7 +100,7 @@
 	WHERE CONSULT_NO=#{consultNo}
 	</select>
 	
-	<!-- 가이드 상담 등록 -->
+	<!-- 가이드 상담 등록 [박은지] -->
 	<insert id="consultInsert" parameterType="co.itrip.prj.consult.service.ConsultVO">
 		<selectKey keyProperty="consultNo" order="BEFORE" resultType="int">
 			SELECT CASE WHEN MAX(CONSULT_NO) IS NULL THEN 1 ELSE MAX(CONSULT_NO)+1 END FROM CONSULT
@@ -109,7 +109,7 @@
 		VALUES(#{consultNo}, #{title}, #{content}, sysdate, '1', #{guideId}, #{jobCd}, '비활성화', #{beginDate}, #{endDate})
 	</insert>
 	
-	<!-- 가이드 상담 등록 -->
+	<!-- 가이드 상담 등록 [박은지] -->
 	<insert id="consultDtInsert">
 		<selectKey keyProperty="cdtNo" order="BEFORE" resultType="int">
 		SELECT 
@@ -123,7 +123,7 @@
 		INSERT INTO CONSULT_DT VALUES (#{cdtNo}, #{consultNo},#{week}, #{beginTime}, #{endTime}, #{price})
 	</insert>
 	
-	<!-- 가이드 상담 상태 수정 (활성화/비활성화) -->
+	<!-- 가이드 상담 상태 수정 (활성화/비활성화) [박은지]-->
 	<update id="consultState">
 		UPDATE CONSULT
 		<set>

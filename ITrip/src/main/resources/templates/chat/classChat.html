@@ -60,17 +60,21 @@ iframe {
 						if(data == 1){
 							alert("출석체크가 완료되었습니다.");
 							$("#chkBtn").attr("disabled", true);
+
 							    ClassAttend(data);
+
 						}
 					}
 				})
 			})
 			
+
 			// 수업회차랑 출석 수 비교
 			function ClassAttend(data) {
 				console.log(data);
 			}
 			
+
 			//클래스 리스트로 이동
 			$("#classList").on("click", function(){
 				location.href="/mClass";

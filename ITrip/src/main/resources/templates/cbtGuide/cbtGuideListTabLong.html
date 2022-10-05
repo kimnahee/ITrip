@@ -39,8 +39,8 @@
 													</h3>
 													<span id="QUES" th:text="${cbt.ques}">문제</span>
 													<input type="hidden" id="cbtNo0" name="cbtNo0" th:value="${cbt.cbtNo}">
-													<input type="hidden" id="PreGtpCd" name="PreGtpCd" th:value="${tCd}">
-													<input type="hidden" id="PreLangCd" name="PreLangCd" th:value="${lCd}">
+													<input type="text" id="PreGtpCd" name="PreGtpCd" th:value="${cbtGuideVO.gtpCd}">
+													<input type="text" id="PreLangCd" name="PreLangCd" th:value="${cbtGuideVO.langCd}">
 													<a>&nbsp;&nbsp;[ 출제자 : <span th:text="${cbt.memberId}"></span> ]
 													</a>
 

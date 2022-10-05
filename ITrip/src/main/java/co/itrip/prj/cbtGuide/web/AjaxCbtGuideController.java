@@ -2,12 +2,15 @@ package co.itrip.prj.cbtGuide.web;
 
 
 import java.security.Principal;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import co.itrip.prj.cbtGuide.service.BookmarkVO;
@@ -23,28 +26,39 @@ import co.itrip.prj.cbtGuide.service.MyCbtLongVO;
 */
 @RestController
 public class AjaxCbtGuideController {
-	@Autowired
-	private CbtGuideService cgDao;
 	
+	@Autowired
+	private CbtGuideService cgService;
+
 	@PostMapping("/ajaxMyCbtLongList.do")
 	public MyCbtLongVO ajaxMyCbtLongList(CbtGuideVO vo, MyCbtLongVO myVo,  Model model, HttpServletRequest request) {
-		myVo.setCbtNo(Integer.parseInt(request.getParameter("cbtNo"))); // 요청된 파라미터 값 유형코드 담음 
-		
-		cgDao.ajaxMyCbtLongInsert(myVo); // 사용자가 입력한 값 등록
-		//System.out.println("vo.getChklist()===="+ vo.getChklist());
-		
-		//model.addAttribute("cbtList", cgDao.ajaxMyCbtLongList(vo));
-		//model.addAttribute("myList", cgDao.myCbtLongInsert(myVo));
-		return cgDao.ajaxMyCbtLongList(myVo);
+		cgService.ajaxMyCbtLongInsert(myVo); // 사용자가 입력한 값 등록
+		return cgService.ajaxMyCbtLongList(myVo);
 	}
+	
 	/* 즐겨찾기 등록 */
 	@PostMapping("/ajaxBookmarkInsert.do")
 	public int ajaxBookmarkInsert(BookmarkVO vo, Principal prin) {
 		vo.setMemberId(prin.getName()); //로그인된 사용자 정보 가져와 담기
-		return cgDao.ajaxBookmarkInsert(vo);
+		return cgService.ajaxBookmarkInsert(vo);
 	}
 	
+	/* 즐겨찾기 카운트 */
+	@RequestMapping("/ajaxBookmarkCount.do")
+	public List<Integer> ajaxBookmarkCount(BookmarkVO vo, @RequestParam(value="cbtNos[]") List<Integer> cbtNos, Principal prin) {
+		//파라미터 값 : memberId, cbtNo
+		System.out.println("==========================vo"+vo);
+		System.out.println("==========================cbtNos"+cbtNos);
+		vo.setMemberId(prin.getName());
+		return cgService.ajaxBookmarkCount(vo);
+	}
 	
+	@PostMapping("/ajaxBookmarDelete.do")
+	public int ajaxBookmarkDelete(BookmarkVO vo, Principal prin) {
+		//파라미터 값 : bmCd, cbtNo
+		vo.setMemberId(prin.getName());
+		return cgService.ajaxBookmarkDelete(vo);
+	}
 	
 
 }

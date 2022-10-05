@@ -39,5 +39,9 @@ public class ClassVO {
 	private String category; //카테고리
 	private int no; // 번호
 	
+	// 가이드가 등록한 클래스 리스트에서 추가로 필요한 정보 -> 은지
+	private String jobName; // 주요기능
+	private String st; // 개설전/진행전/종료
+	
 	
 }
