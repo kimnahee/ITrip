@@ -46,5 +46,8 @@ public interface CbtGuideMapper {
 		public int ajaxMyCbtLongInsert(MyCbtLongVO vo); /* 사용자가 푼 서술형 문제 등록 */
 		public int ajaxMyCbtLongChkList(CbtGuideVO vo); /* REGEXP_COUNT를 이용하여 사용자가 입력한 값과 키워드를 비교하여 키워드 기준으로 존재하면 1 없으면 0 출력*/
 		public int ajaxMyCbLongChkUpdate(Map<String,Integer> map); /*  사용자가 입력한 값과 가이드가 등록한 키워드들을 비교하여(AND) 정답유무 처리 */
+		
 		public int ajaxBookmarkInsert(BookmarkVO vo);   /* 즐겨찾기 추가 */ 
+		public int ajaxBookmarkCount(BookmarkVO vo);    /* 즐겨찾기 카운트 */
+		public int ajaxBookmarkDelete(BookmarkVO vo);   /* 즐겨찾기 삭제 */ 
 }

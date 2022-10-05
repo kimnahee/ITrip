@@ -39,6 +39,7 @@ public class CbtUserServiceImpl implements CbtUserService {
 	
 	@Override
 	public List<CbtUserVO> cbtUserMyList(CbtUserVO vo) {	
+
 		/*List<CbtUserVO> list = map.cbtUserMyList(vo);
 		 * String gcds; String lcds; for (int i = 0; i < list.size(); i++) { gcds =
 		 * cdMap.cdNameList("U", list.get(i).getUtpCd()); lcds = cdMap.cdNameList("L",
@@ -48,10 +49,12 @@ public class CbtUserServiceImpl implements CbtUserService {
 		 * }
 		 */
 		return map.cbtUserMyList(vo);
+
     }
 
 	@Override
 	public CbtUserVO cbtUserMyOne(CbtUserVO vo) {
+
 		/*
 		 * String ucd = cdMap.cdNameList("U", vo.getUtpCd()); String lcd =
 		 * cdMap.cdNameList("L", vo.getLangCd()); vo= map.cbtUserMyOne(vo);
@@ -59,6 +62,7 @@ public class CbtUserServiceImpl implements CbtUserService {
 		 */
 		
 		return map.cbtUserMyOne(vo);
+
 	}
 
 	@Override
