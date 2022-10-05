@@ -106,6 +106,7 @@ public class AdminController {
 		return adminService.consultUpdate(vo);
 	}
 	
+	// 상담 검색
 	@GetMapping("/consultSearch.do")
 	@ResponseBody
 	private List<ConsultVO> consultSearch(@RequestParam("key") String key,
@@ -113,6 +114,16 @@ public class AdminController {
 		vo.setVal(val);
 		vo.setKey(key);
 		return adminService.consultSearch(vo);
+	}
+	
+	// 클래스 검색
+	@GetMapping("/dateSearch.do")
+	@ResponseBody
+	private List<ClassVO> dateSearch(@RequestParam("sdate") String sdate,
+			@RequestParam("edate") String edate, Model model, ClassVO vo) {
+		vo.setSdate(sdate);
+		vo.setEdate(edate);
+		return adminService.classSearch(vo);
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

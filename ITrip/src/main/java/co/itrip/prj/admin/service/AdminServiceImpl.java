@@ -73,6 +73,12 @@ public class AdminServiceImpl implements AdminService {
 		return map.consultSearch(vo);
 	}
 
+	@Override
+	public List<ClassVO> classSearch(ClassVO vo) {
+		// TODO Auto-generated method stub
+		return map.classSearch(vo);
+	}
+
 	
 
 }
