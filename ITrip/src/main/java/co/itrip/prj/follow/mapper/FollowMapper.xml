@@ -20,7 +20,7 @@
 		DELETE FOLLOW WHERE GUIDE_ID = #{guideId} and member_id = #{memberId}
 	</delete>
 	
-	
+	<!-- ========================가이드 마이페이지 팔로워 기능 [박은지] 가이드 -> 유저 ========================-->
 	
 	<select id="followerSelectList" parameterType="co.itrip.prj.follow.service.FollowVO"  resultType="co.itrip.prj.follow.service.FollowVO">
 		SELECT M.MEMBER_ID , M.NICK
@@ -40,7 +40,7 @@
 	</delete>
 	
 	
-	<!-- 상담 상세페이지 팔로우 기능 -->
+	<!-- ========================상담 상세페이지 팔로우 기능 [박은지] 유저 -> 가이드 ========================-->
 	
 	<select id="heartCount" resultType="int" >
 		SELECT COUNT(*)

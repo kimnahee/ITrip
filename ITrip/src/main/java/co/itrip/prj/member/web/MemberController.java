@@ -179,22 +179,5 @@ public class MemberController { //Principal
 		return "main/main";
 	}
 
-	
-	//경아 - 오답노트
-	@GetMapping("/answerNoteMain.do")
-	public String answerNoteMain(Model model,MyCbtHderVO vo, Principal principal) {
-		vo.setMemberId(principal.getName());
-		model.addAttribute("langCdList",mService.myWrongAnswerLangCd(vo));
-		return "answerNote/answerNoteMain";
-	}
-	
-	@GetMapping("/myWrongAnswerNote.do")
-	public String myWrongAnswerNote(Model model,CbtGuideVO vo,MyCbtHderVO mvo) {
-		model.addAttribute("note", mService.myWrongAnswerNote(vo));
-		model.addAttribute("myCnsr", mService.myWrongAnswerCnsr(mvo));
-		return "answerNote/answerNoteSolve";
-	}
-
-	
 }
 

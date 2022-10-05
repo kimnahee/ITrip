@@ -30,5 +30,5 @@
 		AND CD_INI='J' 
 		ORDER BY CD_NO
 	</select>
-	
+
 </mapper>

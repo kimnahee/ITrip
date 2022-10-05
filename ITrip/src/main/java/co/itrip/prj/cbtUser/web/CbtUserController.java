@@ -98,11 +98,13 @@ public class CbtUserController {
 	@PostMapping("/cbtUserMyOne.do")
 	public String cbtUserListOne(CbtUserVO vo, Model model) {
 		model.addAttribute("langCdList",cmmnCdService.cdList("L"));
-		/* 공통코드 작성 방법 변경으로 인해 주석처리함 (하은)
-		 * String ucd = cmmnCdService.cdNameList("U", vo.getUtpCd()); 
-	    String lcd = cmmnCdService.cdNameList("L", vo.getLangCd());
-		vo.setUtpCdName(ucd);
-		vo.setLangCdName(lcd);*/
+
+		/*
+		 * String ucd = cmmnCdService.cdNameList("U", vo.getUtpCd()); String lcd =
+		 * cmmnCdService.cdNameList("L", vo.getLangCd()); vo.setUtpCdName(ucd);
+		 * vo.setLangCdName(lcd);
+		 */
+
 		
 		model.addAttribute("myCbt", cbtUserService.cbtUserMyOne(vo));
 		return "cbtUser/cbtUserMyOne";

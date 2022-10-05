@@ -26,7 +26,7 @@ p {
 							<h4 class="card-title">나만의 CBT 문제 생성하기</h4>
 						</div>
 						<div class="card-content">
-							<form id="Frm" action="cbtCustomMakeSelect.do" method="post">
+							<form id="Frm" action="cbtCustomMakeSelect.do" method="get">
 							<!-- 로그인 시큐리티 -->
 							<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 							<div class="card-body">
@@ -54,7 +54,7 @@ p {
 								<div class="form-group mb-3">
 									<label for="" class="form-label">시간</label>
 									<div class="form-check">
-										<input class="form-check-input" type="radio" name="time" id="time" value="1"> 1분
+										<input class="form-check-input" type="radio" name="time" id="time" value="1"> 1분test
 									</div>
 									<div class="form-check">
 										<input class="form-check-input" type="radio" name="time" id="time" value="5"> 5분
@@ -62,12 +62,14 @@ p {
 									<div class="form-check">
 										<input class="form-check-input" type="radio" name="time" id="time" value="10"> 10분
 									</div>
+									<div class="form-check">
+										<input class="form-check-input" type="radio" name="time" id="time" value="20"> 20분
+									</div>
 								</div>
-
 								<div class="form-group mb-3">
 									<label for="" class="form-label">문제갯수</label>
 									<div class="form-check">
-										<input class="form-check-input" type="radio" name="pcs" id="pcs" value="6"> 6개test
+										<input class="form-check-input" type="radio" name="pcs" id="pcs" value="3"> 3개test
 									</div>
 									<div class="form-check">
 										<input class="form-check-input" type="radio" name="pcs" id="pcs" value="10"> 10개
@@ -76,12 +78,10 @@ p {
 										<input class="form-check-input" type="radio" name="pcs" id="pcs" value="15"> 15개
 									</div>
 									<div class="form-check">
-										<input class="form-check-input" type="radio" name="pcs" id="pcs" value="15"> 20개
+										<input class="form-check-input" type="radio" name="pcs" id="pcs" value="20"> 20개
 									</div>
 								</div>
-
-							
-								<input id="memberId" name="memberId" th:value="${#authentication.principal.member.memberId}"  type="hidden">
+							<!-- 	<input id="memberId" name="memberId" th:value="${#authentication.principal.member.memberId}"  type="hidden"> -->
 							</div>
 							
 							<div class="col-12 d-flex justify-content-end">

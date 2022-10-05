@@ -20,8 +20,6 @@ public class GuideServiceImpl implements GuideService {
 	@Autowired
 	private GuideMapper map;
 	
-
-
 	/** 가이드 단건조회
 	 *  @param GuideVO vo
 	 *  @return vo
@@ -29,7 +27,7 @@ public class GuideServiceImpl implements GuideService {
 	 */
 	@Override
 	public GuideVO guideSelect(GuideVO vo) {
-		// 가이드 단건조회
+		// 은지 - 가이드 단건조회
 		return map.guideSelect(vo);
 	}
 
@@ -54,6 +52,14 @@ public class GuideServiceImpl implements GuideService {
 	public List<ClassVO> userList(ClassVO vo) {
 		//  은지 - 클래스 수강생 리스트
 		return map.userList(vo);
+	}
+
+	@Override
+	public List<ClassVO> myIClassList(ClassVO vo) {
+		// 은지 - 가이드 마이클래스 전체조회
+		// myIClassList의 리턴값들을 ClassVO list에 담음
+		// List<ClassVO> list =  map.myIClassList(vo);// 인스턴스(list)  
+		return  map.myIClassList(vo);
 	}
 
 

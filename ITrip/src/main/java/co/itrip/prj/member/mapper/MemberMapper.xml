@@ -53,43 +53,4 @@
 	</select>
 
 
-	<!-- 내가푼문제언어카테고리 [경아] -->
-	<select id="myWrongAnswerLangCd" parameterType="co.itrip.prj.cbtGuide.service.MyCbtHderVO" resultType="co.itrip.prj.cbtGuide.service.MyCbtHderVO">
-		select distinct m.lang_Cd,cm.cd_name,m.mc_no from mycbt_hder m,cmmncd cm 
-		    where cm.cd_no=m.lang_cd  and cm.cd_ini='L' and member_id = #{memberId} and chk1 = 0 
-		    or 
-		    cm.cd_no=m.lang_cd and cm.cd_ini='L' and member_id = #{memberId} and chk2 = 0 
-		    or
-		    cm.cd_no=m.lang_cd and cm.cd_ini='L' and member_id = #{memberId} and chk3 = 0
-		    or
-		    cm.cd_no=m.lang_cd and cm.cd_ini='L' and member_id = #{memberId} and chk4 = 0
-		    or
-		    cm.cd_no=m.lang_cd and cm.cd_ini='L' and member_id = #{memberId} and chk5 = 0
-			order by mc_no
-	</select>
-
-	<!-- 내가푼문제중에 틀린애들cbtno 중복없이가져오기 [경아] -->
-	<select id="myWrongAnswerNote" parameterType="co.itrip.prj.cbtGuide.service.CbtGuideVO" resultType="co.itrip.prj.cbtGuide.service.CbtGuideVO">
-		SELECT * FROM CBT_GUIDE WHERE CBT_NO IN ((select cbt_no1 from mycbt_hder where mc_no = #{mcNo} and chk1 = 0),
-			 (select cbt_no2 from mycbt_hder where mc_no = #{mcNo} and chk2 = 0),
-			 (select cbt_no3 from mycbt_hder where mc_no = #{mcNo} and chk3 = 0),
-			 (select cbt_no4 from mycbt_hder where mc_no = #{mcNo} and chk4 = 0),
-			 (select cbt_no5 from mycbt_hder where mc_no = #{mcNo} and chk5 = 0))
-	</select>
-	
-	<!-- 내가찍은정답가져오려고.. [경아] -->
-	<select id="myWrongAnswerCnsr" parameterType="co.itrip.prj.cbtGuide.service.MyCbtHderVO" resultType="co.itrip.prj.cbtGuide.service.MyCbtHderVO">
-		select m.* from mycbt_hder m, cmmncd cm 
-		    where cm.cd_no=m.lang_cd and m.mc_no=#{mcNo} and cm.cd_ini='L' and member_id = #{memberId} and chk1 = 0 
-		    or 
-		    cm.cd_no=m.lang_cd and m.mc_no=#{mcNo} and cm.cd_ini='L' and member_id = #{memberId} and chk2 = 0 
-		    or
-		    cm.cd_no=m.lang_cd and m.mc_no=#{mcNo} and cm.cd_ini='L' and member_id = #{memberId} and chk3 = 0
-		    or
-		    cm.cd_no=m.lang_cd and m.mc_no=#{mcNo} and cm.cd_ini='L' and member_id = #{memberId} and chk4 = 0
-		    or
-		    cm.cd_no=m.lang_cd and m.mc_no=#{mcNo} and cm.cd_ini='L' and member_id = #{memberId} and chk5 = 0
-	
-	</select>
-	<!-- distinct cm.cd_name, -->
 </mapper>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<div layout:fragment="content">
+<!-- Responsive tables start -->
+<div class="row" id="table-responsive"><!--  th:each="myList : ${myCbtList}" -->
+  <div class="col-12" >
+    <div class="card">
+      <div class="card-header">
+        <!-- <h4 class="card-title">응시과목<span></span> </h4> -->
+      <!--   <p>응시일자 : <span th:text="${#dates.format(myList.dt, 'yyyy-MM-dd')}"></span></p> -->
+      </div>
+      <div class="card-content">
+        <div class="card-body">
+            <div class="alert alert-primary">
+                <h4 class="alert-heading">채점 결과</h4>
+                <p>랜덤으로 출제된 문제를 다 푸셨습니다. 총 <span th:text=${ListO.size+ListX.size}></span>문제 중 <code class="highlighter-rouge"  th:text=${ListO.size}>맞은 갯수</code> 개를 맞추셨습니다.<br> 자세한 결과는 아래에서 확인 가능합니다.</p>
+            </div>
+        </div><br>
+        	<button type="button" class="btn btn-primary btn-icon icon-left">
+                <i class="fas fa-plane"></i> 맞힌 문제 확인 <span class="badge bg-transparent"></span></button>
+                
+                <!-- Basic Vertical form layout section start -->
+		<div class="row match-height">
+			<div class="col-md-10 col-12 cbtNoSelc">
+				<div class="card">
+					<div class="card-content">
+						<div class="card-body" >
+								<form class="form form-vertical">
+									<div class="form-body" th:each="o: ${ListO}">
+										<div class="row">
+											<div class="col-12">
+												<div class="form-group" >
+													<img alt="" src="images/O.png" style="position:absolute; z-index:2;width: 55px;">
+													&nbsp;&nbsp;<h4>문제</h4><br>
+													<h5><span th:text="${o.ques}"></span></h5>
+													<div th:if="${o.ex1} != null">
+													<label>1. <span th:text="${o.ex1}"></span></label><br>
+													<label>2. <span th:text="${o.ex2}"></span></label><br>
+													<label>3. <span th:text="${o.ex3}"></span></label><br>
+													<label>4. <span th:text="${o.ex4}"></span></label><br>
+													</div>
+													
+													<div class='alert alert-light-primary color-primary'>
+								      					 <a>[ 정답 ] : <span th:text="${o.cnsr}"></span></a><br><br>&nbsp;
+								     					 <a>[ 풀이 ]<br><span th:text="${o.explna}"></span></a>
+								     				</div> 
+												</div>
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div><!--<div class="card-content"끝-->
+					</div>
+				</div>
+			</div>
+            <button type="button" class="btn btn-danger btn-icon icon-left">
+                <i class="fas fa-plane"></i> 틀린 문제 확인 <span class="badge bg-transparent"></span>
+            </button><br>&nbsp;&nbsp;&nbsp; <a href="answerNoteMain.do" > > 오답노트 바로가기</a>
+       <!-- Basic Vertical form layout section start -->
+		<div class="row match-height">
+			<div class="col-md-10 col-12 cbtNoSelc">
+				<div class="card">
+					<div class="card-content">
+						<!-- gtpCd에 따른 처리 -->
+						<div class="card-body" >
+								<form class="form form-vertical">
+									<div class="form-body" th:each="x: ${ListX}">
+										<div class="row">
+											<div class="col-12">
+												<div class="form-group">
+												    <img alt="" src="images/X.png" style="position:absolute; z-index:2;width: 55px">
+												    &nbsp;&nbsp;<h4>문제<br></h4>
+													<h5><span th:text="${x.ques}"></span></h5>
+													<div th:if="${x.ex1} != null">
+													<label>1. <span th:text="${x.ex1}"></span></label><br>
+													<label>2. <span th:text="${x.ex2}"></span></label><br>
+													<label>3. <span th:text="${x.ex3}"></span></label><br>
+													<label>4. <span th:text="${x.ex4}"></span></label><br>
+													</div>
+													<div class='alert alert-light-primary color-primary'>
+								      					 <a>[ 정답 ] : <span th:text="${x.cnsr}"></span></a><br><br>&nbsp;
+								     					 <a>[ 풀이 ]<br><span th:text="${x.explna}"></span></a>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+							<!-- gtpCd=='1'끝 -->
+						</div><!--<div class="card-content"끝-->
+					</div>
+				</div>
+			</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Responsive tables end -->
+
+
+</body>
+</html>
