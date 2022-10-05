@@ -92,4 +92,16 @@ public class ClassServiceImpl implements ClassService {
 		return map.classChk(vo);
 	}
 
+	@Override
+	public ClassAttendVO classAttendSelect(ClassAttendVO vo) {
+		// 수업 주차랑 출석횟수 비교
+		return map.classAttendSelect(vo);
+	}
+
+	@Override
+	public int classAttendUpdate(ClassAttendVO vo) {
+		// 수강완료 여부
+		return map.classAttendUpdate(vo);
+	}
+
 }

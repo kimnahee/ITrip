@@ -11,4 +11,6 @@ public class ClassAttendVO {
 	private int attendCnt; // 유저 출석 횟수
 	private int complete; // 수료여부 (수업횟수 = 출석횟수)
 	
+	private int classCnt; // 클래스 주차
+	
 }

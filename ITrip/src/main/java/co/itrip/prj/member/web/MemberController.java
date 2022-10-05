@@ -60,11 +60,7 @@ public class MemberController { //Principal
 	
 	// 마이페이지
 	@GetMapping("/myPage")
-	public String myPage(Model model) {
-//		System.out.println(request.getParameter("memberId"));
-//	    vo.setMemberId(request.getParameter("memberId"));
-//		model.addAttribute("count", fService.followCount());
-//		model.addAttribute("guides", fService.followSelectList(vo));
+	public String myPage() {
 		return "member/mypage";
 	}
 	
@@ -85,7 +81,7 @@ public class MemberController { //Principal
 		return "member/mconsult";
 	}
 	
-	// 가이드 신청폼
+	// 가이드 신청 요청
 	@GetMapping("/gApply")
 	public String gApply(Model model, MemberVO vo, GuideVO gvo, Principal principal) {
 		// 가이드 신청폼에 member테이블 id,name 가져옴
@@ -109,10 +105,31 @@ public class MemberController { //Principal
 	@PostMapping("/mcReview")
 	public String mcReview(ReviewVO vo, Model model, Principal principal) {
 		// 클래스 리뷰폼에 가이드 아이디, 클래스 번호 가져감
-		model.addAttribute("guideId", vo.getGuideId());
-		model.addAttribute("no", vo.getNo());
 		return "member/classReview";
 	}
+
+	// 마이페이지 내가 쓴 글(스터디게시판)
+	@GetMapping("/myWriter")
+	public String myWriter(CommunityVO vo,CSBoardVO csvo, Model model, Principal principal,
+			@RequestParam(required = false, defaultValue = "1") int pageNum,
+			@RequestParam(required = false, defaultValue = "5") int pageSize) {
+		
+		PageHelper.startPage(pageNum, pageSize);
+		
+		vo.setCtgry("''");
+		vo.setMemberId(principal.getName());
+		
+		csvo.setMemberId(principal.getName());
+		csvo.setCtgry("QNA");
+		
+		model.addAttribute("pageOutfo", PageInfo.of(csService.findAll(csvo)));
+		model.addAttribute("pageInfo", PageInfo.of(comService.findAll(vo)));
+		
+		return "member/mywriter";
+	}
+	
+	///////////////////////////////////////////////////////////////////////////////////////////////
+	
 	
 	// 상담 리뷰
 	@GetMapping("/conReview")
@@ -121,22 +138,6 @@ public class MemberController { //Principal
 	}
 	
 	
-
-	// 마이페이지 내가 쓴 글(스터디게시판)
-		@GetMapping("/myWriter")
-		public String myWriter(CommunityVO vo,CSBoardVO csvo, Model model, Principal principal,
-				@RequestParam(required = false, defaultValue = "1") int pageNum,
-				@RequestParam(required = false, defaultValue = "5") int pageSize) {
-			PageHelper.startPage(pageNum, pageSize);
-			vo.setCtgry("''");
-			vo.setMemberId(principal.getName());
-			csvo.setMemberId(principal.getName());
-			csvo.setCtgry("QNA");
-			model.addAttribute("pageOutfo", PageInfo.of(csService.findAll(csvo)));
-			model.addAttribute("pageInfo", PageInfo.of(comService.findAll(vo)));
-			return "member/mywriter";
-		}
-		
 
 	// 유저 회원 정보 수정페이지
 	@GetMapping("/mrecive.do")

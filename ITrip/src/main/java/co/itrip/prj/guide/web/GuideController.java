@@ -8,6 +8,7 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -49,22 +50,25 @@ public class GuideController {
 	@Autowired
 	private ConsultService conservice; // 컨설트 서비스
 	
+	@Value("${file.dir}")
+	private String fileDir; // 파일 저장할 디폴트 경로 C:/Temp
+	
 
 	
 	int r = 0;
 	
-	// 가이드 insert & 파일처리
+	//소정 가이드 insert & 파일처리
 	@PostMapping("/guideInsert.do")
 	public String guideInsert(GuideVO vo, Model model, MultipartFile file) throws IllegalStateException, IOException {
 		
-		if(!file.getOriginalFilename().isEmpty()) {
-			String projectpath = System.getProperty("user.dir")+"/src/main/resources/static/files"; // user.dir은 프로젝트 경로를 담아주게 된다. 
-			UUID uuid = UUID.randomUUID(); // 랜덤으로 이름생성
-			String filename = uuid+"_"+file.getOriginalFilename(); // 파일이름은 UUID에 있는 랜덤값 + 원래 파일이름으로 설정된다.
-			File saveFile = new File(projectpath,filename);
-			file.transferTo(saveFile);
-			vo.setAttach(file.getOriginalFilename());
-			vo.setAttachDir("/files/"+filename);
+		String oFileName = file.getOriginalFilename();
+		if (!oFileName.isEmpty()) {
+			String sFileName = UUID.randomUUID().toString() + oFileName.substring(oFileName.lastIndexOf(".")); // 마지막.뒤에값
+																												// 가져오기
+			String path = fileDir + "/guide/" + sFileName;
+			file.transferTo(new File(path));
+			vo.setAttach(oFileName);
+			vo.setAttachDir(sFileName);
 			
 		}
 		guService.guideInsert(vo);
@@ -73,12 +77,11 @@ public class GuideController {
 	}
 	
 	
-	// 가이드 클래스 신청 폼
+	//소정 가이드 클래스 신청 폼
 	@GetMapping("/startClass.do")
-	public String startClass(Model model, MemberVO vo, HttpServletRequest request) {
+	public String startClass(Model model, MemberVO vo, HttpServletRequest request, Principal principal) {
 		// guideId 폼에 뿌려주기
-		System.out.println(request.getParameter("memberId"));
-		vo.setMemberId(request.getParameter("memberId"));
+		vo.setMemberId(principal.getName());
 		model.addAttribute("members", mService.memberSelect(vo));
 		
 		// job카테고리 뿌려주기

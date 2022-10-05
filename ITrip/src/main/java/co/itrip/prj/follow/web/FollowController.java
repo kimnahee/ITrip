@@ -21,21 +21,17 @@ public class FollowController {
 	@Autowired
 	private FollowService fService;
 	
+		// 소정 - 마이페이지 팔로우 리스트 
 		@GetMapping("/followList.do")
 		@ResponseBody
 		public List<FollowVO> followList(FollowVO vo, HttpServletRequest request, Model model) {
-			System.out.println(request.getParameter("memberId"));
-			vo.setMemberId(request.getParameter("memberId"));
 			return fService.followSelectList(vo);
 		}
 		
+		// 소정 - 마이페이지 언팔로우
 		@GetMapping("/followDelete.do")
 		@ResponseBody
 		public int followDelete(FollowVO vo, HttpServletRequest request) {
-			System.out.println(request.getParameter("memberId"));
-			System.out.println(request.getParameter("deleteF"));
-			vo.setMemberId(request.getParameter("memberId"));
-			vo.setGuideId(request.getParameter("deleteF"));
 			return fService.followDelete(vo);
 		}
 		

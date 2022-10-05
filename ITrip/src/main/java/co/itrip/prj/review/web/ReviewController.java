@@ -33,20 +33,18 @@ public class ReviewController {
 		return "redirect:myPage"; 
 	}
 	
-	// class review insert
+	// 소정 class review insert
 	@PostMapping("/reviewClassInsert.do")
 	public String reviewClassInsert(ReviewVO vo) {
 		reServicce.classReviewInsert(vo);
 		return "redirect:mClass";
 	}
 	
+	// 소정 리뷰 이미 작성했는지 조회
 	@GetMapping("/classReviewSelect.do")
 	@ResponseBody
 	public ReviewVO classReviewSelect(ReviewVO vo, HttpServletRequest request, Principal principal) {
-		var no = request.getParameter("no");
-		System.out.println("출력요망" +no);
 		vo.setMemberId(principal.getName());
-		vo.setNo(Integer.parseInt(request.getParameter("no")));
 		return reServicce.classReviewSelect(vo);
 		
 	}

@@ -26,7 +26,7 @@ public class ConsultVO {
 	private Date beginDate; // 시작일자
 	private Date endDate; // 종료일자
 	private String career; // 가이드 경력
-	private String dutyName; // 가이드 직무 //consultMapper에서 조인구문으로 가져와서 목록에 뿌려주기
+	private String dutyName; // 가이드 직무 //consultMapper에서 조인구문으로 가져와서 목록에 뿌려주기 cdName
 	
 	private List<ConsultDtVO> consultDt; // ConsultDtVO
 	private String week; // 요일
@@ -35,6 +35,10 @@ public class ConsultVO {
 	private int price; //상담결제금액
 	
 	private String memberId;  
+	
+	private String key; // 검색할 키워드
+	private String val; // 검색할 값
+
 	
 	
 	

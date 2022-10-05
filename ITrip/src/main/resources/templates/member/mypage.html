@@ -269,7 +269,7 @@
         	   $.ajax({
         		   url : "/followDelete.do",
         		   type : "get",
-        		   data : {'deleteF' : deleteF, 'memberId' : memberId},
+        		   data : {'guideId' : deleteF, 'memberId' : memberId},
         		   beforeSend : function(xhr) {
         			   xhr.setRequestHeader("AJAX", true);
 					   xhr.setRequestHeader("X-CSRF-TOKEN", csrfToken);

@@ -3,9 +3,21 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layout/layout}">
 <head>
+<script src="js/jquery-3.6.0.min.js"></script>
 <meta charset="UTF-8">
 <meta name="_csrf" th:content="${_csrf.token}"/>
 <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+<style type="text/css">
+	#searchTab{
+		width: 900px;
+		margin-left: 200px;
+	}
+	
+	
+	.form-select {
+   		 background-image: none;
+    }
+</style>
 </head>
 <body>
 	<div layout:fragment="content">
@@ -14,15 +26,41 @@
 			<div class="col-12">
 				<div class="card">
 					<div class="card-header">
-						<h4 class="card-title">회원정보</h4>
-					</div>
-					<div class="card-content">
-						<div class="card-body">
-							<p>Consult를 신청한 회원입니다. 권한을 수정해주세요.</p>
+						<h4 class="card-title">클래스 신청리스트</h4>
+						<p>Consult를 신청한 회원입니다. 권한을 수정해주세요.</p><br>
+						
+						<!-- 검색폼 시작 -->
+						<div id="searchTab">
+							<form class="form form-horizontal">
+								<div class="form-body">
+									<div class="row">
+										<div class="col-2">
+										<select class="form-select col-2" id="key" name="key">
+											<option value=""> ---검색---</option>
+											<option value="title">상담제목</option>
+											<option value="guideId">가이드아이디</option>
+											<option value="dutyName">가이드 직무</option>
+										</select>
+										</div>
+										<div class="col">
+											<input class="form-select col-4" id="val" name="val">
+										</div>
+										<div class="col-2 d-flex justify-content-end">
+											<button type="button" class="btn btn-primary mr-1 mb-1" onclick="getSearchList()">검색</button>
+										</div>
+									</div>
+								</div>
+
+							</form>
 						</div>
-						<!-- table head dark -->
+						<!-- 검색폼 끝 -->
+						
+					</div>
+						<div class="card-body">
+													
+						<!-- 신청 리스트 시작 -->
 						<div class="table-responsive">
-							<table class="table table-light mb-0">
+							<table id="table" class="table table-light mb-0" >
 								<thead>
 									<tr>
 										<th>상담제목</th>
@@ -34,11 +72,11 @@
 										<th>승인수정</th>
 									</tr>
 								</thead>
-								<tbody th:each="consultList : ${pageInfo.list}">
+								<tbody id="tbody" th:each="consultList : ${pageInfo.list}">
 									<tr>
 										<td class="text-bold-500" th:text="${consultList.title}"></td>
 										<td th:text="${consultList.guideId}"></td>
-										<td class="text-bold-500" th:text="${consultList.cdName}"></td>
+										<td class="text-bold-500" th:text="${consultList.dutyName}"></td>
 										<td class="text-bold-500" th:text="${consultList.career}"></td>
 										<td class="text-bold-500" th:text="${consultList.dt}"></td>
 										<td class="text-bold-500" th:text="${consultList.stateCd}"></td>
@@ -50,7 +88,8 @@
 								</tbody>
 							</table>
 						</div>
-					</div>
+				<!-- 신청 리스트 끝 -->
+				</div>
 				</div>
 			</div>
 		</div>
@@ -86,6 +125,55 @@
 			}
 			
 			let token = $("meta[name='_csrf']").attr("content");
+			
+			// ajax로 검색 구현하기
+			function getSearchList() {
+			let key = $("#key").val();
+			let val = $("#val").val();
+			
+			 $.ajax({
+				url:'/consultSearch.do',
+				type:'GET',
+				data:{'key':key, 'val':val},
+				beforeSend:function(xhr) {
+					xhr.setRequestHeader("AJAX", true);
+				    xhr.setRequestHeader("X-CSRF-TOKEN", token);
+				},
+				success:function result(res) {
+					console.log(res.length);
+					if(res.length >= 1) {
+						$("tbody").empty();
+						 res.forEach(element=>{
+							$("tbody").append(htmlView(element)); 
+						})
+						
+					}else {
+						alert('검색결과가 없습니다.');
+					}
+				}, 
+				error:function err(xhr,err) {
+					alert('검색에러'); 
+				}
+			}) 
+				
+			}
+			
+			function htmlView(data) {
+			//	console.log(data);
+				 let tr = `<tr>
+					<td class="text-bold-500" >${data.title}</td>
+					<td >${data.guideId}</td>
+					<td class="text-bold-500" >${data.dutyName}</td>
+					<td class="text-bold-500" >${data.career}</td>
+					<td class="text-bold-500" >${data.dt}</td>
+					<td class="text-bold-500" >${data.stateCd}</td>
+					<td th:id="${data.consultNo}">
+					<input type="button" th:onclick="updateConsult(this.getAttribute('id'))" 
+					class="btn btn-primary btn-l" value="수정" th:name="${data.consultNo}" th:id="${data.consultNo}">
+					</td>
+				</tr>`;
+				return tr; 
+			}
 			
 			function updateConsult(cNo) {
 				// cNo : consultNo 
