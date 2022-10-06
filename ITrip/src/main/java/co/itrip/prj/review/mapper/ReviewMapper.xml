@@ -51,4 +51,9 @@
 		and pay.no = #{no}
 	</select>
 	
+	<delete id="deleteReview">
+		 delete review 
+   		 where review_no = #{reviewNo}
+	</delete>
+	
 </mapper>

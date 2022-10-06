@@ -37,6 +37,12 @@ public class ReviewServiceImpl implements ReviewService {
 		return map.reviewList(vo);
 	}
 
+	@Override
+	public int deleteReview(ReviewVO vo) {
+		// 소정 - 리뷰 삭제
+		return map.deleteReview(vo);
+	}
+
 
 
 }

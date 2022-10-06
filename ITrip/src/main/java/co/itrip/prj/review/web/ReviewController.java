@@ -41,6 +41,13 @@ public class ReviewController {
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
+	// 소정 - 리뷰 삭제
+	@PostMapping("/deleteReview.do")
+	@ResponseBody
+	public int deleteReview(ReviewVO vo) {
+		return reServicce.deleteReview(vo);
+	}
+	
 	// 소정 class review insert
 	@PostMapping("/reviewClassInsert.do")
 	public String reviewClassInsert(ReviewVO vo) {

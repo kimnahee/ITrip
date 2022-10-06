@@ -5,6 +5,8 @@
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="UTF-8">
+<meta name="_csrf" th:content="${_csrf.token}"/>
+<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
 <title>상담 상세보기</title>
 <script src="js/jquery-3.6.0.min.js"></script>
 <style type="text/css">
@@ -86,7 +88,7 @@
 	                              <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
 	                        </svg> <span >리뷰보기</span>
                         </button ></div>
-			
+							<input type="hidden" id="memberId" class="form-control" name="memberId" th:value=${#authentication.principal.member.memberId} readonly="readonly">
 							
 						</div>
 					</div>
@@ -114,6 +116,7 @@
                 <thead id="contentHead">
                 	</thead>
                 <tbody id="contentBody">
+                
                 </tbody>	
                </table>
             </div>
@@ -240,6 +243,7 @@
 		$("#reviewForm").on("click", e=> {
 			let guideId = $('#guideId').html();
 				console.log(guideId)
+		    let memberId = $('#memberId').val();	
 				
 			$.ajax({
 				url:"/reviewList.do",
@@ -263,14 +267,21 @@
 							let makeTr = `<tr><th class='col-md-4 mb-3'>`+star+`</th>
 							            	<th class='col-md-3'>구분 : ${element.ctgry}</th>
 							            	<th class='col-md-4'>닉네임 : ${element.nick}</th>
-							            	<th class='col-md-1'>X</th>
-					        			 </tr>
-						        			 <tr class="trstyle">
-					               			 	<td>${element.content}</td>
-					               			 </tr>`
+							            	<th class='col-md-1'>`;
+							            	
+							            	if(memberId == element.memberId){
+							            		makeTr +=`<input type="button" onclick="deleteReview(this.getAttribute('id'))"
+							    			       class="btn btn-primary btn-l delBtn" value="X" id="${element.reviewNo}">`	
+							            	}
+							            	
+							            	makeTr += `</th></tr>
+							            	<tr class="trstyle">
+					               			<td>${element.content}</td>
+					               			</tr>`;
+							            	
 						$("#contentBody").append(makeTr);
 					    cnt++; //console.log(cnt)
-					
+					    
 						})
 						
 				    const avg = (sum/cnt).toFixed(1); // 소숫점 1자리까지 표시
@@ -278,6 +289,79 @@
 				}
 			})
 		})
+		
+		// 소정 - 리뷰삭제기능
+		function deleteReview(rNo) {
+			console.log(rNo);
+			
+			let token = $("meta[name='_csrf']").attr("content");
+			let header = $("meta[name='_csrf_header']").attr("content");
+			
+			$.ajax({
+				url:'/deleteReview.do',
+				type:'post',
+				data:{'reviewNo':rNo},
+				beforeSend:function(xhr) {
+					xhr.setRequestHeader("AJAX", true);
+				    xhr.setRequestHeader("X-CSRF-TOKEN", token);
+				},
+				success:function result(res){
+					alert('삭제완료');
+				
+					$("#contentBody").empty();
+					
+					let guideId = $('#guideId').html();
+					let memberId = $('#memberId').val();
+					
+				$.ajax({
+					url:"/reviewList.do",
+					data : {'guideId' : guideId},
+					success : function(data){
+						
+						let sum = 0;
+						let cnt =0;
+						let starIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="gold" class="bi bi-star-fill" viewBox="0 0 16 16">
+			                        	<path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+			                       		 </svg>`
+						data.forEach(element =>{
+							sum += element.star; 
+						
+						let star ='';
+						
+							for(let i = 0; i< element.star; i++){ 
+									star += starIcon; 
+								}
+								let makeTr = `<tr><th class='col-md-4 mb-3'>`+star+`</th>
+				            	<th class='col-md-3'>구분 : ${element.ctgry}</th>
+				            	<th class='col-md-4'>닉네임 : ${element.nick}</th>
+				            	<th class='col-md-1'>`;
+				            	
+				            	if(memberId == element.memberId){
+				            		makeTr +=`<input type="button" onclick="deleteReview(this.getAttribute('id'))"
+				    			       class="btn btn-primary btn-l delBtn" value="X" id="${element.reviewNo}">`	
+				            	}
+				            	
+				            	makeTr += `</th></tr>
+				            	<tr class="trstyle">
+		               			<td>${element.content}</td>
+		               			</tr>`;
+							$("#contentBody").append(makeTr);
+						    cnt++; 
+						
+							})
+							
+					    const avg = (sum/cnt).toFixed(1); 
+	                    $("#score").html(avg);
+					}
+				})
+					
+					
+				},
+				error:function err(xhr,err) {
+					alert('삭제에러');
+				}
+			})
+		}
 		
 		
 /****************김나희****************************************************************/	
