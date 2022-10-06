@@ -30,8 +30,10 @@
 	
 	<!-- 상담메인페이지 페이징 처리, 카테고리 검색기능  [박은지]-->
 	<select id="findAll" resultType="co.itrip.prj.consult.service.ConsultVO" parameterType="co.itrip.prj.consult.service.ConsultVO">
-	   	 SELECT C.CONSULT_NO
-		            ,C.TITLE
+	   	  SELECT C.CONSULT_NO,
+		            CASE WHEN LENGTH(c.title) > 10 THEN SUBSTR(c.title,0,10)||'..'
+		                ELSE SUBSTR(c.title,0,10)
+		          		END AS title
 		            ,C.CONTENT
 		            ,C.DT
 		            ,C.STATE_CD
@@ -43,7 +45,7 @@
 		            ,FUN_CODENAME('D', G.DUTY) AS DUTY_NAME
 		            ,FUN_CODENAME('R', G.CAREER) AS CAREER
 		            ,FUN_CODENAME('J', C.JOB_CD) AS JOB_NAME
-	      FROM CONSULT C, GUIDE G
+		     FROM CONSULT C, GUIDE G        
 	      <where>	C.GUIDE_ID=G.GUIDE_ID  
 		       <if test="jobCd != null">
 				AND JOB_CD = #{jobCd}
