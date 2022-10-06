@@ -39,13 +39,19 @@
 													</h3>
 													<span id="QUES" th:text="${cbt.ques}">문제</span>
 													<input type="hidden" id="cbtNo0" name="cbtNo0" th:value="${cbt.cbtNo}">
-													<input type="text" id="PreGtpCd" name="PreGtpCd" th:value="${cbtGuideVO.gtpCd}">
-													<input type="text" id="PreLangCd" name="PreLangCd" th:value="${cbtGuideVO.langCd}">
+													<input type="hidden" id="PreGtpCd" name="PreGtpCd" th:value="${cbtGuideVO.gtpCd}">
+													<input type="hidden" id="PreLangCd" name="PreLangCd" th:value="${cbtGuideVO.langCd}">
 													<a>&nbsp;&nbsp;[ 출제자 : <span th:text="${cbt.memberId}"></span> ]
 													</a>
 
 												</div>
 											</div>
+											<!-- 이미지가 있으면 이미지 출력-->
+											<div id="atch" class="form-group" th:if="${not #strings.isEmpty(cbt.attach)}">
+												<div class="form-file">
+												    <img th:src="@{/download(fileName=${'/cbtGuide/'+cbt.attachDir})}" style="margin-bottom: 10px;">
+												</div>
+											</div> <!-- 이미지 출력 끝 -->
 											<div class="col-12" id="KwrdArea">
 												<textarea class="form-control inputMcKwrd" id="inputMcKwrd" name="inputMcKwrd" rows="3" placeholder="문제에 대한 답을 서술하세요."></textarea>
 											</div>
