@@ -25,6 +25,7 @@ import co.itrip.prj.cs.service.CSBoardService;
 import co.itrip.prj.cs.service.CSBoardVO;
 import co.itrip.prj.guide.service.GuideService;
 import co.itrip.prj.guide.service.GuideVO;
+import co.itrip.prj.iclass.service.ClassAttendVO;
 import co.itrip.prj.iclass.service.ClassService;
 import co.itrip.prj.iclass.service.ClassVO;
 import co.itrip.prj.member.service.MemberService;
@@ -67,9 +68,11 @@ public class MemberController { //Principal
 		
 	// 마이페이지-클래스
 	@GetMapping("/mClass")
-	public String mClass(ClassVO vo, Model model, Principal principal) {
+	public String mClass(ClassVO vo, ClassAttendVO avo, Model model, Principal principal) {
 		vo.setMemberId(principal.getName());
+		avo.setMemberId(principal.getName());
 		model.addAttribute("classList", cService.myClassList(vo));
+		model.addAttribute("attend", cService.myClassAttendList(avo));
 		return "member/mclass";
 	}
 	
@@ -95,7 +98,8 @@ public class MemberController { //Principal
 			model.addAttribute("dutyCdList", cdService.dutyCdList());
 			return "member/gapply";
 		} else {
-			model.addAttribute("guides", mService.memberSelect(vo));
+			model.addAttribute("members", mService.memberSelect(vo));
+			model.addAttribute("guides", guiService.guideSelect(gvo));
 			return "member/error";
 		}
 		

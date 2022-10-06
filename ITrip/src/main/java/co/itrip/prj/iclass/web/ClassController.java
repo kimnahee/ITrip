@@ -158,6 +158,26 @@ public class ClassController {
 
 	// 소정 //////////////////////////////////////////////////
 
+	// 출석횟수랑 수업회차 비교
+	@PostMapping("/classAttendSelect.do")
+	@ResponseBody
+	public ClassAttendVO attendChk(ClassAttendVO vo, HttpServletRequest request) {
+		int classNo = Integer.parseInt(request.getParameter("classNo"));
+		vo.setMemberId(request.getParameter("memberId"));
+		vo.setClassNo(classNo);
+		return cService.classAttendSelect(vo);
+	}
+	
+	// 수료여부 변경
+	@PostMapping("/classAttendUpdate.do")
+	@ResponseBody
+	public int classAttendUpdate(ClassAttendVO vo, HttpServletRequest request ) {
+		int classNo = Integer.parseInt(request.getParameter("classNo"));
+		vo.setMemberId(request.getParameter("memberId"));
+		vo.setClassNo(classNo);
+		return cService.classAttendUpdate(vo);
+	}
+	
 	// 이미 신청한 클래스 리스트
 	@GetMapping("/alreadyClass")
 	public String alreadyClass(Principal principal, Model model, ClassVO vo) {
