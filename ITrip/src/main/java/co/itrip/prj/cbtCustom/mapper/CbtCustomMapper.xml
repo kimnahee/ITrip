@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="co.itrip.prj.cbtCustom.mapper.CbtCustomMapper">
+
+	<!-- 나만의 CBT 문제,시간,카테고리선택 -->
 	<select id="cbtCustomMakeSelect" resultType="co.itrip.prj.cbtCustom.service.CbtCustomVO" 
 		parameterType="co.itrip.prj.cbtCustom.service.CbtCustomVO">
 <!--  		SELECT * FROM CBT_GUIDE 
@@ -31,6 +33,7 @@
  			<![CDATA[AND ROWNUM <= #{pcs}]]>
 	</select>
 	
+	<!-- 나만의 CBT 풀기 -->
 	<insert id="cbtCustomHderInsert">
 		<selectKey keyProperty="mcSn" order="BEFORE" resultType="int">
 			SELECT CASE WHEN MAX(MC_SN) IS NULL THEN 1 
@@ -40,25 +43,30 @@
 		INSERT INTO CBT_CUSTOM_HDER VALUES(#{mcSn},#{mcNo},#{cbtNo},#{cnsr},sysdate,#{memberId},0,#{langCd})
 	</insert>
 	
+	<!-- 나만의 CBT 문제지번호 최대값가져오기 -->
 	<select id="selectMcNo" resultType="int">
 		select nvl(max(mc_no),0)+1 from cbt_custom_hder
 	</select>
 	
+	<!-- 정답비교 -->
 	<update id="cbtCustomHderChkUpdate">
 		 update cbt_custom_hder set CHK = 
 		    case when( SELECT cnsr FROM cbt_guide WHERE cbt_no = cbt_custom_hder.cbt_no )
 		        =(select cnsr from cbt_custom_hder where mc_sn= #{mcSn}) then 1 else 0 end  where mc_no= #{mcNo}
 	</update>
 	
+	<!-- 나만의 CBT 문제지리스트 -->
 	<select id="cbtCustomHderList" parameterType="co.itrip.prj.cbtCustom.service.CbtCustomHderVO" 
 		resultType="co.itrip.prj.cbtCustom.service.CbtCustomHderVO">
 	    SELECT * FROM cbt_custom_hder WHERE MC_NO = ${mcNo}
 	</select>
 	
+	<!-- 맞은문제 -->
 	<select id="cbtCustomListO" parameterType="co.itrip.prj.cbtGuide.service.CbtGuideVO" 
 		resultType="co.itrip.prj.cbtGuide.service.CbtGuideVO">
 		 SELECT * FROM CBT_GUIDE WHERE CBT_NO IN ((select cbt_no from cbt_custom_hder where mc_no = #{mcNo} and chk = 1))
 	</select>
+	<!-- 틀린문제 -->
 	<select id="cbtCustomListX" parameterType="co.itrip.prj.cbtGuide.service.CbtGuideVO" 
 		resultType="co.itrip.prj.cbtGuide.service.CbtGuideVO">
 		 SELECT * FROM CBT_GUIDE WHERE CBT_NO IN ((select cbt_no from cbt_custom_hder where mc_no = #{mcNo} and chk = 0))

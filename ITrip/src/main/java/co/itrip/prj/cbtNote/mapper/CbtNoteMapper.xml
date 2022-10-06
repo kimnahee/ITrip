@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="co.itrip.prj.cbtNote.mapper.CbtNoteMapper">
 
-	<!-- 내가푼문제언어카테고리 [경아] -->
+	<!-- guideCBT 내가푼문제언어카테고리  -->
 	<select id="myWrongAnswerLangCd" parameterType="co.itrip.prj.cbtGuide.service.MyCbtHderVO" resultType="co.itrip.prj.cbtGuide.service.MyCbtHderVO">
 		select distinct m.lang_Cd,cm.cd_name,m.mc_no from mycbt_hder m,cmmncd cm 
 		    where cm.cd_no=m.lang_cd  and cm.cd_ini='L' and member_id = #{memberId} and chk1 = 0 
@@ -17,7 +17,7 @@
 			order by mc_no 
 	</select>
 
-	<!-- 내가푼문제중에 틀린애들cbtno 중복없이가져오기 [경아] -->
+	<!-- guideCBT 내가푼문제중에 틀린애들 가져오기 -->
 	<select id="myWrongAnswerNote" parameterType="co.itrip.prj.cbtGuide.service.CbtGuideVO" resultType="co.itrip.prj.cbtGuide.service.CbtGuideVO">
 		SELECT * FROM CBT_GUIDE WHERE CBT_NO IN ((select cbt_no1 from mycbt_hder where mc_no = #{mcNo} and chk1 = 0),
 			 (select cbt_no2 from mycbt_hder where mc_no = #{mcNo} and chk2 = 0),
@@ -26,8 +26,9 @@
 			 (select cbt_no5 from mycbt_hder where mc_no = #{mcNo} and chk5 = 0))
 	</select>
 	
-	<!-- 내가찍은정답가져오려고.. [경아] -->
-	<select id="myWrongAnswerCnsr" parameterType="co.itrip.prj.cbtGuide.service.MyCbtHderVO" resultType="co.itrip.prj.cbtGuide.service.MyCbtHderVO">
+	<!-- guideCBT 내가찍은오답  -->
+	<select id="myWrongAnswerCnsr" parameterType="co.itrip.prj.cbtGuide.service.MyCbtHderVO" 
+			resultType="co.itrip.prj.cbtGuide.service.MyCbtHderVO">
 		select m.* from mycbt_hder m, cmmncd cm 
 		    where cm.cd_no=m.lang_cd and m.mc_no=#{mcNo} and cm.cd_ini='L' and member_id = #{memberId} and chk1 = 0 
 		    or 
@@ -38,6 +39,28 @@
 		    cm.cd_no=m.lang_cd and m.mc_no=#{mcNo} and cm.cd_ini='L' and member_id = #{memberId} and chk4 = 0
 		    or
 		    cm.cd_no=m.lang_cd and m.mc_no=#{mcNo} and cm.cd_ini='L' and member_id = #{memberId} and chk5 = 0
-	
 	</select>
-	<!-- distinct cm.cd_name, --></mapper>
+	<!-- distinct cm.cd_name, -->
+	
+	<!-- customCBT 내가푼문제언어카테고리  -->
+	<select id="customWrongAnswerLangCd" resultType="co.itrip.prj.cbtCustom.service.CbtCustomHderVO"
+			parameterType="co.itrip.prj.cbtCustom.service.CbtCustomHderVO">
+		select distinct m.lang_Cd,cm.cd_name,m.mc_no from cbt_custom_hder m,cmmncd cm 
+			    where cm.cd_no=m.lang_cd  and cm.cd_ini='L' and member_id = #{memberId} and chk = 0 
+				order by mc_no
+	</select>
+	
+	<!-- custom cbt 내가찍은오답 -->
+	<select id="cusWrongAnswerCnsr" parameterType="co.itrip.prj.cbtCustom.service.CbtCustomHderVO" 
+			resultType="co.itrip.prj.cbtCustom.service.CbtCustomHderVO">
+		select m.* from cbt_custom_hder m, cmmncd cm 
+		    where cm.cd_no=m.lang_cd and m.mc_no = #{mcNo} and cm.cd_ini='L' and member_id = #{memberId} and chk = 0
+	</select>
+	
+	<!-- custom cbt 내가찍은오답 -->
+	<select id="test" parameterType="co.itrip.prj.cbtCustom.service.CbtCustomHderVO" 
+			resultType="co.itrip.prj.cbtCustom.service.CbtCustomHderVO">
+		select m.* from cbt_custom_hder m, cmmncd cm 
+		    where cm.cd_no=m.lang_cd and m.mc_no = #{list.mcNo} and cm.cd_ini='L' and member_id = #{list.memberId} and chk = 0
+	</select>
+	</mapper>

@@ -81,4 +81,10 @@ public class ConsultServiceImpl implements ConsultService{
 		return map.consultChat(vo);
 	}
 
+	@Override
+	public ConsultDtVO ajaxConsultPrice(ConsultDtVO vo) {
+		//상담가격 가져오기(ajax)
+		return map.ajaxConsultPrice(vo);
+	}
+
 }

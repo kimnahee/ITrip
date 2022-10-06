@@ -100,8 +100,19 @@ public class ClassServiceImpl implements ClassService {
 
 	@Override
 	public int classAttendUpdate(ClassAttendVO vo) {
-		// 수강완료 여부
+		// 수강완료로 업데이트
 		return map.classAttendUpdate(vo);
 	}
+
+	@Override
+	public List<ClassAttendVO> myClassAttendList(ClassAttendVO vo) {
+		// 내가 듣는 클래스출석 리스트
+		return map.myClassAttendList(vo);
+	}
+
+	
+	
+
+	
 
 }
