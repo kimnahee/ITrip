@@ -9,19 +9,18 @@
 th {
 	text-align: center;
 }
+
 </style>
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="/resources/demos/style.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script>
-	$(function() {
-		$('.datepicker').datepicker();
-	})
-</script>
 </head>
 <body>
 	<div layout:fragment="content">
+		<input type="hidden" th:name="${_csrf.parameterName}"
+			th:value="${_csrf.token}">
 		<div class="row">
 			<div class="col-12">
 				<div class="card">
@@ -33,31 +32,44 @@ th {
 							<table class="table table-bordered mb-0">
 								<tr>
 									<th style="display: none;">상담번호</th>
-									<td style="display: none;" th:text=${consult.consultNo}>1234</td>
-									<th>상담명</th>
-									<td colspan="5" th:text=${consult.title}>1234</td>
+									<td id="consultNo" style="display: none;"
+										th:text=${consult.consultNo}>1234</td>
+									<th class="table-primary">상담명</th>
+									<td colspan="6" id="consultTitle" th:text=${consult.title}>1234</td>
 								</tr>
 								<tr>
-									<th>등록일자</th>
+									<th class="table-primary">등록일자</th>
 									<td th:text=${consult.dt}>1234</td>
-									<th>가이드</th>
-									<td colspan="3" th:text=${consult.guideId}>1234</td>
+									<th class="table-primary">가이드</th>
+									<td colspan="4" th:text=${consult.guideId}>1234</td>
 								</tr>
 								<tr>
-									<th>상세내용</th>
-									<td colspan="5" th:text=${consult.content}>1234</td>
+									<th class="table-primary">상세내용</th>
+									<td colspan="6" th:text=${consult.content}>1234</td>
 								</tr>
 								<tr>
-									<th>신청 가능 날짜</th>
-									<td id="beginDate" th:text=${consult.beginDate}>1234</td>
-									<td id="endDate" th:text=${consult.endDate}>1234</td>
-									<td colspan="3"><input id="registerDate" type="text" class="datepicker"></td>
+									<th class="table-primary">신청 가능 날짜</th>
+									<td style="display: none;" id="beginDate"
+										th:text=${consult.beginDate}>1234</td>
+									<td style="display: none;" id="endDate"
+										th:text=${consult.endDate}>1234</td>
+									<td colspan="6"><input id="registerDate" type="text"
+										class="datepicker"></td>
+								</tr>
+								<tr id="price">
+
 								</tr>
 							</table>
 						</div>
+						<hr>
+						<div id="formArea">
+							
+						</div>
 					</div>
 				</div>
-				<script>
+				<script th:inline="javascript">
+				/*<![CDATA[*/
+					//데이트피커 default 옵션(한글처리)
 					$.datepicker.setDefaults({
 						dateFormat : 'yy-mm-dd',
 						prevText : '이전 달',
@@ -72,18 +84,120 @@ th {
 						showMonthAfterYear : true,
 						yearSuffix : '년'
 					});
-					
-					$(document).ready(function(){
-						let beginDate = $("#beginDate").html();
-						let endDate = $("#endDate").html();
-					})
-					
-					$("#registerDate").datepicker({
-						dateFormat: 'yy-mm-dd',
-						minDate: new Date(beginDate),
-						maxDate: new Date(endDate)
-					})
 
+					$(document).ready(function() {
+
+						let beginDate = $("#beginDate").html(); //상담 신청가능 날짜(시작) -처음날짜
+						let endDate = $("#endDate").html(); //상담 신청가능 날짜(끝) - 마지막날짜
+						let csrfHeaderName = "${_csrf.headerName}";
+						let csrfToken=$("input[name=_csrf]").val();
+						
+						// 날짜 제한/요일 제한(데이트피커 설정)
+						$("#registerDate").datepicker({
+							dateFormat: 'yy-mm-dd',
+							minDate : beginDate,
+							maxDate : endDate,
+							beforeShowDay : onlyMonday,
+							onSelect: function(dateText, inst) {
+						        //데이트피커 날짜 선택시
+								let date = $(this).val(); //선택한 날짜
+								let day = new Date(date).getDay(); //선택한 날짜의 요일(week)
+								let consultNo = $("#consultNo").html();
+								//가격 ajax로 가져와서 #price에 tr 추가하기 | hidden form 만들어서 신청하기 버튼 submit(값넘겨주고) | insert payform은 결제단계에서 처리
+						        //보내줘야 하는 값은 consult_no, week값
+						        $.ajax({ 
+								url : "/ajaxConsultPrice.do",
+								type : "post",
+								data : {"consultNo" : consultNo, "day" : day},
+								beforeSend: function(xhr){
+									xhr.setRequestHeader("AJAX", true);
+								    xhr.setRequestHeader("X-CSRF-TOKEN", csrfToken);
+								},
+								success : function(data){
+										$("#price").empty();
+										$("#formArea").empty();
+										$("#price").append(makeTr(data));
+										$("#formArea").append(makeFrm(data));
+									}
+								})
+						    }
+						})
+						
+						let week = [[${consultDT}]];
+						let length = [[${consultDT}]].length; //크기
+						
+						//요일 => 숫자 변환
+						for(let i=0; i<length; i++){
+							if(week[i].week == '일'){
+								week[i].week = 0;
+							} else if(week[i].week == '월'){
+								week[i].week = 1;
+							} else if(week[i].week == '화'){
+								week[i].week = 2;
+							} else if(week[i].week == '수'){
+								week[i].week = 3;
+							} else if(week[i].week == '목'){
+								week[i].week = 4;
+							} else if(week[i].week == '금'){
+								week[i].week = 5;
+							} else if(week[i].week == '토'){
+								week[i].week = 6;
+							}
+                  		}
+						
+						//동적 변수 생성(day0 ~ day6까지)
+                  		for(let i=0; i<length; i++){
+                  			eval("var day" + i + "=" + week[i].week);
+                  		}
+
+                  		//요일 제한
+    					function onlyMonday(date) {
+    						let day = date.getDay();
+    						if(length == 1){
+    							return [ (day == day0) , '' ];
+    						} else if(length == 2){
+    							return [ (day == day0 || day == day1) , '' ];
+    						} else if(length == 3){
+    							return [ (day == day0 || day == day1 || day == day2) , '' ];
+    						} else if(length == 4){
+    							return [ (day == day0 || day == day1 || day == day2 || day == day3) , '' ];
+    						} else if(length == 5){
+    							return [ (day == day0 || day == day1 || day == day2 || day == day3 || day == day4) , '' ];
+    						} else if(length == 6){
+    							return [ (day == day0 || day == day1 || day == day2 || day == day3 || day == day4 || day == day5) , '' ];
+    						} else if(length == 7){
+    							return [ (day == day0 || day == day1 || day == day2 || day == day3 || day == day4 || day == day5 || day == day6) , '' ];
+    						}
+    					};
+					})
+					
+					function makeTr(data){
+						let tr = `<th class="table-primary">가격</th>
+								  <td colspan="4">${data.price}</td>
+								  <th class="table-primary">시작시간</th>
+								  <td>${data.beginTime} ~ ${data.endTime}</td>
+								  `;
+						return tr;
+					}
+					
+					function makeFrm(data){
+						let consultTitle = $("#consultTitle").html();
+						let form = `<form id="frm" class="form form-horizontal">
+									<div class="form-group">
+										<div>
+											<input type="hidden" class="form-control" value=${data.consultNo}>
+											<input type="hidden" class="form-control" value=` + consultTitle + `>
+											<input type="hidden" class="form-control" value=${data.price}>
+											<input type="hidden" class="form-control" value="CONSULT">
+											<input type="submit" class="btn btn-primary btn-sm mb-0" value="신청하기" style="margin-top: 10px; float: right;">
+										</div>
+										</div>
+									</form>`;
+						return form;
+					}
+					
+					
+					/*]]>*/
 				</script>
 
 			</div>

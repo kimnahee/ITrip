@@ -86,16 +86,16 @@
 	
 	<!-- 상담상세보기 상담가능시간 [박은지]-->
 	<select id="consultDtList" resultType="co.itrip.prj.consult.service.ConsultDtVO">
-	SELECT CDT_NO, CONSULT_NO, CASE WHEN WEEK = '0' THEN '월'
-			 WHEN WEEK = '1' THEN '화'
-			 WHEN WEEK = '2' THEN '수'
-			 WHEN WEEK = '3' THEN '목'
-			 WHEN WEEK = '4' THEN '금'
-			 WHEN WEEK = '5' THEN '토'
-			 WHEN WEEK = '6' THEN '일'
+	SELECT CDT_NO, CONSULT_NO, CASE WHEN WEEK = '1' THEN '월'
+			 WHEN WEEK = '2' THEN '화'
+			 WHEN WEEK = '3' THEN '수'
+			 WHEN WEEK = '4' THEN '목'
+			 WHEN WEEK = '5' THEN '금'
+			 WHEN WEEK = '6' THEN '토'
+			 WHEN WEEK = '0' THEN '일'
 			ElSE ' '
-			END AS WEEK
-            ,BEGIN_TIME, END_TIME, PRICE 
+			END AS WEEK,
+			BEGIN_TIME, END_TIME, PRICE 
 	FROM CONSULT_DT
 	WHERE CONSULT_NO=#{consultNo}
 	</select>
@@ -151,6 +151,13 @@
 		select chat_link
 		from consult_chat
 		where consult_no = #{consultNo}
+	</select>
+	
+	<select id="ajaxConsultPrice" resultType="co.itrip.prj.consult.service.ConsultDtVO">
+		select *
+		from consult_dt
+		where consult_no = #{consultNo}
+		and week = #{week}
 	</select>
 
 </mapper>
