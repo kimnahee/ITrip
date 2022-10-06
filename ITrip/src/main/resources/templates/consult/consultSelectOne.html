@@ -14,6 +14,11 @@
 .bi-heart-fill, bi-heart-fill b{
 	color : red;
 }
+.trstyle{
+	border-bottom-width: 20px;
+	border-color: white;
+}
+
 </style>
 </head>
 <body>
@@ -76,10 +81,10 @@
 							<div th:text="${consultOne.consultNo}"></div>
 				<!-- 은지 리뷰버튼 -->
 						<div >
-						<button  type="button" data-target="#inlineForm"  class="btn btn-outline-primary ml-1"  data-dismiss="modal" data-toggle="modal">
+						<button id="reviewForm" type="button" data-target="#inlineForm"  class="btn btn-outline-primary ml-1"  data-dismiss="modal" data-toggle="modal">
 							<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="gold" class="bi bi-star-fill" viewBox="0 0 16 16">
 	                              <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
-	                        </svg> 리뷰보기
+	                        </svg> <span >리뷰보기</span>
                         </button ></div>
 			
 							
@@ -95,38 +100,22 @@
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
         
         <div class="modal-content">
-            <div class="modal-header">
-	            <h4 class="modal-title" id="myModalLabel33">리뷰</h4>
+            <div class="modal-header" id="average">
+	            <h4 class="modal-title">총점  <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="gold" class="bi bi-star-fill" viewBox="0 0 16 16">
+		                        	<path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+		                        </svg><span id="score"></span></h4>
+	            
 	            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	                <i data-feather="x"></i>
 	            </button>
             </div>
             <div class="modal-body">
-               <table class='form-group' >                   
-                    <thead>
-                        <tr>
-                            <th class='col-md-5'>USER ID</th>
-                            <th class='col-md-5'>NICK NAME</th>
-                            <th class='col-md-5'>UNFOLLOW</th>
-                        </tr>
-                    </thead> 
-                    <tbody id="followBody">
-                                                                                   
-                    </tbody>
-                </table>
-
-
-                <div class="form-group">
-                
-                </div>
-                <div class="form-group">
-               		
-                </div>
-                <div class="form-group">
-         
-                </div>
-                <br><br>
-                
+               <table class="form-group">
+                <thead id="contentHead">
+                	</thead>
+                <tbody id="contentBody">
+                </tbody>	
+               </table>
             </div>
            <div class="modal-footer">
             </div> 
@@ -143,8 +132,10 @@
 		let csrfToken = $("input[name=_csrf]").val();
 		
 	
-		
+		/*------------------------------
 		// 페이지 로드 시 곧바로 함수 호출
+		--------------------------------*/
+	
 		$(document).ready(function() {
 			console.log(consultNo)
 			console.log(guideId)
@@ -152,6 +143,7 @@
 			console.log(csrfToken)
 			heartCount();
 		})
+		
 
 		/*------------------------------
 		// 하트 카운트 갯수 출력
@@ -241,11 +233,61 @@
 				}
 			})
 		}
+
+		/*-----------------------------------------------
+		// 리뷰 리스트, 별모양 띄우기 - 은지   // 삭제기능 -소정
+		-------------------------------------------------*/
+		$("#reviewForm").on("click", e=> {
+			let guideId = $('#guideId').html();
+				console.log(guideId)
+				
+			$.ajax({
+				url:"/reviewList.do",
+				data : {'guideId' : guideId},
+				success : function(data){ //console.log(data)
+					
+					// 평점구하기 변수 선언
+					let sum = 0;
+					let cnt =0;
+					// 별아이콘
+					let starIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="gold" class="bi bi-star-fill" viewBox="0 0 16 16">
+		                        	<path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+		                       		 </svg>`
+					data.forEach(element =>{//console.log(element)
+						sum += element.star; // console.log(sum);
+					
+					let star ='';
+						for(let i = 0; i< element.star; i++){ // DB 별점 점수만큼 반복문 돌려 아이콘 그려주기
+								star += starIcon; 
+							}
+							let makeTr = `<tr><th class='col-md-4 mb-3'>`+star+`</th>
+							            	<th class='col-md-3'>구분 : ${element.ctgry}</th>
+							            	<th class='col-md-4'>닉네임 : ${element.nick}</th>
+							            	<th class='col-md-1'>X</th>
+					        			 </tr>
+						        			 <tr class="trstyle">
+					               			 	<td>${element.content}</td>
+					               			 </tr>`
+						$("#contentBody").append(makeTr);
+					    cnt++; //console.log(cnt)
+					
+						})
+						
+				    const avg = (sum/cnt).toFixed(1); // 소숫점 1자리까지 표시
+                    $("#score").html(avg);
+				}
+			})
+		})
 		
-		//상담 신청 페이지로 이동
+		
+/****************김나희****************************************************************/	
+	
+//상담 신청 페이지로 이동
 		$("#consultRegister").on("click", function(){
 			location.href="/consultRegister.do?consultNo=" + consultNo;
 		})
+		
+		
 		
 		</script>
 	</div>
