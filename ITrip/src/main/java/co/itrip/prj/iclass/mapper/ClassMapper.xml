@@ -109,8 +109,8 @@
 	</update>
 	
 	<!-- 수강주차랑 출석횟수 비교 -->
-	<select id="classAttendSelect">
-		select c.class_no, c.class_cnt, a.attend_cnt
+	<select id="classAttendSelect" resultType="co.itrip.prj.iclass.service.ClassAttendVO">
+		select c.class_no, c.class_cnt, a.attend_cnt, a.member_id
 		from class_attend a, class c
 		where c.class_no = a.class_no
 		and c.class_no = #{classNo}
@@ -124,5 +124,12 @@
 		where class_no = #{classNo}
 		and member_id = #{memberId}
 	</update>
+	
+	<!-- 수강완료 체크->  수료증 -->
+	<select id="myClassAttendList" resultType="co.itrip.prj.iclass.service.ClassAttendVO">
+		select *
+		from class_attend
+		where member_id= #{memberId}
+	</select>
 	
 </mapper>

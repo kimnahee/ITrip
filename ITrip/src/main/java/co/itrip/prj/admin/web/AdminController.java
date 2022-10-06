@@ -77,8 +77,9 @@ public class AdminController {
 		PageHelper.startPage(pageNum, pageSize);
 		model.addAttribute("pageInfo", PageInfo.of(adminService.classList(vo)));
 		
-		// job카테고리 뿌려주기
-		model.addAttribute("joblist", cdService.jobCdList());
+		/*
+		 * // job카테고리 뿌려주기 model.addAttribute("joblist", cdService.jobCdList());
+		 */
 		return "admin/appclass";
 	}
 	

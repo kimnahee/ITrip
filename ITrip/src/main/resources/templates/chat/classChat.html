@@ -47,7 +47,11 @@ iframe {
 				let memberId = $("#memberId").val(); //수강자 이름(현재 로그인한 사람)
 				let csrfHeaderName = "${_csrf.headerName}";
 				let csrfToken=$("input[name=_csrf]").val();
-				//ajax 처리 : 클릭하면 해당유저의 attend의 attend_cnt + 1 / 만약 해당 class의 class_cnt와 비교해서 같으면 수료버튼 or 수료상태로...update
+				
+				console.log(classNo);
+				console.log(memberId);
+				
+			//ajax 처리 : 클릭하면 해당유저의 attend의 attend_cnt + 1 / 만약 해당 class의 class_cnt와 비교해서 같으면 수료버튼 or 수료상태로...update
 				$.ajax({ 
 					url : "/classChk.do",
 					type : "post",
@@ -71,7 +75,64 @@ iframe {
 
 			// 수업회차랑 출석 수 비교
 			function ClassAttend(data) {
-				console.log(data);
+					console.log("아작스");
+					
+					let classNo = $("#classNo").val(); //클래스번호
+					let memberId = $("#memberId").val(); //수강자 이름(현재 로그인한 사람)
+					let csrfHeaderName = "${_csrf.headerName}";
+					let csrfToken=$("input[name=_csrf]").val();
+					
+				$.ajax({
+					url: "/classAttendSelect.do",
+					type :"post",
+					data : {'classNo' : classNo, 'memberId' :memberId},
+					beforeSend : function(xhr) {
+						xhr.setRequestHeader("AJAX", true);
+					    xhr.setRequestHeader("X-CSRF-TOKEN", csrfToken);
+					},
+					success : function(data) {
+						console.log(data.attendCnt);
+						console.log(data.classCnt);
+						let Cnt = (data.classCnt-data.attendCnt);
+					  if(data.attendCnt >= data.classCnt) {
+						     ClassAttendUpdate(data);
+					  }else {
+						  alert('수료까지'+Cnt+'번 남았습니다');
+					  }
+
+					},error:function err(xhr,err) {
+						alert('출석 비교 에러'); 
+					}
+				})
+				
+				
+			}
+			
+			//수료칼럼 0->1로 표시
+			function ClassAttendUpdate(data){
+				
+				let classNo = $("#classNo").val(); //클래스번호
+				let memberId = $("#memberId").val(); //수강자 이름(현재 로그인한 사람)
+				let csrfHeaderName = "${_csrf.headerName}";
+				let csrfToken=$("input[name=_csrf]").val();
+				
+				$.ajax({
+					url: "/classAttendUpdate.do",
+					type :"post",
+					data : {'classNo' : classNo, 'memberId' :memberId},
+					beforeSend : function(xhr) {
+						xhr.setRequestHeader("AJAX", true);
+					    xhr.setRequestHeader("X-CSRF-TOKEN", csrfToken);
+					},
+					success : function(data) {
+						console.log(data);
+						console.log("수료상태 변경 완료");
+					  
+
+					},error:function err(xhr,err) {
+						alert('수료변경 에러'); 
+					}
+				})
 			}
 			
 

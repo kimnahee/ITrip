@@ -84,7 +84,7 @@
           <div class="col-12" th:unless="${#lists.isEmpty(classList)}">
             <div class="property-slider-wrap">
               <div class="property-slider">
-              <div class="card col-xs-12 col-sm-6 col-md-5 col-lg-3" th:each="cList : ${classList}">
+              <div class="card col-xs-12 col-sm-6 col-md-5 col-lg-3" th:each="cList : ${classList}" >
               
               <!-- 활성화중인 클래스일때 -->
               <div th:if="${cList.ennc == '활성화'}">
@@ -131,7 +131,7 @@
                       	<input name="guideId" id="guideId" th:value="${cList.guideId}" type="hidden">
                       	<input name="no" class="no" id="no" th:value="${cList.classNo}" type="hidden">
                       	<button type="button" class="btn btn-primary py-2 px-3 classInfo reviewBtn">리뷰</button>
-                      	<button type="button" class="btn btn-primary py-2 px-3" id="certificate">수료증</button>
+                      	<button type="button" class="btn btn-primary py-2 px-3 " id="certificate" th:each="att : ${attend}" th:if="${att.classNo == cList.classNo} and ${att.complete == 1}">수료증</button>
                 	 </form>
                          <div id="classNo" th:text="${cList.classNo}" style="display: none"></div>
                     </div>
@@ -170,16 +170,12 @@
       </div>
       	<script type="text/javascript">
 	
-	let cPrice = document.getElementsByClassName("cPrice");
 	let guideId = $("#guideId").val();
 	
 	let token = $("meta[name='_csrf']").attr("content");
 	let header = $("meta[name='_csrf_header']").attr("content");
 	
-	// 금액 단위 쉼표체크
-    for (let i = 0; i < cPrice.length; i++){
-    	cPrice[i].innerText=cPrice[i].innerText.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")
-    }
+	// 수료여부에따른 수료증버튼
 	
     
     //리뷰버튼 상태체크
@@ -211,6 +207,7 @@
 			})
 		 
     })
+    
     //수료증
     $("#certificate").on("click", function(e){
     	let classNo = $(e.target).parent().next().html();
