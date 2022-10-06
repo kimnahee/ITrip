@@ -118,4 +118,16 @@ public class ConsultController {
 		model.addAttribute("consultDT", conService.consultDtList(dtvo)); //시간조회(신청한 상담의)
 		return "consult/consultRegister";
 	}
+	
+	//상담 신청 시 가격 가져오기
+	@PostMapping("/ajaxConsultPrice.do")
+	@ResponseBody
+	public ConsultDtVO ajaxConsultPrice(ConsultDtVO vo, Model model, HttpServletRequest request) {
+		int consultNo = Integer.parseInt(request.getParameter("consultNo")); //상담번호
+		String day = request.getParameter("day"); //요일
+		System.out.println(consultNo + day);
+		vo.setConsultNo(consultNo);
+		vo.setWeek(day);
+		return conService.ajaxConsultPrice(vo);
+	}
 }

@@ -23,7 +23,6 @@ public interface ConsultService {
 	
 	
 	
-	
-	
+	ConsultDtVO ajaxConsultPrice(ConsultDtVO vo); //상담 신청시 가격 가져오기 
 	ConsultChatVO consultChat(ConsultChatVO vo); //채팅방 연결
 }

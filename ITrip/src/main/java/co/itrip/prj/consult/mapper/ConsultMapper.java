@@ -25,7 +25,7 @@ public interface ConsultMapper {
 
 	List<ConsultVO> myConsultList(ConsultVO vo); // 마이페이지 상담 전체조회 - 소정
 
-	
+	ConsultDtVO ajaxConsultPrice(ConsultDtVO vo); //상담 신청시 가격 가져오기 
 	ConsultChatVO consultChat(ConsultChatVO vo); //채팅방 연결 - 나희
-
+	
 }
