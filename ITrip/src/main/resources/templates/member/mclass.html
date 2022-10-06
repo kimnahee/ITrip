@@ -4,33 +4,13 @@
 <meta charset="utf-8" />
 <meta name="_csrf" th:content="${_csrf.token}"/>
 <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
-	<title>
-      Property &mdash; Free Bootstrap 5 Website Template by Untree.co
-    </title>
-     <script src="js/jquery-3.6.0.min.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="author" content="Untree.co" />
-    <link rel="shortcut icon" href="favicon.png" />
-
-    <meta name="description" content="" />
-    <meta name="keywords" content="bootstrap, bootstrap5" />
-
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-
-    <link rel="stylesheet" href="bootstrap/property/fonts/icomoon/style.css" />
-    <link rel="stylesheet" href="bootstrap/property/fonts/flaticon/font/flaticon.css" />
-
-    <link rel="stylesheet" href="bootstrap/property/css/tiny-slider.css" />
-    <link rel="stylesheet" href="bootstrap/property/css/aos.css" />
-    <link rel="stylesheet" href="bootstrap/property/css/style.css" />
-
-	<style>
-    
+<title>My Class</title>
+<script src="js/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="author" content="Untree.co" />
+<meta name="description" content="" />
+<meta name="keywords" content="bootstrap, bootstrap5" />
+<style>
     .tns-horizontal.tns-subpixel>.tns-item {
      vertical-align: bottom;
     }
@@ -41,207 +21,175 @@
     max-width: none;
      height: 200px; 
 	}
-	
 	 .cEnnc { 
 	   filter: grayscale(100%);
 	   }
-	 
 	.ment {
 		height: 150px;
 	}
-
-    </style>
+		.table{
+		text-align: center;
+		margin-top: 50px;
+		margin-bottom: 50px;
+	}
+	
+	.table td img{
+		max-width: 100%;
+	}
+	.alert {
+	    position: relative;
+	    padding: 2rem 2rem;
+	    margin-bottom: 1rem;
+	    border: none solid transparent;
+	    border-radius: 0.25rem;
+	    font-size: 1.6rem;
+	}
+</style>
     
 </head>
-<body  layout:fragment="content">
- <!-- About Start -->
-    <div class="text-center">
-        <div class="bg-primary mb-3 mx-auto" style="width: 60px; height: 2px;"></div>
-        <h1 class="display-5 mb-5">My Page</h1>
-    </div>
-     <!-- Projects Start -->
-           <input type="hidden" id="memberId" class="form-control" name="memberId" th:value=${#authentication.principal.member.memberId} readonly="readonly">
-    <div class="section ">
-      <div class="container">
-        <div class="row mb-5 align-items-center">
-          <div class="col-lg-6">
-            <h2 class="font-weight-bold text-primary heading">Class</h2>
-          </div>
-        </div>
-        <!-- 결제한 class가 없을때 -->
-		<div class="row" th:if="${#lists.isEmpty(classList)}">
-						<div>
-							<div class="container text-center pt-32" >
-								<h1 class='error-title'>진행중인 Class가 없습니다.</h1>
-								<p>새로운 class를 신청해주세요.</p>
-								<a href="myPage">Go Mypage</a>
+<body>
+<div layout:fragment="content">
+	<div class="card">
+		<input type="hidden" id="memberId" th:value="${#authentication.principal.member.memberId}" /> 
+		<div class="alert alert-light-primary color-primary">My Class</div>
+			<div class="card-body">
+				<div class="row">
+					<!-- 결제한 class가 없을때 -->
+					<div class="row" th:if="${#lists.isEmpty(classList)}">
+						<table class="table">
+							<tr>
+								<td><h3 class='error-title'>진행중인 Class가 없습니다.</h3><br><h4>새로운 class를 신청해주세요.</h4></td>
+							</tr>
+							<tr>
+								<td>Go Mypage</td>
+							</tr>
+						</table>
+					</div>
+
+					<!-- 결제한 Class가 있을 때 -->
+					<div class="row" th:unless="${#lists.isEmpty(classList)}">
+						<div th:each="cList : ${classList}">
+							<!-- 활성화중인 클래스일때 -->
+              				<div th:if="${cList.ennc == '활성화'}">
+              					<table border="1" class="table table-borderless" style="width: 400px;">
+              						<tbody>
+              							<tr>
+              								<td colspan="2">
+              									<a href="#" class="img"><img th:src="@{*{cList.attachDir}}" alt="Image" class="img-fluid" /></a>
+              								</td>
+              							</tr>
+              							<tr>
+              								<td th:text="${cList.title}"></td>
+              								<td><span class="caption badge bg-warning" th:text="${cList.term}"></span></td>
+              							</tr>
+              							<tr>
+              								<th>주요기능</th>
+              								<td th:text="${cList.cdName}"></td>
+              							</tr>
+              							<tr>
+              								<th>정원</th>
+              								<td th:text="|${cList.psncpa}명|"></td>
+              							</tr>
+              							<tr>
+              								<td colspan="2"><button style="width: 100px;" class="btn btn-primary py-2 px-3 classInfo classChat">링크</button></td>
+              								<td style="display: none"><div th:text="${cList.classNo}"></div></td>
+              							</tr>
+              						</tbody>
+              					</table>
 							</div>
-						</div>
-					</div>        
-        
-        <!-- 결제한 Class가 있을 때 -->
-        <div class="row">
-          <div class="col-12" th:unless="${#lists.isEmpty(classList)}">
-            <div class="property-slider-wrap">
-              <div class="property-slider">
-              <div class="card col-xs-12 col-sm-6 col-md-5 col-lg-3" th:each="cList : ${classList}" >
-              
-              <!-- 활성화중인 클래스일때 -->
-              <div th:if="${cList.ennc == '활성화'}">
-                <!-- .item -->
-                <div class="property-item mb-30">
-                  <a href="#" class="img">
-                    <img th:src="@{*{cList.attachDir}}" alt="Image" class="img-fluid"  />
-                  </a>
-                  <div class="property-content">
-                    <div class="price mb-2"><span th:text="${cList.title}"></span></div>
-                    <div>  
-                      <span class="caption badge bg-warning" th:text="${cList.term}"></span>
-                      <div class="">
-                        <span class="">주요기능</span>
-                        <h5 class="card-title" th:text="${cList.cdName}"></h5>  
-                      </div>                                               
-                      <div class="">
-                      	<span class="">정원 </span>
-                      	<h5 class="card-title" th:text="${cList.psncpa}+명"></h5>
-                      </div>   
-                        <button class="btn btn-primary py-2 px-3 classInfo classChat">링크</button>
-                         <div th:text="${cList.classNo}" style="display: none"></div>
-                    </div>
-                  </div>
-                </div>
-                </div>
-                
-                <!-- 비활성화된 클래스일 때 -->
-                <div th:if="${cList.ennc == '비활성화'}">
-                <!-- .item -->
-                <div class="property-item mb-30">
-                  <a href="#" class="img">
-                    <img th:src="@{*{cList.attachDir}}" alt="Image" class="img-fluid cEnnc"  />
-                  </a>
-                  <div class="property-content">
-                    <div class="price mb-2"><span th:text="${cList.title}"></span></div>
-                    <div>  
-                      <div class="ment" >
-                       <span class="">진행완료된 수업입니다.<br>수업에 대한 리뷰와 수료증을 발급 받으 실 수 있습니다. </span>
-                      </div>   
-                      
-                     <form class="token" action="mcReview" method="post">
-                		<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-                      	<input name="guideId" id="guideId" th:value="${cList.guideId}" type="hidden">
-                      	<input name="no" class="no" id="no" th:value="${cList.classNo}" type="hidden">
-                      	<button type="button" class="btn btn-primary py-2 px-3 classInfo reviewBtn">리뷰</button>
-                      	<button type="button" class="btn btn-primary py-2 px-3 " id="certificate" th:each="att : ${attend}" th:if="${att.classNo == cList.classNo} and ${att.complete == 1}">수료증</button>
-                	 </form>
-                         <div id="classNo" th:text="${cList.classNo}" style="display: none"></div>
-                    </div>
-                  </div>
-                </div>
-                </div>
-                 </div>
-              </div>
-
-              <div
-                id="property-nav"
-                class="controls"
-                tabindex="0"
-                aria-label="Carousel Navigation"
-              >
-                <span
-                  class="prev"
-                  data-controls="prev"
-                  aria-controls="property"
-                  tabindex="-1"
-                  >Prev</span
-                >
-                <span
-                  class="next"
-                  data-controls="next"
-                  aria-controls="property"
-                  tabindex="-1"
-                  >Next</span
-                >
-              </div>
-            </div>
-          </div>
-        </div>
-        <br><br>
-            
-      </div>
-      	<script type="text/javascript">
+       						<!-- 비활성화된 클래스일 때 -->
+       						<div th:if="${cList.ennc == '비활성화'}">
+       							<table border="1" class="table table-borderless" style="width: 400px;">
+              						<tbody>
+	              						<tr>
+	              							<td colspan="2">
+	              								<img th:src="@{*{cList.attachDir}}" alt="Image" class="img-fluid cEnnc"  />
+	              							</td>
+              							</tr>
+              							<tr>
+              								<td th:text="${cList.title}"></td>
+              							</tr>
+              							<tr>
+              								<td><span class="">진행완료된 수업입니다.<br>수업에 대한 리뷰와 수료증을 발급 받으 실 수 있습니다. </span></td>
+              							</tr>
+              							<tr>
+              								<td></td>
+              							</tr>
+              							<tr>
+              								<td>
+              								<form class="token" action="mcReview" method="post">
+						                		<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+						                      	<input name="guideId" id="guideId" th:value="${cList.guideId}" type="hidden">
+						                      	<input name="no" class="no" id="no" th:value="${cList.classNo}" type="hidden">
+						                      	<button type="button" class="btn btn-primary py-2 px-3 classInfo reviewBtn">리뷰</button>
+						                      	<button type="button" class="btn btn-primary py-2 px-3 " id="certificate" th:each="att : ${attend}" th:if="${att.classNo == cList.classNo} and ${att.complete == 1}">수료증</button>
+					                		</form>
+					              			<div id="classNo" th:text="${cList.classNo}" style="display: none"></div>
+              								</td>
+              							</tr>
+              						</tbody>
+              					</table>
+       						</div>
+       						
+              			</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
 	
-	let guideId = $("#guideId").val();
-	
-	let token = $("meta[name='_csrf']").attr("content");
-	let header = $("meta[name='_csrf_header']").attr("content");
-	
-	// 수료여부에따른 수료증버튼
-	
-    
-    //리뷰버튼 상태체크
-    $(document).on("click", ".reviewBtn", function(e) {
-    	let cNum = $(e.target).prev().val();
-    	let frm = $(".token");
-    	// console.log($(e.target));
-    	
-		 $.ajax({
-			url : "/classReviewSelect.do",
-			type : "get",
-			data : {'no' : cNum},
-			beforeSend :function(xhr) {
-				xhr.setRequestHeader("AJAX", true);
-		    	xhr.setRequestHeader("X-CSRF-TOKEN", token);
-			},
-			success : function(data) {
-				console.log("출력" + data);
-				
-				 if(data.reviewNo != null) {
-				   alert("이미 리뷰를 작성한 class입니다.");
-				   console.log($(e.target));
-				} else {
-				//	$(e.target).one("click", submit);
-					frm.submit();
+		let guideId = $("#guideId").val();
+		let token = $("meta[name='_csrf']").attr("content");
+		let header = $("meta[name='_csrf_header']").attr("content");
+		
+		// 수료여부에따른 수료증버튼
+		
+	    
+	    //리뷰버튼 상태체크
+	    $(document).on("click", ".reviewBtn", function(e) {
+	    	/* 수정하기 */
+	    	let cNum = $(e.target).prev().html();
+	    	let frm = $(".token");
+	    	// console.log($(e.target));
+	    	
+			 $.ajax({
+				url : "/classReviewSelect.do",
+				type : "get",
+				data : {'no' : cNum},
+				beforeSend :function(xhr) {
+					xhr.setRequestHeader("AJAX", true);
+			    	xhr.setRequestHeader("X-CSRF-TOKEN", token);
+				},
+				success : function(data) {
+					console.log("출력" + data);
+					
+					 if(data.reviewNo != null) {
+					   alert("이미 리뷰를 작성한 class입니다.");
+					   console.log($(e.target));
+					} else {
+					//	$(e.target).one("click", submit);
+						frm.submit();
+					}
 				}
-			}
-			
-			})
-		 
-    })
-    
-    //수료증
-    $("#certificate").on("click", function(e){
-    	let classNo = $(e.target).parent().next().html();
-    	let memberId = $("#memberId").val(); //수강자 이름(현재 로그인한 사람)
-    	location.href="/certificate.do?classNo=" + classNo + "&&memberId=" + memberId;
-    })
-    
-    //강의장 링크연결
-    $(".classChat").on("click", function(e){
-    	let classNo = $(e.target).next().html();
-    	location.href="/classChat.do?classNo="+classNo;
-    })
-    
-	
-/* 	$(document).ready(function(){    
-		reviewBtn();
-	}); */
-    
-    
+				
+				})
+			 
+	    })
+	    
+	    //수료증
+	    $("#certificate").on("click", function(e){
+	    	/* 수정하기 */
+	    	let classNo = $(e.target).parent().next().html();
+	    	let memberId = $("#memberId").val(); //수강자 이름(현재 로그인한 사람)
+	    	location.href="/certificate.do?classNo=" + classNo + "&&memberId=" + memberId;
+	    })
+	    
+	    //강의장 링크연결
+	    $(".classChat").on("click", function(e){
+	    	let classNo = $(e.target).parent().next().children(0).html();
+	    	location.href="/classChat.do?classNo="+classNo;
+	    })
 	</script>
-    </div>
-
-    <script src="bootstrap/property/js/bootstrap.bundle.min.js"></script>
-    <script src="bootstrap/property/js/tiny-slider.js"></script>
-    <script src="bootstrap/property/js/aos.js"></script>
-    <script src="bootstrap/property/js/navbar.js"></script>
-    <script src="bootstrap/property/js/counter.js"></script>
-    <script src="bootstrap/property/js/custom.js"></script>
-            
-        
-    
-    <!-- Projects End -->
-    
-    
-
+</div>
 </body>
 </html>

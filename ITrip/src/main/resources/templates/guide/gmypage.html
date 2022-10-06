@@ -10,165 +10,149 @@
 <meta content="" name="keywords">
 <meta content="" name="description">
 <style>
-.card .card-content {
-	position: static;
-	margin-left: 10px;
-	margin-right: 10px;
-}
+	.table{
+		text-align: center;
+		margin-top: 50px;
+		margin-bottom: 50px;
+	}
+	
+	.table td img{
+		max-width: 100%;
+	}
+	.alert {
+	    position: relative;
+	    padding: 2rem 2rem;
+	    margin-bottom: 1rem;
+	    border: none solid transparent;
+	    border-radius: 0.25rem;
+	    font-size: 1.6rem;
+	}
 </style>
 </head>
 <body>
 	<div layout:fragment="content">
-		<section id="groups">
-			<div class="row match-height">
-				<div class="col-12 mt-3 mb-1">
-					<h3 class="section-title text-uppercase">가이드 마이페이지</h3>
-				</div>
-			</div>
-			<div class="row match-height">
-				<div class="col-12">
-					<div class="card-group">
-						<div class="card">
-							<div class="card-content">
-								<div class="card-body">
-									<div id="img" style="display: inline-block;">
-										<img class="card-img-top img-fluid"
-											style="width: 300px; height: 300px; margin-right: 150px; display: inline-block;"
-											src="bootstrap/securex/img/icon/icon-6.png"
-											alt="Card image cap">
-									</div>
-									<div style="display: inline-block;">
-										<div class="ms-4">	
-											<h1 class=" mb-4">Follower</h1>
-											<a data-toggle="modal" data-target="#exampleModalScrollable">
-												<img src="bootstrap/securex/img/icon/icon-1.png" alt="Icon">
-											</a>
-											<!-- follow modal -->
-											<div class="modal fade" id="exampleModalScrollable"
-												tabindex="-1" role="dialog"
-												aria-labelledby="exampleModalScrollableTitle"
-												aria-hidden="true">
-												<div class="modal-dialog modal-dialog-scrollable"
-													role="document">
-													<div class="modal-content">
-														<div class="modal-header">
-															<h5 class="modal-title" id="exampleModalScrollableTitle">
-																Follower</h5>
-															<button type="button" class="close" data-dismiss="modal"
-																aria-label="Close">
-																<i data-feather="x"></i>
-															</button>
-														</div>
-														<div class="modal-body">
-															<table class='form-group'>
-																<thead>
-																	<tr>
-																		<th class='col-md-5'>USER ID</th>
-																		<th class='col-md-5'>NICK NAME</th>
-																		<th class='col-md-5'>UNFOLLOW</th>
-																	</tr>
-																</thead>
-																<tbody id="followBody">
-																</tbody>
-															</table>
-														</div>
-														<div class="modal-footer">
-															<button type="button" class="btn btn-sm btn-primary"
-																data-dismiss="modal">
-																<i class="bx bx-x d-block d-sm-none"></i> <span
-																	class="d-none d-sm-block">Close</span>
-															</button>
-														</div>
-													</div>
-												</div>
-											</div>
-
-											<div class="btn-square " id="fcount"
-												style="width: 64px; height: 64px;">
-												<!-- <h2 class="mb-1" data-toggle="counter-up"></h2> -->
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
+		<div class="card">
+		<input type="hidden" id="guideId" name="guideId" th:value="${#authentication.principal.member.memberId}" />
+		<input type="hidden" id="memberId" th:value="${#authentication.principal.member.memberId}" /> 
+					<div class="alert alert-light-primary color-primary">가이드 마이페이지</div>
+					<div class="card-body">
+						<div class="row">
+							<table class="table table-bordered">
+								<tr>
+									<td colspan="1"><img style="width: 200px; height: 200px;" src="images/icon/guide.png"></td>
+									<td colspan="3">
+										<h1 class=" mb-4">Follower</h1>
+										<div class="ms-4">
+											<a data-toggle="modal" data-target="#exampleModalScrollable"> 
+		                                    	<img src="images/icon/follow.png" style="width: 50px; height: 50px;" alt="Icon">
+		                                    </a>
+		                                    <!-- follow modal -->
+	                 						<div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog"
+	                    							aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+							                    <div class="modal-dialog modal-dialog-scrollable" role="document">
+							                        <div class="modal-content">
+								                        <div class="modal-header">
+								                            <h5 class="modal-title" id="exampleModalScrollableTitle"> Follower </h5>
+								                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								                            <i data-feather="x"></i>
+								                            </button>
+								                        </div>
+								                        <div class="modal-body">
+								                    		<table class='form-group' >                   
+								                    			<thead>
+								                        			<tr>
+											                            <th class='col-md-5'>USER ID</th>
+											                            <th class='col-md-5'>NICK NAME</th>
+											                            <th class='col-md-5'>UNFOLLOW</th>
+								                       				</tr>
+								                    			</thead> 
+								                    			<tbody id="followBody">
+								                    			</tbody>
+								                    		</table>
+								                        </div>
+								                        <div class="modal-footer">
+								                            <button type="button" class="btn btn-sm btn-primary" data-dismiss="modal">
+								                            <i class="bx bx-x d-block d-sm-none"></i>
+								                            <span class="d-none d-sm-block">Close</span>
+								                            </button>                       
+								                        </div>
+							                        </div>
+							                    </div>
+	                    					</div>
+	                    					<div class="btn-square" id="fcount" style="width: 64px; height: 64px; display: inline-block;"></div>
+	                                    </div>
+									</td>
+								</tr>
+							</table>
+							
+							
+							<!-- 목록 -->
+							<table class="table table-bordered">
+								<thead>
+									<tr>
+										<th>i-consult 1:1</td>
+										<th>i-Class</th>
+										<th>가이드수정</th>
+										<th>수강생 목록</th>
+									</tr>
+								</thead>
+								<tr>
+									<td><img class="img-fluid" src="images/icon/consult.png" style="width: 150px; height: 150px;" alt="Icon"></td>
+									<td><img class="img-fluid" src="images/icon/class.png" style="width: 150px; height: 150px;" alt="Icon"></td>
+									<td><img class="img-fluid" src="images/icon/edit.png" style="width: 150px; height: 150px;"></td>
+									<td><img class="img-fluid" src="images/icon/userList.png" style="width: 150px; height: 150px;" alt="Icon"></td>
+								</tr>
+								<tr>
+									<td>상담중인 내역을 보는 곳입니다.</td>
+									<td>진행중인 클래스를 보는 곳입니다.</td>
+									<td>가이드 정보를 수정하는 곳입니다.</td>
+									<td>수강중인 유저들을 보는 곳입니다.</td>
+								</tr>
+								<tr>
+									<td><button id="gConsult" style="width: 150px;" class="btn btn-sm btn-outline-primary">1:1상담</button></td>
+									<td><button id="gClass" style="width: 150px;" class="btn btn-sm btn-outline-primary">class</button></td>
+									<td><button id="grevice" style="width: 150px;" class="btn btn-sm btn-outline-primary">회원정보수정</button></td>
+									<td><button id="userList" style="width: 150px;" class="btn btn-sm btn-outline-primary">수강생 리스트</button></td>
+								</tr>
+							</table>
 						</div>
+							            <div class="text-center">
+	                <a class="btn block" data-toggle="modal" data-backdrop="false"
+	                    data-target="#backdrop" style="float: right;">회원탈퇴</a>
+	            </div>
+	             <!--Disabled Backdrop Modal -->
+	                    <div class="modal fade text-left" id="backdrop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel4"
+	                    aria-hidden="true">
+	                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+	                        <div class="modal-content">
+	                        <div class="modal-header">
+	                            <h4 class="modal-title" id="myModalLabel4">회원 탈퇴</h4>/
+	                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	                            <i data-feather="x"></i>
+	                            </button>
+	                        </div>
+	                        <div class="modal-body">
+	                            <p>
+	                            가입된 회원정보 모두 삭제 됩니다. 작성하신 게시물은 삭제되지 않습니다.
+								탈퇴 후 같은 계정으로 재가입시 기존에 가직 있던 적립금은 복원되지 않습니다.
+								회원탈퇴를 진행하시겠습니까?
+	                            </p>
+	                        </div>
+	                        <div class="modal-footer">
+	                            <button type="button" class="btn btn-light-secondary" data-dismiss="modal">
+	                            <i class="bx bx-x d-block d-sm-none"></i>
+	                            <span class="d-none d-sm-block">취소</span>
+	                            </button>
+	                            <button type="button" class="btn btn-primary ml-1" data-dismiss="modal">
+	                            <i class="bx bx-check d-block d-sm-none"></i>
+	                            <span class="d-none d-sm-block">탈퇴하기</span>
+	                            </button>
+	                        </div>
+	                        </div>
+	                    </div>
+	                    </div>
 					</div>
 				</div>
-			</div>
-
-		</section>
-		<br>
-		<br>
-		<br>
-		<br>
-		<section id="groups">
-			<div class="row match-height">
-				<div class="col-12">
-					<div class="card-group">
-						<div class="card">
-							<div class="card-content">
-								<img class="card-img-top img-fluid"
-									style="width: 64px; height: 64px;"
-									src="bootstrap/securex/img/icon/icon-6.png"
-									alt="Card image cap">
-								<div class="card-body">
-									<h4 class="card-title">i-consult 1:1</h4>
-									<p class="card-text">상담중인 내역을 보는 곳 입니다.</p>
-									<button id="gConsult" style="width: 100%;"
-										class="btn btn-sm btn-outline-primary">1:1상담</button>
-								</div>
-							</div>
-						</div>
-						<div class="card">
-							<div class="card-content">
-								<img class="card-img-top img-fluid"
-									style="width: 64px; height: 64px;"
-									src="bootstrap/securex/img/icon/icon-6.png"
-									alt="Card image cap">
-								<div class="card-body">
-									<h4 class="card-title">i-Class</h4>
-									<p class="card-text">진행중인 클래스를 보는 곳 입니다.</p>
-									<button id="gClass" style="width: 100%;"
-										class="btn btn-sm btn-outline-primary">class</button>
-								</div>
-							</div>
-						</div>
-						<div class="card">
-							<div class="card-content">
-								<img class="card-img-top img-fluid"
-									style="width: 64px; height: 64px;"
-									src="bootstrap/securex/img/icon/icon-6.png"
-									alt="Card image cap">
-								<div class="card-body">
-									<h4 class="card-title">가이드수정</h4>
-									<p class="card-text">가이드 정보를 수정하는 곳 입니다.</p>
-									<button id="gRevice" style="width: 100%;"
-										class="btn btn-sm btn-outline-primary">회원정보수정</button>
-								</div>
-							</div>
-						</div>
-						<div class="card">
-							<div class="card-content">
-								<img class="card-img-top img-fluid"
-									style="width: 64px; height: 64px;"
-									src="bootstrap/securex/img/icon/icon-6.png"
-									alt="Card image cap">
-								<div class="card-body">
-									<h4 class="card-title">수강생 목록</h4>
-									<p class="card-text">수강중인 유저들을 보는 곳 입니다.</p>
-									<button id="userList" style="width: 100%;"
-										class="btn btn-sm btn-outline-primary">수강생 보러가기</button>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<input type="hidden" id="guideId" name="guideId"
-					th:value="${#authentication.principal.member.memberId}" /> <input
-					type="hidden" id="memberId"
-					th:value="${#authentication.principal.member.memberId}" />
-			</div>
-		</section>
 		<script>
     	let guideId = $("#guideId").val();
     	let csrfToken = $("input[name=_csrf]").val(); // 토큰받아오기
