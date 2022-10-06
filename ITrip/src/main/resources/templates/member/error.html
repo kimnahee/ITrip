@@ -15,10 +15,6 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
      font-size: xx-large; 
 	}
 	
-	@media (min-width: 1200px)
-	h1, .h1 {
-     font-size: 2.25rem; 
-	}
 	
 	#error{
 	 width: 80em;
@@ -41,7 +37,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <p th:each="gui: ${guides}" th:if="${gui.stateCd == '1'}">Guide신청이 승인대기중입니다.</p>
     <div th:each="gui: ${guides}" th:if="${gui.stateCd == '3'}" >
     <p>Guide신청이 승인거부되었습니다.</p>
-    <button type="button">다시 신청하기</button>
+    <button type="button" class="btn btn-primary py-2 px-3">다시 신청하기</button>
     </div>
     <a href="myPage">Go Mypage</a>
 </div>
