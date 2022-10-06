@@ -173,39 +173,74 @@ th {
 					
 					
 					function makeTr(data){
-						var begin = data.beginTime;
-						var btime = begin.substr(0,2);
-						console.log(btime);
-						var end = data.endTime;
-						var etime = end.substr(0,2);
-						console.log(etime);
-						var time = etime-btime;
-						//console.log(time);
+							console.log(data)
+							
+								var begin = data.beginTime; // 시작시간
+								var btime = begin.substr(0,2);
+									console.log(btime);
+								var end = data.endTime;		// 종료시간
+								var etime = end.substr(0,2); 
+									console.log(etime);
+								var time = etime-btime;
+								console.log(time);
+								let times=[];  // 시간들을 배열로 받음
+
+								for(let i=btime; i<etime; i++){
+									times.push(i)
+									console.log(times);
+								}
+								let obj = document.createElement("SELECT"); // 셀렉트박스 만들기
+								obj.setAttribute('id','iSelect');
+								for (key in times) {
+									console.log("=============="+times);
+									let opt=document.createElement("OPTION");
+									opt.value=key;
+									console.log("=======key======="+key);
+									opt.text=times[key];
+									console.log("=======opt======="+opt);
+									obj.options.add(opt);
+									console.log("======obj========"+obj);
+									
+									
+								}
+								let text = $("#iSelect").text()
+								console.log( text+"=======text")
+								let iSelect = (target) =>{ 
+									console.log(target.options[target.selectIndex].text);
+								}
+								
+								
 						
-						let selTime = $("#selTime")
-						
-						//let document.createElement("SELECT");
-						var times=[]; // 시간들을 배열로 받음
-				
-						console.log(times);
-						//var opt = document.createElement("OPTION");
-											//opt.value = times.push(i); // 배열에 담겨져 있는 값을 넘겨준다.
-											//opt.text =times.push(i); // 배열에 담겨져 있는 값을 보여준다.			
 						
 						
 						let tr = `<th class="table-primary">가격</th>
 								  <td colspan="4">${data.price}</td>
 								  <th class="table-primary">시작시간</th>
-								  <td><select id="selTime">`;
-								  for(let i = btime; i<etime; i++){ // 시간만큼 반복문 돌림
-										tr+= `<option value='`+times.push(i)+`'>`+times.push(i)+`</option>`;
-									}
-								  tr+=`</select></td>`;
+								  <td colspan="4">`+obj+`</td>
+								  </th>`
 								  
-						
+								
 						return tr;
 					}
+					document.getElementById("price").lastElementChild.innerHTML='obj';
 
+	 					/*for(let i = btime; i<etime; i++){ // 시간만큼 반복문 돌림
+										tr+= `<option value='`+times.push(i)+`'>`+times.push(i)+`</option>`;
+									}*/
+								
+						
+						//var time = etime-btime;
+						//console.log(time);
+						
+						//let selTime = $("#selTime")
+						
+						//let document.createElement("SELECT");
+						
+				
+						
+						//var opt = document.createElement("OPTION");
+											//opt.value = times.push(i); // 배열에 담겨져 있는 값을 넘겨준다.
+											//opt.text =times.push(i); // 배열에 담겨져 있는 값을 보여준다.		
 					
 					
 					function makeFrm(data){
