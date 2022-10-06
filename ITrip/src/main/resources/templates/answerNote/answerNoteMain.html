@@ -42,9 +42,10 @@
 									aria-selected="false">나만의CBT</a></li>
 							</ul>
 							<div class="tab-content" id="myTabContent">
+							<!-- guide cbt 오답노트 -->
 								<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
 									<div id="noteList1"> 
-										<div th:if="${#lists.isEmpty(langCdList)}">
+										<div th:if="${#lists.isEmpty(gLangCdList)}">
 											<div class="content">
 												<div class="card-content">
 													<h4 class="form-check" style="padding: 50px;">아직 풀어본
@@ -58,20 +59,20 @@
 											</div>
 										</div>
 
-										<div th:unless="${#lists.isEmpty(langCdList)}"> 
+										<div th:unless="${#lists.isEmpty(gLangCdList)}"> 
 											<section id="content-types">
 												<div class="row">
-													<div class="col-md-3 col-sm-8" th:each="c,st:${langCdList}">
+													<div class="col-md-3 col-sm-8" th:each="g,st:${gLangCdList}">
 														<div class="card">
 															<div class="card-content">
 																<img class="card-img-top img-fluid"
 																	src="images/note1.png" alt="Card image cap" />
 																<div class="card-body">
 																	<h4 class="card-title" th:text="${st.index}+1+회차오답노트"></h4>
-																	<b class="card-text" th:text="${c.cdName}"></b>
+																	<b class="card-text" th:text="${g.cdName}"></b>
 																	<button class="btn btn-primary block goNote"
 																		style="float: right; margin-bottom: 5px;">다시풀기</button>
-																	<input type="hidden" th:value="${c.mcNo}">
+																	<input type="hidden" th:value="${g.mcNo}">
 																</div>
 															</div>
 														</div>
@@ -81,9 +82,44 @@
 										</div>
 									</div>
 								</div>
-								<div class="tab-pane fade" id="profile" role="tabpanel"
-									aria-labelledby="profile-tab">
-									<!--  나만의 CBT 오답노트 -->
+								
+								<!--  나만의 CBT 오답노트 -->
+								<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+									<div id="noteList2"> 
+										<div th:if="${#lists.isEmpty(cusLangCdList)}">
+											<div class="content">
+												<div class="card-content">
+													<h4 class="form-check" style="padding: 50px;">나만의 CBT가 없습니다. 문제를 만들어보세요.</h4>
+													<br>
+													<br>
+													<div class="buttons" style="text-align: center;">
+														<a href="cbtCustomMain.do" class="btn btn-primary">문제풀어보기</a>
+													</div>
+												</div>
+											</div>
+										</div>
+
+										<div th:unless="${#lists.isEmpty(cusLangCdList)}"> 
+											<section id="content-types">
+												<div class="row">
+													<div class="col-md-3 col-sm-8" th:each="cus,st:${cusLangCdList}">
+														<div class="card">
+															<div class="card-content">
+																<img class="card-img-top img-fluid" src="images/note3.png" alt="Card image cap" />
+																<div class="card-body">
+																	<h4 class="card-title" th:text="${st.index}+1+회차오답노트"></h4>
+																	<b class="card-text" th:text="${cus.cdName}"></b>
+																	<button class="btn btn-primary block goNote"
+																		style="float: right; margin-bottom: 5px;">다시풀기</button>
+																	<input type="hidden" th:value="${cus.mcNo}">
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</section>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -93,18 +129,6 @@
 			</div>
 		</section>
 
-
-
-
-
-
-
-
-
-
-
-
-
 		<form id="frm">
 			<!-- 로그인 시큐리티 -->
 			<input type="hidden" id="memberId" name="memberId" th:value="${#authentication.principal.member.memberId}"> 
@@ -112,11 +136,20 @@
 		</form>
 
 		<script type="text/javascript">
+			/* guide cbt */
 			$("#noteList1").on("click", ".goNote", function(e) {
-
 				let mcNo = event.target.nextElementSibling.value
 				console.log(mcNo)
 				frm.action = "myWrongAnswerNote.do"
+				frm.mcNo.value = mcNo
+				frm.submit()
+			})
+			
+			/* custom cbt */
+			$("#noteList2").on("click", ".goNote", function(e) {
+				let mcNo = event.target.nextElementSibling.value
+				console.log(mcNo)
+				frm.action = "cusWrongAnswerNote.do"
 				frm.mcNo.value = mcNo
 				frm.submit()
 			})

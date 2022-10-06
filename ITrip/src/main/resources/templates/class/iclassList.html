@@ -6,36 +6,16 @@ layout:decorate="~{layout/layout}">
 <meta charset="utf-8" />
 <meta name="_csrf" th:content="${_csrf.token}"/>
 <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="author" content="Untree.co" />
-<link rel="shortcut icon" href="favicon.png" />
-
-<meta name="description" content="" />
-<meta name="keywords" content="bootstrap, bootstrap5" />
-
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link  href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&display=swap"
-  rel="stylesheet"
-/>
-
-<link rel="stylesheet" href="bootstrap/property/fonts/icomoon/style.css" />
-<link rel="stylesheet" href="bootstrap/property/fonts/flaticon/font/flaticon.css" />
-
-<link rel="stylesheet" href="bootstrap/property/css/tiny-slider.css" />
-<link rel="stylesheet" href="bootstrap/property/css/aos.css" />
-<link rel="stylesheet" href="bootstrap/property/css/style.css" />
-
 <title>♡</title>
 </head>
 <body layout:fragment="content">
- <div class="section section-properties">
+ <div class="section">
       <div class="container">
       
 			
-     	<button th:text="전체" class="btn btn-info round" onclick="location.href='/iClassList.do'" style="margin:5px;"></button>
+      <button th:text="전체" class="btn btn-primary round" onclick="location.href='/iClassList.do'" style="margin:5px;"></button>
       <div style=" display:inline-block; margin:0 auto;" th:each="j:${job}">
-     	<button th:text=${j.cdName} th:id="${j.cdNo}" class="btn btn-info round" onclick="jobSearch(1,this.getAttribute('id'))"style="margin:5px;"></button>
+     	<button th:text=${j.cdName} th:id="${j.cdNo}" class="btn btn-primary round" onclick="jobSearch(1,this.getAttribute('id'))"style="margin:5px;"></button>
       </div><br><br><br>
         <div class="row" id="classList">
         
@@ -217,11 +197,5 @@ layout:decorate="~{layout/layout}">
     
     </script>
     
-    <script src="bootstrap/property/js/bootstrap.bundle.min.js"></script>
-    <script src="bootstrap/property/js/tiny-slider.js"></script>
-    <script src="bootstrap/property/js/aos.js"></script>
-    <script src="bootstrap/property/js/navbar.js"></script>
-    <script src="bootstrap/property/js/counter.js"></script>
-    <script src="bootstrap/property/js/custom.js"></script>
 </body>
 </html>
