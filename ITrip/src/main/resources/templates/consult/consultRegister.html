@@ -171,14 +171,42 @@ th {
     					};
 					})
 					
+					
 					function makeTr(data){
+						var begin = data.beginTime;
+						var btime = begin.substr(0,2);
+						console.log(btime);
+						var end = data.endTime;
+						var etime = end.substr(0,2);
+						console.log(etime);
+						var time = etime-btime;
+						//console.log(time);
+						
+						let selTime = $("#selTime")
+						
+						//let document.createElement("SELECT");
+						var times=[]; // 시간들을 배열로 받음
+				
+						console.log(times);
+						//var opt = document.createElement("OPTION");
+											//opt.value = times.push(i); // 배열에 담겨져 있는 값을 넘겨준다.
+											//opt.text =times.push(i); // 배열에 담겨져 있는 값을 보여준다.			
+						
+						
 						let tr = `<th class="table-primary">가격</th>
 								  <td colspan="4">${data.price}</td>
 								  <th class="table-primary">시작시간</th>
-								  <td>${data.beginTime} ~ ${data.endTime}</td>
-								  `;
+								  <td><select id="selTime">`;
+								  for(let i = btime; i<etime; i++){ // 시간만큼 반복문 돌림
+										tr+= `<option value='`+times.push(i)+`'>`+times.push(i)+`</option>`;
+									}
+								  tr+=`</select></td>`;
+								  
+						
 						return tr;
 					}
+
+					
 					
 					function makeFrm(data){
 						let consultTitle = $("#consultTitle").html();
