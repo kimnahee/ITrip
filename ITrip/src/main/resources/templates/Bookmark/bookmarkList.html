@@ -1,105 +1,315 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+<html xmlns:th="http://www.thymeleaf.org"
+   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+   layout:decorate="~{layout/layout}">
 <head>
 <meta charset="UTF-8">
-<title>즐겨찾기</title>
+<title>Insert title here</title>
 <style type="text/css">
 .content { /*컨텐츠 넓이지정*/
-	margin: 0 auto;
-	height: 750px;
-	width: 80%;
-	text-align: center;
+   margin: 0 auto;
+   height: 750px;
+   width: 80%;
+   text-align: center;
 }
 
 .card-content {
-	margin: 10px;
-	overflow: auto;
+   margin: 10px;
+   overflow: auto;
 }
 </style>
 </head>
 <body>
-	<div layout:fragment="content">
-		<section class="section">
-			<div class="card">
-				<div class="card-header">
+   <div layout:fragment="content">
+      <section class="section">
+         <div class="card">
+            <div class="card-header">
 					<h3>즐겨찾기</h3>
 					<br>
 					<h6>등록한 즐겨찾기를 확인 할 수 있습니다.</h6>
 					<hr>
 				</div>
-				<div class="card-body">
-					<div class="row">
-						<div class="col-md-12 bmCdPram">
-						<!--탭 -->
-							<ul class="nav nav-tabs" id="myTab" role="tablist" >
-								<li class="nav-item" role="presentation">
-								    <a class="nav-link active " id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
-									 aria-selected="true"> <i data-feather="star"></i> 중요한 문제  </a>
-								</li>
-								<li class="nav-item" role="presentation" onclick="bmparam(2)">
-								    <a class="nav-link " id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="bm2"
-									 aria-selected="false"><i data-feather="star"></i> 개념이 부족한 문제 </a>
-								</li>
-								<li class="nav-item" role="presentation">
-								    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact"
-									 aria-selected="false"><i data-feather="star"></i> 실수  </a>
-								</li>
-							</ul>
-							<br>
-							<!--탭끝-->
-							<!-- 탭 1-->
-							<div class="tab-content" id="myTabContent">
-							
-								<div id="bookmark1"> 
-							        <div th:if="${#lists.isEmpty(bookmark)}">
-								        <div class="content">
-									        <div class="card-content">
-										       <h4 class="form-check" style="padding: 50px;"> 즐겨찾기한 문제가 업습니다</h4>
-									        </div>
-								        </div>
-							        </div>
+            <div class="card-body">
+               <div class="row">
+                  <div class="col-md-12">
+                     <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item" role="presentation" value="1"><a
+                           class="nav-link active " id="home-tab" data-toggle="tab"
+                           href="#home" role="tab" aria-controls="home"
+                           aria-selected="true"> <i data-feather="star"></i> 중요한 문제
+                        </a></li>
+                        <li class="nav-item" role="presentation" value="2"><a
+                           class="nav-link " id="profile-tab" data-toggle="tab"
+                           href="#profile" role="tab" aria-controls="bm2"
+                           aria-selected="false"><i data-feather="star"></i> 개념이 부족한
+                              문제 </a></li>
+                        <li class="nav-item" role="presentation" value="3"><a
+                           class="nav-link" id="contact-tab" data-toggle="tab"
+                           href="#contact" role="tab" aria-controls="contact"
+                           aria-selected="false"><i data-feather="star"></i> 실수 </a></li>
+                     </ul>
+                     <div class="tab-content" id="myTabContent">
+                     <!-- 중요한 문제 -->
+                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                              <div th:if="${#lists.isEmpty(bookmark)}">
+                                 <div class="content">
+                                    <div class="card-content">
+											<h4 class="form-check" style="padding: 50px;">즐겨찾기한 문제가
+												없습니다</h4>
+										</div>
+                                 </div>
+                              </div>
 
-									<div th:unless="${#lists.isEmpty(bookmark)}"> 
-									<div >
-											<section id="content-types">
-												<div class="row">
-													<div class="col-md-3 col-sm-8" th:each="bm:${bookmark}" >
-														<div class="card">
-															<div class="card-content">
-																<div class="card-body">
-																	<h4 class="card-title">문제 <span th:text="${bm.cbtNo}"></span></h4>
-																	<b class="card-text" th:text="${bm.ques}"></b>
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-											</section>
-										<div>
-									</div>
-								</div>
-							    <!-- 탭내용1 끝 -->
-							    
-							    <!-- 탭내용2-->
-							     <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...2</div>
-							     
-							     <!--탭내용3-->
-  							     <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">..3.</div>
-							</div>
-							
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
-<script>
-    $(document).ready(function() {
-			bmCdPram();
-	})
-		
-    $('.bookmark').on("click","li",function(e) {})
-    
-</script>
-</div>
+                              <div th:unless="${#lists.isEmpty(bookmark)}"> 
+                                 <section id="content-types" th:each="bm,st:${bookmark}">
+                                    <div class="row" th:if="${bm.bmCd}==1" >
+                                       <div class="card">
+                                          <div class="card-content">
+                                             <div class="card-body">
+                                                   <i class="mb-2" data-feather="star"></i>
+                                             <h6 class="card-title">[[${bm.gtpCdName}]]
+                                                [[${bm.langCdName}]] 문제 [[${bm.cbtNo}]]번</h6>
+                                             <hr>
+                                             <b class="card-text mb-3" th:text="${bm.ques}"></b><br>
+                                             <br>
+                                             <!-- 보기 영역 -->
+                                             <div th:if="${bm.ex1} != null">
+                                                <div class="form-check">
+                                                   <input class="form-check-input" type="radio"
+                                                      th:id="|bm${bm.cbtNo}1|" name="radioChk" value="1">
+                                                   <label class="form-check-label"
+                                                      th:for="|bm${bm.cbtNo}1|" th:text="${bm.ex1}"></label>
+                                                </div>
+                                                <div class="form-check">
+                                                   <input class="form-check-input" type="radio"
+                                                      th:id="|bm${bm.cbtNo}2|" name="radioChk" value="2">
+                                                   <label class="form-check-label"
+                                                      th:for="|bm${bm.cbtNo}2|" th:text="${bm.ex2}">
+                                                   </label>
+                                                </div>
+                                                <div class="form-check">
+                                                   <input class="form-check-input" type="radio"
+                                                      th:id="|bm${bm.cbtNo}3|" name="radioChk" value="3">
+                                                   <label class="form-check-label"
+                                                      th:for="|bm${bm.cbtNo}3|" th:text="${bm.ex3}">
+                                                   </label>
+                                                </div>
+                                                <div class="form-check">
+                                                   <input class="form-check-input" type="radio"
+                                                      th:id="|bm${bm.cbtNo}4|" name="radioChk" value="4">
+                                                   <label class="form-check-label"
+                                                      th:for="|bm${bm.cbtNo}4|" th:text="${bm.ex4}">
+                                                   </label>
+                                                </div>
+                                             </div>
+                                             
+                                                <!-- 정답입력칸 -->
+                                                <div th:unless="${not #strings.isEmpty(bm.ex1)}">
+                                                   <div class="col-sm-4">
+                                                      <input class="form-control form-control-sm"
+                                                         type="text" id="inputCNSR" name="inputCNSR"
+                                                         placeholder="↵">
+                                                   </div>
+                                                </div>
+                                                <button type="button"
+                                                   class="btn btn-outline-primary mr-2 mt-3 anserCall"
+                                                   th:value="${bm.gtpCd}">정답보기</button>
+                                                <input type="hidden" id="cnsr" name="cnsr"
+                                                   th:value="${bm.cnsr}">
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </section>
+                              </div>
+                        </div>
+                        <!-- 개념이 부족한 문제 -->
+                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                              <div th:if="${#lists.isEmpty(bookmark)}">
+                                  <div class="content">
+                                    <div class="card-content">
+											<h4 class="form-check" style="padding: 50px;">즐겨찾기한 문제가
+												없습니다</h4>
+										</div>
+                                 </div>
+                              </div>
+
+                              <div th:unless="${#lists.isEmpty(bookmark)}" > 
+                                 <section id="content-types" th:each="bm,st:${bookmark}">
+                                    <div class="row" th:if="${bm.bmCd}==2">
+                                       <div class="card">
+                                          <div class="card-content">
+                                             <div class="card-body">
+                                                   <i class="mb-2" data-feather="star"></i>
+                                             <h6 class="card-title">[[${bm.gtpCdName}]]
+                                                [[${bm.langCdName}]] 문제 [[${bm.cbtNo}]]번</h6>
+                                             <hr>
+                                             <b class="card-text mb-3" th:text="${bm.ques}"></b><br>
+                                             <br>
+                                             <!-- 보기 영역 -->
+                                             <div th:if="${bm.ex1} != null">
+                                                <div class="form-check">
+                                                   <input class="form-check-input" type="radio"
+                                                      th:id="|bm${bm.cbtNo}1|" name="radioChk" value="1">
+                                                   <label class="form-check-label"
+                                                      th:for="|bm${bm.cbtNo}1|" th:text="${bm.ex1}"></label>
+                                                </div>
+                                                <div class="form-check">
+                                                   <input class="form-check-input" type="radio"
+                                                      th:id="|bm${bm.cbtNo}2|" name="radioChk" value="2">
+                                                   <label class="form-check-label"
+                                                      th:for="|bm${bm.cbtNo}2|" th:text="${bm.ex2}">
+                                                   </label>
+                                                </div>
+                                                <div class="form-check">
+                                                   <input class="form-check-input" type="radio"
+                                                      th:id="|bm${bm.cbtNo}3|" name="radioChk" value="3">
+                                                   <label class="form-check-label"
+                                                      th:for="|bm${bm.cbtNo}3|" th:text="${bm.ex3}">
+                                                   </label>
+                                                </div>
+                                                <div class="form-check">
+                                                   <input class="form-check-input" type="radio"
+                                                      th:id="|bm${bm.cbtNo}4|" name="radioChk" value="4">
+                                                   <label class="form-check-label"
+                                                      th:for="|bm${bm.cbtNo}4|" th:text="${bm.ex4}">
+                                                   </label>
+                                                </div>
+                                             </div>
+                                             
+                                                <!-- 정답입력칸 -->
+                                                <div th:unless="${not #strings.isEmpty(bm.ex1)}">
+                                                   <div class="col-sm-4">
+                                                      <input class="form-control form-control-sm"
+                                                         type="text" id="inputCNSR" name="inputCNSR"
+                                                         placeholder="↵">
+                                                   </div>
+                                                </div>
+                                                <button type="button"
+                                                   class="btn btn-outline-primary mr-2 mt-3 anserCall"
+                                                   th:value="${bm.gtpCd}">정답보기</button>
+                                                <input type="hidden" id="cnsr" name="cnsr"
+                                                   th:value="${bm.cnsr}">
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </section>
+                              </div>
+                        </div>
+                        <!-- 실수 -->
+                        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                              <div th:if="${#lists.isEmpty(bookmark)}">
+                               <div class="content">
+                                    <div class="card-content">
+											<h4 class="form-check" style="padding: 50px;">즐겨찾기한 문제가
+												없습니다</h4>
+										</div>
+                                 </div>
+                              </div>
+
+                              <div th:unless="${#lists.isEmpty(bookmark)}"> 
+                                 <section id="content-types" th:each="bm,st:${bookmark}">
+                                    <div class="row" th:if="${bm.bmCd}==3">
+                                       <div class="card">
+                                          <div class="card-content">
+                                             <div class="card-body">
+                                                   <i class="mb-2" data-feather="star"></i>
+                                             <h6 class="card-title">[[${bm.gtpCdName}]]
+                                                [[${bm.langCdName}]] 문제 [[${bm.cbtNo}]]번</h6>
+                                             <hr>
+                                             <b class="card-text mb-3" th:text="${bm.ques}"></b><br>
+                                             <br>
+                                             <!-- 보기 영역 -->
+                                             <div th:if="${bm.ex1} != null">
+                                                <div class="form-check">
+                                                   <input class="form-check-input" type="radio"
+                                                      th:id="|bm${bm.cbtNo}1|" name="radioChk" value="1">
+                                                   <label class="form-check-label"
+                                                      th:for="|bm${bm.cbtNo}1|" th:text="${bm.ex1}"></label>
+                                                </div>
+                                                <div class="form-check">
+                                                   <input class="form-check-input" type="radio"
+                                                      th:id="|bm${bm.cbtNo}2|" name="radioChk" value="2">
+                                                   <label class="form-check-label"
+                                                      th:for="|bm${bm.cbtNo}2|" th:text="${bm.ex2}">
+                                                   </label>
+                                                </div>
+                                                <div class="form-check">
+                                                   <input class="form-check-input" type="radio"
+                                                      th:id="|bm${bm.cbtNo}3|" name="radioChk" value="3">
+                                                   <label class="form-check-label"
+                                                      th:for="|bm${bm.cbtNo}3|" th:text="${bm.ex3}">
+                                                   </label>
+                                                </div>
+                                                <div class="form-check">
+                                                   <input class="form-check-input" type="radio"
+                                                      th:id="|bm${bm.cbtNo}4|" name="radioChk" value="4">
+                                                   <label class="form-check-label"
+                                                      th:for="|bm${bm.cbtNo}4|" th:text="${bm.ex4}">
+                                                   </label>
+                                                </div>
+                                             </div>
+                                             
+                                                <!-- 정답입력칸 -->
+                                                <div th:unless="${not #strings.isEmpty(bm.ex1)}">
+                                                   <div class="col-sm-4">
+                                                      <input class="form-control form-control-sm"
+                                                         type="text" id="inputCNSR" name="inputCNSR"
+                                                         placeholder="↵">
+                                                   </div>
+                                                </div>
+                                                <button type="button"
+                                                   class="btn btn-outline-primary mr-2 mt-3 anserCall"
+                                                   th:value="${bm.gtpCd}">정답보기</button>
+                                                <input type="hidden" id="cnsr" name="cnsr"
+                                                   th:value="${bm.cnsr}">
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </section>
+                              </div>
+                        </div>
+                        
+                        
+                     </div>
+                  </div>
+
+               </div>
+            </div>
+         </div>
+      </section>
+      <script>
+    //토큰 정보
+		let csrfHeaderName = "${_csrf.headerName}";
+		let csrfToken = $("input[name=_csrf]").val();
+
+		$('.anserCall').on("click", function(e) {
+							let tg = e.currentTarget;
+							let crrCnsr = tg.nextElementSibling.value; //정답
+
+							if (tg.value == 1) { //객관식이면
+								let chk = $('input[name=radioChk]:checked')
+										.val();
+								if (chk == crrCnsr) {
+									alert("정답입니다.")
+								} else {
+									alert("오답입니다. 정답은 " + crrCnsr
+											+ "번 입니다.");
+								}
+
+							} else { //단답형이면
+								let sCnsr = tg.parentElement.childNodes[16].childNodes[1].childNodes[1].value; // 단답형 인풋 영역
+								if (sCnsr == crrCnsr) {
+									alert("정답입니다.")
+								} else {
+									alert("오답입니다. 정답은 [" + crrCnsr
+											+ "]입니다.");
+								} 
+							}
+						})
+      </script>
+   </div>
 </body>
 </html>
