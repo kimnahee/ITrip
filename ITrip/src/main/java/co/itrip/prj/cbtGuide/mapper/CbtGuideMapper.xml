@@ -456,12 +456,26 @@
 	<select id="bookmarkList" parameterType="co.itrip.prj.cbtGuide.service.CbtGuideVO" resultType="co.itrip.prj.cbtGuide.service.CbtGuideVO">
 	    SELECT B.BM_CD, 
 	           C.CBT_NO,
-	           C.QUES  
+	           C.QUES,  
+			   C.CNSR,
+			   C.EX1,
+			   C.EX2,
+			   C.EX3,
+			   C.EX4,
+			   C.ATTACH,
+			   C.ATTACH_DIR,
+			   C.CNSR_CNT,
+			   C.CALL,
+			   C.EXPLNA,
+			   C.GTP_CD,
+			   FUN_CODENAME('G',GTP_CD) GTP_CD_name,
+			   C.LANG_CD,
+			   FUN_CODENAME('L',LANG_CD) LANG_CD_name,
+			   C.MEMBER_ID
         FROM CBT_GUIDE C, 
              BOOKMARK B
         WHERE B.CBT_NO = C.CBT_NO 
           AND B.MEMBER_ID = #{memberId}
-         
 	</select>
 	
 	

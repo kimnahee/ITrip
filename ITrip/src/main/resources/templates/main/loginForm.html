@@ -58,44 +58,12 @@
                             <button class="btn btn-primary float-right">로그인</button>
                         </div>
                     </form>
-                    <div class="divider">
-                        <div class="divider-text">간편 로그인</div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-6 text-center mb-5">
-                            <img alt="" src="images/kakaologin.png" style="position:absolute; z-index:2;width: 180px; cursor: pointer;" id="kakaologin" onclick="kakaoLogin()">
-                            <p id="token-result"></p>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-	<script type="text/javascript">
-	    function kakaoLogin(){
-	    	console.log(Kakao.isInitialized()); // SDK 초기화 여부를 판단
-	    	Kakao.Auth.login({
-	    	      success: function (response) {
-	    	        Kakao.API.request({
-	    	          url: '/v2/user/me',
-	    	          success: function (response) {
-	    	        	  console.log(response);
-	    	        	  
-	    	          },
-	    	          fail: function (error) {
-	    	            console.log(error)
-	    	          },
-	    	        })
-	    	      },
-	    	      fail: function (error) {
-	    	        console.log(error)
-	    	      },
-	    	    })
-	
-	    }
-	    
-	</script>
+
 </div>
 </body>
 </html>

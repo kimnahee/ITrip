@@ -50,7 +50,7 @@ public class RegisterMail implements MailServiceInter{
 		msgText += "</div>";
 		msg.setText(msgText,"utf-8","html");
 		
-		msg.setFrom(new InternetAddress("devel2022p@naver.com","ITrip_ADMIN")); //발송인
+		msg.setFrom(new InternetAddress("itrip1019@naver.com","ITrip_ADMIN")); //발송인
 		
 		return msg;
 	}
