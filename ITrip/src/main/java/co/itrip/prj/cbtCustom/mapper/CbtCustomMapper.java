@@ -13,6 +13,6 @@ public interface CbtCustomMapper {
 	int cbtCustomHderChkUpdate(CbtCustomHderVO vo); //비교해서정답체크
 	List<CbtCustomHderVO> cbtCustomHderList(CbtCustomHderVO vo); //문제지목록 가져오기
 
-	List<CbtGuideVO> cbtCustomListO(CbtGuideVO vo);
-	List<CbtGuideVO> cbtCustomListX(CbtGuideVO vo);
+	List<CbtGuideVO> cbtCustomListO(CbtGuideVO vo);//맞은문제
+	List<CbtGuideVO> cbtCustomListX(CbtGuideVO vo);//틀린문제
 }

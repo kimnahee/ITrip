@@ -17,5 +17,6 @@ public class CbtCustomHderVO {
 	int chk; // 정답유무
 
 	String langCd;
+	String cdName;
 	
 }
