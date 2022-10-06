@@ -136,16 +136,10 @@
 	
 	
 	<select id="myConsultList" resultType="co.itrip.prj.consult.service.ConsultVO">
-		SELECT C.CONSULT_NO, C.TITLE, C.CONTENT, C.DT ,C.STATE_CD, C.GUIDE_ID, C.JOB_CD, C.ENNC, C.BEGIN_DATE, C.END_DATE, pay.member_id
-		            ,FUN_CODENAME('D', G.DUTY) AS DUTY_NAME
-		            ,FUN_CODENAME('R', G.CAREER) AS CAREER
-		            ,FUN_CODENAME('J', C.JOB_CD) AS JOB_NAME
-		FROM CONSULT C, GUIDE G, payform pay
-		where C.GUIDE_ID=G.GUIDE_ID  
-		and c.consult_no = pay.no
-		and pay.category = 'CONSULT'
-		and pay.member_id = #{memberId}
-		ORDER BY CONSULT_NO DESC
+		select c.ennc, c.guide_id, c.consult_no, c.title, p.conday, p.begin_time as stime
+		from consult c, payform p
+		where c.consult_no = p.no
+		and p.member_id = #{memberId}
 	</select>
 	
 	<!-- 채팅방 연결 -->

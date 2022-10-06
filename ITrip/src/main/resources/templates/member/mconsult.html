@@ -115,7 +115,6 @@
 						<div class="col-12" th:unless="${#lists.isEmpty(consultList)}">
 							<div class="property-slider-wrap">
 							
-									<!-- 상담이 활성화일 때 -->
 								<div class="property-slider">
 									<div class="card col-xs-12 col-sm-6 col-md-5 col-lg-3 cCard" th:each="con : ${consultList}">
 										
@@ -130,9 +129,9 @@
 
 													<div class="specs d-flex mb-4 spanM">
 														<ul class="list-group list-group-flush conBody">
-					    									<li class="list-group-item" th:text="'직무   '+${con.dutyName}"></li>
-					   										 <li class="list-group-item" th:text="'경력   '+${con.career}"></li>
-					   										 <li class="list-group-item" >[[${con.jobName}]]</li>
+					    									<li class="list-group-item" th:text="'가이드  / '+${con.guideId}"></li>
+					   										 <li class="list-group-item" th:text="'상담일  / '+${con.conday}"></li>
+					   										 <li class="list-group-item" th:text="'상담 시작시간  / '+${con.stime}"></li>
 					 									 </ul>
 													</div>
 													<span>
