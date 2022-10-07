@@ -11,20 +11,56 @@ layout:decorate="~{layout/layout}">
 <body layout:fragment="content">
  <div class="section">
       <div class="container">
-      
-			
-      <button th:text="전체" class="btn btn-primary round" onclick="location.href='/iClassList.do'" style="margin:5px;"></button>
-      <div style=" display:inline-block; margin:0 auto;" th:each="j:${job}">
-     	<button th:text=${j.cdName} th:id="${j.cdNo}" class="btn btn-primary round" onclick="jobSearch(1,this.getAttribute('id'))"style="margin:5px;"></button>
-      </div><br><br><br>
+	     <div id="btnArea" style="height:100px;padding-top:20px; text-align:center;">
+		     <button th:text="전체" class="btn btn-primary round" onclick="location.href='/iClassList.do'" style="margin:5px;"></button>
+		     <div style=" display:inline-block; " th:each="j:${job}">
+		     <button th:text=${j.cdName} th:id="${j.cdNo}" class="btn btn-primary round" onclick="jobSearch(1,this.getAttribute('id'))"style="margin:5px;"></button>
+		     </div>
+      	</div>
         <div class="row" id="classList">
+        <section class="py-5">
+	        <div class="container px-4 px-lg-5 mt-5">
+	            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-3 justify-content-center">
+					
+					<div th:each="cList:${pageInfo.list}" id="searchClassList"> 
+		                <div class="col mb-5">
+		                    <div class="card h-100">
+		                        <img class="card-img-top" src="images/cbtuser.png" alt="..." />
+		                        
+		                        <div class="card-body p-4">
+		                            <div class="text-center">
+		                                <h5 class="fw-bolder" style="font-weight: bolder;" th:text="${cList.title}"></h5>
+		                                <div>
+						                     <img src="images/dt.png" width="20px;"></img>  
+						                     <span class="caption badge bg-warning" th:text="${cList.term}"></span><br>
+			                                 <span class="">주요기능 </span>
+						                     <span class="card-title" style="font-weight: bold;" th:text="${cList.cdName}"></span><br>
+						                     <span class="">정원 </span>
+						                     <span class="card-title" style="font-weight: bold;" th:text="${cList.psncpa}+명"></span><br>
+						                     <span class="card-title" style="font-weight: bold;" th:text="${cList.price}+원"></span>
+		                                </div>
+		                            </div>
+		                        </div>
+		                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+		                            <div class="text-center classInfo">
+		                            	<a class="btn btn-outline-dark mt-auto" href="#">더보기</a>
+				 						<div th:text="${cList.classNo}" style="display: none;"></div>
+		                           	</div>
+		                        </div>
+		                    </div>
+		                </div>
+					</div>
+					
+	            </div>
+	        </div>
+	    </section>
         
-          <div class="card col-xs-12 col-sm-6 col-md-5 col-lg-4" th:each="cList:${pageInfo.list}" id="searchClassList">
-
-            <div class="property-item mb-30">
-             <!--  <a href="#" class="img"><img th:src="@{*{cList.attachDir}}"alt="Image" class="img-fluid"></a> -->
-              
+        
+<!--           <div class="card col-xs-12 col-sm-6 col-md-5 col-lg-4" th:each="cList:${pageInfo.list}" id="searchClassList">
+			<div>
+              <a href="#" class="img"><img th:src="@{*{cList.attachDir}}"alt="Image" class="img-fluid"></a>
                <a href="#" class="img"><img th:src="@{/download(fileName=${cList.attachDir})}" alt="Image" class="img-fluid"/></a>
+               <a href="#" class="img"><img src="images/note3.png" alt="Image" class="img-fluid"/></a>
               <div class="property-content">
                 <div class="price mb-2"><span th:text=${cList.price} class="cPrice"></span></div>
                 <div>
@@ -46,13 +82,12 @@ layout:decorate="~{layout/layout}">
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
+          
           
         </div>
         
         <div class="row align-items-center py-5" id="pagingNav">
-      
-	
 			<!-- 페이지네이션 -->
 			<nav aria-label="Page navigation example">
 				<ul class="pagination pagination-info  justify-content-center">
@@ -142,8 +177,8 @@ layout:decorate="~{layout/layout}">
 	function makeClassList(data) {
 		$('#classList').html("");
 		$.each(data, function(index, item){
-			console.log(item)
-			var row = '<div class="card col-xs-12 col-sm-6 col-md-5 col-lg-4">'
+			
+			var row0 = '<div class="card col-xs-12 col-sm-6 col-md-5 col-lg-4">'
 				+'<div class="property-item mb-30">'
          		+'<a href="#" class="img"><img src='+item.attachDir+' alt="Image" class="img-fluid"></a>'
            		+'<div class="property-content">'
@@ -156,15 +191,31 @@ layout:decorate="~{layout/layout}">
                	+'<a href="#"  class="btn btn-primary py-2 px-3 classInfo">더보기</a>'
 				+'<div style="display: none">'+item.classNo+'</div></div></div></div></div>'
 	
+				
+			var row = '<br><div id="searchClassList" style="width:370px;margin:30px;"> <div class="col mb-5"><div class="card h-100">'
+                +'<img class="card-img-top" src="images/cbtuser.png" alt="..." />'
+                +'<div class="card-body p-4"><div class="text-center">'
+                +'<h5 class="fw-bolder" style="font-weight: bolder;">'+item.title+'</h5>'
+                +'<div><img src="images/dt.png" width="20px;"></img>  '
+                +'<span class="caption badge bg-warning">'+item.term+'</span><br>'
+                +'<span class="">주요기능 </span>'
+                +'<span class="card-title" style="font-weight: bold;">'+item.cdName+'</span><br>'
+                +'<span class="">정원 </span>'
+                +'<span class="card-title" style="font-weight: bold;">'+item.psncpa+'명</span><br>'
+                +'<span class="card-title" style="font-weight: bold;">'+item.price+'원</span><br>'
+                +'</div></div></div>'
+                +'<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">'
+                +'<div class="text-center classInfo">'
+                +'<a class="btn btn-outline-dark mt-auto" href="#">더보기</a>'
+		 		+'<div style="display: none">'+item.classNo+'</div>'
+                +'</div></div></div></div></div>'
+				
 				$('#classList').append(row);
 				
-				console.log(data)
 		});
 	}
 	
 	function makePaging(res,jobCd){
-		console.log(res)
-		console.log("jobCd : "+jobCd)
 		$("#pagingNav").html("");
 		
 		ph ='<nav aria-label="Page navigation example">'
