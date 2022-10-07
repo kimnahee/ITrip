@@ -5,6 +5,8 @@ package co.itrip.prj.member.web;
 import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,8 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
-import co.itrip.prj.cbtGuide.service.CbtGuideVO;
-import co.itrip.prj.cbtGuide.service.MyCbtHderVO;
 import co.itrip.prj.cmmncd.service.CmmnCdService;
 import co.itrip.prj.community.service.CommunityService;
 import co.itrip.prj.community.service.CommunityVO;
@@ -183,6 +183,31 @@ public class MemberController { //Principal
 		mService.memberInsert(vo);
 		return "main/main";
 	}
-
+	
+	/* 김하은 : 회원탈퇴 전 비밀번호 확인 폼 */
+	@GetMapping("/pwChkForm.do")
+	public String pwChkForm() {
+		return "main/pwChkForm";
+	}
+	/* 김하은 : 비밀번호 확인 후 회원정보 수정폼으로... */
+	@PostMapping("/pwChk.do")
+	public String pwChk(MemberVO vo, @RequestParam(value ="error", required =false)String error,
+			@RequestParam(value ="exception", required =false)String exception, Model model) {
+	
+		MemberVO memberDao = mService.memberSelect(vo); //DB의 pw를 가져옴 
+		String DBpw = memberDao.getPw(); // DB의 비밀번호
+		
+		
+		PasswordEncoder reqPw = new BCryptPasswordEncoder(); // 암호화처리를 위한 인스턴스 생성
+	
+		if(reqPw.matches(vo.getPw(), DBpw)) {
+			System.out.println("비밀번호가 맞음...!");
+			return "redirect:/mrecive.do";
+		}else {
+			System.out.println("비밀번호가 틀림...!");
+			model.addAttribute("error", error);
+			model.addAttribute("exception", exception);
+			return "main/pwChkForm";
+		}
+    }
 }
-

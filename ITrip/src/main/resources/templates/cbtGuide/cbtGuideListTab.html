@@ -9,6 +9,19 @@
 <title>CBT 문제 목록</title>
 <script src="js/jquery-3.6.0.min.js"></script>
 <style>
+.form-group h3{
+  display : inline-block;
+}
+#bmSty{
+ display : inline-block;
+ width: 30px;
+ position : relative;
+ top : -5px;
+ left: -10px;
+}
+.bookmark{
+  padding-left : 0px;
+}
 </style>
 </head>
 <body>
@@ -19,7 +32,10 @@
 			<div class="col-md-10 col-12 cbtNoSelc">
 				<div class="card">
 					<div class="card-header">
-						<h4 class="card-title">문제</h4>
+						<h4 class="card-title">랜덤 문제</h4>
+						<br>
+					   <h6>랜덤으로 출제된 5문제를 풀 수 있습니다. <br>5문제를 푸신 후 제출하시면 채점 결과를 확인 하실 수 있습니다.</h6>
+					   <hr>
 					</div>
 					<div class="card-content">
 						 <!--문제가 없는 경우 -->
@@ -35,11 +51,11 @@
 										<div class="row">
 											<div class="col-12">
 												<div class="form-group">
-												
-													<!-- 북마크 -->
-													<div data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user"><h3>문제<span th:text="${cbt.cbtNo}"></span></h3>
-													<a class="bmArea" style="cursor: pointer" th:data-no="${st.index}"></a>
-													</div>
+													    <h3>문제<span th:text="${cbt.cbtNo}"></span></h3>
+														<!-- 북마크 -->
+														<div id="bmSty"data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
+														   <a class="bmArea" style="cursor: pointer" th:data-no="${st.index}"></a>
+														</div>
 													<!-- 북마크 목록-->
 													     <div class="dropdown-menu">
 													     <ul class="bookmark">

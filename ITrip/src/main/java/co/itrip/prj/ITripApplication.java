@@ -10,6 +10,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @SpringBootApplication
 @Controller
@@ -27,6 +29,16 @@ public class ITripApplication {
         //model.addAttribute("author",userDetails.getUsername());
 		
 		return "main/main";
+	}
+	/* 김하은 로그인 처리 */
+	@RequestMapping("/login")
+	public String login(@RequestParam(value ="error", required =false)String error,
+			@RequestParam(value ="exception", required =false)String exception, Model model) {
+		
+		//에러가 있다면 model에 반영
+		model.addAttribute("error", error);
+		model.addAttribute("exception", exception);
+		return "main/loginForm";
 	}
 	
 	//로그인 폼
