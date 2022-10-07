@@ -65,19 +65,18 @@
 	</select>
 	
 	<select id="myClassList" resultType="co.itrip.prj.iclass.service.ClassVO">
-		select distinct c.class_no, c.title, c.content, c.crclm, c.dt, c.price, c.attach, c.attach_dir, c.job_cd, c.psncpa, c.class_cnt, c.ennc, c.confm_cd, c.guide_id, cm.cd_ini, cm.cd_no, cm.cd_name, dt.term, dt.begin_time, dt.end_time, pay.member_id
-		from class c
-		left join cmmncd cm
-		on c.job_cd = cm.cd_no
-		left join class_dt dt
-		on c.class_no = dt.class_no
-        left join payform pay
-        on c.class_no = pay.no
-		where cm.cd_ini = 'J' 
-        and dt.ctime_no=1 
-        and pay.category = 'CLASS'
-        and pay.member_id = #{memberId}	
-        order by 1
+		 SELECT C.* ,DT.MINDT, DT.MAXDT, p.member_id,
+     				CASE WHEN  SYSDATE BETWEEN MINDT AND MAXDT THEN '진행중'
+                    <![CDATA[WHEN  SYSDATE < MINDT THEN '개설전']]> <!--  Query안에 사용되고 있는 부등호가 문자열이라는 것을 의미 -->
+                    ELSE '종료'
+                    END ST
+        FROM CLASS C , payform p, ( SELECT CLASS_NO, MIN(TERM) MINDT , MAX(TERM) MAXDT 
+                         FROM CLASS_DT
+                         GROUP BY CLASS_NO) DT
+        WHERE C.CLASS_NO = DT.CLASS_NO
+        and p.no = c.class_no
+        AND C.CONFM_CD = '2'
+        AND p.member_id=#{memberId}
 	</select>
 	
 	<select id="alreadyClass" resultType="co.itrip.prj.iclass.service.ClassVO">

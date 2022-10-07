@@ -110,21 +110,27 @@ public class AdminController {
 	// 상담 검색
 	@GetMapping("/consultSearch.do")
 	@ResponseBody
-	private List<ConsultVO> consultSearch(@RequestParam("key") String key,
-			@RequestParam("val") String val, Model model, ConsultVO vo) {
+	private PageInfo<ConsultVO> consultSearch(@RequestParam("key") String key,
+			@RequestParam("val") String val, Model model, ConsultVO vo,
+			@RequestParam(required = false, defaultValue = "1") int pageNum,
+			@RequestParam(required = false, defaultValue = "5") int pageSize) {
 		vo.setVal(val);
 		vo.setKey(key);
-		return adminService.consultSearch(vo);
+		PageHelper.startPage(pageNum, pageSize);
+		return PageInfo.of(adminService.consultSearch(vo));
 	}
 	
 	// 클래스 검색
 	@GetMapping("/dateSearch.do")
 	@ResponseBody
-	private List<ClassVO> dateSearch(@RequestParam("sdate") String sdate,
-			@RequestParam("edate") String edate, Model model, ClassVO vo) {
+	private PageInfo<ClassVO> dateSearch(@RequestParam("sdate") String sdate,
+			@RequestParam("edate") String edate, Model model, ClassVO vo,
+			@RequestParam(required = false, defaultValue = "1") int pageNum,
+			@RequestParam(required = false, defaultValue = "5") int pageSize) {
 		vo.setSdate(sdate);
 		vo.setEdate(edate);
-		return adminService.classSearch(vo);
+		PageHelper.startPage(pageNum, pageSize);
+		return PageInfo.of(adminService.classSearch(vo));
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

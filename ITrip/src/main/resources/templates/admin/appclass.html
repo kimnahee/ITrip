@@ -42,7 +42,7 @@
 							<input type="date" class="form-control" id="edate" name="edate">
 						</div>
 					 <div class="col-2 d-flex justify-content-end">
-                        <button type="button" class="btn btn-primary mr-1 mb-1" onclick="getDateList()">검색</button>
+                        <button type="button" class="btn btn-primary mr-1 mb-1 searchBtn" >검색</button>
                     </div>
 					</div>
 				</div>
@@ -52,7 +52,8 @@
 		<!-- 검색폼 끝 -->
       </div>
       
-        <div class="card-body">
+      <!-- 페이징하면서 만들 전체 시작-->
+        <div class="card-body" id="all">
 		
 		<!-- 신청 리스트 시작 -->
         <div class="table-responsive">
@@ -83,14 +84,9 @@
               </tr>
             </tbody>
           </table>
-        </div>
+        </div><br>
         <!-- 신청 리스트 끝 -->
-         </div>
-        
-
-    </div>
-  </div>
-</div>
+         
 <!-- Table head options end -->
 <!-- 페이지네이션 -->
 			 <nav aria-label="Page navigation example">
@@ -120,6 +116,12 @@
 						class="page-link">»</span></li>
 				</ul>
 			</nav> 
+		</div>
+      <!-- 페이징하면서 만들 전체 끝-->  
+
+    </div>
+  </div>
+</div>
 			<script type="text/javascript">
 		 	function gopage(p) {
 				location.href = '/appClass.do?pageNum=' + p;
@@ -128,29 +130,97 @@
 		 	let token = $("meta[name='_csrf']").attr("content");
 			let header = $("meta[name='_csrf_header']").attr("content");
 			
-			
-			// ajax로 날짜 검색
-			function getDateList() {
+			$(".searchBtn").on("click",function(){
+				
 				let sdate = $("#sdate").val();
 				let edate = $("#edate").val();
-			//	console.log(sdate);
-			//	console.log(edate);
+				console.log(sdate);
+				console.log(edate);
+				  getDateList(1,sdate,edate)
+			})
+			
+			// ajax로 날짜 검색
+			function getDateList(p,sdate,edate) {
 				
 				$.ajax({
 					url:'/dateSearch.do',
 					type:'GET',
-					data:{'sdate':sdate, 'edate':edate},
+					dataType:'json',
+					data:{'sdate':sdate, 'edate':edate, "pageNum":p},
 					beforeSend:function(xhr) {
 						xhr.setRequestHeader("AJAX", true);
 					    xhr.setRequestHeader("X-CSRF-TOKEN", token);
 					},
 					success:function result(res) {
-					//	console.log(res);
-						if(res.length >=1 ) {
-							$("#tbody").empty();
-							res.forEach(element=>{
-								$("#tbody").append(htmlView(element));
+						
+						if(res.list.length >=1 ) {
+							console.log(res.list);
+							$("#all").empty();
+							
+							listofHead =`<div class="table-responsive">
+						          <table class="table table-light mb-0"> 
+					            <thead>
+					              <tr>
+					                <th>클래스제목</th>
+					                <th>가이드아이디</th>
+					                <th>업무 카테고리</th>
+					                <th>정원/수업횟수</th>
+					                <th>신청일자</th>
+					                <th>승인상태</th>
+					                <th>승인수정</th>
+					              </tr>
+					            </thead>
+					            <tbody id="tbody">`;
+					            
+							res.list.forEach((elem,idx,arr)=>{
+								 
+								  
+						    listofHead += `<tr>
+				                <td class="text-bold-500" >${elem.title}</td>
+				                <td >${elem.guideId}</td>
+				                <td class="text-bold-500" >${elem.cdName}</td>
+				                <td class="text-bold-500" >${elem.psncpa}명 / ${elem.classCnt}주</td>
+				                <td class="text-bold-500" >${elem.dt}</td>
+				                <td class="text-bold-500" >${elem.confmCd}</td>
+				                <td id="${elem.classNo}">
+				                <input type="button" onclick="updateClass(this.getAttribute('id'))"
+								class="btn btn-primary btn-l" value="수정" name="${elem.classNo}" id="${elem.classNo}">
+								</td>
+				              </tr>`;		  
+								
 							})
+							
+							listofHead +=`</tr></tbody></table></div><br>`;
+							
+								$("#all").html(listofHead);
+								
+								ph ='<nav aria-label="Page navigation example">'
+								    +'<ul class="pagination pagination-info  justify-content-center">'
+								 if(res.isFirstPage==true){  
+									ph += '<li class="page-item disabled"><span class="page-link">«</span></li>'
+								 }
+								 else{
+							    	ph += `<li class="page-item"><a class="page-link" href="javascript:getDateList(${res.prePage},'${sdate}','${edate}')" rel="prev">«</a></li>`
+							    }
+						
+								for(page of res.navigatepageNums){
+									ph += `<li class="page-item (${res.pageNum} eq ${page}) ? active: ''}" ></li>`
+									if(res.pageNum == page){
+										ph += `<span class='page-link'>${page}</span>`
+									}else{
+										ph+=`<a class='page-link' href='javascript:getDateList(${page},"${sdate}","${edate}")'>${page}</a>`
+									}
+									ph += "</li>"
+								}
+							
+								if(res.hasNextPage ==true){
+									ph += ` <li class="page-item"><a class="page-link" href="javascript:getDateList(${res.nextPage},'${sdate}','${edate}')" rel="next">»</a></li>`
+								}else{
+									ph += '<li class="page-item disabled"><span class="page-link">»</span></li></ul></nav>'
+								}
+								
+								$("#all").html(listofHead + ph);
+								
 						}else {
 							alert('검색결과가 없습니다');
 						}
