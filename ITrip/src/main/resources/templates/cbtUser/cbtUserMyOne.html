@@ -51,8 +51,6 @@
 									<textarea class="form-control" id="ques" name="ques" rows="3" th:text=${myCbt.ques}></textarea>
 								</div>
 
-
-
 								<div class="form-group mb-3" id="exList">
 									<div th:if="${myCbt.utpCd}=='1'">
 										<label for="ex1" class="form-label">보기①</label>
@@ -79,20 +77,17 @@
 									</div>
 								</div>
 
+								<label for="explna" class="form-label">풀이</label>
+								<textarea class="form-control" id="explna" name="explna" rows="3" th:text=${myCbt.explna}></textarea>
+							
+								<div class="form-file">
 								
-								<div class="form-group mb-3">
-									<label for="explna" class="form-label">풀이</label>
-									<textarea class="form-control" id="explna" name="explna" rows="3" th:text=${myCbt.explna}></textarea>
-								</div>
-								<div class="col-md-6 mb-1">
-									<div class="input-group mb-3">
-										<div class="form-file">
-                                             <img th:src="@{/download(fileName=${'/CBT_USER/'+myCbt.attachDir})}" th:text="${myCbt.attach}" style="width: 100px;"/>
-                                             <input type="file" id="attach" class="form-control form-group" name="file" >
-                                        </div>
-                                        
-									</div>
-								</div>
+								<div th:if="${!#lists.isEmpty(myCbt.attachDir)}">
+                                   <img th:src="@{/download(fileName=${'/CBT_USER/'+myCbt.attachDir})}" th:text="${myCbt.attach}" style="width: 100px;"/>
+                                </div>   
+                                   <input type="file" id="attach" class="form-control form-group" name="file" >
+                                </div>
+                                       
 								<input id="memberId" name="memberId" th:value="${#authentication.principal.member.memberId}"  type="hidden">
 								<input id="cbtNo" name="cbtNo" th:value="${myCbt.cbtNo}"  type="hidden">
 							</div>
@@ -100,7 +95,7 @@
 							<div class="col-12 d-flex justify-content-end">
 								<button type="submit" class="btn btn-primary mr-1 mb-1">수정</button>
 								<button type="button" class="btn btn-primary mr-1 mb-1"th:id="${myCbt.cbtNo}" onclick="deleteCbt(this.getAttribute('id'))">삭제</button>
-								<button type="reset" class="btn btn-light-secondary mr-1 mb-1">취소</button>
+								<button type="button" class="btn btn-light-secondary mr-1 mb-1" id="listBtn">취소</button>
 							</div>
 							</form>
 						</div>
@@ -121,9 +116,21 @@
 			
 			function deleteCbt(cbtNo){
 				// alert("삭제하시겠습니까???")
-		    	frm.action ="cbtUserMyDelete.do"
-		    	frm.submit()
+				let del = confirm("정말 삭제하시겠습니까?")
+				if(del == true){
+					frm.action ="cbtUserMyDelete.do"
+				    frm.submit()
+				}else{
+					alert("삭제가 취소되었습니다.")
+				}
+		    	
 			}
+			
+
+			//수정취소버튼클릭시
+			$("#listBtn").on("click",function(){
+			   location.href = "/cbtUserMyList.do";
+			})
 		</script>
 </div>
 </body>

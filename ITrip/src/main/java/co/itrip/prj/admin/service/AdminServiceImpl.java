@@ -79,6 +79,11 @@ public class AdminServiceImpl implements AdminService {
 		return map.classSearch(vo);
 	}
 
+	@Override
+	public List<MemberVO> ajaxSearchMember(MemberVO vo) {
+		return map.ajaxSearchMember(vo);
+	}
+
 	
 
 }

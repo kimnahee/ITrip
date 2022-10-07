@@ -24,13 +24,17 @@
 
 	<select id="classList" resultType="co.itrip.prj.iclass.service.ClassVO"
 			 parameterType="co.itrip.prj.iclass.service.ClassVO">
-		select distinct c.class_no, c.title, c.content, c.crclm, c.dt, c.price, c.attach, c.attach_dir, c.job_cd, c.psncpa, c.class_cnt, c.ennc, c.confm_cd, c.guide_id, cm.cd_ini, cm.cd_no, cm.cd_name, dt.term, dt.begin_time, dt.end_time
-		from class c
-		left join cmmncd cm
-		on c.job_cd = cm.cd_no
-		left join class_dt dt
-		on c.class_no = dt.class_no
-		where cm.cd_ini = 'J' and dt.ctime_no=1  order by 1
+ 		select distinct c.class_no, c.title, c.content, c.crclm, c.dt, 
+			c.price, c.attach, c.attach_dir, c.job_cd, c.psncpa, c.class_cnt, 
+			c.ennc, c.confm_cd, c.guide_id, cm.cd_ini, cm.cd_no, cm.cd_name, 
+			dt.term, dt.begin_time, dt.end_time
+				from class c
+				left join cmmncd cm
+				on c.job_cd = cm.cd_no
+				left join class_dt dt
+				on c.class_no = dt.class_no
+				where cm.cd_ini = 'J' and dt.ctime_no=1  order by 1 
+
 	</select><!-- and ennc = '활성화' -->
 	
 	<select id="classDtList" resultType="co.itrip.prj.iclass.service.ClassDtVO"

@@ -169,7 +169,6 @@ public class AdminController {
 	}
 	
 	
-
     //경아 - 파일 다운로드 처리
 	 @GetMapping(value = "/download", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	 public void download(String fileName, HttpServletResponse response, HttpServletRequest request){
@@ -214,5 +213,14 @@ public class AdminController {
 
 	    }
 	 
+	 @RequestMapping("/ajaxSearchMember.do")
+	 @ResponseBody
+	 public PageInfo<MemberVO> ajaxSearchMember(@RequestParam("key") String key,
+			 	@RequestParam("val") String val, MemberVO vo, HttpServletRequest request,
+				@RequestParam(required = false, defaultValue = "1") int pageNum,
+				@RequestParam(required = false, defaultValue = "10") int pageSize) {
+			PageHelper.startPage(pageNum, pageSize); 
+		 return  PageInfo.of(adminService.ajaxSearchMember(vo));
+	 }
 	 
 }
