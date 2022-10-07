@@ -2,6 +2,9 @@ package co.itrip.prj.payform.web;
 
 import java.security.Principal;
 
+import javax.security.auth.message.callback.PrivateKeyCallback.Request;
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,6 +37,19 @@ public class PayformController {
 		
 		return "redirect:myPage";
 	}
+	
+	
+	//은지 - 상담구입
+	@PostMapping("/CoPayformInsert.do")
+	public String CoPayformInsert(PayformVO vo, Principal prin, HttpServletRequest request) {
+		int no = Integer.parseInt(request.getParameter("consultNo"));
+		System.out.println("!!!!!!!!!"+no);
+		System.out.println("!!!!!!!!!"+vo.getNo());
+		vo.setMember_id(prin.getName());
+		payformService.coPayformInsert(vo);
+		return "redirect:myPage";
+	}
+	
 	
 	/*
 	 * 2022.09.27 작업하였으나 API변경으로 인해 사용안함

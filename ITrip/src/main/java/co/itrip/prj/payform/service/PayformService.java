@@ -1,5 +1,6 @@
 package co.itrip.prj.payform.service;
 
+
 import co.itrip.prj.iclass.service.ClassAttendVO;
 
 /**
@@ -14,4 +15,7 @@ public interface PayformService {
 
 	//경아 - 클래스결제테이블insert
 	int clPayformInsert(PayformVO vo,ClassAttendVO cvo);
+	
+	//은지 - 상담결제테이블insert
+	int coPayformInsert(PayformVO vo);
 }

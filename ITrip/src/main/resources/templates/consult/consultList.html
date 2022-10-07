@@ -37,7 +37,7 @@
 .card{
 	display: inline-block;
 	width: 250px;
-	margin : 15px;
+	margin : 10px 5px;
 }
 .card-body{
 	min-height: 150px;
@@ -65,7 +65,7 @@
 					    <li class="list-group-item" th:text="'직무 : '+${consultList.dutyName}"></li>
 					    <li class="list-group-item" th:text="'경력 : '+${consultList.career}"></li>
 					    <li class="list-group-item" >[[${consultList.jobName}]]</li>
-					  	<li class="list-group-item"><a href="" class="btn btn-primary px-4 mx-auto my-2 consultListInfo">더보기</a></li>
+					  	<li class="list-group-item"><a href="" class="btn btn-info px-4 mx-auto my-2 consultListInfo">더보기</a></li>
 					  </ul>
 					  <input type="hidden" th:value="${consultList.consultNo}">
 				</div>

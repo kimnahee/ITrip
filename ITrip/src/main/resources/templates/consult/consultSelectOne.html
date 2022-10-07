@@ -20,6 +20,11 @@
 	border-bottom-width: 20px;
 	border-color: white;
 }
+#schedule span{
+	display: inline-block; /*인라인이지만 블럭 성격을 가지도록 한다. 위아래 margin값과 paddin width 값을 가질 수 있다는 의미가 된다*/
+	margin-top : 15px;
+}
+
 
 </style>
 </head>
@@ -60,13 +65,13 @@
 							<div class="divider">
 								<div class="divider-text">상담 가능 시간</div>
 							</div>
-							<div th:each="con : ${consultDt}">
-								<span th:text=${con.week}></span> &nbsp;&nbsp;&nbsp; <span
-									th:text="${'시작시간:'+con.beginTime}"></span>~ <span
-									th:text="${'끝나는시간:'+con.endTime}"></span>
-								<h5>
+							<div th:each="con : ${consultDt}" id="schedule">
+								<span th:text=${con.week}></span>
+								<span th:text="${'시작시간:'+con.beginTime}"></span> ~ 
+								<span th:text="${'끝나는시간:'+con.endTime}"></span>
+								<h6>
 									결제 금액 : <b th:text="${con.price}"></b>원
-								</h5>
+								</h6>
 							</div>
 						</div>
 
@@ -77,20 +82,19 @@
 						
 		
                         
-                        <!-- 나희 상담신처 -->
-						<div style="padding: 10px;">
-							<button id="consultRegister" class="btn btn-primary btn-md mb-0" style="float: right;">상담신청하기</button>
-							<div th:text="${consultOne.consultNo}"></div>
-				<!-- 은지 리뷰버튼 -->
-						<div >
-						<button id="reviewForm" type="button" data-target="#inlineForm"  class="btn btn-outline-primary ml-1"  data-dismiss="modal" data-toggle="modal">
+                        <!-- 나희 상담신청 페이지 -->
+						<div style="padding: 20px; align:center;">
+							<button id="consultRegister" class="btn btn-info btn-md mb-0" style="float:right;">상담신청하기</button>	
+						
+						<!-- 은지 리뷰 -->
+						<button id="reviewForm" type="button"  style="float:right; margin-right:10px;" data-target="#inlineForm"  class="btn btn-outline-primary ml-1"  data-dismiss="modal" data-toggle="modal">
 							<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="gold" class="bi bi-star-fill" viewBox="0 0 16 16">
 	                              <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
-	                        </svg> <span >리뷰보기</span>
-                        </button ></div>
+	                        </svg> <span >리뷰보기</span></button >
 							<input type="hidden" id="memberId" class="form-control" name="memberId" th:value=${#authentication.principal.member.memberId} readonly="readonly">
-							
 						</div>
+						
+						
 					</div>
 				</div>
 			</div>
@@ -280,12 +284,20 @@
 					               			</tr>`;
 							            	
 						$("#contentBody").append(makeTr);
-					    cnt++; //console.log(cnt)
+					    cnt++;
 					    
 						})
+		                       		 console.log(cnt)
+						if(cnt != 0 ){
+						    const avg =(sum/cnt).toFixed(1); 		               
+				    //const avg = (sum/cnt).toFixed(1); // 소숫점 1자리까지 표시
+				    console.log(avg)
+				                       		$("#score").html(avg);								
+								}else{
+									
+                    $("#score").html("작성된 리뷰가 없습니다.");
+								}
 						
-				    const avg = (sum/cnt).toFixed(1); // 소숫점 1자리까지 표시
-                    $("#score").html(avg);
 				}
 			})
 		})
@@ -327,7 +339,9 @@
 							sum += element.star; 
 						
 						let star ='';
-						
+				
+							
+									
 							for(let i = 0; i< element.star; i++){ 
 									star += starIcon; 
 								}
@@ -347,13 +361,13 @@
 		               			</tr>`;
 							$("#contentBody").append(makeTr);
 						    cnt++; 
-						
+					
 							})
 							
-					    const avg = (sum/cnt).toFixed(1); 
-	                    $("#score").html(avg);
-					}
-				})
+					    const avg =(sum/cnt).toFixed(1); 		               
+		               				$("#score").html(avg);								
+							}
+					})
 					
 					
 				},

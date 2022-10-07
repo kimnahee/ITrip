@@ -43,7 +43,7 @@ public class ConsultController {
 	@GetMapping("/consultList.do")
 	public String findPage(ConsultVO vo, Model model, HttpServletRequest request,
 			@RequestParam(required = false, defaultValue = "1") int pageNum,
-			@RequestParam(required = false, defaultValue = "8") int pageSize) {
+			@RequestParam(required = false, defaultValue = "10") int pageSize) {
 		PageHelper.startPage(pageNum, pageSize);
 		vo.setEnnc("활성화");
 		model.addAttribute("pageInfo", PageInfo.of(conService.findAll(vo)));
