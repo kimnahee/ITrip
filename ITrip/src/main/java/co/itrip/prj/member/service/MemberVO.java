@@ -20,4 +20,6 @@ public class MemberVO {
 
 	private String guideId; // 아이디
 	
+	private String key; // 검색할 키워드
+	private String val; // 검색할 값
 }

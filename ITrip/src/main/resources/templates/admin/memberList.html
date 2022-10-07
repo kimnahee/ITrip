@@ -18,16 +18,6 @@
 						<div class="card-body">
 						<p>회원정보입니다.</p>
 						
-						<!-- 회원검색 -->					
-						<div style="float: right;">							
-							<select class="form-select" style="width: 100px; display: inline-block; width: auto;">
-								<option>아이디</option>
-								<option>이름</option>
-							</select>						
-							<input type="text" class="form-control" style="display: inline-block; width: auto;">
-							<button class="btn btn-sm btn-outline-primary" style="display: inline-block; width: auto;">검색</button>
-						</div>
-						
 						<!-- 탭 -->
 						<ul class="nav nav-tabs" id="myTab" role="tablist">
 							<li class="nav-item" role="presentation"><a class="nav-link active" id="home-tab" data-toggle="tab" href="#all" role="tab" aria-controls="home"
@@ -40,69 +30,79 @@
 								aria-controls="contact" aria-selected="false"><b>ADMIN</b></a></li>
 						</ul>
 
-
-						<div class="tab-content" id="myTabContent" style="clear: both;">
+						<div class="tab-content" id="myTabContent">
 							<!-- 전체 -->
 							<div class="tab-pane fade show active" id="all" role="tabpanel" aria-labelledby="home-tab">
-								<div class="table-responsive">
-									<table class="table table-striped mb-0">
-										<thead>
-											<tr>
-												<th>아이디</th>
-												<th>이름</th>
-												<th>닉네임</th>
-												<th>이메일</th>
-												<th>권한</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr th:each="m:${pageInfo.list}">
-												<th th:text=${m.memberId}></th>
-												<td th:text=${m.name}></td>
-												<td th:text=${m.nick}></td>
-												<td th:text=${m.email}></td>
-												<td th:text=${m.auth}></td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-								<br>
-								<!-- 페이지네이션 -->
-								<nav aria-label="Page navigation example">
-									<ul class="pagination pagination-info  justify-content-center">
-										<li class="page-item disabled"
-											th:if="${pageInfo.isIsFirstPage()}"><span
-											class="page-link">«</span></li>
-										<li class="page-item"
-											th:if="${!pageInfo.isIsFirstPage() && pageInfo.getList().size() > 0}"><a
-											class="page-link"
-											th:href="|javascript:gopage([[${pageInfo.getPrePage()}]])|"
-											rel="prev">«</a></li>
-										<li
-											th:class="|page-item ${(pageInfo.pageNum eq page) ? 'active': ''} |"
-											th:each="page:${pageInfo.navigatepageNums}"><span
-											class="page-link" th:if="${pageInfo.pageNum eq page}"
-											th:text="${page}"></span> <a class="page-link"
-											th:unless="${pageInfo.pageNum eq page}"
-											th:href="|javascript:gopage(${page})|" th:text="${page}">{{$page
-												}}</a></li>
-										<li class="page-item" th:if="${pageInfo.hasNextPage}"><a
-											class="page-link"
-											th:href="|javascript:gopage([[${pageInfo.getNextPage()}]])|"
-											rel="next">»</a></li>
-										<li class="page-item disabled"
-											th:unless="${pageInfo.hasNextPage}"><span
-											class="page-link">»</span></li>
-									</ul>
-								</nav>
+							
+							<!-- 회원검색 -->					
+							<div style="float: right;">							
+								<select class="form-select" id="key" name="key" style="width: 100px; display: inline-block; width: auto;">
+									<option value="memberId">아이디</option>
+									<option value="name">이름</option>
+								</select>						
+								<input type="text" id="val" name="val" class="form-control" style="display: inline-block; width: auto;">
+								<button class="btn btn-sm btn-outline-primary searchBtn" 
+									style="display: inline-block; width: auto;">검색</button>
 							</div>
+							
+							<div class="table-responsive" style="clear: both;">
+								<table class="table table-striped mb-0">
+									<thead>
+										<tr>
+											<th>아이디</th>
+											<th>이름</th>
+											<th>닉네임</th>
+											<th>이메일</th>
+											<th>권한</th>
+										</tr>
+									</thead>
+									<tbody id="tbody">
+										<tr th:each="m:${pageInfo.list}">
+											<th th:text=${m.memberId}></th>
+											<td th:text=${m.name}></td>
+											<td th:text=${m.nick}></td>
+											<td th:text=${m.email}></td>
+											<td th:text=${m.auth}></td>
+										</tr>
+									</tbody>
+								</table>
+							</div><br>
+							<!-- 페이지네이션 -->
+							<nav aria-label="Page navigation example" id="paging">
+								<ul class="pagination pagination-info  justify-content-center">
+									<li class="page-item disabled"
+										th:if="${pageInfo.isIsFirstPage()}"><span
+										class="page-link">«</span></li>
+									<li class="page-item"
+										th:if="${!pageInfo.isIsFirstPage() && pageInfo.getList().size() > 0}"><a
+										class="page-link"
+										th:href="|javascript:gopage([[${pageInfo.getPrePage()}]])|"
+										rel="prev">«</a></li>
+									<li
+										th:class="|page-item ${(pageInfo.pageNum eq page) ? 'active': ''} |"
+										th:each="page:${pageInfo.navigatepageNums}"><span
+										class="page-link" th:if="${pageInfo.pageNum eq page}"
+										th:text="${page}"></span> <a class="page-link"
+										th:unless="${pageInfo.pageNum eq page}"
+										th:href="|javascript:gopage(${page})|" th:text="${page}">{{$page
+											}}</a></li>
+									<li class="page-item" th:if="${pageInfo.hasNextPage}"><a
+										class="page-link"
+										th:href="|javascript:gopage([[${pageInfo.getNextPage()}]])|"
+										rel="next">»</a></li>
+									<li class="page-item disabled"
+										th:unless="${pageInfo.hasNextPage}"><span
+										class="page-link">»</span></li>
+								</ul>
+							</nav>
+							</div><!-- end of all -->
 						</div><!-- end of myTabContent -->
-						</div>
-					</div><!-- end of card-content -->
-				</div>
+					</div>
+				</div><!-- end of card-content -->
 			</div>
 		</div>
-		<script type="text/javascript">
+	</div>
+	<script type="text/javascript">
 		let authView = document.getElementById("authView")
 		let all = document.getElementById("all")
 		
@@ -115,7 +115,6 @@
 			gopageAjax(1,auth)
 		})
 			
-		
 		function gopageAjax(p,author){
 		
 			$.ajax({
@@ -124,7 +123,6 @@
 				dataType:'json',
 				data:{'auth':author,"pageNum":p},
 				success:function result(res){
-					console.log(author)
 					all.innerHTML = "";
 					listOfAuth= '<div class="table-responsive">'
 									+'<table class="table table-striped mb-0">'
@@ -137,11 +135,8 @@
 					})
 					
 					listOfAuth += '</tbody></table></div></div><br>'
-					
 					all.innerHTML = listOfAuth
-					
-					
-					
+				 	
 					ph ='<nav aria-label="Page navigation example">'
 					    +'<ul class="pagination pagination-info  justify-content-center">'
 					 if(res.isFirstPage==true){  
@@ -149,8 +144,7 @@
 					 }
 					 else{
 				    	ph += `<li class="page-item"><a class="page-link" href="javascript:gopageAjax(${res.prePage},'${author}')" rel="prev">«</a></li>`
-				    }
-			
+				     }
 					for(page of res.navigatepageNums){
 						ph += `<li class="page-item (${res.pageNum} eq ${page}) ? active: ''}" ></li>`
 						if(res.pageNum == page){
@@ -160,15 +154,12 @@
 						}
 						ph += "</li>"
 					}
-				
 					if(res.hasNextPage ==true){
 						ph += ` <li class="page-item"><a class="page-link" href="javascript:gopageAjax(${res.nextPage},'${author}')" rel="next">»</a></li>`
 					}else{
 						ph += '<li class="page-item disabled"><span class="page-link">»</span></li></ul></nav>'
 					}
-					
 					all.innerHTML += ph
-					
 				}
 			})
 		}
@@ -178,11 +169,71 @@
 			location.href = '/memberList.do?pageNum=' + p;
 		} 
 		
-		 function deleteFnc(memId){
-			 
+		 $("#myTabContent").on("click",".searchBtn",function search(){
+			let key = document.getElementById("key").value;
+			let val = document.getElementById("val").value;
+			
+			gopageSearchAjax(1,key,val)
+		 })
+		 
+		 
+		 function gopageSearchAjax(p,key,val){
+			
+			$.ajax({
+				url:"ajaxSearchMember.do",
+				type:'get',
+				dataType:'json',
+				data:{'key':key,'val':val,"pageNum":p},
+				success:function result(res){
+					all.innerHTML = "";
+					listMember = '<div style="float: right;">'						
+								+'<select class="form-select" id="key" name="key" style="width: 100px; display: inline-block; width: auto;">'
+								+'<option value="memberId">아이디</option>'
+								+'<option value="name">이름</option></select>'
+								+'<input type="text" id="val" name="val" class="form-control" style="display: inline-block; width: auto;">'
+								+'<button class="btn btn-sm btn-outline-primary searchBtn" style="display: inline-block; width: auto;">검색</button></div>'
+								+'<div class="table-responsive" style="clear: both;">'
+								+'<table class="table table-striped mb-0">'
+								+'<thead><tr><th>아이디</th><th>이름</th><th>닉네임</th><th>이메일</th><th>권한</th></tr>'
+								+'</thead><tbody">'
+					res.list.forEach(elem=>{
+						 listMember += '<tr><th>'+elem.memberId+'</th>'
+							+'<td>'+elem.name+'</td>'
+							+'<td>'+elem.nick+'</td>'
+							+'<td>'+elem.email+'</td>'
+							+'<td>'+elem.auth+'</td></tr>'
+						})
+					
+					all.innerHTML = listMember
+					 
+					ph ='<br><nav aria-label="Page navigation example" id="paging">'
+					    +'<ul class="pagination pagination-info  justify-content-center">'
+					 if(res.isFirstPage==true){  
+						ph += '<li class="page-item disabled"><span class="page-link">«</span></li>'
+					 }else{
+				    	ph += `<li class="page-item"><a class="page-link" href="javascript:gopageSearchAjax(${res.prePage},'${key}','${val}')" rel="prev">«</a></li>`
+				     }
+					for(page of res.navigatepageNums){
+						ph += `<li class="page-item (${res.pageNum} eq ${page}) ? active: ''}" ></li>`
+						if(res.pageNum == page){
+							ph += `<span class='page-link'>${page}</span>`
+						}else{
+							ph+=`<a class='page-link' href='javascript:gopageSearchAjax(${page},"${key}","${val}")'>${page}</a>`
+						}
+						ph += "</li>"
+					 }
+					if(res.hasNextPage ==true){
+						ph += ` <li class="page-item"><a class="page-link" href="javascript:gopageSearchAjax(${res.nextPage},'${key}','${val}')" rel="next">»</a></li>`
+					 }else{
+						ph += '<li class="page-item disabled"><span class="page-link">»</span></li></ul></nav>'
+					 } 
+					all.innerHTML += ph 
+				}
+			})
 		 }
+		 
+	
 		</script>
-		
 	</div>
 </body>
 </html>

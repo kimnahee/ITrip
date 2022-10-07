@@ -11,7 +11,7 @@ layout:decorate="~{layout/layout}">
 <body layout:fragment="content">
  <div class="section">
       <div class="container">
-	     <div id="btnArea" style="height:100px;padding-top:20px; text-align:center;">
+	     <div id="btnArea" style="height:100px;padding-top:30px; text-align:center;">
 		     <button th:text="전체" class="btn btn-primary round" onclick="location.href='/iClassList.do'" style="margin:5px;"></button>
 		     <div style=" display:inline-block; " th:each="j:${job}">
 		     <button th:text=${j.cdName} th:id="${j.cdNo}" class="btn btn-primary round" onclick="jobSearch(1,this.getAttribute('id'))"style="margin:5px;"></button>
@@ -25,7 +25,7 @@ layout:decorate="~{layout/layout}">
 					<div th:each="cList:${pageInfo.list}" id="searchClassList"> 
 		                <div class="col mb-5">
 		                    <div class="card h-100">
-		                        <img class="card-img-top" src="images/cbtuser.png" alt="..." />
+		                        <img class="card-img-top" src="images/spring.png" alt="..." />
 		                        
 		                        <div class="card-body p-4">
 		                            <div class="text-center">

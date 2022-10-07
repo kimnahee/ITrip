@@ -2,16 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="co.itrip.prj.admin.mapper.AdminMapper">
 
+<!-- 모든회원리스트 -->
 <select id="memberList" resultType="co.itrip.prj.member.service.MemberVO"
  						parameterType="co.itrip.prj.member.service.MemberVO">
 	select * from member
 </select>
 
+<!-- 권한별회원리스트 -->
 <select id="memberListOf" resultType="co.itrip.prj.member.service.MemberVO"
  						parameterType="co.itrip.prj.member.service.MemberVO">
 	select * from member where auth = #{auth}
 </select>
 
+<!-- 가이드신청 리스트 -->
 <select id="memberAuthList" resultType="co.itrip.prj.guide.service.GuideVO"
  						parameterType="co.itrip.prj.guide.service.GuideVO">
 	select g.guide_id, g.career,g.dc,g.duty,g.attach,g.attach_dir,g.state_cd,cm.cd_name,m.nick,m.name,m.auth
@@ -22,6 +25,7 @@
 		and g.guide_id = m.member_id
 </select>
 
+<!-- 멤버->가이드 권한수정 -->
 <update id="memberAuthUpdate" parameterType="co.itrip.prj.guide.service.GuideVO">
 	update guide set 
 	<if test="stateCd==1">state_cd = '2'</if>
@@ -30,12 +34,26 @@
 	 
 </update>
 
+<!-- 멤버->가이드 수정되면 멤버테이블에서도 수정 -->
 <update id="memberAuthUpdateTo" parameterType="co.itrip.prj.member.service.MemberVO">
 	
 	update member set 
 	 auth = case when ( SELECT state_cd FROM guide WHERE guide_id = #{guideId}) ='2' then 'GUIDE' else 'USER' end
 	 where member_id=#{guideId}
 </update>
+
+<!-- 회원검색 -->
+<select id="ajaxSearchMember" resultType="co.itrip.prj.member.service.MemberVO">
+	select * from member where
+		<choose>
+			<when test="key != null and key.equals('memberId')">
+			  member_id like '%'|| #{val} || '%'
+			</when>
+			<when test="key != null and key.equals('name')">
+			  name = #{val}
+			</when>
+		</choose>		
+</select>
 
 
 <!-- classList뿌리기 -->

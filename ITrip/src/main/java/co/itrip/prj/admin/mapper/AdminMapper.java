@@ -14,6 +14,7 @@ public interface AdminMapper {
 	List<GuideVO> memberAuthList(GuideVO vo);//guide신청한 회원조회
 	int memberAuthUpdate(GuideVO vo); //guide신청한 회원등급수정
 	int memberAuthUpdateTo(MemberVO vo); //guide신청한 회원의 멤버테이블 권한수정 
+	List<MemberVO> ajaxSearchMember(MemberVO vo);//회원검색
 	
 	//소정
 	List<ClassVO> classList(ClassVO vo); // 클래스 전체조회 페이징 처리 
