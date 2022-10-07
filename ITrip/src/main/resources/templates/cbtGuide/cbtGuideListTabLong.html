@@ -20,6 +20,9 @@
 				<div class="card">
 					<div class="card-header">
 						<h4 class="card-title">랜덤 문제</h4>
+						<br>
+					   <h6>랜덤으로 출제된 5문제를 풀 수 있습니다. <br>각각의 문제를 푸신 후 바로 채점하여 정답을 확인 하실 수 있습니다.</h6>
+					   <hr>
 					</div>
 					<div class="card-content">
 						 <!--문제가 없는 경우 -->
@@ -91,37 +94,6 @@
 			</form>
 		</div>
 
-		<!-- 모달창으로 정답과 키워드 띄어야함...-->
-		<!-- <div class="modal fade text-left" id="primary" tabindex="-1" role="dialog" aria-labelledby="myModalLabel160" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-    <div class="modal-content">
-        <div class="modal-header bg-primary">
-        <h5 class="modal-title white" id="myModalLabel160">정답 확인</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <i data-feather="x"></i>
-        </button>
-        </div>
-        <div class="modal-body">
-        <span th:text="${cbt.cnsr}"> </sapn>
-        </div>
-        <div class="modal-body">
-        키워드 들어갈 공간입니다.
-        </div>
-        <div class="modal-footer">
-        <button type="button" class="btn btn-light-secondary" data-dismiss="modal">
-            <i class="bx bx-x d-block d-sm-none"></i>
-            <span class="d-none d-sm-block">취소</span>
-        </button>
-        <button type="button" class="btn btn-primary ml-1" data-dismiss="modal">
-            <i class="bx bx-check d-block d-sm-none"></i>
-            <span class="d-none d-sm-block">확인</span>
-        </button>
-        </div>
-    </div>
-    </div>
-</div> -->
-
-		<!-- 모달창 끝 -->
 		<script>
 		//서술형 풀이 ajax 처리
  		$(".cbtNoSelc").on("click", ".check", function(e) {
@@ -174,12 +146,15 @@
 		}) 
 		//정정하기 나중에 처리...
 		function chkRevise(){
-			console.log("일단 실행됨");
-			let chk =confirm("정정하시겠습니까?"); // 확인 true 취소 false
-            alert( chk ); // 확인 버튼을 눌렀다면 true가 출력
+			console.log("불러와만 짐....ㅠ")
+ 			//let tg = e.currentTarget;
+ 			
+			//let chk = confirm("정정하시겠습니까?"); // 확인 true 취소 false
+            //alert( chk ); // 확인 버튼을 눌렀다면 true가 출력
 			
-			/* let cbtNum = $(tg).prev().prev().val(); // 클릭한 버튼이 있는 문제 번호
- 			 $.ajax({
+			//let cbtNum = $(tg).prev().prev().val(); // 클릭한 버튼이 있는 문제 번호
+			//console.log(cbtNum);
+ 			 /*$.ajax({
  			    url: '/ajaxMyCbtLongList.do',
  			    type:'post',
  			    dataType: 'json',
@@ -203,7 +178,7 @@
      				}
 				},
 				error: function searchError(xhr, err) {
-			           console.error("Error on ajax call: " + err); }});   */
+			           console.error("Error on ajax call: " + err); }});  */
 				}
 		
 	</script>
