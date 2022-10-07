@@ -2,161 +2,106 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
 <head>
 <meta charset="utf-8" />
-	<title>
-     class
-    </title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="author" content="Untree.co" />
-    <link rel="shortcut icon" href="favicon.png" />
-
-    <meta name="description" content="" />
-    <meta name="keywords" content="bootstrap, bootstrap5" />
-
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-
-    <link rel="stylesheet" href="bootstrap/property/fonts/icomoon/style.css" />
-    <link rel="stylesheet" href="bootstrap/property/fonts/flaticon/font/flaticon.css" />
-
-    <link rel="stylesheet" href="bootstrap/property/css/tiny-slider.css" />
-    <link rel="stylesheet" href="bootstrap/property/css/aos.css" />
-    <link rel="stylesheet" href="bootstrap/property/css/style.css" />
-
-	<style>
-    
-    .d-flex {
-    display: -webkit-box !important;
+<title>Guide Myclass</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="author" content="Untree.co" />
+<meta name="description" content="" />
+ <meta name="keywords" content="bootstrap, bootstrap5" />
+<style>
+	.table{
+		text-align: center;
+		margin: 30px;
 	}
-	.property-item .property-content .specs .caption {
-    font-size: 15px; 
+	
+	.table td img{
+		max-width: 100%;
 	}
-	#tns1 > .tns-item {
-    width: calc(6.66667%);
-    padding-right: 30px;
-    }
-	.property-item .property-content {
-    width: 80%;
-    height: 80%;
-    }
-    .img-fluid {
-    max-width: 80%;
-    height: auto;
+	.alert {
+	    position: relative;
+	    padding: 2rem 2rem;
+	    margin-bottom: 1rem;
+	    border: none solid transparent;
+	    border-radius: 0.25rem;
+	    font-size: 1.6rem;
 	}
-    </style>
-    
+</style>
 </head>
-<body  layout:fragment="content">
- <!-- About Start -->
-    <div class="text-center">
-        <div class="bg-primary mb-3 mx-auto" style="width: 60px; height: 2px;"></div>
-        <h1 class="display-5 mb-5">i-class</h1>
-        <h4>내가 개설한 클래스 목록을 보여주는 곳 입니다. 클래스 등록 수정 삭제가 가능합니다.</h4>
-    </div>
-     <!-- Projects Start -->
-    <div class="container-xxl py-5">
-        <div class="container">
-           
-            <div class="section">
-      <div class="container">
-        <div class="row mb-5 align-items-center">
-          <div class="col-lg-6">
-            <h2 class="font-weight-bold text-primary heading"> Class </h2>
-            <span><a id="startClass"  class="btn btn-primary py-2 px-1">등록하기</a></span>&nbsp;&nbsp;
-             <span><a href="alreadyClass"  class="btn btn-primary py-2 px-1">승인중인 클래스</a></span>
-          </div>
-          
-        </div>
-        <div class="row">
-          <div class="col-12">
-            <div class="property-slider-wrap">
-              <div class="property-slider">
-              
-                <!-- .item -->
-                <div class="property-item" th:each="classlist : ${classList}" th:if="${classlist.confmCd == '2'}">
-                  <a href="property-single.html" class="img">
-                    <img src="bootstrap/property/images/img_1.jpg" alt="Image" class="img-fluid" />
-                  </a>
-                  <div class="property-content">
-                    <div class="price mb-2"><span th:text="${classlist.title}"></span></div>
-                    <div>                     
-                      <span class="city d-block mb-3 statement" th:text="${classlist.st}" ></span>                                              
-                      <div class="">
-                      	<span class="">정원 </span>
-                      	<h5 class="card-title" th:text="${classlist.psncpa}+명"></h5>                   
-                      </div>
-                  	<div th:if="${classlist.st} == '진행중'" >
-                       <span><button  onclick="location.href='mcReview'" class="btn btn-primary py-2 px-1 link"  >링크입력</button></span>&nbsp;&nbsp;
-                       <span><button onclick="location.href='#'" class="btn btn-primary py-2 px-1" >게더타운 입장</button></span>&nbsp;&nbsp;
-               		</div>
-               		 <div th:unless="${classlist.st} == '진행중'">
-                       <span><button  class="btn btn-primary py-2 px-1 link" disabled='disabled'>링크입력</button></span>&nbsp;&nbsp;
-                       <span><button class="btn btn-primary py-2 px-1" disabled='disabled' >게더타운 입장</button></span>&nbsp;&nbsp;
-               		</div>
-                    </div>
-                  </div>
-                </div>
-                
-                
-                
-                <!-- .item -->
-              </div>
-
-              <div
-                id="property-nav"
-                class="controls"
-                tabindex="0"
-                aria-label="Carousel Navigation"
-              >
-                <span
-                  class="prev"
-                  data-controls="prev"
-                  aria-controls="property"
-                  tabindex="-1"
-                  >Prev</span
-                >
-                <span
-                  class="next"
-                  data-controls="next"
-                  aria-controls="property"
-                  tabindex="-1"
-                  >Next</span
-                >
-              </div>
-            </div>
-          </div>
-        </div>
-          
-      </div>
-    </div>
-	<input type='hidden' id="memberId" th:value="${#authentication.principal.member.memberId}">
-     <script type="text/javascript">
-         	
- 			let memberId = $("#memberId").val();  
-         	
-
-         	$("#startClass").on("click", function() {
-         		location.href = "/startClass.do?memberId=" + memberId;
-         	}) 
- 			
-         	
-         	
-         </script>
-    <script src="bootstrap/property/js/bootstrap.bundle.min.js"></script>
-    <script src="bootstrap/property/js/tiny-slider.js"></script>
-    <script src="bootstrap/property/js/aos.js"></script>
-    <script src="bootstrap/property/js/navbar.js"></script>
-    <script src="bootstrap/property/js/counter.js"></script>
-    <script src="bootstrap/property/js/custom.js"></script>
-            
-        </div>
-    </div>
-    <!-- Projects End -->
-    
-    
-
+<body>
+<div layout:fragment="content">
+	<div class="card">
+		<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+		<input type="hidden" id="memberId" th:value="${#authentication.principal.member.memberId}" /> 
+		<div class="alert alert-light-primary color-primary">I-Class</div>
+			<!-- 클래스 등록/승인요청한 클래스 버튼 -->
+			<div class="row" style="margin-bottom: 30px; padding-left: 10px;">
+				<div>
+					<button id="startClass" style="width: 140px;" class="btn btn-sm btn-primary">등록하기</button>
+					<button id="alreadyClass" style="width: 150px;" class="btn btn-sm btn-primary">등록한 클래스 목록</button>
+				</div>
+				<div th:each="classlist : ${classList}" th:if="${classlist.confmCd == '2'}" style="width: 380px; display: inline-block;">
+								<table class="table table-hover table-bordered" style="width: 300px;">
+									<tbody>
+										<tr style="display: none;">
+											<!-- 클래스 번호 -->
+											<td id="classNo" colspan="2" th:text="${classlist.classNo}"></td>
+										</tr>
+										<tr>
+											<!-- 이미지(수정) -->
+											<td colspan="2"> <img th:src="@{/download(fileName=${'/CLASS/'+classlist.attachDir})}" alt="Image" class="img-fluid" /></td>
+										</tr>
+										<tr>
+											<td colspan="2" th:text="${classlist.title}"></td>
+										</tr>
+										<tr>
+											<td colspan="2" th:text="${classlist.st}"></td>
+										</tr>
+										<tr>
+											<th>정원</th>
+											<td th:text="${classlist.psncpa}+명">></td>
+										</tr>
+										<tr>
+											<th>상태</th>
+											<td th:text="${classlist.st}"></td>
+										</tr>
+										<tr>
+											<td colspan="2">
+												<div th:if="${classlist.st} == '진행중'" >
+							                       <button class="btn btn-primary py-2 px-1 link">링크입력</button>&nbsp;&nbsp;
+							                       <button class="btn btn-primary py-2 px-1 classChat" >강의실 입장</button>
+							               		</div>
+							               		<div th:unless="${classlist.st} == '진행중'" >
+							                       <button class="btn btn-primary py-2 px-1 link" disabled='disabled'>링크입력</button>&nbsp;&nbsp;
+							                       <button class="btn btn-primary py-2 px-1 classChat" disabled='disabled'>강의실 입장</button>
+							               		</div>
+											</td>
+										</tr>
+									</tbody>								
+								</table>
+							</div>
+			</div>
+		<script type="text/javascript">
+			let memberId = $("#memberId").val(); //현재 접속한 사람 아이디
+			
+			//클래스 등록
+			$("#startClass").on("click", function() {
+				location.href = "/startClass.do?memberId=" + memberId;
+			})
+			
+			//등록한 클래스 목록(승인요청중인)
+			$("#alreadyClass").on("click", function(){
+				location.href = "/alreadyClass";
+			})
+			
+			//채팅방 연결
+			$(".classChat").on("click", function(e){
+				let classNo = $(e.target).closest("tbody").children(1).children(1).html();
+				//console.log(classNo);
+				location.href="classChat.do?classNo=" + classNo; 
+			})
+			
+			
+        </script>
+	</div>
+</div>
 </body>
 </html>

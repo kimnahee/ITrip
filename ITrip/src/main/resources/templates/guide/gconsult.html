@@ -5,174 +5,92 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="author" content="Untree.co" />
     <link rel="shortcut icon" href="favicon.png" />
-
     <meta name="description" content="" />
     <meta name="keywords" content="bootstrap, bootstrap5" />
-
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-
-    <link rel="stylesheet" href="bootstrap/property/fonts/icomoon/style.css" />
-    <link rel="stylesheet" href="bootstrap/property/fonts/flaticon/font/flaticon.css" />
-
-    <link rel="stylesheet" href="bootstrap/property/css/tiny-slider.css" />
-    <link rel="stylesheet" href="bootstrap/property/css/aos.css" />
-    <link rel="stylesheet" href="bootstrap/property/css/style.css" />
-
-    <title>
-     counsult
-    </title>
-    
-<style type="text/css">
-.property-item .property-content {
-	margin-top: 0px;
-}
-
-.d-flex {
-	display: -webkit-box !important;
-}
-
-.property-item .property-content .specs .caption {
-	font-size: 15px;
-}
-
-.tns-horizontal.tns-subpixel>.tns-item {
-	vertical-align: bottom;
-}
-.card-header {
-		margin-top: 10%;
-	}
-	
-	#error .error-title {
-     font-size: xx-large; 
-	}
-	
-	/* @media (min-width: 1200px)
-	h1, .h1 {
-     font-size: 2.25rem; 
-	} */
-	
-	#error{
-	 width: 120em;
-	 height: 20em;
-	}
-	
-	.error-title {
-		margin-top: 1%;
-	}
-	
-	.Title {
-		height: 100px;
-	}
-	
-	.conCard{
+    <title>GuideConsult</title> 
+<style>
+	.table{
 		text-align: center;
+		margin-top: 50px;
+		margin-bottom: 50px;
 	}
 	
-	ul {
-		margin-left: auto;
-		margin-right: auto;
+	.table td img{
+		max-width: 100%;
 	}
-
+	.alert {
+	    position: relative;
+	    padding: 2rem 2rem;
+	    margin-bottom: 1rem;
+	    border: none solid transparent;
+	    border-radius: 0.25rem;
+	    font-size: 1.6rem;
+	}
 </style>
 </head>
-<body layout:fragment="content">
- <!-- About Start -->
-    <div class="text-center">
-        <div class="bg-primary mb-3 mx-auto" style="width: 60px; height: 2px;"></div>
-        <h1 class="display-5 mb-5">I-CONSULT</h1>
-        
-    </div>
-    
-     <!-- Projects Start -->
-    <div class="container-xxl py-5">
-        <div class="container">
-        
-     <div class="section">
-      <div class="container">
-        <div class="row mb-5 align-items-center">
-          <div class="col-lg-6">
-            <h2 class="font-weight-bold text-primary heading">
-              1:1 상담
-            </h2> 
-            <span><a href="consultStart.do"class="btn btn-primary py-2 px-1">등록하기</a></span>&nbsp;&nbsp;
-            <span><a href="consultStart.do"class="btn btn-primary py-2 px-1">승인요청한상담</a></span>&nbsp;&nbsp;
-          </div>
-        </div>
-        <!--  <input type="text" id="guideId" name="guideId" th:value="${#authentication.principal.member.memberId}" />        -->
-          					<!-- 진행중인 상담이 있을 때 -->
-					<div class="row">
-						<div class="col-12" >
-							<div class="property-slider-wrap">
-							
-									<!-- 상담이 활성화일 때 -->
-								<div class="property-slider">
-									<div class="card col-xs-12 col-sm-6 col-md-5 col-lg-3 cCard" th:each="con : ${consultList}">
-										    
-										<!-- 상담이 활성화일때 -->
-										<!-- .item -->
-										<div class="property-item"  th:if="${con.stateCd == '2'}">
-											<div class="property-content conCard">
-												<span>
-													 <input type="text" th:value="${con.consultNo}">
-													<a class="btn btn-primary py-2 px-1 enncState" th:text="${con.ennc}"></a>
-												</span>
-												<div class="city mb-2 Title">
-													<span th:text="${con.title}" class="cTitle">Web개발 고민</span>
-												</div>
-												<div>
-
-													<div class="specs d-flex mb-4 spanM">
-														<ul class="list-group list-group-flush conBody">
-					    									<li class="list-group-item" th:text="'직무   '+${con.dutyName}"></li>
-					   										 <li class="list-group-item" th:text="'경력   '+${con.career}"></li>
-					   										 <li class="list-group-item" >[[${con.jobName}]]</li>
-					 									 </ul>
-													</div>
-													<span>
-													<a href="property-single.html" class="btn btn-primary py-2 px-1">링크</a>
-													</span>
-													<span>
-													<a href="conReview"class="btn btn-primary py-2 px-1">채팅방</a>
-													</span>
-												</div>
-											</div>
-										</div>
-										
-										
-									</div>
-									
-									<!-- .item -->
-								</div>
-								
-								
-								<div id="property-nav" class="controls" tabindex="0"
-									aria-label="Carousel Navigation">
-									<span class="prev" data-controls="prev"
-										aria-controls="property" tabindex="-1">Prev</span> <span
-										class="next" data-controls="next" aria-controls="property"
-										tabindex="-1">Next</span>
-								</div>
+<body>
+<div layout:fragment="content">
+	<div class="card">
+		<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+		<input type="hidden" id="memberId" th:value="${#authentication.principal.member.memberId}" /> 
+		<div class="alert alert-light-primary color-primary">I-Consult</div>
+			<div class="card-body">
+				<div class="row">
+					<!-- 상담 등록/승인요청한 상담 버튼 -->
+					<div class="row" style="margin-bottom: 30px;">
+							<div>
+								<td><button id="consultStart" style="width: 140px;" class="btn btn-sm btn-primary">등록하기</button></td>
+								<!-- 어디로 가는 버튼인지 확인필요 -->
+								<td><button id="" style="width: 140px;" class="btn btn-sm btn-primary">등록한 상담 목록</button></td>
 							</div>
+					</div>
+					<br>
+					<!-- 진행중인 상담이 있을 때 -->
+						<!-- 상담이 활성화일 때 -->
+					<div class="row" style="margin-bottom: 30px;">
+						<div th:each="con : ${consultList}" th:if="${con.stateCd == '2'}" style="width: 380px;">
+							<table class="table table-hover" style="width: 300px;">
+								<thead>
+									<th colspan="2"><button id="consultStart" style="width: 100px;" class="btn btn-sm btn-outline-primary enncState" th:text="${con.ennc}"></button></th>
+								</thead>
+								<tbody>
+									<tr>
+										<!-- 상담 번호 -->
+										<td id="consultNo" style="display: none;" colspan="2" th:text="${con.consultNo}"></td>
+									</tr>
+									<tr>
+										<!-- 상담 제목 -->
+										<td colspan="2" class="cTitle"><h2 th:text="${con.title}"></h2></td>
+									</tr>
+									<tr>
+										<th>직무</th>
+										<td th:text="${con.dutyName}"></td>
+									</tr>
+									<tr>
+										<th>경력</th>
+										<td th:text="${con.career}"></td>
+									</tr>
+									<tr>
+										<td><button style="width: 100px;" class="btn btn-sm btn-primary consultStart">링크</button></td>
+										<td><button style="width: 100px;" class="btn btn-sm btn-primary consultChat">채팅방</button></td>
+									</tr>
+								</tbody>								
+							</table>
 						</div>
-					</div>             
-           
-          </div>
-         </div>
-     
-          <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+					</div>
+			</div>
+		</div>
+	</div>
 	<script type="text/javascript">
 	let csrfHeaderName = "${_csrf.headerName}";
 	let csrfToken = $("input[name=_csrf]").val();
-	/*------------------------------
-	  상담리스트 상태 변경
-	--------------------------------*/
+	let consultNo = $("#consultNo").html(); //상담번호(전역변수)
+
+	//상담리스트 상태 변경(활성화 => 비활성화 & 비활성화 => 활성화)
 	$(".enncState").on("click", e=> {
-		let consultNo = $(e.target).prev().val();
-		console.log(consultNo)
+		//console.log(consultNo)
 		let ennc =  $(e.target).html();
-		console.log(ennc)
+		//console.log(ennc)
 		if(ennc == '비활성화'){
 			ennc = '활성화'
 		} else {
@@ -186,7 +104,7 @@
 				xhr.setRequestHeader("AJAX", true);
 				xhr.setRequestHeader("X-CSRF-TOKEN", csrfToken);
 			},success : function(data) {
-				console.log(data);
+				//console.log(data);
 				if(data == 1){ // 1이면 업데이트 성공
 					if($(e.target).html() == '비활성화'){
 						$(e.target).html('활성화') 
@@ -198,24 +116,21 @@
 		})
 	})
 	
+	//링크 입력하는 부분(만들기)
 	
+	//채팅방 연결
+	$(".consultChat").on("click", function(e){
+		let consultNo = $(e.target).parent().parent().prev().prev().prev().prev().children(0).html();
+		console.log(consultNo);
+		location.href="/consultChat.do?consultNo=" + consultNo;
+	})
 	
+	//상담 등록
+	$("#consultStart").on("click", function(e){
+		location.href="/consultStart.do";
+	})
 	</script>
-          
-      
-
-    <script src="bootstrap/property/js/bootstrap.bundle.min.js"></script>
-    <script src="bootstrap/property/js/tiny-slider.js"></script>
-    <script src="bootstrap/property/js/aos.js"></script>
-    <script src="bootstrap/property/js/navbar.js"></script>
-    <script src="bootstrap/property/js/counter.js"></script>
-    <script src="bootstrap/property/js/custom.js"></script>
-      
-    </div>
-   </div>
-    <!-- Projects End -->
-    
-    
-
+</div>
+ 
 </body>
 </html>
