@@ -166,14 +166,12 @@
 	 WHERE  CM.CD_INI = 'J' 
 	   AND  DT.CTIME_NO = 1 
        AND  C.CONFM_CD = '1'
-       		<choose>
-		  	<when test="sdate != null ">
+		  	<if test="sdate != null ">
 		  	 <![CDATA[and c.dt >= #{sdate}]]>
-		  	</when>
-		  	<when test="edate != null ">
-		  	and c.dt <![CDATA[<=]]> #{edate}
-		  	</when>
-		  </choose>	
+		  	</if>
+		  	<if test="edate != null ">
+		  	 <![CDATA[and c.dt <= #{edate}]]> 
+		  	</if>
      ORDER BY C.DT
 	</select>
 
