@@ -30,8 +30,8 @@ th {
 						<h4 class="card-title">상담 상세 신청 페이지</h4>
 					</div>
 					<div class="card-body">
-						<div class="row" th:object=${consult}>
-							<table class="table table-bordered mb-0">
+						<div class="row" th:object=${consult} >
+							<table class="table table-bordered mb-0" >
 								<tr>
 									<th style="display: none;">상담번호</th>
 									<td id="consultNo" style="display: none;"
@@ -62,22 +62,24 @@ th {
 
 								</tr>
 							</table>
-							
-						 <form  id="frm" name="frm" class="form form-horizontal" action="">
-									<div class="form-group">
+						 <form  id="frm" name="frm" class="form form-horizontal" method="post">
+									<div class="form-group" > 
 										<div>
-											<input type="text"  name="no" class="form-control" th:value=${consult.consultNo}>
-											<input type="text" id="memberId" class="form-control" name="memberId" th:value=${#authentication.principal.member.memberId} readonly="readonly">
-											<input type="text"  id="title" name="name" class="form-control" th:value="${consult.title}">
-											<input type="text"  name="amount" class="form-control" th:value="${consult.title}" >
-											<input type="text"  name="category" class="form-control" value="CONSULT">
-											<input type="text" id="objArea" name="beginTime" class="form-control" value="" >
+											<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+											<input type="text" id="member_id" class="form-control" name="member_id" th:value=${#authentication.principal.member.memberId} >
+											<input type="text" id="consultNo"  name="merchant_uid" class="form-control" th:value="'CO'+${consult.consultNo}">
+											<input type="text" id="consultNo"  name="consultNo" class="form-control" th:value="${consult.consultNo}">
+											<input type="text" id="no"  name="no" class="form-control" th:value="${consult.consultNo}">
+											<input type="text" id="title" name="name" class="form-control" th:value="${consult.title}">
+											<input type="text" id="frmamount" name="amount" value="">
+											<input type="text" id="frmconday" name="conday" value="">
+											<input type="text"   id="category" name="category" class="form-control" value="CONSULT">
+											<input type="text" id="frmBeginTime" name="beginTime" class="form-control" value="" >
 											<input type="button" onclick="pay()" class="btn btn-primary btn-sm mb-0" id="payForm" value="신청하기" style="margin-top: 10px; float: right;">
 											</div>
 										</div>
-									</form> 
-						
-						</div>
+									</form> 	
+							</div>
 						<hr>
 						<div id="formArea">
 							
@@ -120,6 +122,7 @@ th {
 							onSelect: function(dateText, inst) {
 						        //데이트피커 날짜 선택시
 								let date = $(this).val(); //선택한 날짜
+								$("#frmconday").val(date);
 								let day = new Date(date).getDay(); //선택한 날짜의 요일(week)
 								let consultNo = $("#consultNo").html();
 								//가격 ajax로 가져와서 #price에 tr 추가하기 | hidden form 만들어서 신청하기 버튼 submit(값넘겨주고) | insert payform은 결제단계에서 처리
@@ -133,6 +136,8 @@ th {
 								    xhr.setRequestHeader("X-CSRF-TOKEN", csrfToken);
 								},
 								success : function(data){
+										let price = data.price;
+										$("#frmamount").val(price);
 										$("#price").empty();
 										$("#formArea").empty();
 										$("#price").append(makeTr(data));
@@ -168,7 +173,8 @@ th {
 										console.log( document.getElementById("objArea")); 
 										document.getElementById("objArea").appendChild(obj); // <td id="objArea">안에 넣기
 										
-										
+										let beginTime=$("#selected option:selected").val();
+										console.log(beginTime+"ggggggggg")
 									}
 								})
 						    }
@@ -180,6 +186,8 @@ th {
 									$("#frmBeginTime").val(value);
 										})
 										
+
+						
 										
 										
 						let week = [[${consultDT}]];
@@ -228,6 +236,8 @@ th {
     							return [ (day == day0 || day == day1 || day == day2 || day == day3 || day == day4 || day == day5 || day == day6) , '' ];
     						}
     					};
+    					
+							
 					})
 					
 					
@@ -237,7 +247,7 @@ th {
 						let tr = '<th class="table-primary">결제금액</th>'
 							  +'<td colspan="4">'+data.price+'</td>'
 							  +'<th class="table-primary">시작시간</th>'
-							  +'<td colspan="4" id="objArea"></td>'
+							  +'<td colspan="4" id="objArea" name="beginTime"></td>'
 							
 						return tr;	
 					}
@@ -266,13 +276,12 @@ th {
 									</form>`;
 						return form;
 					}  */
-				
-	
 					
- 				 	let mId = document.getElementById("memberId").value
-					let cNo = document.getElementById("consultNo").value
-					let price = document.getElementById("price").innerHTML
-					let title = document.getElementById("title").innerHTML
+					
+ 				 	let mId = document.getElementById("member_id").value
+					let cNo = document.getElementById("no").value
+					//let price = document.getElementById("price").innerHTML
+					let title = document.getElementById("title").value
 					
 					
 						console.log(mId)
@@ -282,13 +291,13 @@ th {
 					
 					
  					function pay() {
- 				 		let num = 0;
+						let num = 0;
 				 		num ++;
 					    IMP.init('imp21718783');//'가맹점 식별코드' 
 					    IMP.request_pay({// param
 					        pg: "kakaopay.TC0ONETIME", //pg사명 or pg사명.CID 
 					        merchant_uid: "CO"+cNo+mId+num,  // 상점에서 관리하는 주문 번호
-					        name: "맛있는간식", //결제창에 노출될 상품명
+					        name: title, //결제창에 노출될 상품명
 					        amount: 10000, //금액
 					        buyer_email : "testiamport@naver.com", 
 					        buyer_name : mId,

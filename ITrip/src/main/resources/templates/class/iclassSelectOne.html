@@ -134,7 +134,7 @@ layout:decorate="~{layout/layout}">
 	        pg: "kakaopay.TC0ONETIME", //pg사명 or pg사명.CID 
 	        merchant_uid: "CL"+cNo+mId+num,  // 상점에서 관리하는 주문 번호
 	        name: title, //결제창에 노출될 상품명
-	        amount: price, //금액
+	        amount: price, //금액merchant_uid
 	        buyer_email : "testiamport@naver.com", 
 	        buyer_name : mId,
 	    }, function (rsp) { // callback
