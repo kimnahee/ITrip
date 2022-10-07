@@ -21,4 +21,10 @@ public class PayformVO {
 	private String category;          // 상담 또는 클래스 구분
 	private int no;                // 상품 번호
 	private Date setlede;             // 결제일자
+	
+	
+	private Date conday;			// 상담날짜
+	private String beginTime;       // 상담 시작시간
+	private String endTime;  		// 상담 끝시간
+	
 }

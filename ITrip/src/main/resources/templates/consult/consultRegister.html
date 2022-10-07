@@ -16,6 +16,8 @@ th {
 <link rel="stylesheet" href="/resources/demos/style.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<!-- iamport.payment.js -->
+  <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
 </head>
 <body>
 	<div layout:fragment="content">
@@ -60,6 +62,21 @@ th {
 
 								</tr>
 							</table>
+							
+						 <form  id="frm" name="frm" class="form form-horizontal" action="">
+									<div class="form-group">
+										<div>
+											<input type="text"  name="no" class="form-control" th:value=${consult.consultNo}>
+											<input type="text" id="memberId" class="form-control" name="memberId" th:value=${#authentication.principal.member.memberId} readonly="readonly">
+											<input type="text"  id="title" name="name" class="form-control" th:value="${consult.title}">
+											<input type="text"  name="amount" class="form-control" th:value="${consult.title}" >
+											<input type="text"  name="category" class="form-control" value="CONSULT">
+											<input type="text" id="objArea" name="beginTime" class="form-control" value="" >
+											<input type="button" onclick="pay()" class="btn btn-primary btn-sm mb-0" id="payForm" value="신청하기" style="margin-top: 10px; float: right;">
+											</div>
+										</div>
+									</form> 
+						
 						</div>
 						<hr>
 						<div id="formArea">
@@ -67,6 +84,7 @@ th {
 						</div>
 					</div>
 				</div>
+				
 				<script th:inline="javascript">
 				/*<![CDATA[*/
 					//데이트피커 default 옵션(한글처리)
@@ -91,7 +109,8 @@ th {
 						let endDate = $("#endDate").html(); //상담 신청가능 날짜(끝) - 마지막날짜
 						let csrfHeaderName = "${_csrf.headerName}";
 						let csrfToken=$("input[name=_csrf]").val();
-						
+						/* let memberId = $("#memberId").val();
+						console.log(memberId); */
 						// 날짜 제한/요일 제한(데이트피커 설정)
 						$("#registerDate").datepicker({
 							dateFormat: 'yy-mm-dd',
@@ -117,12 +136,52 @@ th {
 										$("#price").empty();
 										$("#formArea").empty();
 										$("#price").append(makeTr(data));
-										$("#formArea").append(makeFrm(data));
+										//$("#formArea").append(makeFrm(data));
+										
+										var begin = data.beginTime; // 시작시간
+										var btime = begin.substr(0,2);
+											
+										var end = data.endTime;		// 종료시간
+										var etime = end.substr(0,2); 
+								
+										var time = etime-btime;
+										
+										let times=[];  // 시간들을 배열로 받음
+
+											for(let i=btime; i<etime; i++){ // 시간만큼 반복문 돌림
+												times.push(i)
+											}
+											
+											let obj = document.createElement("select"); // 셀렉트박스 만들기
+												obj.style.width = '100px'
+												obj.setAttribute('id', 'selected');
+										
+											for (key in times) { 
+												let opt=document.createElement("option"); // 옵션태그 만들기
+												opt.value=times[key];   // 배열에 담겨져 있는 값을 넘겨준다.
+												opt.text=times[key]+'시'; // 배열에 담겨져 있는 값을 보여준다.	
+												obj.appendChild(opt); // 셀렉트박스에 html 요소 추가
+											}
+												
+										console.log(obj);	
+										
+										console.log( document.getElementById("objArea")); 
+										document.getElementById("objArea").appendChild(obj); // <td id="objArea">안에 넣기
+										
+										
 									}
 								})
 						    }
 						})
 						
+						$("#price").on("change", '#selected', e=>{ // click과 change 이벤트가 결과가 같음 디폴트 선택값때문에 서브밋에 이벤트 검
+											let value= e.target.value;
+											console.log(value+"sadasdasd");
+									$("#frmBeginTime").val(value);
+										})
+										
+										
+										
 						let week = [[${consultDT}]];
 						let length = [[${consultDT}]].length; //크기
 						
@@ -172,94 +231,79 @@ th {
 					})
 					
 					
+					// tr에 들어갈 데이터
 					function makeTr(data){
-							console.log(data)
+
+						let tr = '<th class="table-primary">결제금액</th>'
+							  +'<td colspan="4">'+data.price+'</td>'
+							  +'<th class="table-primary">시작시간</th>'
+							  +'<td colspan="4" id="objArea"></td>'
 							
-								var begin = data.beginTime; // 시작시간
-								var btime = begin.substr(0,2);
-									console.log(btime);
-								var end = data.endTime;		// 종료시간
-								var etime = end.substr(0,2); 
-									console.log(etime);
-								var time = etime-btime;
-								console.log(time);
-								let times=[];  // 시간들을 배열로 받음
-
-								for(let i=btime; i<etime; i++){
-									times.push(i)
-									console.log(times);
-								}
-								let obj = document.createElement("SELECT"); // 셀렉트박스 만들기
-								obj.setAttribute('id','iSelect');
-								for (key in times) {
-									console.log("=============="+times);
-									let opt=document.createElement("OPTION");
-									opt.value=key;
-									console.log("=======key======="+key);
-									opt.text=times[key];
-									console.log("=======opt======="+opt);
-									obj.options.add(opt);
-									console.log("======obj========"+obj);
-									
-									
-								}
-								let text = $("#iSelect").text()
-								console.log( text+"=======text")
-								let iSelect = (target) =>{ 
-									console.log(target.options[target.selectIndex].text);
-								}
-								
-								
-						
-						
-						
-						let tr = `<th class="table-primary">가격</th>
-								  <td colspan="4">${data.price}</td>
-								  <th class="table-primary">시작시간</th>
-								  <td colspan="4">`+obj+`</td>
-								  </th>`
-								  
-								
-						return tr;
+						return tr;	
 					}
-					document.getElementById("price").lastElementChild.innerHTML='obj';
-
-	 					/*for(let i = btime; i<etime; i++){ // 시간만큼 반복문 돌림
-										tr+= `<option value='`+times.push(i)+`'>`+times.push(i)+`</option>`;
-									}*/
-								
-						
-						//var time = etime-btime;
-						//console.log(time);
-						
-						//let selTime = $("#selTime")
-						
-						//let document.createElement("SELECT");
-						
-				
-						
-						//var opt = document.createElement("OPTION");
-											//opt.value = times.push(i); // 배열에 담겨져 있는 값을 넘겨준다.
-											//opt.text =times.push(i); // 배열에 담겨져 있는 값을 보여준다.		
 					
-					
-					function makeFrm(data){
+		/* 			function makeFrm(data){
+						console.log(data)
 						let consultTitle = $("#consultTitle").html();
-						let form = `<form id="frm" class="form form-horizontal">
+						let memberId = $("#memberId").val();
+						
+						let form = `<form id="frm" name="frm" class="form form-horizontal" method="post" >
 									<div class="form-group">
 										<div>
-											<input type="hidden" class="form-control" value=${data.consultNo}>
-											<input type="hidden" class="form-control" value=` + consultTitle + `>
-											<input type="hidden" class="form-control" value=${data.price}>
-											<input type="hidden" class="form-control" value="CONSULT">
-											<input type="submit" class="btn btn-primary btn-sm mb-0" value="신청하기" style="margin-top: 10px; float: right;">
-										</div>
+											<input type="text" id="no" name="consultNo" class="form-control" value=${data.consultNo}>
+											<input type="hidden" id="no" name="no" class="form-control" value=${data.consultNo}>
+											<input type="text" id="merchant_uid"name="merchant_uid" class="form-control" value=${data.consultNo}>
+											<input type="text" id="memberId"  name="member_id" class="form-control" value="${memberId}">
+											<input type="text" id="name" name="name" class="form-control" value="` + consultTitle + `">
+											<input type="text" id="amount" name="amount" class="form-control" value=${data.price}>
+											<input type="text" id="category" name="category" class="form-control" value="CONSULT">
+											<input type="text" id="frmBeginTime" name="beginTime" class="form-control" value="" >
+											<input type="button" class="btn btn-primary btn-sm mb-0" onclick="pay()" value="신청하기" style="margin-top: 10px; float: right;">
+											</div>
 										</div>
 									</form>`;
 						return form;
-					}
+					}  */
+				
+	
+					
+ 				 	let mId = document.getElementById("memberId").value
+					let cNo = document.getElementById("consultNo").value
+					let price = document.getElementById("price").innerHTML
+					let title = document.getElementById("title").innerHTML
 					
 					
+						console.log(mId)
+						console.log(cNo)
+						console.log(price)
+						console.log(title)
+					
+					
+ 					function pay() {
+ 				 		let num = 0;
+				 		num ++;
+					    IMP.init('imp21718783');//'가맹점 식별코드' 
+					    IMP.request_pay({// param
+					        pg: "kakaopay.TC0ONETIME", //pg사명 or pg사명.CID 
+					        merchant_uid: "CO"+cNo+mId+num,  // 상점에서 관리하는 주문 번호
+					        name: "맛있는간식", //결제창에 노출될 상품명
+					        amount: 10000, //금액
+					        buyer_email : "testiamport@naver.com", 
+					        buyer_name : mId,
+					    }, function (rsp) { // callback
+					    	console.log(rsp)
+					        if (rsp.success) {
+					        	frm.action = "CoPayformInsert.do"
+					        	frm.submit()//결제및신청테이블에 추가
+					        	
+					        	alert("결제가 정상적으로 완료되었습니다. 마이페이지에서 확인하세요.")
+					        	
+					        } else {
+					            alert("결제실패 / 메세지(" + rsp.error_msg + ")");
+					        }
+					    }); 
+ 					} 
+					 
 					/*]]>*/
 				</script>
 

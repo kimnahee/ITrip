@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import co.itrip.prj.consult.service.ConsultDtVO;
+import co.itrip.prj.consult.service.ConsultVO;
 import co.itrip.prj.iclass.mapper.ClassMapper;
 import co.itrip.prj.iclass.service.ClassAttendVO;
 import co.itrip.prj.payform.mapper.PayFormMapper;
@@ -27,6 +29,12 @@ public class PayformServiceImpl implements PayformService {
 	public int clPayformInsert(PayformVO vo,ClassAttendVO cvo) {
 		map.clPayformInsert(vo);
 		return cmap.classAttendInsert(cvo);
+	}
+
+	@Override
+	public int coPayformInsert(PayformVO vo) {
+	
+		return map.coPayformInsert(vo);
 	}
 
 }
