@@ -1,6 +1,6 @@
 package co.itrip.prj.payform.service;
 
-import java.util.Date;
+import java.sql.Date;
 
 import lombok.Data;
 
