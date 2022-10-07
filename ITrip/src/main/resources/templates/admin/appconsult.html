@@ -26,7 +26,7 @@
 			<div class="col-12">
 				<div class="card">
 					<div class="card-header">
-						<h4 class="card-title">클래스 신청리스트</h4>
+						<h4 class="card-title">상담 신청리스트</h4>
 						<p>Consult를 신청한 회원입니다. 권한을 수정해주세요.</p><br>
 						
 						<!-- 검색폼 시작 -->
@@ -46,7 +46,7 @@
 											<input class="form-select col-4" id="val" name="val">
 										</div>
 										<div class="col-2 d-flex justify-content-end">
-											<button type="button" class="btn btn-primary mr-1 mb-1" onclick="getSearchList()">검색</button>
+											<button type="button" class="btn btn-primary mr-1 mb-1 searchBtn">검색</button>
 										</div>
 									</div>
 								</div>
@@ -56,7 +56,8 @@
 						<!-- 검색폼 끝 -->
 						
 					</div>
-						<div class="card-body">
+					<!-- 페이징하면서 만들 전체 시작-->
+						<div class="card-body" id="all">
 													
 						<!-- 신청 리스트 시작 -->
 						<div class="table-responsive">
@@ -87,14 +88,10 @@
 									</tr>
 								</tbody>
 							</table>
-						</div>
+						</div><br>
 				<!-- 신청 리스트 끝 -->
-				</div>
-				</div>
-			</div>
-		</div>
-		<!-- Table head options end -->
-		<!-- 페이지네이션 -->
+				  
+				  <!-- 페이지네이션 -->
 		<nav aria-label="Page navigation example">
 			<ul class="pagination pagination-info  justify-content-center">
 				<li class="page-item disabled" th:if="${pageInfo.isIsFirstPage()}"><span
@@ -119,6 +116,16 @@
 					class="page-link">»</span></li>
 			</ul>
 		</nav>
+				
+	</div>
+	<!-- 페이징하면서 만들 전체 끝-->
+				</div>
+			</div>
+		</div>
+		
+		<!-- Table head options end -->
+		
+	
 		<script type="text/javascript">
 			function gopage(p) {
 				location.href = '/appConsult.do?pageNum=' + p;
@@ -126,26 +133,94 @@
 			
 			let token = $("meta[name='_csrf']").attr("content");
 			
+			$(".searchBtn").on("click",function() {
+				let key = $("#key").val();
+				let val = $("#val").val();
+				 getSearchList(1,key,val)
+			})
+			
 			// ajax로 검색 구현하기
-			function getSearchList() {
-			let key = $("#key").val();
-			let val = $("#val").val();
+			function getSearchList(p,key,val) {
 			
 			 $.ajax({
 				url:'/consultSearch.do',
 				type:'GET',
-				data:{'key':key, 'val':val},
+				dataType:'json',
+				data:{'key':key, 'val':val, "pageNum":p},
 				beforeSend:function(xhr) {
 					xhr.setRequestHeader("AJAX", true);
 				    xhr.setRequestHeader("X-CSRF-TOKEN", token);
 				},
 				success:function result(res) {
-					console.log(res.length);
-					if(res.length >= 1) {
-						$("#tbody").empty();
-						 res.forEach(element=>{
-							$("#tbody").append(htmlView(element)); 
+					console.log(res);
+					if(res.list.length >= 1) {
+						$("#all").empty();
+						
+						listofHead = `<div class="table-responsive">
+							<table id="table" class="table table-light mb-0" >
+							<thead>
+								<tr>
+									<th>상담제목</th>
+									<th>가이드 아이디</th>
+									<th>가이드직무</th>
+									<th>경력</th>
+									<th>신청일자</th>
+									<th>승인상태</th>
+									<th>승인수정</th>
+								</tr>
+							</thead>
+							<tbody id="tbody">`;
+							
+						 res.list.forEach((elem,idx,arr)=>{
+							  console.log(elem);
+							  console.log(idx);
+							  console.log(arr);
+							  
+						 listofHead +=	`<tr>
+								<td class="text-bold-500" >${elem.title}</td>
+								<td >${elem.guideId}</td>
+								<td class="text-bold-500" >${elem.dutyName}</td>
+								<td class="text-bold-500" >${elem.career}</td>
+								<td class="text-bold-500" >${elem.dt}</td>
+								<td class="text-bold-500" >${elem.stateCd}</td>
+								<td id="${elem.consultNo}">
+								<input type="button" onclick="updateConsult(this.getAttribute('id'))" 
+								class="btn btn-primary btn-l" value="수정" name="${elem.consultNo}" id="${elem.consultNo}">
+								</td>
+							</tr>`;  
+							  
 						})
+						
+						listofHead +=`</tbody></table></div><br>`;
+						
+							 $("#all").html(listofHead); 
+							 
+							 ph ='<nav aria-label="Page navigation example">'
+								    +'<ul class="pagination pagination-info  justify-content-center">'
+								 if(res.isFirstPage==true){  
+									ph += '<li class="page-item disabled"><span class="page-link">«</span></li>'
+								 }
+								 else{
+							    	ph += `<li class="page-item"><a class="page-link" href="javascript:getSearchList(${res.prePage},'${key}','${val}')" rel="prev">«</a></li>`
+							    }
+						
+								for(page of res.navigatepageNums){
+									ph += `<li class="page-item (${res.pageNum} eq ${page}) ? active: ''}" ></li>`
+									if(res.pageNum == page){
+										ph += `<span class='page-link'>${page}</span>`
+									}else{
+										ph+=`<a class='page-link' href='javascript:getSearchList(${page},"${key}","${val}")'>${page}</a>`
+									}
+									ph += "</li>"
+								}
+							
+								if(res.hasNextPage ==true){
+									ph += ` <li class="page-item"><a class="page-link" href="javascript:getSearchList(${res.nextPage},'${key}','${val}')" rel="next">»</a></li>`
+								}else{
+									ph += '<li class="page-item disabled"><span class="page-link">»</span></li></ul></nav>'
+								}
+								
+								$("#all").html(listofHead + ph);
 						
 					}else {
 						alert('검색결과가 없습니다.');
@@ -159,7 +234,6 @@
 			}
 			
 			function htmlView(data) {
-				console.log(data);
 				 let tr = `<tr>
 					<td class="text-bold-500" >${data.title}</td>
 					<td >${data.guideId}</td>

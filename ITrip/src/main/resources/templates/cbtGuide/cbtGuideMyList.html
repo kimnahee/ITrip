@@ -47,7 +47,7 @@
 							</tr>
 						</thead>
 						<tbody id="myTbody"  >
-						<tr  th:each="my:${pageInfo.list}" style="cursor: pointer;">
+						<tr  th:each="my:${pageInfo.list}" style="cursor: pointer;" onmouseover="this.style.background='#EDEDED'" onmouseout="this.style.background='white'">
       						<input type="hidden" id="gtpCd0" name="gtpCd0" th:value="${my.gtpCd}">
 							<input type="hidden" id="langCd0" name="langCd0" th:value="${my.langCd}">
 							<td><p class="text-md text-secondary mb-0" id="gtpCdName" name="gtpCdName" th:text="${my.gtpCdName}">출제유형</p></td> 

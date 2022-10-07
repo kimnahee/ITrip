@@ -48,6 +48,7 @@
 	        SELECT G.CBT_NO,
 	               G.QUES,
 	               G.LANG_CD,
+	               FUN_CODENAME('L',G.LANG_CD) LANG_CD_name,
 	               G.CNSR,
 	               G.EX1,
 	               G.EX2, 
@@ -59,11 +60,13 @@
 		    	   G.CALL, 
 		    	   G.EXPLNA,
 		    	   G.GTP_CD,
+		    	   FUN_CODENAME('G',G.GTP_CD) GTP_CD_name,
 		    	   G.MEMBER_ID
 			FROM (SELECT ROWNUM AS ROWNO,
 			             CBT_NO,
 			             QUES,
 			             LANG_CD,
+			             FUN_CODENAME('L',LANG_CD) LANG_CD_name,
 			             CNSR, 
 			             EX1,
 			             EX2,
@@ -75,6 +78,7 @@
 			             CALL,
 			             EXPLNA,
 			             GTP_CD,
+			             FUN_CODENAME('G',GTP_CD) GTP_CD_name,
 			             MEMBER_ID  
 			      FROM CBT_GUIDE 
 			      WHERE GTP_CD IN('1','2') 

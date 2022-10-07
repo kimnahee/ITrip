@@ -69,7 +69,7 @@ and U.rowno = #{rownum}
 	
 	<select id="cbtUserMyOne" parameterType="co.itrip.prj.cbtUser.service.CbtUserVO" resultType="co.itrip.prj.cbtUser.service.CbtUserVO">
 		  SELECT CBT_NO, QUES,explna,attach,attach_dir,ex1,ex2,ex3,ex4, 
-	           CNSR , CNSR_CNT, CALL,member_id
+	           CNSR , CNSR_CNT, CALL,member_id,
 	           UTP_CD,FUN_CODENAME('U',UTP_CD) UTP_CD_name,
 	           LANG_CD,FUN_CODENAME('L',LANG_CD) LANG_CD_name 
 	           FROM CBT_USER 

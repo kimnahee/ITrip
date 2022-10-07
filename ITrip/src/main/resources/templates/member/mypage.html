@@ -48,7 +48,7 @@
 											<h1 class=" mb-4">Follower</h1>
 											<div class="ms-4">
 												<a data-toggle="modal" data-target="#exampleModalScrollable"> 
-			                                    	<img src="images/icon/follow.png" style="width: 50px; height: 50px;" alt="Icon">
+			                                    	<img src="images/icon/follow.png" style="width: 50px; height: 50px; cursor:pointer;" alt="Icon">
 			                                    </a>
 			                                    <!-- follow modal -->
 		                 						<div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog"
@@ -56,18 +56,19 @@
 								                    <div class="modal-dialog modal-dialog-scrollable" role="document">
 								                        <div class="modal-content">
 									                        <div class="modal-header">
-									                            <h5 class="modal-title" id="exampleModalScrollableTitle"> Follower </h5>
+									                            <h5 class="modal-title" id="exampleModalScrollableTitle"> Follow </h5>
 									                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 									                            <i data-feather="x"></i>
 									                            </button>
 									                        </div>
-									                        <div class="modal-body">
+									                        <div class="modal-body" style="margin: 0px;text-align: center;">
 									                    		<table class='form-group' >                   
 									                    			<thead>
 									                        			<tr>
-												                            <th class='col-md-5'>USER ID</th>
-												                            <th class='col-md-5'>NICK NAME</th>
-												                            <th class='col-md-5'>UNFOLLOW</th>
+												                            <th>USER ID</th>
+												                            <th>NICK NAME</th>
+												                            <th>DUTY</th>
+												                            <th>UNFOLLOW</th>
 									                       				</tr>
 									                    			</thead> 
 									                    			<tbody id="followBody">
@@ -111,16 +112,16 @@
 										<td>가이드를 신청하는 곳입니다.</td>
 									</tr>
 									<tr>
-										<td><button id="myConsult" style="width: 150px;" class="btn btn-sm btn-outline-primary">Consult</button></td>
-										<td><button id="myClass" style="width: 150px;" class="btn btn-sm btn-outline-primary">Class</button></td>
-										<td><button id="mywriter" style="width: 150px;" class="btn btn-sm btn-outline-primary">My Writer</button></td>
-										<td><button id="gapply" style="width: 150px;" class="btn btn-sm btn-outline-primary">Start Guide</button></td>
+										<td><button id="myConsult" style="width: 150px;" class="btn btn-sm btn-primary">Consult</button></td>
+										<td><button id="myClass" style="width: 150px;" class="btn btn-sm btn-primary">Class</button></td>
+										<td><button id="mywriter" style="width: 150px;" class="btn btn-sm btn-primary">My Writer</button></td>
+										<td><button id="gapply" style="width: 150px;" class="btn btn-sm btn-primary">Start Guide</button></td>
 									</tr>
 								</table>
 							</div>
 						</div>
 						<div class="text-center">
-                			<a class="btn block" data-toggle="modal" data-backdrop="false" data-target="#backdrop">회원탈퇴</a>/<a class="btn" href="mrecive.do">회원수정</a>
+                			<a class="btn" href="mrecive.do">회원수정</a>/<a class="btn block" data-toggle="modal" data-backdrop="false" data-target="#backdrop">회원탈퇴</a>
            	 			</div>
              		<!--Disabled Backdrop Modal -->
                     <div class="modal fade text-left" id="backdrop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel4" aria-hidden="true">
@@ -134,9 +135,9 @@
                         </div>
                         <div class="modal-body">
                             <p>
-                            가입된 회원정보 모두 삭제 됩니다. 작성하신 게시물은 삭제되지 않습니다.
-							탈퇴 후 같은 계정으로 재가입시 기존에 가직 있던 적립금은 복원되지 않습니다.
-							회원탈퇴를 진행하시겠습니까?
+	                            가입된 회원정보 모두 삭제 됩니다. 작성하신 게시물은 삭제되지 않습니다.
+								탈퇴 후 같은 계정으로 재가입시 기존에 가지고 있던 적립금은 복원되지 않습니다.
+								회원탈퇴를 진행하시겠습니까?
                             </p>
                         </div>
                         <div class="modal-footer">
@@ -204,7 +205,7 @@
         		let tr = $("<tr>").append($("<td>").html(data.guideId))
         						  .append($("<td>").html(data.nick))
         						  .append($("<td>").html(data.cdName))
-        						  .append($("<td>").append($("<div>").append($("<button>").addClass("btn").addClass("deletF").html("unfo"))))
+        						  .append($("<td>").append($("<div>").append($("<button>").addClass("btn").addClass("deletF").addClass("btn-outline-primary").html("unfo"))))
        	 		return tr;
         }  
 

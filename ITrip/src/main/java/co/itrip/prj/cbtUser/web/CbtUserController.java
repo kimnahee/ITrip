@@ -104,7 +104,8 @@ public class CbtUserController {
 		 * cmmnCdService.cdNameList("L", vo.getLangCd()); vo.setUtpCdName(ucd);
 		 * vo.setLangCdName(lcd);
 		 */
-
+		System.out.println("~~~~~~~~~~~~~~"+vo.getUtpCd());
+		System.out.println("~~~~~~~~~~~~~~"+vo.getUtpCdName());
 		
 		model.addAttribute("myCbt", cbtUserService.cbtUserMyOne(vo));
 		return "cbtUser/cbtUserMyOne";
@@ -131,8 +132,39 @@ public class CbtUserController {
 	
 	//내가 제출한 cbt문제삭제 
 	@PostMapping("/cbtUserMyDelete.do")
-	public String cbtUserMyDelete(CbtUserVO vo) {
-		cbtUserService.cbtUserMyDelete(vo);
+	public String cbtUserMyDelete(CbtUserVO vo) { //사진 경로받아와서 디비삭제서버삭제
+		
+		CbtUserVO cbtVo = cbtUserService.cbtUserMyOne(vo);
+		
+		File file = new File("C:/Temp/CBT_USER/"+cbtVo.getAttachDir());
+        
+    	if( file.exists() ){ //파일존재여부확인
+    		
+    		if(file.isDirectory()){ //파일이 디렉토리인지 확인
+    			
+    			File[] files = file.listFiles();
+    			
+    			for( int i=0; i<files.length; i++){
+    				if( files[i].delete() ){
+    					System.out.println(files[i].getName()+" 삭제성공");
+    				}else{
+    					System.out.println(files[i].getName()+" 삭제실패");
+    				}
+    			}
+    			
+    		}
+    		if(file.delete()){
+    			System.out.println("파일삭제 성공");
+    			cbtUserService.cbtUserMyDelete(vo);
+    		}else{
+    			System.out.println("파일삭제 실패");
+    		}
+    		
+    	}else{
+    		System.out.println("파일이 존재하지 않습니다.");
+    	}
+
+    	
 		return "redirect:cbtUserMyList.do";
 	}
 

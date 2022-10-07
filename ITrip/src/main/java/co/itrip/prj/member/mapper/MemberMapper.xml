@@ -13,10 +13,6 @@
 				,'ROLE_' || auth as auth
 				from member
 				where member_id = #{memberId}
-				<!-- 로그인 체크 -->
-		<if test="pw != null">
-		and pw= #{pw}
-		</if>
 	</select>
 	
 	<!-- 유저 회원정보수정 [박은지] -->
@@ -29,10 +25,17 @@
 		</set>
 		where member_id = #{memberId}
 	</update>
-	
-	<delete id="memberDelete">
-	
-	</delete>
+	<!-- int memberDelete(MemberVO vo); // 회원 삭제(null처리) -->
+	<update id="memberDelete">
+	    update member set nick = null,
+	                      pw = null,
+	                      name = null,
+	                      email = null,
+	                      attach = null,
+	                      attach_dir = null,
+	                      auth='DONE'
+	    where member_id = #{memberId}
+	</update>
 	
 	<!-- pulbic int memberInsert(MemberVO vo); // 회원등록 -->
 	<insert id="memberInsert">

@@ -44,7 +44,7 @@
 										<h1 class=" mb-4">Follower</h1>
 										<div class="ms-4">
 											<a data-toggle="modal" data-target="#exampleModalScrollable"> 
-		                                    	<img src="images/icon/follow.png" style="width: 50px; height: 50px;" alt="Icon">
+		                                    	<img src="images/icon/follow.png" style="width: 50px; height: 50px;  cursor:pointer;" alt="Icon">
 		                                    </a>
 		                                    <!-- follow modal -->
 	                 						<div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog"
@@ -109,17 +109,16 @@
 									<td>수강중인 유저들을 보는 곳입니다.</td>
 								</tr>
 								<tr>
-									<td><button id="gConsult" style="width: 150px;" class="btn btn-sm btn-outline-primary">1:1상담</button></td>
-									<td><button id="gClass" style="width: 150px;" class="btn btn-sm btn-outline-primary">class</button></td>
-									<td><button id="grevice" style="width: 150px;" class="btn btn-sm btn-outline-primary">회원정보수정</button></td>
-									<td><button id="userList" style="width: 150px;" class="btn btn-sm btn-outline-primary">수강생 리스트</button></td>
+									<td><button id="gConsult" style="width: 150px;" class="btn btn-sm btn-primary">1:1상담</button></td>
+									<td><button id="gClass" style="width: 150px;" class="btn btn-sm btn-primary">class</button></td>
+									<td><button id="grevice" style="width: 150px;" class="btn btn-sm btn-primary">회원정보수정</button></td>
+									<td><button id="userList" style="width: 150px;" class="btn btn-sm btn-primary">수강생 리스트</button></td>
 								</tr>
 							</table>
 						</div>
-							            <div class="text-center">
-	                <a class="btn block" data-toggle="modal" data-backdrop="false"
-	                    data-target="#backdrop" style="float: right;">회원탈퇴</a>
-	            </div>
+						<div class="text-center">
+                			<a class="btn" href="mrecive.do">회원수정</a>/<a class="btn block" data-toggle="modal" data-backdrop="false" data-target="#backdrop">회원탈퇴</a>
+           	 			</div>
 	             <!--Disabled Backdrop Modal -->
 	                    <div class="modal fade text-left" id="backdrop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel4"
 	                    aria-hidden="true">
