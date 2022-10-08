@@ -82,10 +82,12 @@ public class MemberServiceImpl implements MemberService {
 	public int ajaxNickChk(String mNick) {
 		return map.ajaxNickChk(mNick);
 	}
-	// 패스워드 확인
+
+	// 아이디, 비밀번호 중복검사
 	@Override
-	public int ajaxpwChk(String mPw) {
-		return map.ajaxpwChk(mPw);
+	public MemberVO memberSearch(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return map.memberSearch(vo);
 	}
 
 

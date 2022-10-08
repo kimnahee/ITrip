@@ -4,6 +4,9 @@ package co.itrip.prj.member.web;
 
 import java.security.Principal;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -11,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.github.pagehelper.PageHelper;
@@ -207,7 +211,40 @@ public class MemberController { //Principal
 			System.out.println("비밀번호가 틀림...!");
 			model.addAttribute("error", error);
 			model.addAttribute("exception", exception);
-			return "main/pwChkForm";
+			return "redirect:/pwChkForm.do";
 		}
     }
+	/* 김하은 : 회원 탈퇴 */
+	@GetMapping("/memberDelete.do")
+	public String memberDelete(MemberVO vo, Principal prin, HttpSession session) {
+		vo.setMemberId(prin.getName());
+		mService.memberDelete(vo);
+		session.invalidate(); //로그아웃
+		return "redirect:/";
+	}
+	/* 김하은 : 회원 아이디/비밀번호 찾기 폼 */
+	@GetMapping("/memberSearchForm.do")
+	public String memberSearchForm(){
+		return "main/memberSearchForm";
+	}
+	
+	/* 김하은 : 아이디/비밀번호 찾기 */
+	@PostMapping("/memberSearch.do")
+	public String memberSearch(MemberVO vo, Model model) {
+		
+		// 이름과 메일이 일치하지 않으면...
+		System.out.println("=============memberSearch : "+vo);
+		
+		// 이름과 메일이 일치하면...
+	   model.addAttribute("v", mService.memberSearch(vo));
+		return "main/memberSearchList";
+	}
+	
+
+	
+	@PostMapping("/memberPwUpdate.do")
+	public String memberPwUpdate(MemberVO vo, Model model) {
+		System.out.println("====================vo:"+vo);
+		return "main/main";
+	}
 }

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+<head>
+<meta charset="utf-8" />
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+<title>아이디/비밀번호 찾기</title>
+<script src="js/jquery-3.6.0.min.js"></script>
+<style>
+#searchImg{
+	 text-align: center;
+}
+</style>
+</head>
+<body>
+<div layout:fragment="content">
+<div class="row">
+        <div class="col-md-5 col-sm-12 mx-auto">
+            <div class="card pt-4">
+                <div class="card-body">
+                    <div class="text-center mb-5 ">
+                        <h3>ITrip에 가입된 계정 정보입니다.</h3><br>
+                        <h5 class="mt-4" ><span th:text="${v.memberId}">아이디</span></h5> 
+                    </div>
+              
+                        <div class="text-center mb-5">
+                            <a href="/loginForm.do"> 지금 바로 로그인하기</a><br><br>
+                            <hr>
+                                <small> 비밀번호를 잊으셨나요?</small>
+                           <a href="/memberPwUpdate.do"> >> 새로운 비밀번호 설정하기</a><br><br>
+                                </a>
+                        </div>
+                        </hr>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+
+</body>
+</html>

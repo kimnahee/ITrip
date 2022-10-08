@@ -36,12 +36,6 @@ public class AjaxMemberController {
 		return mService.ajaxNickChk(mNick);
 	}
 	
-	// 패스워드 확인
-	@PostMapping("/ajaxpwChk.do")
-	public int ajaxpwChk(String mPw) {
-		return mService.ajaxpwChk(mPw);
-	}
-	
 	// 이메일 인증
 	@PostMapping("/ajaxMailChk.do")
 	String ajaxMailChk(@RequestParam("email") String email) throws Exception{
