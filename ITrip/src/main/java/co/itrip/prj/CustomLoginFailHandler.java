@@ -36,7 +36,9 @@ public class CustomLoginFailHandler implements AuthenticationFailureHandler {
 		}
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/login?error=true&exception="+msg);
+		RequestDispatcher reqDis = request.getRequestDispatcher("/pwChk.do?error=true&exception="+msg);
 		dispatcher.forward(request, response);
+		reqDis.forward(request, response);
 
 	}
 }

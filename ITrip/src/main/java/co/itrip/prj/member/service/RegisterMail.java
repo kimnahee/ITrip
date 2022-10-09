@@ -37,13 +37,13 @@ public class RegisterMail implements MailServiceInter{
 		String msgText = "";
 		msgText += "<div style='margin:100px;'>";
 		msgText += "<h1> 안녕하세요</h1>";
-		msgText += "<h1> ITrip에서 회원가입 인증을 위해 메일 발송드립니다.</h1>";
+		msgText += "<h1> ITrip에서 이메일 인증을 관련으로 메일 발송드립니다.</h1>";
 		msgText += "<br>";
-		msgText += "<p>아래 코드를 회원가입 창으로 돌아가 입력해주세요<p>";
+		msgText += "<p>아래 코드를 확인 하신 후, 홈페이지에서 입력해주세요<p>";
 		msgText += "<br>";
 		msgText += "<br>";
 		msgText += "<div align='center' style='border:1px solid black; font-family:verdana';>";
-		msgText += "<h3 style='color:blue;'>회원가입 인증 코드입니다.</h3>";
+		msgText += "<h3 style='color:blue;'>이메일 인증 코드입니다.</h3>";
 		msgText += "<div style='font-size:130%'>";
 		msgText += "CODE : <strong>";
 		msgText += ePw + "</strong><div><br/> "; // 메일에 인증번호 넣기

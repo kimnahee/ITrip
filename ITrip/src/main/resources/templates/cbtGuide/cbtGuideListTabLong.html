@@ -125,7 +125,6 @@
       					 <a>[ 정 답 ]<br><span>${resp.cnsr}</span></a><br><br>&nbsp;
       					 <a>[ 키워드 ]<br><span>${resp.ckwrd}</span></a><br><br>
       					 &nbsp;&nbsp;&nbsp;
-      					 <button type="button" class="btn btn-outline-primary check" data-target="#primary" onclick="chkRevise()"> 정답 체크 정정</button> 
      				</div> `;
      				
      				$(tg).attr("disabled", true); //정답보기 한 번 클릭하면 비활성화처리
@@ -144,42 +143,7 @@
 		    error: function searchError(xhr, err) {
 		           console.error("Error on ajax call: " + err); }}); 
 		}) 
-		//정정하기 나중에 처리...
-		function chkRevise(){
-			console.log("불러와만 짐....ㅠ")
- 			//let tg = e.currentTarget;
- 			
-			//let chk = confirm("정정하시겠습니까?"); // 확인 true 취소 false
-            //alert( chk ); // 확인 버튼을 눌렀다면 true가 출력
-			
-			//let cbtNum = $(tg).prev().prev().val(); // 클릭한 버튼이 있는 문제 번호
-			//console.log(cbtNum);
- 			 /*$.ajax({
- 			    url: '/ajaxMyCbtLongList.do',
- 			    type:'post',
- 			    dataType: 'json',
- 			    data: {'cbtNo' : cbtNum, 'mcKwrd' :inputMcKwrd },
- 			    beforeSend: function(xhr){
- 			    	xhr.setRequestHeader(header, token);
- 			    },
- 			    success: function explnaSuccess(resp) {
- 			    	console.log(resp);
- 			    // chk 값을 확인 후 O,X 이미지 띄움...
-     				if(resp.chk == 1){
-     					let chkX = confirm("오답으로 처리 하시겠습니까?"); // 확인 true 취소 false
-     	                alert( chkX ); // 확인 버튼을 눌렀다면 true가 출력
-     				     let img_html =`<img alt="" src="images/X.png" style="position:absolute; z-index:2;width: 55px;">`;
-     				    $(imgArea).append(img_html);  
-     				} else{
-     					let chkO = confirm("정답으로 처리 하시겠습니까?");
-     	                alert( chkO ); 
-     					 let img_html =`<img alt="" src="images/O.png" style="position:absolute; z-index:2;width: 55px;">`;
-     				    $(imgArea).append(img_html);  
-     				}
-				},
-				error: function searchError(xhr, err) {
-			           console.error("Error on ajax call: " + err); }});  */
-				}
+	
 		
 	</script>
 	</div>

@@ -25,7 +25,7 @@
 		</set>
 		where member_id = #{memberId}
 	</update>
-	<!-- int memberDelete(MemberVO vo); // 회원 삭제(null처리) -->
+	<!-- int memberDelete(MemberVO vo); // 회원 삭제(null처리) [김하은] -->
 	<update id="memberDelete">
 	    update member set nick = null,
 	                      pw = null,
@@ -37,23 +37,25 @@
 	    where member_id = #{memberId}
 	</update>
 	
-	<!-- pulbic int memberInsert(MemberVO vo); // 회원등록 -->
+	<!-- pulbic int memberInsert(MemberVO vo); // 회원등록 [김하은] -->
 	<insert id="memberInsert">
 	    INSERT INTO MEMBER (MEMBER_ID, NICK, PW, NAME, EMAIL, ATTACH, ATTACH_DIR, AUTH)
 	                VALUES (#{memberId}, #{nick},#{pw}, #{name}, #{email}, null, null, 'USER')
 	</insert>
 	
-	<!--public int ajaxIdChk(String mId);    // id 중복 검사 -->
+	<!--public int ajaxIdChk(String mId);    // id 중복 검사 [김하은]-->
 	<select id="ajaxIdChk" resultType="integer">
 	    select count(*) from member where member_id = #{mId}
 	</select>
-	<!--public int ajaxNickChk(String mNick); // 닉네임 중복검사 -->
+	<!--public int ajaxNickChk(String mNick); // 닉네임 중복검사 [김하은] -->
 	<select id="ajaxNickChk"  resultType="integer">
 	    select count(*) from member where nick = #{mNick}
 	</select>
-	<!--public int ajaxpwChk(String mPw);    // 패스워드 확인 -->
-	<select id="ajaxpwChk" resultType="integer">
-	</select>
+	
+    <!-- MemberVO memberSearch(MemberVO vo); //아이디/ 비밀번호 찾기 [김하은]-->
+    <select id="memberSearch" parameterType="co.itrip.prj.member.service.MemberVO" resultType="co.itrip.prj.member.service.MemberVO">
+        select member_id from member where name =#{name} and email=#{email}
+    </select>
 
 
 </mapper>

@@ -57,10 +57,45 @@
 										<input type="email" class="form-control" id="email" name="email" th:value="${member.email}" >
 									</div>
 								</div>
+								
 								<div class="col-12 d-flex justify-content-end">
+                                    <a class="btn block" data-toggle="modal" data-backdrop="false" data-target="#backdrop">회원탈퇴</a>
 									<button type="submit" class="btn btn-primary mr-1 mb-1" >저장</button>
 									<a type="button" class="btn btn-light-secondary mr-1 mb-1" href="myPage">취소</a>
 								</div>
+									<!--Disabled Backdrop Modal -->
+				                    <div class="modal fade text-left" id="backdrop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel4" aria-hidden="true">
+					                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+					                    
+					                        <div class="modal-content">
+						                        <div class="modal-header">
+						                            <h4 class="modal-title" id="myModalLabel4">회원 탈퇴</h4>
+						                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						                            <i data-feather="x"></i>
+						                            </button>
+							                    </div>
+						                        <div class="modal-body">
+						                            <p>
+							                            가입된 회원정보 모두 삭제 됩니다. 작성하신 게시물은 삭제되지 않습니다.
+														탈퇴 후 같은 계정으로 재가입시 기존에 가지고 있던 적립금은 복원되지 않습니다.
+														회원탈퇴를 진행하시겠습니까?
+						                            </p>
+						                        </div>
+						                        <div class="modal-footer">
+						                            <button type="button" class="btn btn-light-secondary" data-dismiss="modal">
+						                            <i class="bx bx-x d-block d-sm-none"></i>
+						                            <span class="d-none d-sm-block">취소</span>
+						                            </button>
+						                            <button type="button" class="btn btn-primary ml-1" data-dismiss="modal" onclick="deleteCall()">
+						                            <i class="bx bx-check d-block d-sm-none"></i>
+						                            <span class="d-none d-sm-block" >탈퇴하기</span>
+						                            </button>
+						                        </div>
+				                          </div>
+				                          
+				                    </div>
+				                  </div>
+				                  <!-- 탈퇴 끝 -->
 							</div>
 						</div>
 					</form>
@@ -76,6 +111,12 @@
     	function message() {
     		alert("회원정보수정이 완료되었습니다.");
     	}
+    	
+    	// 김하은 : 탈퇴 처리 (유저이름을 제외한 정보 null 처리)
+    	function deleteCall(){
+    	    location.href='/memberDelete.do';
+    	}
+    	
     </script>
      
 </body>
