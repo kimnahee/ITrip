@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+<head>
+<meta charset="UTF-8">
+<title>403 error page</title>
+</head>
+<body>
+	<div id="error" layout:fragment="content">
+		<div class="container text-center pt-32">
+			<h1 class='error-title'>403</h1>
+			<p>You're not allowed in here</p>
+			<a href="/" class='btn btn-primary'>메인으로</a>
+		</div>
+	</div>
+</body>
+</html>
