@@ -71,8 +71,8 @@ public class MemberController { //Principal
 	public String mClass(ClassVO vo, ClassAttendVO avo, Model model, Principal principal) {
 		vo.setMemberId(principal.getName());
 		avo.setMemberId(principal.getName());
-		model.addAttribute("classList", cService.myClassList(vo));
-		model.addAttribute("attend", cService.myClassAttendList(avo));
+		model.addAttribute("classList", cService.myClassList(vo)); 
+		model.addAttribute("attend", cService.myClassAttendList(avo)); // 수료여부 확인 후 수료증버튼 활성화, 비활성화
 		return "member/mclass";
 	}
 	

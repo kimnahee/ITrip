@@ -79,7 +79,7 @@ public class GuideController {
 	
 	//소정 가이드 클래스 신청 폼
 	@GetMapping("/startClass.do")
-	public String startClass(Model model, MemberVO vo, HttpServletRequest request, Principal principal) {
+	public String startClass(Model model, MemberVO vo, Principal principal) {
 		// guideId 폼에 뿌려주기
 		vo.setMemberId(principal.getName());
 		model.addAttribute("members", mService.memberSelect(vo));
