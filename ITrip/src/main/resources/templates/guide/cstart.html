@@ -33,7 +33,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
             </div>
             <div class="card-content">
             <div class="card-body">
-                <form class="form form-horizontal" action="classInsert.do" method="post" enctype="multipart/form-data">
+                <form class="form form-horizontal" action="classInsert.do" onsubmit="return message()" method="post" enctype="multipart/form-data">
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
                 <div class="form-body">
                     <div class="row">
@@ -54,7 +54,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
                     </div>
                     <div class="col-md-8 form-group">
                         <select class="form-select" id="jobCd" name="jobCd">
-                        		<option selected>-- 카테고리 선택 --</option>
+                        		<option selected value="">-- 카테고리 선택 --</option>
                                 <option th:each="job : ${joblist}" th:value="${job.cdNo}" th:utext="${job.cdName}"></option>
                         </select> 
                     </div>
@@ -63,7 +63,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
                     </div>
                     <div class="col-md-8">
                                 <div class="form-group mb-3">
-                                    <textarea class="form-control" id="content" name="content" rows="3" placeholder="introduce yourself"></textarea>
+                                    <textarea class="form-control" id="content" name="content" rows="3" placeholder="50자 이상 100자 이하으로 작성가능합니다."></textarea>
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -71,7 +71,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
                     </div>
                     <div class="col-md-8">
                                 <div class="form-group mb-3">
-                                    <textarea class="form-control" id="crclm" name="crclm" rows="3" placeholder="introduce yourself"></textarea>
+                                    <textarea class="form-control" id="crclm" name="crclm" rows="3" placeholder="커리큘럼은 100자 이상 500자 이하으로 작성가능합니다."></textarea>
                                 </div>
                             </div>
                     
@@ -101,13 +101,13 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
                     <div class="col-md-3"></div>
                     <div class="col-md-2  form-group">1회차</div>
                     <div class="col-md-2  form-group" >
-                        <input type="date" id="term" class="form-control " name="classDt[0].term">
+                        <input type="date" id="term1" class="form-control datepicker" name="classDt[0].term" >
                     </div>
                     <div class="col-md-2  form-group" >
-                        <input type="text" id="beginTime" class="timestart form-control " name="classDt[0].beginTime"> 
+                        <input type="text" id="beginTime1" class="timestart form-control" name="classDt[0].beginTime"> 
                     </div> 시~
                     <div class="col-md-2  form-group" >
-                        <input type="text" id="endTime" class="timeend form-control " name="classDt[0].endTime"> 
+                        <input type="text" id="endTime1" class="timeend form-control" name="classDt[0].endTime"> 
                     </div> 시 
 					
                     <!-- 수업시간 폼 1 end -->
@@ -116,13 +116,13 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
                     <div class="col-md-3"></div>
                     <div class="col-md-2  form-group">2회차</div>
                     <div class="col-md-2  form-group" >
-                        <input type="date" id="term" class="form-control " name="classDt[1].term">
+                        <input type="date" id="term2" class="form-control" name="classDt[1].term">
                     </div>
                     <div class="col-md-2  form-group" >
-                        <input type="text" id="beginTime" class="timestart form-control " name="classDt[1].beginTime"> 
+                        <input type="text" id="beginTime2" class="timestart form-control" name="classDt[1].beginTime"> 
                     </div> 시~
                     <div class="col-md-2  form-group" >
-                        <input type="text" id="endTime" class="timeend form-control " name="classDt[1].endTime"> 
+                        <input type="text" id="endTime2" class="timeend form-control" name="classDt[1].endTime"> 
                     </div> 시 
 					
                     <!-- 수업시간 폼 1 end -->
@@ -132,14 +132,14 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
                         <label>금액</label>
                     </div>
                     <div class="col-md-8">
-                        <input type="number" min="0" max="300000" id="price" class="form-control form-group" name="price" placeholder="price">
+                        <input type="number" value="0" min="1" max="300000" id="price" class="form-control form-group" name="price" >
 
                     </div>
                      <div class="col-md-4">
                         <label>정원</label>
                     </div>
                     <div class="col-md-8">
-                        <input type="number" min="1" max="10" id="psncpa" class="form-control form-group" name="psncpa" placeholder="10명까지 가능합니다.">
+                        <input type="number" value="0" min="1" max="10" id="psncpa" class="form-control form-group" name="psncpa" >
                     </div>
                     <div class="col-md-4">
                         <label>첨부파일</label>
@@ -215,49 +215,49 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
                  <div class="col-md-3"></div>
                  <div class="col-md-2  form-group" >1회차</div>
                  <div class="col-md-2  form-group" >
-                     <input type="date" id="term" class="form-control " name="classDt[0].term">
+                     <input type="date" id="term1" class="form-control" name="classDt[0].term">
                  </div>
                  <div class="col-md-2  form-group" >
-                     <input type="text" id="beginTime" class="timestart form-control " name="classDt[0].beginTime"> 
+                     <input type="text" id="beginTime1" class="timestart form-control" name="classDt[0].beginTime"> 
                  </div> 시~
                  <div class="col-md-2  form-group" >
-                     <input type="text" id="endTime" class="timeend form-control " name="classDt[0].endTime"> 
+                     <input type="text" id="endTime1" class="timeend form-control" name="classDt[0].endTime"> 
                  </div> 시 
 				
                  <div class="col-md-3"></div>
                  <div class="col-md-2  form-group">2회차</div>
                  <div class="col-md-2  form-group" >
-                     <input type="date" id="term" class="form-control " name="classDt[1].term">
+                     <input type="date" id="term2" class="form-control" name="classDt[1].term">
                  </div>
                  <div class="col-md-2  form-group" >
-                     <input type="text" id="beginTime" class="timestart form-control " name="classDt[1].beginTime"> 
+                     <input type="text" id="beginTime2" class="timestart form-control" name="classDt[1].beginTime"> 
                  </div> 시~
                  <div class="col-md-2  form-group" >
-                     <input type="text" id="endTime" class="timeend form-control " name="classDt[1].endTime"> 
+                     <input type="text" id="endTime2" class="timeend form-control" name="classDt[1].endTime"> 
                  </div> 시 
 					
         		 <div class="col-md-3"></div>
                  <div class="col-md-2  form-group">3회차</div>
                  <div class="col-md-2  form-group" >
-                     <input type="date" id="term" class="form-control " name="classDt[2].term">
+                     <input type="date" id="term3" class="form-control" name="classDt[2].term">
                  </div>
                  <div class="col-md-2  form-group" >
-                     <input type="text" id="beginTime" class="timestart form-control " name="classDt[2].beginTime"> 
+                     <input type="text" id="beginTime3" class="timestart form-control" name="classDt[2].beginTime"> 
                  </div> 시~
                  <div class="col-md-2  form-group" >
-                     <input type="text" id="endTime" class="timeend form-control " name="classDt[2].endTime"> 
+                     <input type="text" id="endTime3" class="timeend form-control" name="classDt[2].endTime"> 
                  </div> 시 
                  
                  <div class="col-md-3"></div>
                  <div class="col-md-2  form-group">4회차</div>
                  <div class="col-md-2  form-group" >
-                     <input type="date" id="term" class="form-control " name="classDt[3].term">
+                     <input type="date" id="term4" class="form-control" name="classDt[3].term">
                  </div>
                  <div class="col-md-2  form-group" >
-                     <input type="text" id="beginTime" class="timestart form-control " name="classDt[3].beginTime"> 
+                     <input type="text" id="beginTime4" class="timestart form-control" name="classDt[3].beginTime"> 
                  </div> 시~
                  <div class="col-md-2  form-group" >
-                     <input type="text" id="endTime" class="timeend form-control " name="classDt[3].endTime"> 
+                     <input type="text" id="endTime4" class="timeend form-control" name="classDt[3].endTime"> 
                  </div> 시 `;
                  
         	// 시작시간
@@ -294,25 +294,25 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
                  <div class="col-md-3"></div>
                  <div class="col-md-2  form-group">1회차</div>
                  <div class="col-md-2  form-group" >
-                     <input type="date" id="term" class="form-control " name="classDt[0].term">
+                     <input type="date" id="term1" class="form-control" name="classDt[0].term">
                  </div>
                  <div class="col-md-2  form-group" >
-                     <input type="text" id="beginTime" class="timestart form-control " name="classDt[0].beginTime"> 
+                     <input type="text" id="beginTime1" class="timestart form-control" name="classDt[0].beginTime"> 
                  </div> 시~
                  <div class="col-md-2  form-group" >
-                     <input type="text" id="endTime" class="timeend form-control " name="classDt[0].endTime"> 
+                     <input type="text" id="endTime1" class="timeend form-control" name="classDt[0].endTime"> 
                  </div> 시 
 				
                  <div class="col-md-3"></div>
                  <div class="col-md-2  form-group">2회차</div>
                  <div class="col-md-2  form-group" >
-                     <input type="date" id="term" class="form-control " name="classDt[1].term">
+                     <input type="date" id="term2" class="form-control" name="classDt[1].term">
                  </div>
                  <div class="col-md-2  form-group" >
-                     <input type="text" id="beginTime" class="timestart form-control " name="classDt[1].beginTime"> 
+                     <input type="text" id="beginTime2" class="timestart form-control" name="classDt[1].beginTime"> 
                  </div> 시~
                  <div class="col-md-2  form-group" >
-                     <input type="text" id="endTime" class="timeend form-control " name="classDt[1].endTime"> 
+                     <input type="text" id="endTime2" class="timeend form-control" name="classDt[1].endTime"> 
                  </div> 시 `;
                  
         	// 시작시간
@@ -349,8 +349,89 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
      			console.log(sample[i].value);
      			}
      		}*/
-         
-         
+     		
+     	// 폼 재출전 체크
+   		 function message() {
+    			
+    			if($("#title").val() == "") {
+    				alert('클래스이름을 알려주세요.');
+    				$("#title").focus();
+    				return false;
+    			}
+    			
+    			if($("#jobCd").val() == "") {
+    				alert('어떤 카테고리인가요?');
+    				return false;
+    			}
+    			
+    			if($("#content").val() == "") {
+    				alert('신청할 클래스에 대해 설명해주세요.');
+    				$("#content").focus();
+    				return false;
+    			}
+    			
+    			if ($("#content").val() != "") {
+
+   				var count = /^[\w\Wㄱ-ㅎㅏ-ㅣ가-힣]{50,100}$/;
+
+   				if (count.test($("#content").val()) == false) {
+   					alert("설명은 50자 이상 100자 이하으로 작성가능합니다.");
+   					$("#content").focus();
+   					return false;
+   				}
+
+   			}
+    			
+    			if($("#crclm").val() == "") {
+    				alert('신청할 클래스의 커리큘럼을 적어주세요.');
+    				$("#crclm").focus();
+    				return false;
+    			}
+    			
+    			if ($("#crclm").val() != "") {
+
+   				var count = /^[\w\Wㄱ-ㅎㅏ-ㅣ가-힣]{100,500}$/;
+
+   				if (count.test($("#crclm").val()) == false) {
+   					alert("커리큘럼은 100자 이상 500자 이하으로 작성가능합니다.");
+   					$("#crclm").focus();
+   					return false;
+   				}
+
+   			}
+    			
+    			if($("#file").val() == "") {
+    				alert('클래스를 대표하는 사진을 첨부해주세요.');
+    				$("#file").focus();
+    				return false;
+    			}
+    			
+    			// 클래스 날짜와 시간 체크
+    			if($("#term1").val() == "" ||  $("#beginTime1").val() == "" || $("#endTime1").val() == "") {
+    				alert('1회차 클래스날짜와 시간을 체크해주세요.');
+    				return false;
+    			}
+    			if($("#term2").val() == "" ||  $("#beginTime2").val() == "" || $("#endTime2").val() == "") {
+    				alert('2회차 클래스날짜와 시간을 체크해주세요.');
+    				return false;
+    			}
+    			if($("#term3").val() == "" ||  $("#beginTime3").val() == "" || $("#endTime3").val() == "") {
+    				alert('3회차 클래스날짜와 시간을 체크해주세요.');
+    				return false;
+    			}
+    			if($("#term4").val() == "" ||  $("#beginTime4").val() == "" || $("#endTime4").val() == "") {
+    				alert('4회차 클래스날짜와 시간을 체크해주세요.');
+    				return false;
+    			}
+    			
+    			
+    		
+    			alert("클래스 신청이 완료되었습니다.");
+    			return true;
+    		}
+   		  	
+     		
+     		
          
         </script>
          

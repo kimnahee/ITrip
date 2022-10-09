@@ -107,6 +107,7 @@
 
 			if ($("#dc").val() == "") {
 				alert('소개(설명) 입력해주세요.');
+				$("#dc").focus();
 				return false;
 			}
 
@@ -124,11 +125,13 @@
 
 			if ($("#career").val() == "") {
 				alert('경력을 선택해주세요.');
+				$("#carrer").focus();
 				return false;
 			}
 
 			if ($("#duty").val() == "") {
 				alert('직무를 선택해주세요.');
+				$("#duty").focus();
 				return false;
 			}
 
