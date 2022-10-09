@@ -20,4 +20,5 @@ public interface GuideMapper {
 	List<ClassVO> userList(ClassVO vo); // 은지 - 클래스 수강생 리스트
 	List<ClassVO> myIClassList(ClassVO vo); // 은지 - 가이드 마이클래스 전체조회
 
+	int guideDelete(GuideVO vo); // 경아 - 가이드승인거절시 가이드테이블에서삭제 
 }

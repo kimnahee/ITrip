@@ -30,19 +30,27 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 </head>
 <body>
 <div layout:fragment="content">
-
-		<div id="error">
-<div class="container text-center pt-32" th:each="mem: ${members}">
-    <h1 class='error-title' th:text="${mem.memberId}+'님 이미 가이드를 신청하셨습니다'">500</h1>
-    <p th:each="gui: ${guides}" th:if="${gui.stateCd == '1'}">Guide신청이 승인대기중입니다.</p>
-    <div th:each="gui: ${guides}" th:if="${gui.stateCd == '3'}" >
-    <p>Guide신청이 승인거부되었습니다.</p>
-    <button type="button" class="btn btn-primary py-2 px-3">다시 신청하기</button>
-    </div>
-    <a href="myPage">Go Mypage</a>
-</div>
-    </div>
+	<div id="error">
+		<div class="container text-center pt-32" th:each="mem: ${members}">
+		    <h1 class='error-title' th:text="${mem.memberId}+'님 이미 가이드를 신청하셨습니다'">500</h1>
+		    <p th:each="gui: ${guides}" th:if="${gui.stateCd == '1'}">Guide신청이 승인대기중입니다.</p>
+		    <div th:each="gui: ${guides}" th:if="${gui.stateCd == '3'}" >
+		    <p>Guide신청이 승인거부되었습니다.</p>
+		    <button type="button" class="btn btn-primary py-2 px-3">다시 신청하기</button>
+		    </div>
+		    <a href="myPage">Go Mypage</a>
 		</div>
-		
+	</div>
+	<form action="guideDelete.do" method="post" id="frm">
+		<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+		<input type="text" id="guideId" name="guideId" th:value="${members.memberId}">
+	</form>
+	<script type="text/javascript">
+	$(".btn").on("click",function(){
+		frm.submit();
+	})
+	
+	</script>
+</div>		
 </body>
 </html>

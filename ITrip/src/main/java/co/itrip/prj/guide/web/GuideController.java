@@ -171,4 +171,10 @@ public class GuideController {
 		return "guide/userList";
 	}
 
+	//경아 - 가이드신청 승인거절시 가이드테이블에서삭제 
+	@RequestMapping("/guideDelete.do")
+	public String guideDelete(GuideVO vo) {
+		guService.guideDelete(vo);
+		return "redirect:gApply";
+	}
 }

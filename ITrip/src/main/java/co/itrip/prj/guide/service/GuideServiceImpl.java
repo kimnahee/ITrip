@@ -62,6 +62,12 @@ public class GuideServiceImpl implements GuideService {
 		return  map.myIClassList(vo);
 	}
 
+	@Override
+	public int guideDelete(GuideVO vo) {
+		//경아 - 가이드테이블에서삭제 
+		return map.guideDelete(vo);
+	}
+
 
 
 }
