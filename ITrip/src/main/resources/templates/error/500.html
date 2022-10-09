@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+<head>
+<meta charset="UTF-8">
+<title>500 error page</title>
+</head>
+<body>
+	<div id="error" layout:fragment="content">
+		<div class="container text-center pt-32">
+			<h1 class='error-title'>500</h1>
+			<p>Error system. Please contact administrator.</p>
+			<a href="/" class='btn btn-primary'>메인으로</a>
+		</div>
+</body>
+</html>
