@@ -107,7 +107,7 @@ layout:decorate="~{layout/layout}">
     <form action="" id="frm" method="post">
     	<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 		<input type="hidden" id="memberId" name="member_id" th:value="${#authentication.principal.member.memberId}">
-    	<input type="hidden" id="classNo" name="merchant_uid" th:value="'CL'+${classOne.classNo}">
+    	<input type="hidden" id="classNo" name="merchant_uid" th:value="'CL'+${classOne.classNo+#authentication.principal.member.memberId}">
     	<input type="hidden" name="classNo" th:value="${classOne.classNo}">
     	<input type="hidden" id="no" name="no" th:value="${classOne.classNo}">
     	<input type="hidden"  name="name" th:value=${classOne.title}>
