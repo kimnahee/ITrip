@@ -20,6 +20,7 @@ public interface MemberService {
 	int memberDelete(MemberVO vo); // 회원 삭제(null처리)
 	public int ajaxIdChk(String mId);    // id 중복 검사
 	public int ajaxNickChk(String mNik); // 닉네임 중복검사
+	public int memberPwUpdate(MemberVO vo); // pw변경
 
 
 }

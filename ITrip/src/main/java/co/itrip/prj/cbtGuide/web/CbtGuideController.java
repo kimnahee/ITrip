@@ -152,17 +152,19 @@ public class CbtGuideController {
 	public String cbtGuideUpdate(CbtGuideVO vo, CbtKeywordVO kVo, HttpServletRequest request,
 			@RequestParam("file") MultipartFile file) throws IllegalStateException, IOException {
 		
+	    //CbtGuideVO fVo = cgService.cbtGuideListOne(vo);
+	    
+	    //File file = new File("C:/Temp/cbtGuide/"+fVo.getAttachDir());
 		
 		// 파일처리 수정해야함 ! 파일이 지워졌다가 다시 등록되도록...
-		String saveFolder=("");
-		File sfile = new File(saveFolder);
-		String oFileName = file.getOriginalFilename();
+		// 파일처리 : C에 파일이 업로드 되도록 수정
+		String oFileName=file.getOriginalFilename();
 		if(!oFileName.isEmpty()) {
 			String sFileName = UUID.randomUUID().toString()+oFileName.substring(oFileName.lastIndexOf("."));
 			String path = fileDir+"/cbtGuide/"+sFileName;
 		    file.transferTo(new File(path));
 		    vo.setAttach(oFileName);
-		    vo.setAttachDir(saveFolder+"/cbtGuide/"+sFileName);
+		    vo.setAttachDir(sFileName);
 		}
 		
 		cgService.cbtGuideUpdate(vo); //파일 처리 후 수정
