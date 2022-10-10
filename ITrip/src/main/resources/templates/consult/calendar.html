@@ -49,7 +49,7 @@ let csrfToken = $("input[name=_csrf]").val(); // 토큰받아오기
 						console.log(calendar.no)
 						let event = {};
 						event.id = calendar.no;
-						event.title = '닉네임: '+calendar.memberId + ' 시작시간: '+calendar.beginTime +'시';
+						event.title = calendar.name + '/ '+calendar.beginTime +'시';
 						event.start = calendar.conday;
 						event.end = calendar.conday;
 						
