@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import co.itrip.prj.calendar.mapper.CalendarMapper;
+import co.itrip.prj.calendar.service.CalendarVO;
 import co.itrip.prj.consult.service.ConsultDtVO;
 import co.itrip.prj.consult.service.ConsultVO;
 import co.itrip.prj.iclass.mapper.ClassMapper;
@@ -17,6 +19,8 @@ public class PayformServiceImpl implements PayformService {
 	PayFormMapper map;
 	@Autowired
 	ClassMapper cmap;
+	@Autowired
+	CalendarMapper calmap;
 	
 	@Override
 	public void addPay(PayformVO vo) {
@@ -32,9 +36,10 @@ public class PayformServiceImpl implements PayformService {
 	}
 
 	@Override
-	public int coPayformInsert(PayformVO vo) {
-	
-		return map.coPayformInsert(vo);
+	@Transactional
+	public int coPayformInsert(PayformVO vo, CalendarVO cvo) {
+		map.coPayformInsert(vo);
+		return calmap.calendarInsert(cvo);
 	}
 
 }

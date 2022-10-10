@@ -41,7 +41,7 @@
 							<div>
 								<td><button id="consultStart" style="width: 140px;" class="btn btn-sm btn-primary">등록하기</button></td>
 								<!-- 어디로 가는 버튼인지 확인필요 -->
-								<td><button id="" style="width: 140px;" class="btn btn-sm btn-primary">등록한 상담 목록</button></td>
+								<td><button id="calendarStart" style="width: 140px;" class="btn btn-sm btn-primary">상담캘린더</button></td>
 							</div>
 					</div>
 					<br>
@@ -129,6 +129,12 @@
 	$("#consultStart").on("click", function(e){
 		location.href="/consultStart.do";
 	})
+		//상담 등록
+	$("#calendarStart").on("click", function(e){
+		location.href="/calendar.do";
+	})
+	
+	
 	</script>
 </div>
  

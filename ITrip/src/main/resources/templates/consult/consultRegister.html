@@ -66,12 +66,13 @@ th {
 						 <form  id="frm" name="frm" class="form form-horizontal" method="post">
 									<div class="form-group" > 
 										<div>
-											<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+											<input type="text" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 											<input type="text" id="member_id" class="form-control" name="member_id" th:value=${#authentication.principal.member.memberId} >
-											<input type="text" id="consultNo"  name="merchant_uid" class="form-control" th:value="'CO'+${consult.consultNo}">
+											<input type="text" id="consultNo"  name="merchant_uid" class="form-control" th:value="'CO'+${consult.consultNo+#authentication.principal.member.memberId}">
 											<input type="text" id="consultNo"  name="consultNo" class="form-control" th:value="${consult.consultNo}">
 											<input type="text" id="no"  name="no" class="form-control" th:value="${consult.consultNo}">
 											<input type="text" id="title" name="name" class="form-control" th:value="${consult.title}">
+											<input type="text" id="guideId" name="guideId" class="form-control" th:value="${consult.guideId}">
 											<input type="text" id="frmamount" name="amount" value="">
 											<input type="text" id="frmconday" name="conday" value="">
 											<input type="text"   id="category" name="category" class="form-control" value="CONSULT">
@@ -140,6 +141,8 @@ th {
 										let price = data.price;
 										$("#frmamount").val(price);
 										$("#price").empty();
+										
+										
 										$("#formArea").empty();
 										$("#price").append(makeTr(data));
 										//$("#formArea").append(makeFrm(data));
@@ -281,25 +284,31 @@ th {
 					
  				 	let mId = document.getElementById("member_id").value
 					let cNo = document.getElementById("no").value
-					//let price = document.getElementById("price").innerHTML
+					//const amount= document.getElementById("frmamount").value
 					let title = document.getElementById("title").value
+					//let merchant_uid =  document.getElementById("merchant_uid").value
 					
 					
 						console.log(mId)
 						console.log(cNo)
 						console.log(price)
 						console.log(title)
+						//console.log(merchant_uid)
 					
-					
+						
+						//console.log(randomNumFloor)
  					function pay() {
-						let num = 0;
-				 		num ++;
+ 						let num = 0;
+ 						num ++;	
+ 						const amount = document.getElementById("frmamount").value
+ 						//const randomNum = Math.random() * 100;
+						//const randomNumFloor = Math.floor((Math.random * 100) + 100);
 					    IMP.init('imp21718783');//'가맹점 식별코드' 
 					    IMP.request_pay({// param
 					        pg: "kakaopay.TC0ONETIME", //pg사명 or pg사명.CID 
-					        merchant_uid: "CO"+cNo+mId+num,  // 상점에서 관리하는 주문 번호
+					       // merchant_uid: "CO"+cNo+mId+num,  // 상점에서 관리하는 주문 번호
 					        name: title, //결제창에 노출될 상품명
-					        amount: 10000, //금액
+					        amount: amount, //금액
 					        buyer_email : "testiamport@naver.com", 
 					        buyer_name : mId,
 					    }, function (rsp) { // callback

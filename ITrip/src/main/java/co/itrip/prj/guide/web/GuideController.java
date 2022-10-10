@@ -97,14 +97,11 @@ public class GuideController {
 	public String gmyPage(Model model, Principal principal, FollowVO vo) {
 		 vo.setMemberId(principal.getName());
 		 model.addAttribute("count", fService.followCount()); 
-			/*
-			 * vo = mService.memberSelect(vo); System.out.println("========"+vo.getName());
-			 */
 		return "guide/gmypage";
 	}	
 	
 	// 은지 - 가이드 마이페이지 -가이드가 개설한 상담 리스트
-	@GetMapping("/gconsult.do")
+	@RequestMapping("/gconsult.do")
 	public String gconsult(ConsultVO vo, Model model, Principal principal) {
 		
 		vo.setGuideId(principal.getName());
