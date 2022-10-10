@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import co.itrip.prj.calendar.service.CalendarVO;
 import co.itrip.prj.iclass.service.ClassAttendVO;
 import co.itrip.prj.iclass.service.ClassService;
 import co.itrip.prj.payform.service.PayformService;
@@ -41,12 +42,12 @@ public class PayformController {
 	
 	//은지 - 상담구입
 	@PostMapping("/CoPayformInsert.do")
-	public String CoPayformInsert(PayformVO vo, Principal prin, HttpServletRequest request) {
-		int no = Integer.parseInt(request.getParameter("consultNo"));
-		System.out.println("!!!!!!!!!"+no);
-		System.out.println("!!!!!!!!!"+vo.getNo());
+	public String CoPayformInsert(PayformVO vo, CalendarVO cvo, Principal prin, HttpServletRequest request) {
+		//int no = Integer.parseInt(request.getParameter("consultNo"));
+		//System.out.println("!!!!!!!!!"+no);
+		//System.out.println("!!!!!!!!!"+vo.getNo());
 		vo.setMember_id(prin.getName());
-		payformService.coPayformInsert(vo);
+		payformService.coPayformInsert(vo,cvo);
 		return "redirect:myPage";
 	}
 	
