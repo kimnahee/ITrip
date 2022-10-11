@@ -14,16 +14,47 @@ iframe {
 #chat{
 	overflow:hidden;
 }
+div{
+	text-align: center;
+}
 </style>
 </head>
 <body>
 <div id="chat" layout:fragment="content" th:object="${chat}">
 	<div class="divider">
+		<input type="hidden" id="consultNo" class="form-control" name="classNo" th:value=${chat.consultNo} readonly="readonly">
+		<input type="hidden" id="memberId" class="form-control" name="memberId" th:value=${#authentication.principal.member.memberId} readonly="readonly">
+		<input type="hidden" id="auth" class="form-control" name="auth" th:value=${#authentication.principal.member.auth} readonly="readonly">
+		<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 		<div class="divider-text">1:1 상담</div>
 	</div>
 	<!-- 유튜브 링크가 없는 iframe -->
-	<iframe th:src="|https://www.vchatcloud.com/chat-demo/iframe/iframe_kakao/index.html?channelKey=${chat.chatLink}|"
-		frameborder='no' scrolling='no' marginwidth='0' marginheight='0' width='391' height='691'></iframe>
+	<div>
+		<iframe th:src="|https://www.vchatcloud.com/chat-demo/iframe/iframe_kakao/index.html?channelKey=${chat.chatLink}|"
+			frameborder='no' scrolling='no' marginwidth='0' marginheight='0' width='391' height='691'></iframe>
+	</div>
+	<hr><br>
+	<!-- 권한:유저인 사람만 리뷰 쓸수있음 -->
+	<div id="btn">
+		<button th:if="${#authentication.principal.member.auth} == 'ROLE_USER'" id="reviewBtn" class="btn btn-primary btn-md mb-0">리뷰쓰기</button>
+		<button id="consultList" class="btn btn-outline-primary btn-md mb-0">목록으로</button>
+	</div>
+	<script>
+		//리뷰버튼
+		$("#reviewBtn").on("click", function(){
+			location.href="/conReview";
+		})
+		
+		//목록으로
+		$("#consultList").on("click", function(){
+			let auth = $("#auth").val();
+			if(auth == 'ROLE_GUIDE'){
+				location.href="/gconsult.do"
+			} else if(auth == 'ROLE_USER'){
+				location.href="mConsult";
+			}
+		})
+	</script>
 </div>
 </body>
 </html>

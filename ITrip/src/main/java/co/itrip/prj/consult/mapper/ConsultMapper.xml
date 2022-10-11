@@ -151,7 +151,7 @@
 	
 	<!-- 채팅방 연결 -->
 	<select id="consultChat" resultType="co.itrip.prj.consult.service.ConsultChatVO">
-		select chat_link
+		select *
 		from consult_chat
 		where consult_no = #{consultNo}
 	</select>
