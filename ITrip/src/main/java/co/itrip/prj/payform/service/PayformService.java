@@ -15,8 +15,11 @@ public interface PayformService {
 	public void addPay(PayformVO vo);
 
 	//경아 - 클래스결제테이블insert
-	int clPayformInsert(PayformVO vo,ClassAttendVO cvo);
+	int clPayformInsert(PayformVO vo,ClassAttendVO cvo, CalendarVO cavo);
 	
 	//은지 - 상담결제테이블insert
 	int coPayformInsert(PayformVO vo, CalendarVO cvo);
+	
+	//은지 - 결제 카운트 
+	int payCount(PayformVO vo); // 결제 횟수 체크
 }
