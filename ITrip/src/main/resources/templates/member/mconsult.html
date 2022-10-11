@@ -179,8 +179,13 @@
 								</tr>
 								<tr>
 									<td>
-										<button class="btn btn-primary py-2 px-3 consultChat">상담내용</button>
-										<button class="btn btn-primary py-2 px-3 consultReview">리뷰</button>
+	              							<form class="token" action="conReview" method="post">
+							                		<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+							                      	<input name="guideId" id="guideId" th:value="${con.guideId}" type="hidden">
+							                      	<input name="no" class="no" id="no" th:value="${con.consultNo}" type="hidden">
+							                      	<button type="button" class="btn btn-primary py-2 px-3 consultChat">상담내용</button>
+							                      	<button type="button" class="btn btn-primary py-2 px-3 consultReview">리뷰</button>
+							                </form>
 									</td>
 								</tr>
 							</table>
@@ -193,8 +198,10 @@
 		</div>
 		<script>
 			//채팅방 연결
+			let token = $("meta[name='_csrf']").attr("content");
+			
 			$(".consultChat").on("click", function(e) {
-				let consultNo = $(e.target).parent().parent().prev().prev().prev().prev().prev().children(0).html();
+				let consultNo = $(e.target).parent().parent().parent().prev().prev().prev().prev().prev().prev().children(0).html();
 				console.log(consultNo);
 				//let memberId = $("#memberId").val();
 				//console.log(memberId);
@@ -202,12 +209,39 @@
 			})
 			
 			$(".consultReview").on("click", function(e){
-				location.href="/conReview";
+				let cNum = $(e.target).parent().parent().parent().prev().prev().prev().prev().prev().prev().children(0).html();
+				console.log(cNum);
+				let frm = $(".token");
+	 			 $.ajax({
+	 				url : "/consultReviewSelect.do",
+	 				type : "get",
+	 				data : {'no' : cNum},
+	 				beforeSend :function(xhr) {
+	 					xhr.setRequestHeader("AJAX", true);
+	 			    	xhr.setRequestHeader("X-CSRF-TOKEN", token);
+	 				},
+	 				success : function(data) {
+	 					console.log("출력" + data);
+	 					
+	 					 if(data.reviewNo != null) {
+	 					   alert("이미 리뷰를 작성한 상담입니다.");
+	 					   console.log($(e.target));
+	 					} else {
+	 					//	$(e.target).one("click", submit);
+	 						frm.submit();
+	 					}
+	 				}
+	 				
+	 				})
+				//리뷰 상태체크
+				//location.href="/conReview";
 			})
 
 			$(".qnaList").on("click", function(e) {
 				location.href = "/qnaList.do";
 			})
+			
+			//리뷰버튼 상태체크
 		</script>
 	</div>
 

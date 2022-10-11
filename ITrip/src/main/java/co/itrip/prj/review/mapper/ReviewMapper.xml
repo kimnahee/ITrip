@@ -51,6 +51,16 @@
 		and pay.no = #{no}
 	</select>
 	
+	<select id="consultReviewSelect" resultType="co.itrip.prj.review.service.ReviewVO">
+		select re.review_no, re.guide_id, re.nick, re.content, re.dt, re.ctgry, re.member_id, re.star, re.no  
+		from review re, payform pay
+		where re.no = pay.no
+		and re.member_id = pay.member_id
+		and pay.category = 'CONSULT	'
+		and pay.member_id = #{memberId}
+		and pay.no = #{no}
+	</select>
+	
 	<delete id="deleteReview">
 		 delete review 
    		 where review_no = #{reviewNo}
