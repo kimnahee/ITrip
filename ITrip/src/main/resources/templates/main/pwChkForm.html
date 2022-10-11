@@ -16,7 +16,7 @@
                         <h3 class="mt-4">비밀번호 확인</h3> 
                     </div>
                     <div th:if="${param.error}">
-				        <p class="alert alert-danger">비밀번호가 틀렸습니다.</p>
+				        <p class="alert alert-danger" th:text="${error}">비밀번호가 틀렸습니다.</p>
 				    </div>
                     <form action="/pwChk.do" method="post" id="frm">
                         <div class="form-group position-relative has-icon-left">
