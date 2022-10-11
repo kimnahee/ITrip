@@ -12,6 +12,7 @@ public class CalendarVO {
 	private int no; // 캘린더 번호
 	private String guideId; // 가이드 아이디
 	private String member_id; // 유저 아이디
+	private String memberId; // 유저 아이디 캘린더용
 	private String name; // 제목
 	
 	//@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")

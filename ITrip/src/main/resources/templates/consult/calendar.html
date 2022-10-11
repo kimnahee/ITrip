@@ -28,58 +28,55 @@
 
 <script>
 
-
+let guideId = $("#guideId").val();
+let csrfToken = $("input[name=_csrf]").val(); // 토큰받아오기
       
     
      $(document).ready(function() {
+     let guideId = $("#guideId").val();
+	let csrfToken = $("input[name=_csrf]").val(); // 토큰받아오기
      var calendarEl = document.getElementById('calendar');
-	 let events = []; //db에 있는 모든 리스트
+	 let schedules = []; 
 	//캘린더 전체리스트 ajax
 		$.ajax({
 	    url: 'calendarList.do',
-	    dataType : 'json',
+	    data : {'guideId' : guideId},
+		dataType : 'json',
 	    success: function(res){
 	        var list = res;
 	        console.log(list);
-	        $.each(list, function(idx, schedule) {
-						console.log(schedule.no)
+	        $.each(list, function(idx, calendar) {
+						console.log(calendar.no)
 						let event = {};
-						event.id = schedule.no;
-						event.title = schedule.name;
-						event.start = schedule.conday;
-						event.end = schedule.conday;
-						event.cntn = schedule.beginTime;
+						event.id = calendar.no;
+						event.title = calendar.name + '/ '+calendar.beginTime +'시';
+						event.start = calendar.conday;
+						event.end = calendar.conday;
 						
 						
-						events.push(event); // 담기
+						schedules.push(event); // 담기
 					})
 
 
-        var calendarEl = document.getElementById('calendar');
+       /* var calendarEl = document.getElementById('calendar');
 
         const events = list.map(function(item) {
-       		 console.log(item);
-            return {
-                title : item.name
-                
-            }
-        }); 
+       		 				 console.log(item);
+	            return {
+	                title : item.name
+	                
+	            }
+        }); */
 
         var calendar = new FullCalendar.Calendar(calendarEl, {
         	 height: '850px',
 	         headerToolbar: {          
 	         left: 'prev,next today',         
-	          center: 'title',          
-	          right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'        
-	          },
-	          select : function(arg) {
-							console.log(arg)
-							$("#calendarModal").modal("show")
-							$("#startDt").val(arg.startStr);
-							$("#endDt").val(arg.endStr);
-			},				
-            	events : events,
-        
+	         center: 'title',          
+	         right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'        
+	         },
+	          events : schedules,
+
         });
 
         calendar.render();
