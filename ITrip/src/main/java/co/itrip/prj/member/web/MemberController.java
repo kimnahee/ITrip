@@ -4,6 +4,7 @@ package co.itrip.prj.member.web;
 
 import java.security.Principal;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -209,9 +210,10 @@ public class MemberController { //Principal
 			return "redirect:/mrecive.do";
 		}else {
 			System.out.println("비밀번호가 틀림...!");
-			model.addAttribute("error", error);
+			model.addAttribute("error", "비밀번호가 틀렸습니다.");
 			model.addAttribute("exception", exception);
-			return "redirect:/pwChkForm.do";
+			
+			return "redirect:/pwChkForm.do?error=true&exception='+error'";
 		}
     }
 	/* 김하은 : 회원 탈퇴 */
@@ -232,7 +234,7 @@ public class MemberController { //Principal
 	@PostMapping("/memberSearch.do")
 	public String memberSearch(MemberVO vo, Model model) {
 		
-		// 이름과 메일이 일치하지 않으면...
+		// 이름과 메일이 일치하지 않으면... 예외처리 해야함...!
 		System.out.println("=============memberSearch : "+vo);
 		
 		// 이름과 메일이 일치하면...
@@ -240,11 +242,16 @@ public class MemberController { //Principal
 		return "main/memberSearchList";
 	}
 	
+	@GetMapping("/memberPwUpdateForm.do")
+	public String memberPwUpdateForm(MemberVO vo, Model model) {
+		System.out.println("====================vo:"+vo);
+		return "main/memberPwUpdateForm";
+	}
 
 	
 	@PostMapping("/memberPwUpdate.do")
 	public String memberPwUpdate(MemberVO vo, Model model) {
-		System.out.println("====================vo:"+vo);
+	  mService.memberPwUpdate(vo);
 		return "main/main";
 	}
 }

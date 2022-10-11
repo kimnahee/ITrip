@@ -54,8 +54,16 @@
 	
     <!-- MemberVO memberSearch(MemberVO vo); //아이디/ 비밀번호 찾기 [김하은]-->
     <select id="memberSearch" parameterType="co.itrip.prj.member.service.MemberVO" resultType="co.itrip.prj.member.service.MemberVO">
-        select member_id from member where name =#{name} and email=#{email}
+        SELECT MEMBER_ID, 
+               RPAD(SUBSTR(MEMBER_ID,1,2),LENGTH(MEMBER_ID),'*') AS MEMBER_ID_STAR  
+        FROM MEMBER WHERE NAME =#{name} AND EMAIL=#{email}
     </select>
+   <!--  public int memberPwUpdate(MemberVO vo); // pw변경 [김하은]-->
+   <update id="memberPwUpdate">
+       UPDATE MEMBER 
+       SET PW = #{pw}
+       WHERE MEMBER_ID = #{memberId}
+   </update>
 
 
 </mapper>

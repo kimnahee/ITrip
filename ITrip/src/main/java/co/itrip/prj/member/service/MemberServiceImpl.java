@@ -89,6 +89,22 @@ public class MemberServiceImpl implements MemberService {
 		// TODO Auto-generated method stub
 		return map.memberSearch(vo);
 	}
+	
+	/**
+	 * 비밀번호 변경
+	 * @author 김하은 
+	 * @Date 2022.10.10 
+	 */
+	@Override
+	public int memberPwUpdate(MemberVO vo) {
+		
+		/* 패스워드 암호화*/
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(); // 암호화처리를 위한 인스턴스 생성
+		String result = encoder.encode(vo.getPw()); // 사용자가 입력한 pw값을 암호화처리
+		vo.setPw(result);
+
+		return map.memberPwUpdate(vo);
+	}
 
 
 }
