@@ -187,7 +187,7 @@
 							                      	<input name="no" class="no" id="no" th:value="${cList.classNo}" type="hidden">
 							                      	<button type="button" class="btn btn-primary py-2 px-3 reviewBtn">리뷰</button>
 							                      	<button type="button" class="btn btn-primary py-2 px-3 " id="certificate" th:each="att : ${attend}" th:if="${att.classNo == cList.classNo} and ${att.complete == 1}">수료증</button>
-							                </form>
+							                	 </form>
 							                 </div>
 	              							</td>
 	              						</tr>
@@ -261,8 +261,8 @@
 	    
 	    //강의장 링크연결
 	    $(".classChat").on("click", function(e){
-	    	let classNo = $(e.target).parent().parent().prev().prev().prev().prev().prev().children(0).html();
-	    	//console.log(classNo);
+	    	let classNo = $(e.target).parent().parent().prev().prev().prev().prev().children(0).html();
+	    	console.log(classNo);
 	    	location.href="/classChat.do?classNo="+classNo;
 	    })
 	</script>

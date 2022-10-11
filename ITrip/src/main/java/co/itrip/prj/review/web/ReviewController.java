@@ -64,14 +64,5 @@ public class ReviewController {
 		
 	}
 	
-	// (consult) 리뷰 이미 작성했는지 상태 확인
-	@GetMapping("/consultReviewSelect.do")
-	@ResponseBody
-	public ReviewVO consultReviewSelect(ReviewVO vo, HttpServletRequest request, Principal principal) {
-		vo.setMemberId(principal.getName());
-		return reServicce.consultReviewSelect(vo);
-		
-	}
-	
 	
 }

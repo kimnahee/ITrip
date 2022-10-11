@@ -5,7 +5,6 @@
 <meta name="_csrf" th:content="${_csrf.token}" />
 <meta name="_csrf_header" th:content="${_csrf.headerName}" />
 <title>아이디/비밀번호 찾기</title>
-<script src="js/jquery-3.6.0.min.js"></script>
 <style>
 #searchImg{
 	 text-align: center;
@@ -14,13 +13,14 @@
 </head>
 <body>
 <div layout:fragment="content">
+<div class="container">
 <div class="row">
         <div class="col-md-5 col-sm-12 mx-auto">
             <div class="card pt-4">
                 <div class="card-body">
                     <div class="text-center mb-5 ">
                         <h3>ITrip에 가입된 계정 정보입니다.</h3><br>
-                        <input type="hidden" id = "memberId" name="memberId" th:value="${v.memberId}">
+                        <input type="text" id = "memberId" name="memberId" th:value="${v.memberId}">
                         <h5 class="mt-4" ><span th:text="${v.memberIdStar}">아이디</span></h5> 
                     </div>
               
@@ -28,19 +28,20 @@
                             <a href="/loginForm.do"> 지금 바로 로그인하기</a><br><br>
                             <hr>
                                 <small> 비밀번호를 잊으셨나요?</small><br>
-                           <a href="/memberPwUpdateForm.do"> >> 새로운 비밀번호 설정하기</a><br><br>
-                                </a>
+                           <span style="cursor:pointer;" onclick="newPwCall()"> >> 새로운 비밀번호 설정하기</span><br><br>
                         </div>
-                        </hr>
-                    </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
 <script>
+  function newPwCall(){
    let memberId = $("#memberId").val();
+   //console.log(memberId);
    location.href="/memberPwUpdateForm.do?memberId=" + memberId;
+  }
+	  
 </script>
 </div>
 </body>

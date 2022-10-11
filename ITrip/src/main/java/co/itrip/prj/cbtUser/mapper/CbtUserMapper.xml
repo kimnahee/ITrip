@@ -3,13 +3,13 @@
 <mapper namespace="co.itrip.prj.cbtUser.mapper.CbtUserMapper">
 
 
-<!-- <select id="cbtUserList" resultType="co.itrip.prj.cbtUser.service.CbtUserVO"
+<select id="cbtUserList" resultType="co.itrip.prj.cbtUser.service.CbtUserVO"
  						parameterType="co.itrip.prj.cbtUser.service.CbtUserVO">
 	select cbt_no, ques, lang_cd, cnsr, ex1, ex2,
 			ex3, ex4, attach, attach_dir, cnsr_cnt, call,
 			explna, utp_cd, lang_cd, member_id 
 		 	from cbt_user where lang_cd = #{langCd}
-</select> -->
+</select>
 
 <insert id="cbtUserInsert">
 	<selectKey keyProperty="cbtNo" order="BEFORE" resultType="int">
@@ -29,10 +29,11 @@
 FROM (SELECT ROWNUM, 
 cbt_no, ques, lang_cd, cnsr, ex1, ex2,
 			ex3, ex4, attach, attach_dir, cnsr_cnt, call,
-			explna, utp_cd, member_id  FROM cbt_user where lang_cd=#{langCd} order by dbms_random.value) U,cmmncd C
+			explna, utp_cd, member_id  FROM cbt_user where lang_cd=#{langCd}) U,cmmncd C
 WHERE C.cd_ini = 'L' 
 and C.cd_no = U.lang_cd 
 and rownum = #{rownum}
+
 
 </select>
 
@@ -44,7 +45,7 @@ SELECT U.cbt_no,U.ques,U.lang_cd, U.cnsr, U.ex1, U.ex2,
 FROM (SELECT ROWNUM AS rowno, 
 cbt_no, ques, lang_cd, cnsr, ex1, ex2,
 			ex3, ex4, attach, attach_dir, cnsr_cnt, call,
-			explna, utp_cd, member_id  FROM cbt_user where lang_cd=#{langCd} order by dbms_random.value) U,cmmncd C 
+			explna, utp_cd, member_id  FROM cbt_user where lang_cd=#{langCd}) U,cmmncd C 
 WHERE C.cd_ini = 'L' 
 and C.cd_no = U.lang_cd 
 and U.rowno = #{rownum}

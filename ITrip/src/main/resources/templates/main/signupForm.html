@@ -211,14 +211,15 @@
         let mPw = $("#pw").val();
         
         if(mPw.match(pwreg) == null){
-            $(".successPwRegChk").text("* 영문, 숫자, 특수문자 중 2가지 이상 조합하여 10자리 이내로 입력해주세요.");
+            $(".successPwRegChk").text("* 영문자,숫자, 특수문자를 포함한 10글자 이상 비밀번호를 입력해주세요. ");
 			$(".successPwRegChk").css("color", "red");
 			$("#pwRegChk").val("false");
-			console.log($("#pwChk").val());
         }else{
-            $(".successPwChk").text("");
-			$("#pwRegChk").val("tre");
+            $(".successPwRegChk").text("");
+			$("#pwRegChk").val("true");
+			console.log("정규화패턴 충족")
         }
+        console.log("pwRegChk : ", $("#pwRegChk").val());
     })
       
     //비밀번호 확인

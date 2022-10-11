@@ -32,9 +32,9 @@ public class PayformController {
 	
 	//경아 - 클래스구입
 	@PostMapping("/ClPayformInsert.do")
-	public String ClPayformInsert(PayformVO vo,ClassAttendVO cvo, CalendarVO cavo, Principal prin) {
+	public String ClPayformInsert(PayformVO vo,ClassAttendVO cvo,Principal prin) {
 		cvo.setMemberId(prin.getName());
-		payformService.clPayformInsert(vo,cvo,cavo);
+		payformService.clPayformInsert(vo,cvo);
 		
 		return "redirect:myPage";
 	}
@@ -42,7 +42,7 @@ public class PayformController {
 	
 	//은지 - 상담구입
 	@PostMapping("/CoPayformInsert.do")
-	public String CoPayformInsert(PayformVO vo, CalendarVO cvo, Principal prin) {
+	public String CoPayformInsert(PayformVO vo, CalendarVO cvo, Principal prin, HttpServletRequest request) {
 		//int no = Integer.parseInt(request.getParameter("consultNo"));
 		//System.out.println("!!!!!!!!!"+no);
 		//System.out.println("!!!!!!!!!"+vo.getNo());

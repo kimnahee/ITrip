@@ -16,10 +16,11 @@ public class CbtUserServiceImpl implements CbtUserService {
 
 	@Autowired
 	private CmmnCdMapper cdMap;
-	/*
-	 * @Override public List<CbtUserVO> cbtUserList(CbtUserVO vo) { return
-	 * map.cbtUserList(vo); }
-	 */
+	
+	@Override
+	public List<CbtUserVO> cbtUserList(CbtUserVO vo) {
+		return map.cbtUserList(vo);
+	}
 
 	@Override
 	public int cbtUserInsert(CbtUserVO vo) {

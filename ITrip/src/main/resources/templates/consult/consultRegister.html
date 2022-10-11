@@ -13,6 +13,7 @@ th {
 </style>
 <link rel="stylesheet"
 	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <!-- iamport.payment.js -->
@@ -67,7 +68,7 @@ th {
 										<div>
 											<input type="text" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 											<input type="text" id="member_id" class="form-control" name="member_id" th:value=${#authentication.principal.member.memberId} >
-											<input type="text" id="consultNo"  name="merchant_uid" class="form-control" th:value="'CO'+${consult.consultNo+#authentication.principal.member.memberId+(max+1)}">
+											<input type="text" id="consultNo"  name="merchant_uid" class="form-control" th:value="'CO'+${consult.consultNo+#authentication.principal.member.memberId}">
 											<input type="text" id="consultNo"  name="consultNo" class="form-control" th:value="${consult.consultNo}">
 											<input type="text" id="no"  name="no" class="form-control" th:value="${consult.consultNo}">
 											<input type="text" id="title" name="name" class="form-control" th:value="${consult.title}">
@@ -148,7 +149,7 @@ th {
 										
 										var begin = data.beginTime; // 시작시간
 										var btime = begin.substr(0,2);
-										$("#frmBeginTime").val(btime);
+											
 										var end = data.endTime;		// 종료시간
 										var etime = end.substr(0,2); 
 								
@@ -294,11 +295,14 @@ th {
 						console.log(title)
 						//console.log(merchant_uid)
 					
-						let num = 0;
+						
 						//console.log(randomNumFloor)
  					function pay() {
+ 						let num = 0;
  						num ++;	
- 						const amount = document.getElementById("frmamount").value;
+ 						const amount = document.getElementById("frmamount").value
+ 						//const randomNum = Math.random() * 100;
+						//const randomNumFloor = Math.floor((Math.random * 100) + 100);
 					    IMP.init('imp21718783');//'가맹점 식별코드' 
 					    IMP.request_pay({// param
 					        pg: "kakaopay.TC0ONETIME", //pg사명 or pg사명.CID 

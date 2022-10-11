@@ -118,27 +118,6 @@ public class CbtUserController {
 		String oFileName = file.getOriginalFilename();
 		if(!oFileName.isEmpty()) {
 			//기존파일삭제
-			CbtUserVO cbtVo = cbtUserService.cbtUserMyOne(vo);
-			File beforeFile = new File("C:/Temp/CBT_USER/"+cbtVo.getAttachDir());
-		  	if( beforeFile.exists() ){ //파일존재여부확인
-	    		if(beforeFile.isDirectory()){ //파일이 디렉토리인지 확인
-	    			File[] files = beforeFile.listFiles();
-	    			for( int i=0; i<files.length; i++){
-	    				if( files[i].delete() ){
-	    					System.out.println(files[i].getName()+" 삭제성공");
-	    				}else{
-	    					System.out.println(files[i].getName()+" 삭제실패");
-	    				}
-	    			}
-	    		}
-	    		if(beforeFile.delete()){
-	    			System.out.println("파일삭제 성공");
-	    		}else{
-	    			System.out.println("파일삭제 실패");
-	    		}
-	    	}else{
-	    		System.out.println("파일이 존재하지 않습니다.");
-	    	}
 			
 			//업로드
 			String sFileName = UUID.randomUUID().toString()+oFileName.substring(oFileName.lastIndexOf("."));
@@ -156,11 +135,15 @@ public class CbtUserController {
 	public String cbtUserMyDelete(CbtUserVO vo) { //사진 경로받아와서 디비삭제서버삭제
 		
 		CbtUserVO cbtVo = cbtUserService.cbtUserMyOne(vo);
+		
 		File file = new File("C:/Temp/CBT_USER/"+cbtVo.getAttachDir());
         
     	if( file.exists() ){ //파일존재여부확인
+    		
     		if(file.isDirectory()){ //파일이 디렉토리인지 확인
+    			
     			File[] files = file.listFiles();
+    			
     			for( int i=0; i<files.length; i++){
     				if( files[i].delete() ){
     					System.out.println(files[i].getName()+" 삭제성공");
@@ -168,6 +151,7 @@ public class CbtUserController {
     					System.out.println(files[i].getName()+" 삭제실패");
     				}
     			}
+    			
     		}
     		if(file.delete()){
     			System.out.println("파일삭제 성공");
@@ -175,9 +159,12 @@ public class CbtUserController {
     		}else{
     			System.out.println("파일삭제 실패");
     		}
+    		
     	}else{
     		System.out.println("파일이 존재하지 않습니다.");
     	}
+
+    	
 		return "redirect:cbtUserMyList.do";
 	}
 

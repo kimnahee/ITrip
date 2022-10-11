@@ -19,7 +19,7 @@
                     </div>
                     <form action="/memberPwUpdate.do" method="post" id="frm">
                     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-                    <input type="hidden" id="memberId" name="memberId">
+                    <input type="hidden" id="memberId" name="memberId" th:value="${memberVO.memberId}">
                         
                      <div><label><small>비밀번호</small></label></div>
 										<div class="input-group input-group-outline mb-2">
@@ -39,7 +39,6 @@
                         <div class="clearfix">
                             <button type="button" class="btn btn-primary float-right mb-3 pwUpdateCall">비밀번호 변경</button>
                         </div>
-                        </hr>
                     </form>
                 </div>
             </div>
@@ -48,21 +47,22 @@
 </div>
 <script>
 
- //비밀번호 정규표현식 체크
-    $("#pw").blur(function(){
-        let pwreg = /^(?!((?:[A-Za-z]+)|(?:[~!@#$%^&*()_+=]+)|(?:[0-9]+))$)[A-Za-z\d~!@#$%^&*()_+=]{10,}$/; //영문, 숫자, 특수문자 중 2가지 이상 조합하여 10자리 이내
-        let mPw = $("#pw").val();
-        
-        if(mPw.match(pwreg) == null){
-            $(".successPwRegChk").text("* 영문, 숫자, 특수문자 중 2가지 이상 조합하여 10자리 이내로 입력해주세요.");
-			$(".successPwRegChk").css("color", "red");
-			$("#pwRegChk").val("false");
-			console.log($("#pwChk").val());
-        }else{
-            $(".successPwChk").text("");
-			$("#pwRegChk").val("tre");
-        }
-    })
+//비밀번호 정규표현식 체크
+$("#pw").blur(function(){
+    let pwreg = /^(?!((?:[A-Za-z]+)|(?:[~!@#$%^&*()_+=]+)|(?:[0-9]+))$)[A-Za-z\d~!@#$%^&*()_+=]{10,}$/; //영문, 숫자, 특수문자 중 2가지 이상 조합하여 10자리 이내
+    let mPw = $("#pw").val();
+    
+    if(mPw.match(pwreg) == null){
+        $(".successPwRegChk").text("* 영문자,숫자, 특수문자를 포함한 10글자 이상 비밀번호를 입력해주세요. ");
+		$(".successPwRegChk").css("color", "red");
+		$("#pwRegChk").val("false");
+    }else{
+        $(".successPwRegChk").text("");
+		$("#pwRegChk").val("true");
+		console.log("정규화패턴 충족")
+    }
+    console.log("pwRegChk : ", $("#pwRegChk").val());
+})
       
     //비밀번호 확인
     $("#pwRe").blur(function(){ 
