@@ -89,7 +89,7 @@ public class MemberController { //Principal
 		return "member/mconsult";
 	}
 	
-	// 가이드 신청 요청
+	// 가이드 신청 폼
 	@GetMapping("/gApply")
 	public String gApply(Model model, MemberVO vo, GuideVO gvo, Principal principal) {
 		// 가이드 신청폼에 member테이블 id,name 가져옴
