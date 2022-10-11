@@ -22,4 +22,6 @@ public class MemberVO {
 	
 	private String key; // 검색할 키워드
 	private String val; // 검색할 값
+	
+	private String memberIdStar; // 아이디찾기 할때 **처리 담을 변수
 }

@@ -20,14 +20,15 @@
                 <div class="card-body">
                     <div class="text-center mb-5 ">
                         <h3>ITrip에 가입된 계정 정보입니다.</h3><br>
-                        <h5 class="mt-4" ><span th:text="${v.memberId}">아이디</span></h5> 
+                        <input type="hidden" id = "memberId" name="memberId" th:value="${v.memberId}">
+                        <h5 class="mt-4" ><span th:text="${v.memberIdStar}">아이디</span></h5> 
                     </div>
               
                         <div class="text-center mb-5">
                             <a href="/loginForm.do"> 지금 바로 로그인하기</a><br><br>
                             <hr>
-                                <small> 비밀번호를 잊으셨나요?</small>
-                           <a href="/memberPwUpdate.do"> >> 새로운 비밀번호 설정하기</a><br><br>
+                                <small> 비밀번호를 잊으셨나요?</small><br>
+                           <a href="/memberPwUpdateForm.do"> >> 새로운 비밀번호 설정하기</a><br><br>
                                 </a>
                         </div>
                         </hr>
@@ -37,8 +38,10 @@
         </div>
     </div>
 </div>
-
+<script>
+   let memberId = $("#memberId").val();
+   location.href="/memberPwUpdateForm.do?memberId=" + memberId;
+</script>
 </div>
-
 </body>
 </html>
