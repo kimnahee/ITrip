@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" 
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
-	layout:decorate="~{layout/layout}">
+   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+   layout:decorate="~{layout/layout}">
 <head>
 <meta charset="UTF-8">
   
@@ -9,13 +9,13 @@
 <style>
   /* 캘린더 위의 해더 스타일(날짜가 있는 부분) */  
  .fc-header-toolbar {    
-	  padding-top: 1em;   
-	  padding-left: 1em;
-	  padding-right: 1em; 
+     padding-top: 1em;   
+     padding-left: 1em;
+     padding-right: 1em; 
  }
 
 #calendar {
-	max-height: 100%;
+   max-height: 100%;
 }
 </style>
  <!-- jquery CDN -->  
@@ -34,55 +34,55 @@ let csrfToken = $("input[name=_csrf]").val(); // 토큰받아오기
     
      $(document).ready(function() {
      let guideId = $("#guideId").val();
-	let csrfToken = $("input[name=_csrf]").val(); // 토큰받아오기
+   let csrfToken = $("input[name=_csrf]").val(); // 토큰받아오기
      var calendarEl = document.getElementById('calendar');
-	 let schedules = []; 
-	//캘린더 전체리스트 ajax
-		$.ajax({
-	    url: 'calendarList.do',
-	    data : {'guideId' : guideId},
-		dataType : 'json',
-	    success: function(res){
-	        var list = res;
-	        console.log(list);
-	        $.each(list, function(idx, calendar) {
-						console.log(calendar.no)
-						let event = {};
-						event.id = calendar.no;
-						event.title = calendar.name + '/ '+calendar.beginTime +'시';
-						event.start = calendar.conday;
-						event.end = calendar.conday;
-						
-						
-						schedules.push(event); // 담기
-					})
+    let schedules = []; 
+   //캘린더 전체리스트 ajax
+      $.ajax({
+       url: 'calendarList.do',
+       data : {'guideId' : guideId},
+       dataType : 'json',
+       success: function(res){
+           var list = res;
+           console.log(list);
+           $.each(list, function(idx, calendar) {
+                  console.log(calendar.no)
+                  let event = {};
+                  event.id = calendar.no;
+                  event.title = calendar.name + '/ '+calendar.beginTime +'시';
+                  event.start = calendar.conday;
+                  event.end = calendar.conday;
+                  
+                  
+                  schedules.push(event); // 담기
+               })
 
 
        /* var calendarEl = document.getElementById('calendar');
 
         const events = list.map(function(item) {
-       		 				 console.log(item);
-	            return {
-	                title : item.name
-	                
-	            }
+                           console.log(item);
+               return {
+                   title : item.name
+                   
+               }
         }); */
 
         var calendar = new FullCalendar.Calendar(calendarEl, {
-        	 height: '850px',
-	         headerToolbar: {          
-	         left: 'prev,next today',         
-	         center: 'title',          
-	         right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'        
-	         },
-	          events : schedules,
+            height: '850px',
+            headerToolbar: {          
+            left: 'prev,next today',         
+            center: 'title',          
+            right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'        
+            },
+             events : schedules,
 
         });
 
         calendar.render();
-	    },
-	});
-	});
+       },
+   });
+   });
 
       
     
@@ -91,9 +91,9 @@ let csrfToken = $("input[name=_csrf]").val(); // 토큰받아오기
 <body layout:fragment="content">
 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 <input type="hidden" id="guideId" name="guideId" th:value="${#authentication.principal.member.memberId}" />
-	  <div id='calendar-container'>    
-	  	<div id='calendar'></div>  
-	  </div>
+     <div id='calendar-container'>    
+        <div id='calendar'></div>  
+     </div>
 
 </body>
 </html>

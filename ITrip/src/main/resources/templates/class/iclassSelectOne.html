@@ -108,11 +108,15 @@ layout:decorate="~{layout/layout}">
     	<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 		<input type="hidden" id="memberId" name="member_id" th:value="${#authentication.principal.member.memberId}">
     	<input type="hidden" id="classNo" name="merchant_uid" th:value="'CL'+${classOne.classNo+#authentication.principal.member.memberId}">
-    	<input type="hidden" name="classNo" th:value="${classOne.classNo}">
-    	<input type="hidden" id="no" name="no" th:value="${classOne.classNo}">
-    	<input type="hidden"  name="name" th:value=${classOne.title}>
-    	<input type="hidden"  name="amount" th:value=${classOne.price}>
-    	<input type="hidden"  name="category" th:value="CLASS">
+    	<input type="hidden" name="classNo"  th:value="${classOne.classNo}">
+    	<input type="hidden" id="no" name="no"  th:value="${classOne.classNo}">
+    	<input type="hidden"  name="name"  th:value=${classOne.title}>
+    	<input type="hidden"  name="amount"  th:value=${classOne.price}>
+    	<input type="hidden"  name="category"  th:value="CLASS">
+    	
+    	<input type="text" id="guideId" name="guideId" class="form-control"  th:value="${classOne.guideId}">
+    	<input type="text"  name="beginTime" th:each="cdt:${classDt}" th:value="${cdt.beginTime}">
+    	<input type="text"  name="conday" th:each="cdt:${classDt}" th:value="${cdt.term}">
     </form>
     
     <script type="text/javascript">

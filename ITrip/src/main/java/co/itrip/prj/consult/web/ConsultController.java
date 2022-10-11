@@ -25,6 +25,8 @@ import co.itrip.prj.consult.service.ConsultService;
 import co.itrip.prj.consult.service.ConsultVO;
 import co.itrip.prj.guide.service.GuideService;
 import co.itrip.prj.guide.service.GuideVO;
+import co.itrip.prj.payform.service.PayformService;
+import co.itrip.prj.payform.service.PayformVO;
 
 @Controller
 public class ConsultController {
@@ -37,6 +39,9 @@ public class ConsultController {
 	
 	@Autowired
 	private ConsultService conService; // 1:1상담 서비스
+	
+	@Autowired
+	private PayformService payService; // 결제 서비스
 	
 	
 	//페이징
@@ -110,12 +115,13 @@ public class ConsultController {
 	
 	//상담 신청 상세 페이지
 	@GetMapping("/consultRegister.do")
-	public String consultRegister(ConsultVO vo, ConsultDtVO dtvo, Model model, HttpServletRequest request) {
+	public String consultRegister(ConsultVO vo, ConsultDtVO dtvo, PayformVO pvo, Model model, HttpServletRequest request) {
 		int consultNo = Integer.parseInt(request.getParameter("consultNo"));
 		vo.setConsultNo(consultNo);
 		model.addAttribute("consult", conService.consultSelectOne(vo)); //단건조회(신청한 상담)
 		dtvo.setConsultNo(consultNo);
 		model.addAttribute("consultDT", conService.consultDtList(dtvo)); //시간조회(신청한 상담의)
+		model.addAttribute("max", payService.payCount(pvo));
 		return "consult/consultRegister";
 	}
 	
