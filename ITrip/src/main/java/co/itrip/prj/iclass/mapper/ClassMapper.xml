@@ -79,6 +79,7 @@
                          GROUP BY CLASS_NO) DT
         WHERE C.CLASS_NO = DT.CLASS_NO
         and p.no = c.class_no
+        and p.category='CLASS'
         AND C.CONFM_CD = '2'
         AND p.member_id=#{memberId}
 	</select>
