@@ -89,7 +89,7 @@ public class MemberController { //Principal
 		return "member/mconsult";
 	}
 	
-	// 가이드 신청 폼
+	// 가이드 신청 요청
 	@GetMapping("/gApply")
 	public String gApply(Model model, MemberVO vo, GuideVO gvo, Principal principal) {
 		// 가이드 신청폼에 member테이블 id,name 가져옴
@@ -240,11 +240,12 @@ public class MemberController { //Principal
 		// 이름과 메일이 일치하면...
 	   model.addAttribute("v", mService.memberSearch(vo));
 		return "main/memberSearchList";
+	
 	}
 	
 	@GetMapping("/memberPwUpdateForm.do")
 	public String memberPwUpdateForm(MemberVO vo, Model model) {
-		System.out.println("====================vo:"+vo);
+		System.out.println("====================memberPwUpdateFormVo:"+vo);
 		return "main/memberPwUpdateForm";
 	}
 

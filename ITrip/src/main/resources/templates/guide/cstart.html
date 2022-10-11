@@ -4,21 +4,17 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 layout:decorate="~{layout/layout}"
 xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Form Layout - Voler Admin Dashboard</title>
-<!-- timepicker -->
+ <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Layout - Voler Admin Dashboard</title>
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
-<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script> 
-
-<!-- datepicker -->
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
- 
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-
-<style>
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="bootstrap/voler/assets/css/bootstrap.css">
+    
+    <link rel="stylesheet" href="bootstrap/voler/assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" href="bootstrap/voler/assets/css/app.css">
+    <link rel="shortcut icon" href="bootstrap/voler/assets/images/favicon.svg" type="image/x-icon">
+    <style>
 
 #testDiv{
 	width:900px;
@@ -75,7 +71,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
                     </div>
                     <div class="col-md-8">
                                 <div class="form-group mb-3">
-                                    <textarea class="form-control" id="crclm" name="crclm" rows="6" placeholder="커리큘럼은 100자 이상 500자 이하으로 작성가능합니다."></textarea>
+                                    <textarea class="form-control" id="crclm" name="crclm" rows="3" placeholder="커리큘럼은 100자 이상 500자 이하으로 작성가능합니다."></textarea>
                                 </div>
                             </div>
                     
@@ -105,31 +101,31 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
                     <div class="col-md-3"></div>
                     <div class="col-md-2  form-group">1회차</div>
                     <div class="col-md-2  form-group" >
-                        <input type="text" id="term1" class="form-control datepicker" name="classDt[0].term" readonly="readonly">
+                        <input type="date" id="term1" class="form-control datepicker" name="classDt[0].term" >
                     </div>
                     <div class="col-md-2  form-group" >
-                        <input type="text" id="beginTime1" class="timestart form-control" name="classDt[0].beginTime" readonly="readonly"> 
+                        <input type="text" id="beginTime1" class="timestart form-control" name="classDt[0].beginTime"> 
                     </div> 시~
                     <div class="col-md-2  form-group" >
-                        <input type="text" id="endTime1" class="timeend form-control" name="classDt[0].endTime" readonly="readonly"> 
+                        <input type="text" id="endTime1" class="timeend form-control" name="classDt[0].endTime"> 
                     </div> 시 
 					
                     <!-- 수업시간 폼 1 end -->
-                      <!-- 수업시간 폼 2 start -->  
+                      <!-- 수업시간 폼 1 start -->  
 				
                     <div class="col-md-3"></div>
                     <div class="col-md-2  form-group">2회차</div>
                     <div class="col-md-2  form-group" >
-                        <input type="text" id="term2" class="form-control" name="classDt[1].term" readonly="readonly">
+                        <input type="date" id="term2" class="form-control" name="classDt[1].term">
                     </div>
                     <div class="col-md-2  form-group" >
-                        <input type="text" id="beginTime2" class="timestart form-control" name="classDt[1].beginTime" readonly="readonly"> 
+                        <input type="text" id="beginTime2" class="timestart form-control" name="classDt[1].beginTime"> 
                     </div> 시~
                     <div class="col-md-2  form-group" >
-                        <input type="text" id="endTime2" class="timeend form-control" name="classDt[1].endTime" readonly="readonly"> 
+                        <input type="text" id="endTime2" class="timeend form-control" name="classDt[1].endTime"> 
                     </div> 시 
 					
-                    <!-- 수업시간 폼 2 end -->
+                    <!-- 수업시간 폼 1 end -->
                     </div>
                     
                     <div class="col-md-4">
@@ -164,8 +160,8 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
         </div>
         <script type="text/javascript">
         
-         var jb = jQuery.noConflict(); // datepicker 선언
          let classtime = document.getElementById("classtime");
+     	
         
           $(document).ready(function(){ 
         	  
@@ -219,92 +215,50 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
                  <div class="col-md-3"></div>
                  <div class="col-md-2  form-group" >1회차</div>
                  <div class="col-md-2  form-group" >
-                     <input type="text" id="term1" class="form-control" name="classDt[0].term" readonly="readonly">
+                     <input type="date" id="term1" class="form-control" name="classDt[0].term">
                  </div>
                  <div class="col-md-2  form-group" >
-                     <input type="text" id="beginTime1" class="timestart form-control" name="classDt[0].beginTime" readonly="readonly"> 
+                     <input type="text" id="beginTime1" class="timestart form-control" name="classDt[0].beginTime"> 
                  </div> 시~
                  <div class="col-md-2  form-group" >
-                     <input type="text" id="endTime1" class="timeend form-control" name="classDt[0].endTime" readonly="readonly"> 
+                     <input type="text" id="endTime1" class="timeend form-control" name="classDt[0].endTime"> 
                  </div> 시 
 				
                  <div class="col-md-3"></div>
                  <div class="col-md-2  form-group">2회차</div>
                  <div class="col-md-2  form-group" >
-                     <input type="text" id="term2" class="form-control" name="classDt[1].term" readonly="readonly">
+                     <input type="date" id="term2" class="form-control" name="classDt[1].term">
                  </div>
                  <div class="col-md-2  form-group" >
-                     <input type="text" id="beginTime2" class="timestart form-control" name="classDt[1].beginTime" readonly="readonly"> 
+                     <input type="text" id="beginTime2" class="timestart form-control" name="classDt[1].beginTime"> 
                  </div> 시~
                  <div class="col-md-2  form-group" >
-                     <input type="text" id="endTime2" class="timeend form-control" name="classDt[1].endTime" readonly="readonly"> 
+                     <input type="text" id="endTime2" class="timeend form-control" name="classDt[1].endTime"> 
                  </div> 시 
 					
         		 <div class="col-md-3"></div>
                  <div class="col-md-2  form-group">3회차</div>
                  <div class="col-md-2  form-group" >
-                     <input type="text" id="term3" class="form-control" name="classDt[2].term" readonly="readonly">
+                     <input type="date" id="term3" class="form-control" name="classDt[2].term">
                  </div>
                  <div class="col-md-2  form-group" >
-                     <input type="text" id="beginTime3" class="timestart form-control" name="classDt[2].beginTime" readonly="readonly"> 
+                     <input type="text" id="beginTime3" class="timestart form-control" name="classDt[2].beginTime"> 
                  </div> 시~
                  <div class="col-md-2  form-group" >
-                     <input type="text" id="endTime3" class="timeend form-control" name="classDt[2].endTime" readonly="readonly"> 
+                     <input type="text" id="endTime3" class="timeend form-control" name="classDt[2].endTime"> 
                  </div> 시 
                  
                  <div class="col-md-3"></div>
                  <div class="col-md-2  form-group">4회차</div>
                  <div class="col-md-2  form-group" >
-                     <input type="text" id="term4" class="form-control" name="classDt[3].term" readonly="readonly">
+                     <input type="date" id="term4" class="form-control" name="classDt[3].term">
                  </div>
                  <div class="col-md-2  form-group" >
-                     <input type="text" id="beginTime4" class="timestart form-control" name="classDt[3].beginTime" readonly="readonly"> 
+                     <input type="text" id="beginTime4" class="timestart form-control" name="classDt[3].beginTime"> 
                  </div> 시~
                  <div class="col-md-2  form-group" >
-                     <input type="text" id="endTime4" class="timeend form-control" name="classDt[3].endTime" readonly="readonly"> 
+                     <input type="text" id="endTime4" class="timeend form-control" name="classDt[3].endTime"> 
                  </div> 시 `;
-                 
-                 // 데이트피커
-                 jb("#term1").datepicker({
-          				dateFormat: 'yy-mm-dd',
-          				minDate: 21, //오늘부터 3주 뒤에 시작날짜로 신청가능.
-          				onSelect: function(dateText, inst) {
-          					let date = jb(this).val(); // 1주차에서 선택한 날짜
-          					
-          					let oneStart = new Date(Date.parse(date) + 7 * 1000 * 60 * 60 * 24); //일주일후
-          					let onsEnd = new Date(Date.parse(oneStart) + 7 * 1000 * 60 * 60 * 24); 
-          					
-          					let twoStart = new Date(Date.parse(oneStart) + 7 * 1000 * 60 * 60 * 24); 
-          					let twoEnd = new Date(Date.parse(twoStart) + 7 * 1000 * 60 * 60 * 24); 
-          					
-          					let threeStart = new Date(Date.parse(twoStart) + 7 * 1000 * 60 * 60 * 24); 
-          					let threeEnd = new Date(Date.parse(threeStart) + 7 * 1000 * 60 * 60 * 24); 
-          					
-          					
-          					// 날짜 초기화시키기
-     	     				jb("#term2").datepicker('destroy');
-     	     				jb("#term3").datepicker('destroy');
-     	     				jb("#term4").datepicker('destroy');
-          					
-          					jb("#term2").datepicker({
-          	     				dateFormat: 'yy-mm-dd',
-          	     				minDate: oneStart,
-          	     				maxDate: onsEnd
-          	     			})
-          	     			
-          	     			jb("#term3").datepicker({
-          	     				dateFormat: 'yy-mm-dd',
-          	     				minDate: twoStart,
-          	     				maxDate: twoEnd
-          	     			})
-          	     			
-          	     			jb("#term4").datepicker({
-          	     				dateFormat: 'yy-mm-dd',
-          	     				minDate: threeStart,
-          	     				maxDate: threeEnd
-          	     			})
-          				}
-          			})    
                  
         	// 시작시간
              $('input.timestart').timepicker({
@@ -340,49 +294,26 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
                  <div class="col-md-3"></div>
                  <div class="col-md-2  form-group">1회차</div>
                  <div class="col-md-2  form-group" >
-                     <input type="text" id="term1" class="form-control" name="classDt[0].term" readonly="readonly">
+                     <input type="date" id="term1" class="form-control" name="classDt[0].term">
                  </div>
                  <div class="col-md-2  form-group" >
-                     <input type="text" id="beginTime1" class="timestart form-control" name="classDt[0].beginTime" readonly="readonly"> 
+                     <input type="text" id="beginTime1" class="timestart form-control" name="classDt[0].beginTime"> 
                  </div> 시~
                  <div class="col-md-2  form-group" >
-                     <input type="text" id="endTime1" class="timeend form-control" name="classDt[0].endTime" readonly="readonly"> 
+                     <input type="text" id="endTime1" class="timeend form-control" name="classDt[0].endTime"> 
                  </div> 시 
 				
                  <div class="col-md-3"></div>
                  <div class="col-md-2  form-group">2회차</div>
                  <div class="col-md-2  form-group" >
-                     <input type="text" id="term2" class="form-control" name="classDt[1].term" readonly="readonly">
+                     <input type="date" id="term2" class="form-control" name="classDt[1].term">
                  </div>
                  <div class="col-md-2  form-group" >
-                     <input type="text" id="beginTime2" class="timestart form-control" name="classDt[1].beginTime" readonly="readonly"> 
+                     <input type="text" id="beginTime2" class="timestart form-control" name="classDt[1].beginTime"> 
                  </div> 시~
                  <div class="col-md-2  form-group" >
-                     <input type="text" id="endTime2" class="timeend form-control" name="classDt[1].endTime" readonly="readonly"> 
+                     <input type="text" id="endTime2" class="timeend form-control" name="classDt[1].endTime"> 
                  </div> 시 `;
-                 
-            // 데이트피커
-            jb("#term1").datepicker({
-     				dateFormat: 'yy-mm-dd',
-     				minDate: 21, //오늘부터 3주 뒤에 시작날짜로 신청가능.
-     				onSelect: function(dateText, inst) {
-     					let date = jb(this).val(); // 1주차에서 선택한 날짜
-     					let sweek = new Date(Date.parse(date) + 7 * 1000 * 60 * 60 * 24); //일주일후
-     					let eweek = new Date(Date.parse(sweek) + 7 * 1000 * 60 * 60 * 24); 
-     					console.log(date);
-     					console.log(sweek);
-     					console.log(eweek);
-     					
-     					// 2주차 날짜 초기화시키기
-	     				jb("#term2").datepicker('destroy');
-     					
-     					jb("#term2").datepicker({
-     	     				dateFormat: 'yy-mm-dd',
-     	     				minDate: sweek,
-     	     				maxDate: eweek
-     	     			})
-     				}
-     			})
                  
         	// 시작시간
              $('input.timestart').timepicker({
@@ -407,7 +338,6 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     	            	scrollbar: true
     	    	
     	    		});
-      		
         	 
              }
          
@@ -500,52 +430,18 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     			return true;
     		}
    		  	
-     		jb.datepicker.setDefaults({
-     	        dateFormat: 'yy-mm-dd',
-     	        prevText: '이전 달',
-     	        nextText: '다음 달',
-     	        monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-     	        monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-     	        dayNames: ['일', '월', '화', '수', '목', '금', '토'],
-     	        dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
-     	        dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
-     	        showMonthAfterYear: true,
-     	        yearSuffix: '년'
-     	    });
      		
-     		function loadDate() {
-     			
-     			jb("#term1").datepicker({
-     				dateFormat: 'yy-mm-dd',
-     				minDate: 21, //오늘부터 3주 뒤에 시작날짜로 신청가능.
-     				onSelect: function(dateText, inst) {
-     					let date = jb(this).val(); // 1주차에서 선택한 날짜
-     					let sweek = new Date(Date.parse(date) + 7 * 1000 * 60 * 60 * 24); //일주일후
-     					let eweek = new Date(Date.parse(sweek) + 7 * 1000 * 60 * 60 * 24); 
-     					console.log(date);
-     					console.log(sweek);
-     					console.log(eweek);
-     					
-     					// 2주차 날짜 초기화시키기
-	     				jb("#term2").datepicker('destroy');
-     					
-     					jb("#term2").datepicker({
-     	     				dateFormat: 'yy-mm-dd',
-     	     				minDate: sweek,
-     	     				maxDate: eweek
-     	     			})
-     				}
-     			})
-     			
-     			
-     		}
      		
-     		$(document).ready(function() {
-     				loadDate();
-     			
-     		})
+         
         </script>
          
-
+        
+         
+         <script src="bootstrap/voler/assets/js/feather-icons/feather.min.js"></script>
+    <script src="bootstrap/voler/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="bootstrap/voler/assets/js/app.js"></script>
+    
+    <script src="bootstrap/voler/assets/js/main.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>    
 </body>
 </html>

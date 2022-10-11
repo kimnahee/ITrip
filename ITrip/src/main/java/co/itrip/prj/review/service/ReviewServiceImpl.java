@@ -43,11 +43,6 @@ public class ReviewServiceImpl implements ReviewService {
 		return map.deleteReview(vo);
 	}
 
-	@Override
-	public ReviewVO consultReviewSelect(ReviewVO vo) {
-		return map.consultReviewSelect(vo);
-	}
-
 
 
 }
