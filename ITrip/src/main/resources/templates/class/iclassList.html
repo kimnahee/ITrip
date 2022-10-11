@@ -230,7 +230,7 @@ layout:decorate="~{layout/layout}">
 		for(page of res.navigatepageNums){
 			ph += `<li class="page-item (${res.pageNum} eq ${page}) ? active: ''}" ></li>`
 			if(res.pageNum == page){
-				ph += `<span class='page-link'>${page}</span>`
+				ph += `<span style='background-color:#00CFDD; color:white;' class='page-link'>${page}</span>`
 			}else{
 				ph+=`<a class='page-link' href='javascript:makePaging(${page},"${jobCd}")'>${page}</a>`
 			}
