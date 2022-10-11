@@ -37,7 +37,9 @@ public class ConsultVO {
 	private String val; // 검색할 값
 	
 	private Date conday; // 마이페이지 상담일
-	private String stime; // 마이페이지 상담 시작시간
+	private String stime; // 마이페이지 상담 시작시간 beginTime이랑 겹쳐서
+	private String etime; // 마이페이지 상담 끝나는시간 endTime이랑 겹쳐서
+	private String st; // 상담 날짜&시간 체크
 
 	
 	

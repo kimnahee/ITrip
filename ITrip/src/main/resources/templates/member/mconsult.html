@@ -37,7 +37,8 @@
 				th:value="${#authentication.principal.member.memberId}" />
 			<div class="alert alert-light-primary color-primary">My Consult</div>
 			<div class="card-body">
-				<!-- 진행중인 상담이 없을 때 -->
+			
+				<!-- 결제한 상담이 없을 때 -->
 				<div class="row" th:if="${#lists.isEmpty(consultList)}">
 					<table class="table">
 						<tr>
@@ -50,10 +51,13 @@
 						</tr>
 					</table>
 				</div>
-				<!-- 진행중인 상담이 있을 때 -->
+				
+				<!-- 결제한 상담이 있을 때 -->
 				<div class="row" th:unless="${#lists.isEmpty(consultList)}">
 					<div th:each="con : ${consultList}" style="width: 380px;">
-						<div th:if="${con.ennc == '활성화'}">
+					
+					 <!-- 상담이 진행중일 때 -->
+						<div th:if="${con.st == '진행중'}">
 							<table class="table table-bordered" style="width: 350px;">
 								<tr style="display: none;">
 									<td th:text="${con.consultNo}"></td>
@@ -62,41 +66,127 @@
 									<td th:text="${con.title}"></td>
 								</tr>
 								<tr>
+									<td th:text="${con.st}"></td>
+								</tr>
+								<tr>
 									<td th:text="'가이드  / '+${con.guideId}"></td>
 								</tr>
 								<tr>
-									<td th:text="'상담일  / '+${con.conday}"></td>
+									<td th:text="'상담일, 시작시간 /'+${con.conday}+', '+${con.stime}"></td>
 								</tr>
 								<tr>
-									<td th:text="'상담 시작시간  / '+${con.stime}"></td>
+									<td><div>
+								상담시간입니다.<br>
+	              							아래 채팅창을 눌러 가이드와 상담을 하실 수 있습니다.
+									</div></td>
 								</tr>
 								<tr>
 									<td>
 										<button class="btn btn-primary py-2 px-3 consultChat">채팅방</button>
+									</td>
+								</tr>
+							</table>
+						</div>
+						
+						<!-- 상담이 진행전일 때 -->
+						<div th:if="${con.st == '진행전'}">
+							<table class="table table-bordered" style="width: 350px;">
+								<tr style="display: none;">
+									<td th:text="${con.consultNo}"></td>
+								</tr>
+								<tr>
+									<td th:text="${con.title}"></td>
+								</tr>
+								<tr>
+									<td th:text="${con.st}"></td>
+								</tr>
+								<tr>
+									<td th:text="'가이드  / '+${con.guideId}"></td>
+								</tr>
+								<tr>
+									<td th:text="'상담일, 시작시간 /'+${con.conday}+', '+${con.stime}"></td>
+								</tr>
+								<tr>
+									<td><div>
+								아직 상담시간이 되지 않았습니다.<br>
+	              							문의 할 점이 있으시면 아래로 문의 부탁드립니다.
+									</div></td>
+								</tr>
+								<tr>
+									<td>
+									<button class="btn btn-primary py-2 px-3 qnaList">Q&A</button>
+									</td>
+								</tr>
+							</table>
+						</div>
+						
+						<!-- 상담이 개설전일 때 -->
+						<div th:if="${con.st == '개설전'}">
+							<table class="table table-bordered" style="width: 350px;">
+								<tr style="display: none;">
+									<td th:text="${con.consultNo}"></td>
+								</tr>
+								<tr>
+									<td th:text="${con.title}"></td>
+								</tr>
+								<tr>
+									<td th:text="${con.st}"></td>
+								</tr>
+								<tr>
+									<td th:text="'가이드  / '+${con.guideId}"></td>
+								</tr>
+								<tr>
+									<td th:text="'상담일, 시작시간 /'+${con.conday}+', '+${con.stime}"></td>
+								</tr>
+								<tr>
+									<td><div>
+								아직 상담일자가 되지 않았습니다.<br>
+	              							문의 할 점이 있으시면 아래로 문의 부탁드립니다.
+									</div></td>
+								</tr>
+								<tr>
+									<td>
+									<button class="btn btn-primary py-2 px-3 qnaList">Q&A</button>
+									</td>
+								</tr>
+							</table>
+						</div>
+						
+						<!-- 상담이 종료되었을 때 -->
+						<div th:if="${con.st == '종료'}">
+							<table class="table table-bordered" style="width: 350px;">
+								<tr style="display: none;">
+									<td th:text="${con.consultNo}"></td>
+								</tr>
+								<tr>
+									<td th:text="${con.title}"></td>
+								</tr>
+								<tr>
+									<td th:text="${con.st}"></td>
+								</tr>
+								<tr>
+									<td th:text="'가이드  / '+${con.guideId}"></td>
+								</tr>
+								<tr>
+									<td th:text="'상담일, 시작시간 /'+${con.conday}+', '+${con.stime}"></td>
+								</tr>
+								<tr>
+									<td><div>
+								종료된 상담입니다.<br>
+											상담가능시간은 상담시작시간으로부터 1시간입니다.<br>
+	              							다시 상담내용을 보고 싶다면 아래 버튼을 눌러주세요.
+									</div></td>
+								</tr>
+								<tr>
+									<td>
+										<button class="btn btn-primary py-2 px-3 consultChat">상담내용</button>
 										<button class="btn btn-primary py-2 px-3 consultReview">리뷰</button>
 									</td>
 								</tr>
 							</table>
 						</div>
-						<!-- 상담이 비활성화일 때 -->
-						<div th:if="${con.ennc == '비활성화'}" style="width: 380px;">
-							<table border="1" class="table table-borderless"
-								style="width: 350px;">
-								<tr>
-									<td><h3 class='error-title'>비활성화된 상담입니다.</h3>
-										<h4>새로운 class를 신청해주세요.</h4></td>
-								</tr>
-								<tr>
-									<td><h6>가이드의 요청에 의해 비활성화중입니다.</h6></td>
-								</tr>
-								<tr>
-									<td><h6>문의할 점이 있으시면 Q&A센터로 문의해주시기바랍니다.</h6></td>
-								</tr>
-								<tr>
-									<td><button class="btn btn-primary py-2 px-3 qnaList">Q&A</button></td>
-								</tr>
-							</table>
-						</div>
+						
+						
 					</div>
 				</div>
 			</div>
