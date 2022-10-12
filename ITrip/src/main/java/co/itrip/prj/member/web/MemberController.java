@@ -73,19 +73,28 @@ public class MemberController { //Principal
 		
 	// 마이페이지-클래스
 	@GetMapping("/mClass")
-	public String mClass(ClassVO vo, ClassAttendVO avo, Model model, Principal principal) {
+	public String mClass(ClassVO vo, ClassAttendVO avo, Model model, Principal principal,
+			@RequestParam(required = false, defaultValue = "1") int pageNum,
+			@RequestParam(required = false, defaultValue = "3") int pageSize) {
+		PageHelper.startPage(pageNum, pageSize);
+		
 		vo.setMemberId(principal.getName());
 		avo.setMemberId(principal.getName());
-		model.addAttribute("classList", cService.myClassList(vo)); 
+		model.addAttribute("pageInfo", PageInfo.of(cService.myClassList(vo))); 
 		model.addAttribute("attend", cService.myClassAttendList(avo)); // 수료여부 확인 후 수료증버튼 활성화, 비활성화
+		System.out.println(PageInfo.of(cService.myClassList(vo)));
 		return "member/mclass";
 	}
 	
 	// 마이페이지-1:1상담
 	@GetMapping("/mConsult")
-	public String mConsult(ConsultVO vo, Model model, Principal principal) {
+	public String mConsult(ConsultVO vo, Model model, Principal principal,
+			@RequestParam(required = false, defaultValue = "1") int pageNum,
+			@RequestParam(required = false, defaultValue = "3") int pageSize) {
+		PageHelper.startPage(pageNum, pageSize);
+		
 		vo.setMemberId(principal.getName());
-		model.addAttribute("consultList", conService.myConsultList(vo));
+		model.addAttribute("pageInfo", PageInfo.of(conService.myConsultList(vo)));
 		return "member/mconsult";
 	}
 	
