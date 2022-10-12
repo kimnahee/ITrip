@@ -100,6 +100,16 @@
 		</set>
 		where com_no = #{comNo}
 	</update>
+	
+	<!-- 검색+페이징 -->
+	<select id="freeSearch" resultType="co.itrip.prj.community.service.CommunityVO">
+		select * from community
+		where
+		<choose>
+			<when test="key == 1"> title like '%'|| #{val} ||'%'</when>
+			<when test="key == 2"> content like '%'|| #{val} ||'%'</when>
+		</choose>
+	</select>
 
 	<!-- 댓글 서비스 -->
 	<select id="replyList"

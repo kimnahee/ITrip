@@ -18,6 +18,7 @@ public interface CommunityMapper {
 	List<CommunityVO> freeList();//자유게시판 전체조회
 	int freeInsert(CommunityVO vo);//자유게시판 게시글 작성
 	int freeUpdate(CommunityVO vo);//자유게시판 게시글 수정
+	List<CommunityVO> freeSearch(CommunityVO vo, String Key, String val); //자유게시판 검색
 	
 	int studyDelete(CommunityVO vo);//게시글 삭제
 	int commHitUpdate(CommunityVO vo);//조회수 처리

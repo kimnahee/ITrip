@@ -211,7 +211,7 @@
 		</div>
 	</div>
 
-	<script>
+	<script th:inline="javascript">
 
 			$("#myPage").on("click", function() {
 				//console.log(memberId);
@@ -256,8 +256,9 @@
 			
 			//헤더 알림 ajax
 			$(document).ready(function(){
-				let id = $("#memberId").val();
-				if(!id){
+				let auth = [[${#authentication.principal}]];
+				//console.log(auth);
+				if(auth=='anonymousUser'){
 					//console.log("확인");  
 				} else{
 					alarmCount();//페이지 로딩시 알람 개수 출력
