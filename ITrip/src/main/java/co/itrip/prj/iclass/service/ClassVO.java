@@ -48,6 +48,7 @@ public class ClassVO {
 	
 	private String mindt; // 클래스 시작일
 	private String maxdt; // 클래스 끝일
+
 	
 	
 }
