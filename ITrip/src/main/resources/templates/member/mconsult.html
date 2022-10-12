@@ -39,7 +39,7 @@
 			<div class="card-body">
 			
 				<!-- 결제한 상담이 없을 때 -->
-				<div class="row" th:if="${#lists.isEmpty(consultList)}">
+				<div class="row" th:if="${#lists.isEmpty(pageInfo)}">
 					<table class="table">
 						<tr>
 							<td><h3 class='error-title'>진행중인 상담이 없습니다.</h3>
@@ -53,8 +53,8 @@
 				</div>
 				
 				<!-- 결제한 상담이 있을 때 -->
-				<div class="row" th:unless="${#lists.isEmpty(consultList)}">
-					<div th:each="con : ${consultList}" style="width: 380px;">
+				<div class="row" th:unless="${#lists.isEmpty(pageInfo)}">
+					<div th:each="con : ${pageInfo.list}" style="width: 380px;">
 					
 					 <!-- 상담이 진행중일 때 -->
 						<div th:if="${con.st == '진행중'}">
@@ -190,8 +190,42 @@
 					</div>
 				</div>
 			</div>
+			
+			<!-- 페이지네이션 -->
+			<nav aria-label="Page navigation example">
+				<ul class="pagination pagination-info  justify-content-center">
+					<li class="page-item disabled"
+						th:if="${pageInfo.isIsFirstPage()}"><span
+						class="page-link">«</span></li>
+					<li class="page-item"
+						th:if="${!pageInfo.isIsFirstPage() && pageInfo.getList().size() > 0}"><a
+						class="page-link"
+						th:href="|javascript:gopage([[${pageInfo.getPrePage()}]])|"
+						rel="prev">«</a></li>
+					<li th:class="|page-item ${(pageInfo.pageNum eq page) ? 'active': ''} |"
+						th:each="page:${pageInfo.navigatepageNums}"><span
+						class="page-link" th:if="${pageInfo.pageNum eq page}"
+						th:text="${page}"></span> <a class="page-link"
+						th:unless="${pageInfo.pageNum eq page}"
+						th:href="|javascript:gopage(${page})|" th:text="${page}">{{$page}}</a></li>
+					<li class="page-item" th:if="${pageInfo.hasNextPage}"><a
+						class="page-link"
+						th:href="|javascript:gopage([[${pageInfo.getNextPage()}]])|"
+						rel="next">»</a></li>
+					<li class="page-item disabled"
+						th:unless="${pageInfo.hasNextPage}"><span
+						class="page-link">»</span></li>
+				</ul>
+			</nav>
+			
 		</div>
 		<script>
+		
+			// 페이징 처리
+			function gopage(p) {
+			location.href = '/mConsult?pageNum=' + p;
+			}
+		
 			//채팅방 연결
 			$(".consultChat").on("click", function(e) {
 				let consultNo = $(e.target).parent().parent().prev().prev().prev().prev().prev().children(0).html();
