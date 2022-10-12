@@ -68,7 +68,7 @@ th {
 										<div>
 											<input type="text" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 											<input type="text" id="member_id" class="form-control" name="member_id" th:value=${#authentication.principal.member.memberId} >
-											<input type="text" id="consultNo"  name="merchant_uid" class="form-control" th:value="'CO'+${consult.consultNo+#authentication.principal.member.memberId}">
+											<input type="text" id="consultNo"  name="merchant_uid" class="form-control" th:value="'CO'+${consult.consultNo+#authentication.principal.member.memberId+(max+1)}">
 											<input type="text" id="consultNo"  name="consultNo" class="form-control" th:value="${consult.consultNo}">
 											<input type="text" id="no"  name="no" class="form-control" th:value="${consult.consultNo}">
 											<input type="text" id="title" name="name" class="form-control" th:value="${consult.title}">
@@ -149,7 +149,8 @@ th {
 										
 										var begin = data.beginTime; // 시작시간
 										var btime = begin.substr(0,2);
-											
+										$("#frmBeginTime").val(btime);
+										
 										var end = data.endTime;		// 종료시간
 										var etime = end.substr(0,2); 
 								
@@ -297,8 +298,8 @@ th {
 					
 						
 						//console.log(randomNumFloor)
+						let num = 0;
  					function pay() {
- 						let num = 0;
  						num ++;	
  						const amount = document.getElementById("frmamount").value
  						//const randomNum = Math.random() * 100;

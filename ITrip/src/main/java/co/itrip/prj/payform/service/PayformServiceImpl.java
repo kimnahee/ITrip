@@ -30,16 +30,25 @@ public class PayformServiceImpl implements PayformService {
 
 	@Override 
 	@Transactional
-	public int clPayformInsert(PayformVO vo,ClassAttendVO cvo) {
+	public int clPayformInsert(PayformVO vo,ClassAttendVO cvo, CalendarVO cavo) {
 		map.clPayformInsert(vo);
+		calmap.classCalendarInsert(cavo);
 		return cmap.classAttendInsert(cvo);
 	}
 
+	// 은지
 	@Override
 	@Transactional
 	public int coPayformInsert(PayformVO vo, CalendarVO cvo) {
 		map.coPayformInsert(vo);
 		return calmap.calendarInsert(cvo);
+	}
+
+	// 은지
+	@Override
+	public int payCount(PayformVO vo) {
+		// 결제 횟수 체크
+		return map.payCount(vo);
 	}
 
 }
