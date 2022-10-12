@@ -31,6 +31,10 @@
 	padding-top : 25px;
 	padding-bottom : 25px;
 }
+#searchFree{
+	margin-left: 20px;
+	text-align: center;
+}
 </style>
 </head>
 
@@ -42,7 +46,14 @@
 					<!-- <div id="boardName" class="alert alert-light-primary color-primary"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-star"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg> 자유게시판</div> -->
 					<div id="boardName" class="alert alert-primary">
                             <h4 class="alert-heading">자유게시판</h4>
-                        </div>
+                    </div>
+				</div>
+				<div id="searchFree">
+					<select id="key" name="key">
+						<option value="1">제목</option>
+						<option value="2">내용</option>
+					</select>
+					<input type="text" id="val" name="val">&nbsp;<a href="#" id="search" name="search" class="badge bg-info">검색하기</a>
 				</div>
 				<div class="card-body px-0 pb-2">
 					<div class="table-responsive p-0">
@@ -102,10 +113,12 @@
 			</div>
 		</div>
 		<script>
+			//페이징
 			function gopage(p) {
 				location.href = '/free.do?pageNum=' + p;
 			}
-
+			
+			//상세조회
 			$("#freeList").on(
 					"click",
 					function(e) {
@@ -114,31 +127,22 @@
 						location.href = "/selectFree.do?comNo=" + comNo;
 					})
 
+			//글쓰기
 			$("#insertBtn").on("click", function(e) {
 				location.href = "/freeInsertForm.do";
 			})
+			
+			//검색
+			$("#search").on("click", function(e){
+				let key = $("#key").val();
+				let val = $("#val").val();
+				console.log(key + val);
+			})
+			
+			
 		</script>
+		
 	</div>
 
-	<!--   Core JS Files   -->
-	<script src="bootstrap/material/assets/js/core/popper.min.js"></script>
-	<script src="bootstrap/material/assets/js/core/bootstrap.min.js"></script>
-	<script src="bootstrap/material/assets/js/plugins/perfect-scrollbar.min.js"></script>
-	<script src="bootstrap/material/assets/js/plugins/smooth-scrollbar.min.js"></script>
-	<script>
-		var win = navigator.platform.indexOf('Win') > -1;
-		if (win && document.querySelector('#sidenav-scrollbar')) {
-			var options = {
-				damping : '0.5'
-			}
-			Scrollbar.init(document.querySelector('#sidenav-scrollbar'),
-					options);
-		}
-	</script>
-	<!-- Github buttons -->
-	<script async defer src="https://buttons.github.io/buttons.js"></script>
-	<!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
-	<script
-		src="bootstrap/material/assets/js/material-dashboard.min.js?v=3.0.0"></script>
 </body>
 </html>

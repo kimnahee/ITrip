@@ -6,17 +6,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>자유게시판 글 상세보기</title>
-<script src="js/jquery-3.6.0.min.js"></script>
-<link rel="stylesheet" href="bootstrap/voler/assets/css/bootstrap.css">
-<link rel="stylesheet"
-	href="bootstrap/voler/assets/vendors/quill/quill.bubble.css">
-<link rel="stylesheet"
-	href="bootstrap/voler/assets/vendors/quill/quill.snow.css">
-<link rel="stylesheet"
-	href="bootstrap/voler/assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
-<link rel="stylesheet" href="bootstrap/voler/assets/css/app.css">
-<link rel="shortcut icon"
-	href="bootstrap/voler/assets/images/favicon.svg" type="image/x-icon">
 <style>
 #exampleFormControlTextarea1 {
 	min-height: 250px;
@@ -49,8 +38,7 @@
 				<div class="card-body">
 					<form action="" method="post" id="frm" class="form form-horizontal"
 						th:object="${selectCommunity}">
-						<input type="hidden" th:name="${_csrf.parameterName}"
-							th:value="${_csrf.token}">
+						<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 						<input type="hidden" id="myId"
 							class="form-control" name="myId"
 							th:value=${#authentication.principal.member.memberId}
@@ -149,10 +137,8 @@
 				<form id="frm" class="form form-horizontal">
 					<div class="form-group" th:object="${selectCommunity}">
 						<div>
-							<input type="text" class="form-control" id="comment"
-								name="comment"> <input type="button" id="commentBtn"
-								class="btn btn-primary btn-sm mb-0" value="댓글작성"
-								style="margin-top: 10px; float: right;">
+							<input type="text" class="form-control" id="comment" name="comment"> 
+							<input type="button" id="commentBtn" class="btn btn-primary btn-sm mb-0" value="댓글작성" style="margin-top: 10px; float: right;">
 							</button>
 						</div>
 					</div>
@@ -164,7 +150,6 @@
 			let comNo = $("#comNo").val();
 			let csrfHeaderName = "${_csrf.headerName}";
 			let csrfToken=$("input[name=_csrf]").val();
-			console.log(csrfToken);
 			let mid = $("#myId").val();
 			let membId = $("#memberId").val();
 			
@@ -187,7 +172,8 @@
 			}
 			
 			function makeTr(data){
-				let tr = `<tr>
+				let tr = `<tr>	
+						<td class="text-center" style="display:none;">${data.reNo}</td>
 						<td class="text-center">${data.content}</td>
 						<td class="text-center">${data.dt}</td>
 						<td>`;
@@ -237,7 +223,8 @@
 			/* 댓글 수정 버튼 => 추가수정필요함 */
 			$(document).on("click",".updateReply", function(e){
 				$(".divBtn").hide();
-				let reNo = $(e.target).closest("tr").children(1).html();
+				let reNo = $(e.target).closest("tr").children(0).html();
+				console.log(reNo);
 				let tr =  $(e.target).closest("tr");
 				
 				let a = '';
@@ -300,16 +287,10 @@
 			})
 			
 			$(document).ready(function(){    
+				console.log(csrfToken);
 				replyList(); //페이지 로딩시 댓글 목록 출력 
 			});
 		</script>
 	</div>
-	<script src="bootstrap/voler/assets/js/feather-icons/feather.min.js"></script>
-	<script
-		src="bootstrap/voler/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-	<script src="bootstrap/voler/assets/js/app.js"></script>
-	<script src="bootstrap/voler/assets/vendors/quill/quill.min.js"></script>
-	<script src="bootstrap/voler/assets/js/pages/form-editor.js"></script>
-	<script src="bootstrap/voler/assets/js/main.js"></script>
 </body>
 </html>

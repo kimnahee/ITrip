@@ -255,14 +255,14 @@
 			
 			//헤더 알림 ajax
 			$(document).ready(function(){
-	            let auth = [[${#authentication.principal}]];
-	            //console.log(auth);
-	            if(auth=='anonymousUser'){
-	               //console.log("확인");  
-	            } else{
-	               alarmCount();//페이지 로딩시 알람 개수 출력
-	               alarmList();//알람 리스트 출력
-	            }
+				let auth = [[${#authentication.principal}]];
+				//console.log(auth);
+				if(auth=='anonymousUser'){
+					//console.log("확인");  
+				} else{
+					alarmCount();//페이지 로딩시 알람 개수 출력
+					alarmList();//알람 리스트 출력
+				}
 			});
 			
 			//알람 리스트 출력
