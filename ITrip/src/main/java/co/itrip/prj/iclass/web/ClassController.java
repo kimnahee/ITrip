@@ -157,6 +157,14 @@ public class ClassController {
 	}
 
 	// 소정 //////////////////////////////////////////////////
+	
+	// 가이드 클래스 링크 입력
+	@PostMapping("/classlinkInsert.do")
+	public String classlinkInsert(ClassChatVO vo) {
+		cService.classlinkInsert(vo);
+		return "redirect:gclass.do";
+	}
+	
 
 	// 출석횟수랑 수업회차 비교
 	@PostMapping("/classAttendSelect.do")
