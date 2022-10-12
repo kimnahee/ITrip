@@ -17,12 +17,22 @@
 <!-- 가이드신청 리스트 -->
 <select id="memberAuthList" resultType="co.itrip.prj.guide.service.GuideVO"
  						parameterType="co.itrip.prj.guide.service.GuideVO">
-	select g.guide_id, g.career,g.dc,g.duty,g.attach,g.attach_dir,g.state_cd,cm.cd_name,m.nick,m.name,m.auth
+	select g.guide_id, g.career,FUN_CODENAME('R',g.career) career_cd_name,
+		CASE WHEN LENGTH(g.dc) > 15 THEN SUBSTR(g.dc,0,15)||'....'
+		                ELSE SUBSTR(g.dc,0,15)
+		           END AS dc
+		,g.duty,FUN_CODENAME('D',g.duty) duty_cd_name,
+		g.attach,g.attach_dir,g.state_cd,cm.cd_name,m.nick,m.name,m.auth
 		from guide g,member m,cmmncd cm 
 		where g.state_cd = 1 
 		and cm.cd_ini = 'S'
 		and g.state_cd = cm.cd_no
 		and g.guide_id = m.member_id
+		order by dt desc
+</select>
+<select id="memberAuthOne" resultType="co.itrip.prj.guide.service.GuideVO"
+ 						parameterType="co.itrip.prj.guide.service.GuideVO">
+	SELECT * FROM GUIDE WHERE GUIDE_ID = #{guideId}
 </select>
 
 <!-- 멤버->가이드 권한수정 -->

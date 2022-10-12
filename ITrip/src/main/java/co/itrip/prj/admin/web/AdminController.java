@@ -6,44 +6,22 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.net.MalformedURLException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.List;
-import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.web.ServerProperties.Tomcat.Resource;
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.core.io.InputStreamResource;
-import org.springframework.core.io.UrlResource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.util.UriUtils;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -51,7 +29,6 @@ import com.github.pagehelper.PageInfo;
 import co.itrip.prj.admin.service.AdminService;
 import co.itrip.prj.cmmncd.service.CmmnCdService;
 import co.itrip.prj.consult.service.ConsultVO;
-import co.itrip.prj.guide.service.GuideService;
 import co.itrip.prj.guide.service.GuideVO;
 import co.itrip.prj.iclass.service.ClassVO;
 import co.itrip.prj.member.service.MemberVO;
@@ -141,8 +118,14 @@ public class AdminController {
 			@RequestParam(required = false, defaultValue = "1") int pageNum,
 			@RequestParam(required = false, defaultValue = "10") int pageSize) {
 		PageHelper.startPage(pageNum, pageSize);
+		model.addAttribute("duty", cdService.cdList("D"));
 		model.addAttribute("pageInfo", PageInfo.of(adminService.memberAuthList(vo)));
 		return "admin/memberAuthList";
+	}
+	@RequestMapping("/memberAuthOne.do")
+	@ResponseBody
+	public GuideVO memberAuthOne(GuideVO vo) {
+		return adminService.memberAuthOne(vo);
 	}
 
 	//경아 - 회원리스트

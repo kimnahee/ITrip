@@ -476,7 +476,7 @@ $(document).on("click","#fbInsert", function(e){
 		success : function(data,idx,arr){
 			console.log(data);
 			if(data == 1){
-				alert("댓글이 성공적으로 등록되었습니다.")
+				//alert("댓글이 성공적으로 등록되었습니다.")
 				
 				//똑같은아작스 또 호출해야되나;? 
 				$.ajax({
@@ -489,10 +489,16 @@ $(document).on("click","#fbInsert", function(e){
 					data:{'cbtNo':cbtNos.innerText},
 					success:function result(res){
 						feedbackArea.innerHTML="" 
-						res.forEach((elem,idx,arr)=>{
-							feedbackArea.innerHTML+= 
-								"<tr><td>"+(idx+1)+"</td><td>"+elem.content+"</td><td>"
+						res.list.forEach((elem,idx,arr)=>{
+							if(memberId == elem.memberId){
+								feedbackArea.innerHTML+= 
+									"<tr><td>"+(idx+1)+"</td><td>"+elem.content+"</td><td>"
 									+elem.nick+"</td><td><button type='button' class='badge bg-warning fbDelete' id='fbDelete' value="+elem.feedbackNo+">x</button></td></tr>"
+							}else{
+								feedbackArea.innerHTML+=
+									"<tr><td>"+(idx+1)+"</td><td>"+elem.content+"</td><td>"
+									+elem.nick+"</td><td><button type='button' class='' disabled='disabled'>x</button></td></tr>";
+							}
 						})
 						content=""
 					},
