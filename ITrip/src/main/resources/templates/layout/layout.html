@@ -233,7 +233,6 @@
 			$("#alarmList").on("click", function(e){
 				let csrfHeaderName = "${_csrf.headerName}";
 				let csrfToken=$("input[name=_csrf]").val();
-				
 				if($(e.target).prop('tagName') == 'SPAN'){
 					let alarmNo = $(e.target).closest("div").prev().html();
 					$.ajax({ 

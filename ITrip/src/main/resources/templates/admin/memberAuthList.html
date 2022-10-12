@@ -7,6 +7,11 @@
 <meta name="_csrf" th:content="${_csrf.token}"/>
 <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
 <title>Insert title here</title>
+<style type="text/css">
+#tbody tr:hover{
+ background-color: #EDEDED; 
+}
+</style>
 </head>
 <body>
 	<div layout:fragment="content">
@@ -20,9 +25,9 @@
 						<div class="card-body">
 							<p>GUIDE신청한 회원입니다. 권한을 수정하세요.</p>
 							<div class="table-responsive">
-								<table class="table table-light mb-0">
+								<table class="table mb-0">
 									<thead>
-										<tr>
+										<tr style="color:black;">
 											<th>아이디</th>
 											<th>닉네임</th>
 											<th>직무</th>
@@ -33,14 +38,14 @@
 											<th>권한수정</th>
 										</tr>
 									</thead>
-									<tbody>
-										<tr th:each="g:${pageInfo.list}">
+									<tbody id="tbody">
+										<tr th:each="g:${pageInfo.list}" th:id="${g.guideId}" style="cursor: pointer;">
 											<th th:text=${g.guideId}></th>
 											<td th:text=${g.nick}></td>
-											<td th:text=${g.duty}></td>
-											<td th:text=${g.career}></td>
+											<td th:text=${g.dutyCdName}></td>
+											<td th:text=${g.careerCdName}></td>
 											<td th:text=${g.dc}></td>
-											<td><a th:href="@{/download(fileName=${g.attachDir})}"  th:text="${g.attach}" ></a></td>
+											<td><a th:href="@{download(fileName='/guide/'+${g.attachDir})}"  th:text="${g.attach}" ></a></td>
 											<td th:text=${g.cdName}></td>
 											<td th:id="${g.guideId }">
 												<input type="button" th:onclick="updateFnc(this.getAttribute('id'))"
@@ -86,7 +91,22 @@
 				</div>
 			</div>
 		</div>
+		
+		
+		
+		
+		
+		
+		
 		<script type="text/javascript">
+/*   		$('#tbody tr td').on("mouseover",function(){
+			$(this).addClass('changeColor');	
+			}).on("mouseout",function() {	   
+				$(this).removeClass('changeColor');	
+			}); 
+		
+		 */
+		
 		function gopage(p) {
 			location.href = '/memberAuthList.do?pageNum=' + p;
 		}
@@ -124,7 +144,6 @@
 			
 			btn.addEventListener('click',function(e){
 				e.preventDefault();
-
 				$.ajax({
 					url:'/memberAuthUpdate.do',
 					type:'post',
@@ -144,10 +163,47 @@
 					}
 				}) 
 			})
-			
-			
 		}
+	
 		
+		  $("#tbody").on("click","tr",function(e){
+			  e.preventDefault();
+			  $.ajax({
+				url:"/memberAuthOne.do",
+				dataType:'json',
+				data:{'guideId':this.id},
+				success:function result(res){
+					console.log(res)
+				 	let modal = `<div class="modal fade text-left" id="info" tabindex="-1" role="dialog"
+			             aria-labelledby="myModalLabel130" aria-hidden="true">
+			             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+			             <div class="modal-content">
+			                 <div class="modal-header bg-info">
+			                 <h5 class="modal-title white" id="myModalLabel130">
+			                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+			                 	<path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+			                 </svg>&nbsp
+			                	${res.guideId}님의 가이드 신청입니다.</h5>
+			                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			                     <i data-feather="x"></i>
+			                 </button>
+			                 </div>
+			                 <div class="modal-body">
+			                 	${res.dc}
+			                 </div>
+			                 <div class="modal-footer">
+			                 <button type="button" class="btn btn-info ml-1" data-dismiss="modal">
+			                     <i class="bx bx-check d-block d-sm-none"></i>
+			                     <span class="d-none d-sm-block">확인</span>
+			                 </button>
+			                 </div>
+			             </div>
+			             </div>
+			         </div>` 
+					$(modal).modal('show');
+					}
+			  })
+		  })
 		</script>
 	</div>
 </body>

@@ -9,6 +9,7 @@ import lombok.Data;
 @Data
 public class CalendarVO {
 	
+	private int calendaro; // 인공키
 	private String merchant_uid; // 외래키, 상담 결제 취소시 캘린더 리스트 삭제용도
 	
 	private String guideId; // 가이드 아이디

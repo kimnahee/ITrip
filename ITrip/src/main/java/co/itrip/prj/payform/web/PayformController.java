@@ -1,6 +1,9 @@
 package co.itrip.prj.payform.web;
 
 import java.security.Principal;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.List;
 
 import javax.security.auth.message.callback.PrivateKeyCallback.Request;
 import javax.servlet.http.HttpServletRequest;
@@ -13,7 +16,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import co.itrip.prj.calendar.service.CalendarVO;
 import co.itrip.prj.iclass.service.ClassAttendVO;
+import co.itrip.prj.iclass.service.ClassDtVO;
 import co.itrip.prj.iclass.service.ClassService;
+import co.itrip.prj.iclass.service.ClassVO;
 import co.itrip.prj.payform.service.PayformService;
 import co.itrip.prj.payform.service.PayformVO;
 
@@ -28,13 +33,29 @@ public class PayformController {
 	
 	@Autowired
 	private PayformService payformService;
+	
+	@Autowired
+	private ClassService classService; //클래스 서비스
+	
+	
 
 	
 	//경아 - 클래스구입
 	@PostMapping("/ClPayformInsert.do")
-	public String ClPayformInsert(PayformVO vo,ClassAttendVO cvo, CalendarVO cavo, Principal prin) {
+	public String ClPayformInsert(PayformVO vo, ClassVO clvo, ClassDtVO cdvo ,ClassAttendVO cvo, CalendarVO cavo, Principal prin) {
 		cvo.setMemberId(prin.getName());
-		payformService.clPayformInsert(vo,cvo,cavo);
+		String term = cdvo.getTerm();
+		int classNo = vo.getNo();
+		System.out.println(term);
+		clvo.setTerm(term);
+		clvo.setClassNo(classNo);
+		ClassVO condayList = classService.classSelectOne(clvo);
+		System.out.println("ccccccc"+condayList);
+		/*
+		 * for (int i = 0; i<condayList.size(); i++) {
+		 * System.out.println("============"+condayList.get(i));
+		 * payformService.clPayformInsert(vo,cvo,cavo); }
+		 */
 		return "redirect:myPage";
 	}
 	
@@ -49,6 +70,11 @@ public class PayformController {
 		payformService.coPayformInsert(vo,cvo);
 		return "redirect:myPage";
 	}
+	
+	
+	
+	
+	
 	
 	
 	/*
