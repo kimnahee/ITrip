@@ -228,9 +228,9 @@
 		
 			//채팅방 연결
 			$(".consultChat").on("click", function(e) {
-				let consultNo = $(e.target).parent().parent().prev().prev().prev().prev().prev().children(0).html();
+				let consultNo = $(e.target).parent().parent().prev().prev().prev().prev().prev().prev().children(0).html();
 				console.log(consultNo);
-				//let memberId = $("#memberId").val();
+				let memberId = $("#memberId").val();
 				//console.log(memberId);
 				location.href="/consultChat.do?consultNo="+consultNo;
 			})

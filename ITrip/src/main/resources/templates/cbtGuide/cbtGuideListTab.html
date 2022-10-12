@@ -50,12 +50,11 @@
 									<div class="form-body">
 										<div class="row">
 											<div class="col-12">
-												<div class="form-group">
-													    <h3>문제<span th:text="${cbt.cbtNo}"></span></h3>
-														<!-- 북마크 -->
-														<div id="bmSty"data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-														   <a class="bmArea" style="cursor: pointer" th:data-no="${st.index}"></a>
-														</div>
+												<div class="form-group" >
+												<!-- 북마크 -->
+													<div data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user"><h3>문제<span th:text="${cbt.cbtNo}"></span></h3>
+													<a class="bmArea" style="cursor: pointer" th:data-no="${st.index}"></a>
+													</div>
 													<!-- 북마크 목록-->
 													     <div class="dropdown-menu">
 													     <ul class="bookmark">
@@ -126,7 +125,7 @@
 									<div class="form-body">
 										<div class="row">
 											<div class="col-12">
-												<div class="form-group " >
+												<div class="form-group" >
 												<!-- 북마크 -->
 													<div data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user"><h3>문제<span th:text="${cbt.cbtNo}"></span></h3>
 													<a class="bmArea" style="cursor: pointer" th:data-no="${st.index}"></a>
@@ -262,9 +261,9 @@
 			let tg = e.currentTarget; 
 			let bCd = tg.value; // 즐겨찾기코드 (1,2,3 중 클릭한 값으로 담김)
 			let cNo = tg.parentElement.parentElement.nextElementSibling.value; // 즐겨찾기 한 문제번호
-			let ul =  tg.parentElement.parentElement.parentElement.childNodes[3].childNodes[2].childNodes[0];
+			let ul =  tg.parentElement.parentElement.parentElement.childNodes[3].childNodes[2].childNodes[0]; //svg 태그
 		
-			
+			console.log(ul);
 			if($(ul).hasClass("bi-star")){ //비어있으면
 				bookmarkInsert(tg);
 			} else{
@@ -411,7 +410,6 @@
     
             });
 		
-            
 		
 		</script>
 	</div>

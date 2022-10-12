@@ -19,8 +19,8 @@
 								</svg>
                         <h3 class="mt-4">로그인</h3> 
                     </div>
-                    <div th:if="${param.error}">
-				        <p th:text="${exception}" class="alert alert-danger"></p>
+                   <div th:if="${param.error}">
+				        <p class="alert alert-danger">정보가 일치하지 않습니다.</p>
 				    </div>
                     <form action="/login" method="post" id="frm">
                         <div class="form-group position-relative has-icon-left">

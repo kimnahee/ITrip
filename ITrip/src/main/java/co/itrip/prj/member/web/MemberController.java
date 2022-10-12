@@ -235,26 +235,33 @@ public class MemberController { //Principal
 	}
 	/* 김하은 : 회원 아이디/비밀번호 찾기 폼 */
 	@GetMapping("/memberSearchForm.do")
-	public String memberSearchForm(){
+	public String memberSearchForm(MemberVO vo){
+		
 		return "main/memberSearchForm";
 	}
 	
 	/* 김하은 : 아이디/비밀번호 찾기 */
 	@PostMapping("/memberSearch.do")
-	public String memberSearch(MemberVO vo, Model model) {
+	public String memberSearch(MemberVO vo, Model model, @RequestParam(value ="error", required =false)String error,
+			@RequestParam(value ="exception", required =false)String exception) {
 		
-		// 이름과 메일이 일치하지 않으면... 예외처리 해야함...!
-		System.out.println("=============memberSearch : "+vo);
+		MemberVO dbVo = mService.memberSearch(vo);
 		
-		// 이름과 메일이 일치하면...
-	   model.addAttribute("v", mService.memberSearch(vo));
-		return "main/memberSearchList";
+		// 사용자가 입력한 값(이름, 이메일)이 DB에 저장된 이름과 이메일이 동일하면...
+		if (dbVo.getName().equals(vo.getName())  && dbVo.getEmail().equals(vo.getEmail())) {
+			 model.addAttribute("v", dbVo);
+			 return "main/memberSearchList";
+		}else {
+			model.addAttribute("error", "정보가 일치하지 않습니다.");
+			model.addAttribute("exception", "정보가 일치하지 않습니다.");
+			
+			return "redirect:/memberSearchForm.do?error=true&exception='+error'";
+		}
 	
 	}
 	
 	@GetMapping("/memberPwUpdateForm.do")
 	public String memberPwUpdateForm(MemberVO vo, Model model) {
-		System.out.println("====================memberPwUpdateFormVo:"+vo);
 		return "main/memberPwUpdateForm";
 	}
 

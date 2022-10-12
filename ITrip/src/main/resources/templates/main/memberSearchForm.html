@@ -25,6 +25,9 @@
                     <div class="text-center mb-5 ">
                         <h5 class="mt-4">아이디 / 비밀번호 찾기</h5> 
                     </div>
+                      <div th:if="${param.error}">
+				        <p class="alert alert-danger">정보가 틀렸습니다. 다시 확인 해주세요.</p>
+				    </div>
                     <form action="/memberSearch.do" method="post" id="frm">
                     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
                         <div><label><small>이름</small></label></div>
