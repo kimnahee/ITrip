@@ -11,12 +11,13 @@ public interface CommunityService {
 	List<CommunityVO> studyList(); //스터디게시판 전체조회
 	int studyInsert(CommunityVO vo);//스터디게시판 게시글 작성
 	int studyUpdate(CommunityVO vo);//스터디게시판 게시글 수정
+	List<CommunityVO> studySearch(CommunityVO vo); //스터디게시판 검색
 	
 	//자유게시판
 	List<CommunityVO> freeList();//자유게시판 전체조회
 	int freeInsert(CommunityVO vo);//자유게시판 게시글 작성
 	int freeUpdate(CommunityVO vo);//자유게시판 게시글 수정
-	List<CommunityVO> freeSearch(CommunityVO vo, String Key, String val); //자유게시판 검색
+	List<CommunityVO> freeSearch(CommunityVO vo); //자유게시판 검색
 	
 	int studyDelete(CommunityVO vo);//게시글 삭제
 	int commHitUpdate(CommunityVO vo);//조회수 처리

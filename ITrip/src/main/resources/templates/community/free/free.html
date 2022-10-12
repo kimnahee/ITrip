@@ -82,33 +82,35 @@
 						<br>
 					</div>
 						<!-- 페이지네이션 -->
-						<nav aria-label="Page navigation example">
-							<ul class="pagination pagination-primary  justify-content-center">
-								<li class="page-item disabled"
-									th:if="${pageInfo.isIsFirstPage()}"><span
-									class="page-link">«</span></li>
-								<li class="page-item"
-									th:if="${!pageInfo.isIsFirstPage() && pageInfo.getList().size() > 0}"><a
-									class="page-link"
-									th:href="|javascript:gopage([[${pageInfo.getPrePage()}]])|"
-									rel="prev">«</a></li>
-								<li
-									th:class="|page-item ${(pageInfo.pageNum eq page) ? 'active': ''} |"
-									th:each="page:${pageInfo.navigatepageNums}"><span
-									class="page-link" th:if="${pageInfo.pageNum eq page}"
-									th:text="${page}"></span> <a class="page-link"
-									th:unless="${pageInfo.pageNum eq page}"
-									th:href="|javascript:gopage(${page})|" th:text="${page}">{{$page
-										}}</a></li>
-								<li class="page-item" th:if="${pageInfo.hasNextPage}"><a
-									class="page-link"
-									th:href="|javascript:gopage([[${pageInfo.getNextPage()}]])|"
-									rel="next">»</a></li>
-								<li class="page-item disabled"
-									th:unless="${pageInfo.hasNextPage}"><span
-									class="page-link">»</span></li>
-							</ul>
-						</nav>
+						<div id="pageNation">
+							<nav aria-label="Page navigation example">
+								<ul class="pagination pagination-primary  justify-content-center">
+									<li class="page-item disabled"
+										th:if="${pageInfo.isIsFirstPage()}"><span
+										class="page-link">«</span></li>
+									<li class="page-item"
+										th:if="${!pageInfo.isIsFirstPage() && pageInfo.getList().size() > 0}"><a
+										class="page-link"
+										th:href="|javascript:gopage([[${pageInfo.getPrePage()}]])|"
+										rel="prev">«</a></li>
+									<li
+										th:class="|page-item ${(pageInfo.pageNum eq page) ? 'active': ''} |"
+										th:each="page:${pageInfo.navigatepageNums}"><span
+										class="page-link" th:if="${pageInfo.pageNum eq page}"
+										th:text="${page}"></span> <a class="page-link"
+										th:unless="${pageInfo.pageNum eq page}"
+										th:href="|javascript:gopage(${page})|" th:text="${page}">{{$page
+											}}</a></li>
+									<li class="page-item" th:if="${pageInfo.hasNextPage}"><a
+										class="page-link"
+										th:href="|javascript:gopage([[${pageInfo.getNextPage()}]])|"
+										rel="next">»</a></li>
+									<li class="page-item disabled"
+										th:unless="${pageInfo.hasNextPage}"><span
+										class="page-link">»</span></li>
+								</ul>
+							</nav>
+						</div>
 				</div>
 			</div>
 		</div>
@@ -136,10 +138,63 @@
 			$("#search").on("click", function(e){
 				let key = $("#key").val();
 				let val = $("#val").val();
-				console.log(key + val);
+				gopageSearchFree(1, key, val);
 			})
 			
-			
+			function gopageSearchFree(p, key, val){
+				$.ajax({ 
+					url : "/ajaxSearchFree.do",
+					type : "post",
+					data : {"key" : key, "val" : val, "pageNum" : p},
+					beforeSend: function(xhr){
+						xhr.setRequestHeader("AJAX", true);
+					    xhr.setRequestHeader("X-CSRF-TOKEN", csrfToken);
+					},
+					success : function(data){
+						$("#freeList").empty();
+						let a = '';
+						let pn = '';
+						if(data.list.length != 0){
+							data.list.forEach(elem => {
+								a += '<tr>';
+								a += '<td><p class="text-md text-secondary mb-0">' + elem.comNo + '</p></td>';
+								a += '<td><p class="text-md text-secondary mb-0">' + elem.title + '</p></td>';
+								a += '<td style="display: none;"><p class="text-md text-secondary mb-0">' + elem.memberId + '</p></td>';
+								a += '<td><p class="text-md text-secondary mb-0">'+ elem.dt + '</p></td>';
+								a += '<td><p class="text-md text-secondary mb-0">' + elem.hit + '</p></td></tr>';
+							})
+						} else{
+							a += '<tr><td colspan="5">검색결과가 존재하지 않습니다.</td></tr>';
+						}
+						//페이지네이션
+						pn += '<nav aria-label="Page navigation example" id="page">';
+						pn += '<ul class="pagination pagination-primary  justify-content-center">';
+						if(data.isFirstPage == true){
+							pn += '<li class="page-item disabled"><span class="page-link">«</span></li>';
+						} else{
+							pn += `<li class="page-item">
+								   <a class="page-link" href="javascript:gopageSearchStudy(${data.prePage}, '${key}', '${val}')"
+								rel="prev">«</a></li>`
+						}
+						for(page of data.navigatepageNums){
+							pn += `<li class="page-item (${data.pageNum} eq ${page}) ? active: ''}" ></li>`;
+							if(data.pageNum == page){
+								pn += `<span style="background-color:#5A8DEE; color:white;" class='page-link'>${page}</span>`
+							} else{
+								pn += `<a class='page-link' href='javascript:gopageSearchStudy(${page},"${key}","${val}")'>${page}</a>`
+							}
+							pn += "</li>"
+						}
+						if(data.hasNextPage ==true){
+							pn += ` <li class="page-item"><a class="page-link" href="javascript:gopageSearchStudy(${data.nextPage},'${key}','${val}')" rel="next">»</a></li>`
+						 }else{
+							 pn += '<li class="page-item disabled"><span class="page-link">»</span></li></ul></nav>'
+						 } 
+						$("#freeList").html(a);
+						$("#pageNation").html(pn);
+					}
+				})
+			}
 		</script>
 		
 	</div>

@@ -93,8 +93,13 @@ public class CommunityServiceImpl implements CommunityService {
 	}
 
 	@Override
-	public List<CommunityVO> freeSearch(CommunityVO vo, String Key, String val) {
-		return map.freeSearch(vo, Key, val);
+	public List<CommunityVO> freeSearch(CommunityVO vo) {
+		return map.freeSearch(vo);
+	}
+
+	@Override
+	public List<CommunityVO> studySearch(CommunityVO vo) {
+		return map.studySearch(vo);
 	}
 
 }

@@ -153,7 +153,7 @@ public class CommunityController {
 		model.addAttribute("selectStudy", dao.selectCommunity(vo));
 		return "community/free/freeUpdateForm";
 	}
-
+	
 	// 자유게시판 글 수정
 	@PostMapping("/freeUpdate.do")
 	public String freeUpdate(CommunityVO vo, MultipartFile file, HttpServletRequest request)
@@ -194,6 +194,17 @@ public class CommunityController {
 		model.addAttribute("pageInfo", PageInfo.of(dao.findAll(vo)));
 		return "community/study/study";
 	}
+	
+	//스터디게시판 검색
+	@PostMapping("/ajaxSearchStudy.do")
+	@ResponseBody
+	public PageInfo<CommunityVO> ajaxSearchStudy(@RequestParam("key") String key,
+		 	@RequestParam("val") String val, CommunityVO vo, HttpServletRequest request,
+			@RequestParam(required = false, defaultValue = "1") int pageNum,
+			@RequestParam(required = false, defaultValue = "10") int pageSize){
+		PageHelper.startPage(pageNum, pageSize); 
+		return PageInfo.of(dao.studySearch(vo));
+	}
 
 	// 페이징 처리(자유게시판)
 	@GetMapping("/free.do")
@@ -206,7 +217,18 @@ public class CommunityController {
 		model.addAttribute("pageInfo", PageInfo.of(dao.findAll(vo)));
 		return "community/free/free";
 	}
-
+	
+	//자유게시판 검색
+	@PostMapping("/ajaxSearchFree.do")
+	@ResponseBody
+	public PageInfo<CommunityVO> ajaxSearchFree(@RequestParam("key") String key,
+		 	@RequestParam("val") String val, CommunityVO vo, HttpServletRequest request,
+			@RequestParam(required = false, defaultValue = "1") int pageNum,
+			@RequestParam(required = false, defaultValue = "10") int pageSize){
+		PageHelper.startPage(pageNum, pageSize); 
+		return PageInfo.of(dao.freeSearch(vo));
+	}
+	
 	// 댓글
 	// 댓글 리스트
 	@GetMapping("/replyList.do")

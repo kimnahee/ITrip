@@ -32,6 +32,10 @@
 	padding-top : 25px;
 	padding-bottom : 25px;
 }
+#searchStudy{
+	margin-left: 20px;
+	text-align: center;
+}
 </style>
 </head>
 
@@ -44,6 +48,14 @@
 					<div id="boardName" class="alert alert-primary">
                             <h4 class="alert-heading">스터디게시판</h4>
                         </div>
+				</div>
+				<div id="searchStudy">
+					<select id="key" name="key">
+						<option value="1">제목</option>
+						<option value="2">내용</option>
+						<option value="3">작성자</option>
+					</select>
+					<input type="text" id="val" name="val">&nbsp;<a href="#" id="search" name="search" class="badge bg-info">검색하기</a>
 				</div>
 				<div class="card-body px-0 pb-2">
 					<div class="table-responsive p-0">
@@ -72,33 +84,35 @@
 						<br>
 					</div>
 						<!-- 페이지네이션 -->
-						<nav aria-label="Page navigation example">
-							<ul class="pagination pagination-primary  justify-content-center">
-								<li class="page-item disabled"
-									th:if="${pageInfo.isIsFirstPage()}"><span
-									class="page-link">«</span></li>
-								<li class="page-item"
-									th:if="${!pageInfo.isIsFirstPage() && pageInfo.getList().size() > 0}"><a
-									class="page-link"
-									th:href="|javascript:gopage([[${pageInfo.getPrePage()}]])|"
-									rel="prev">«</a></li>
-								<li
-									th:class="|page-item ${(pageInfo.pageNum eq page) ? 'active': ''} |"
-									th:each="page:${pageInfo.navigatepageNums}"><span
-									class="page-link" th:if="${pageInfo.pageNum eq page}"
-									th:text="${page}"></span> <a class="page-link"
-									th:unless="${pageInfo.pageNum eq page}"
-									th:href="|javascript:gopage(${page})|" th:text="${page}">{{$page
-										}}</a></li>
-								<li class="page-item" th:if="${pageInfo.hasNextPage}"><a
-									class="page-link"
-									th:href="|javascript:gopage([[${pageInfo.getNextPage()}]])|"
-									rel="next">»</a></li>
-								<li class="page-item disabled"
-									th:unless="${pageInfo.hasNextPage}"><span
-									class="page-link">»</span></li>
-							</ul>
-						</nav>
+						<div id="pageNation">
+							<nav aria-label="Page navigation example" id="page">
+								<ul class="pagination pagination-primary  justify-content-center">
+									<li class="page-item disabled"
+										th:if="${pageInfo.isIsFirstPage()}"><span
+										class="page-link">«</span></li>
+									<li class="page-item"
+										th:if="${!pageInfo.isIsFirstPage() && pageInfo.getList().size() > 0}"><a
+										class="page-link"
+										th:href="|javascript:gopage([[${pageInfo.getPrePage()}]])|"
+										rel="prev">«</a></li>
+									<li
+										th:class="|page-item ${(pageInfo.pageNum eq page) ? 'active': ''} |"
+										th:each="page:${pageInfo.navigatepageNums}"><span
+										class="page-link" th:if="${pageInfo.pageNum eq page}"
+										th:text="${page}"></span> <a class="page-link"
+										th:unless="${pageInfo.pageNum eq page}"
+										th:href="|javascript:gopage(${page})|" th:text="${page}">{{$page
+											}}</a></li>
+									<li class="page-item" th:if="${pageInfo.hasNextPage}"><a
+										class="page-link"
+										th:href="|javascript:gopage([[${pageInfo.getNextPage()}]])|"
+										rel="next">»</a></li>
+									<li class="page-item disabled"
+										th:unless="${pageInfo.hasNextPage}"><span
+										class="page-link">»</span></li>
+								</ul>
+							</nav>
+						</div>
 				</div>
 			</div>
 		</div>
@@ -123,6 +137,71 @@
 			$("#insertBtn").on("click", function(e) {
 				location.href = "/studyInsertForm.do";
 			})
+			
+			//검색
+			$("#search").on("click", function(e){
+				let key = $("#key").val();
+				let val = $("#val").val();
+				gopageSearchStudy(1, key, val);
+			})
+			
+			function gopageSearchStudy(p, key, val){
+				$.ajax({ 
+					url : "/ajaxSearchStudy.do",
+					type : "post",
+					data : {"key" : key, "val" : val, "pageNum" : p},
+					beforeSend: function(xhr){
+						xhr.setRequestHeader("AJAX", true);
+					    xhr.setRequestHeader("X-CSRF-TOKEN", csrfToken);
+					},
+					success : function(data){
+						$("#studyList").empty();
+						$("#pageNation").empty();
+						let a = '';
+						let pn = '';
+						console.log(data);
+						 if(data.list.length != 0){
+							data.list.forEach(elem => {
+								a += '<tr>';
+								a += '<td><p class="text-md text-secondary mb-0">' + elem.comNo + '</p></td>';
+								a += '<td><p class="text-md text-secondary mb-0">' + elem.title + '</p></td>';
+								a += '<td><p class="text-md text-secondary mb-0">' + elem.memberId + '</p></td>';
+								a += '<td><p class="text-md text-secondary mb-0">'+ elem.dt + '</p></td>';
+								a += '<td><p class="text-md text-secondary mb-0">' + elem.hit + '</p></td></tr>';
+							})
+						} else{
+							a += '<tr><td colspan="5">검색결과가 존재하지 않습니다.</td></tr>';
+						}
+						//페이지네이션
+						pn += '<nav aria-label="Page navigation example" id="page">';
+						pn += '<ul class="pagination pagination-primary  justify-content-center">';
+						if(data.isFirstPage == true){
+							pn += '<li class="page-item disabled"><span class="page-link">«</span></li>';
+						} else{
+							pn += `<li class="page-item">
+								   <a class="page-link" href="javascript:gopageSearchStudy(${data.prePage}, '${key}', '${val}')"
+								rel="prev">«</a></li>`
+						}
+						for(page of data.navigatepageNums){
+							pn += `<li class="page-item (${data.pageNum} eq ${page}) ? active: ''}" ></li>`;
+							if(data.pageNum == page){
+								pn += `<span style="background-color:#5A8DEE; color:white;" class='page-link'>${page}</span>`
+							} else{
+								pn += `<a class='page-link' href='javascript:gopageSearchStudy(${page},"${key}","${val}")'>${page}</a>`
+							}
+							pn += "</li>"
+						}
+						if(data.hasNextPage ==true){
+							pn += ` <li class="page-item"><a class="page-link" href="javascript:gopageSearchStudy(${data.nextPage},'${key}','${val}')" rel="next">»</a></li>`
+						 }else{
+							 pn += '<li class="page-item disabled"><span class="page-link">»</span></li></ul></nav>'
+						 } 
+						$("#studyList").html(a);
+						$("#pageNation").html(pn);
+
+					}
+				})
+			}
 		</script>
 	</div>
 </body>

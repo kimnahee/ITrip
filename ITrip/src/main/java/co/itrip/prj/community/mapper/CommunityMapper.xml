@@ -64,6 +64,20 @@
 		from comboard
 		where com_no=#{comNo}
 	</delete>
+	
+	<!-- 검색+페이징(스터디게시판) -->
+	<select id="studySearch" resultType="co.itrip.prj.community.service.CommunityVO">
+		select * 
+		from comboard
+		where ctgry='스터디'
+		<choose>
+			<when test="key == 1"> and title like '%'|| #{val} ||'%'</when>
+			<when test="key == 2"> and content like '%'|| #{val} ||'%'</when>
+			<when test="key == 3"> and member_id like '%'|| #{val} ||'%'</when>
+		</choose>
+		order by com_no
+		desc
+	</select>
 
 	<!-- 자유게시판 -->
 	<select id="freeList"
@@ -101,14 +115,17 @@
 		where com_no = #{comNo}
 	</update>
 	
-	<!-- 검색+페이징 -->
+	<!-- 검색+페이징(자유게시판) -->
 	<select id="freeSearch" resultType="co.itrip.prj.community.service.CommunityVO">
-		select * from community
-		where
+		select * 
+		from comboard
+		where ctgry='자유게시판'
 		<choose>
-			<when test="key == 1"> title like '%'|| #{val} ||'%'</when>
-			<when test="key == 2"> content like '%'|| #{val} ||'%'</when>
+			<when test="key == 1"> and title like '%'|| #{val} ||'%'</when>
+			<when test="key == 2"> and content like '%'|| #{val} ||'%'</when>
 		</choose>
+		order by com_no
+		desc
 	</select>
 
 	<!-- 댓글 서비스 -->

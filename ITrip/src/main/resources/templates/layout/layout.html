@@ -4,6 +4,8 @@
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="UTF-8">
+<meta name="_csrf" th:content="${_csrf.token}" th:if="${_csrf} ne null"/>
+<meta name="_csrf_header" th:content="${_csrf.headerName}" th:if="${_csrf} ne null"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>메인화면</title>
 <script src="js/jquery-3.6.0.min.js"></script>
@@ -212,7 +214,9 @@
 	</div>
 
 	<script th:inline="javascript">
-
+			var csrfToken = $("meta[name='_csrf']").attr("content");    
+			var csrfHeader = $("meta[name='_csrf_header']").attr("content");
+			
 			$("#myPage").on("click", function() {
 				//console.log(memberId);
 				location.href = "/myPage"

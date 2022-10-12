@@ -18,4 +18,6 @@ public class CommunityVO {
 	private String attachDir;
 	private String ctgry;
 	
+	private String key; // 검색할 키워드
+	private String val; // 검색할 값
 }
