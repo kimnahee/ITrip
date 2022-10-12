@@ -97,6 +97,11 @@
 		insert into class_attend values(#{memberId},#{classNo},0,0)
 	</insert>
 	
+	<!-- 가이드 클래스 링크입력 -->
+	<insert id="classlinkInsert">
+		insert into class_chat values (#{classNo},#{chatLink})
+	</insert>
+	
 	<!-- 강의장 연결 -->
 	<select id="classChatLink" resultType="co.itrip.prj.iclass.service.ClassChatVO">
 		select *
