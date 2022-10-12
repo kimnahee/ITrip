@@ -84,6 +84,11 @@ public class AdminServiceImpl implements AdminService {
 		return map.ajaxSearchMember(vo);
 	}
 
+	@Override
+	public GuideVO memberAuthOne(GuideVO vo) {
+		return map.memberAuthOne(vo);
+	}
+
 	
 
 }

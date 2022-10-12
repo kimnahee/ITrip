@@ -10,8 +10,9 @@ import co.itrip.prj.member.service.MemberVO;
 public interface AdminMapper {
 	//경아 
 	List<MemberVO> memberList(MemberVO vo); //전체회원조회
-	List<MemberVO> memberListOf(MemberVO vo);//권한변회원조회
+	List<MemberVO> memberListOf(MemberVO vo);//권한별회원조회
 	List<GuideVO> memberAuthList(GuideVO vo);//guide신청한 회원조회
+	GuideVO memberAuthOne(GuideVO vo); // guide신청한회원 단건조회
 	int memberAuthUpdate(GuideVO vo); //guide신청한 회원등급수정
 	int memberAuthUpdateTo(MemberVO vo); //guide신청한 회원의 멤버테이블 권한수정 
 	List<MemberVO> ajaxSearchMember(MemberVO vo);//회원검색

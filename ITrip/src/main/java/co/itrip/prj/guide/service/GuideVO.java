@@ -22,7 +22,9 @@ public class GuideVO {
 	private String nick;
 	private String name;
 	private String auth;
-
+	private String dutyCdName; 
+	private String careerCdName;
+	
 	private String cdName; // 직무 설명
 	private String care; // 경력 설명 
 
