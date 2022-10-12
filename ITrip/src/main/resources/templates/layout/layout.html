@@ -145,7 +145,7 @@
 								님 환영합니다!
 							</div>
 						</li>&nbsp;&nbsp;
-						<div>
+						<div sec:authorize="isAuthenticated()">
 							<a href="#" class="badge bg-primary" id="alarmCount"></a>
 						</div>
 						<!-- 알림 리스트 출력하는 공간 / div 권한 수정??? -->
@@ -212,7 +212,6 @@
 	</div>
 
 	<script>
-			let id = $("#memberId").val();
 
 			$("#myPage").on("click", function() {
 				//console.log(memberId);
@@ -226,6 +225,7 @@
 			})
 			
 			$("#alarmInsert").on("click", function(){
+				let id = $("#memberId").val();
 				location.href="/alarmInsert.do?memberId="+ id;
 			})
 			
@@ -256,6 +256,7 @@
 			
 			//헤더 알림 ajax
 			$(document).ready(function(){
+				let id = $("#memberId").val();
 				if(!id){
 					//console.log("확인");  
 				} else{
@@ -268,6 +269,7 @@
 			function alarmList(){
 				let csrfHeaderName = "${_csrf.headerName}";
 				let csrfToken=$("input[name=_csrf]").val();
+				let id = $("#memberId").val();
 				
 				$.ajax({ 
 					url : "/alarmList.do",
@@ -303,6 +305,7 @@
 			function alarmCount(){
 				let csrfHeaderName = "${_csrf.headerName}";
 				let csrfToken=$("input[name=_csrf]").val();
+				let id = $("#memberId").val();
 				
 				$.ajax({ 
 					url : "/alarmCount.do",
