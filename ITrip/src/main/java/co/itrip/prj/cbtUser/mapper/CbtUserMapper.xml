@@ -3,13 +3,13 @@
 <mapper namespace="co.itrip.prj.cbtUser.mapper.CbtUserMapper">
 
 
-<select id="cbtUserList" resultType="co.itrip.prj.cbtUser.service.CbtUserVO"
+<!-- <select id="cbtUserList" resultType="co.itrip.prj.cbtUser.service.CbtUserVO"
  						parameterType="co.itrip.prj.cbtUser.service.CbtUserVO">
 	select cbt_no, ques, lang_cd, cnsr, ex1, ex2,
 			ex3, ex4, attach, attach_dir, cnsr_cnt, call,
 			explna, utp_cd, lang_cd, member_id 
 		 	from cbt_user where lang_cd = #{langCd}
-</select>
+</select> -->
 
 <insert id="cbtUserInsert">
 	<selectKey keyProperty="cbtNo" order="BEFORE" resultType="int">
