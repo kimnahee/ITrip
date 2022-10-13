@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+<head>
+<meta charset="UTF-8">
+</head>
+<body>
+<div  layout:fragment="content">
+<!-- Table head options start -->
+<div class="row" id="table-head">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">신청한 상담(승인대기중)</h4>
+      </div>
+      <div class="card-content">
+        <!-- table head dark -->
+        <div class="table-responsive">
+          <table class="table table-light mb-0"> 
+            <thead>
+              <tr>
+                <th>제목</th>
+                <th>신청일자</th>
+                <th>시작날짜</th>
+                <th>종료날짜</th>
+              </tr>
+            </thead>
+            <tbody id="consultList">
+              <tr th:each="list : ${alreadyList}" >
+                <td class="text-bold-500 hidden" th:text="${list.consultNo}"></td>
+                <td class="text-bold-500" th:text="${list.title}"></td>
+                <td class="text-bold-500" th:text="${list.dt}"></td>
+                <td class="text-bold-500" th:text="${list.beginDate}"></td>
+                <td class="text-bold-500" th:text="${list.endDate}"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Table head options end -->
+<form id="frm" action="alreadyConsultOne.do" method="post">
+	<input type="hidden" id="consultNo" name="consultNo">
+	<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+</form>
+			
+		<script type="text/javascript">
+		
+			$("#consultList").on("click", function(e) {
+				let no = $(e.target).closest("tr").children().html();
+			//	console.log(no);
+				frm.consultNo.value = no;
+				frm.submit();
+			})
+			
+			function hiddenList() {
+				row = $(".hidden");
+			//	console.log(row);
+				row.css('display', 'none');
+			}
+			
+			$(document).ready(function(){    
+				hiddenList(); 
+			});
+		</script>
+	</div>
+</body>
+</html>

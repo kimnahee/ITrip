@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="co.itrip.prj.consult.mapper.ConsultMapper">
 	
-	<!-- 가이드마이페이지에 내가 등록한 상담리스트 [박은지] -->
+	<!-- 가이드마이페이지에 가이드가 등록하고 승인된 상담리스트 [박은지] -->
 	<select id="consultList" resultType="co.itrip.prj.consult.service.ConsultVO" parameterType="co.itrip.prj.consult.service.ConsultVO">
 			SELECT C.CONSULT_NO
 		            ,C.TITLE
@@ -25,7 +25,6 @@
 		  </where>
 		   AND C.GUIDE_ID=#{guideId}
         ORDER BY CONSULT_NO DESC
-
 	</select> 
 	
 	<!-- 상담메인페이지 페이징 처리, 카테고리 검색기능  [박은지]-->
@@ -46,15 +45,16 @@
 		            ,FUN_CODENAME('R', G.CAREER) AS CAREER
 		            ,FUN_CODENAME('J', C.JOB_CD) AS JOB_NAME
 		     FROM CONSULT C, GUIDE G        
-	      <where>	C.GUIDE_ID=G.GUIDE_ID  
-		       <if test="jobCd != null">
-				AND JOB_CD = #{jobCd}
-				</if>
-			   <if test="ennc.equals('활성화')"> <!-- 활성화인 경우에만 리스트로 띄우기 -->
-			   AND ENNC =#{ennc}
-			   </if>
-		  </where>
-        ORDER BY CONSULT_NO DESC
+		      <where>	C.GUIDE_ID=G.GUIDE_ID  
+			       <if test="jobCd != null"> <!-- 직무코드 -->
+					AND JOB_CD = #{jobCd}
+					</if>
+				   <if test="ennc.equals('활성화')"> <!-- 활성화인 경우에만 리스트로 띄우기 -->
+				   AND ENNC =#{ennc}
+				   </if>
+			  </where>
+			  AND C.STATE_CD = '2' <!-- 승인완료 상태인것 -->
+	         ORDER BY CONSULT_NO DESC
 	
 	</select>
 	
@@ -155,7 +155,8 @@
 		from consult_chat
 		where consult_no = #{consultNo}
 	</select>
-	
+
+	<!-- 아작스로 금액 띄우기 -->
 	<select id="ajaxConsultPrice" resultType="co.itrip.prj.consult.service.ConsultDtVO">
 		select *
 		from consult_dt
@@ -170,6 +171,47 @@
 	and consult_no = 38
 	and cd.week = 5;
 	</select>
+	
+	<!-- 가이드마이페이지에 내가 등록한 전체 상담 조회 [박은지] -->
+	<select id="alreadyConsult" resultType="co.itrip.prj.consult.service.ConsultVO" parameterType="co.itrip.prj.consult.service.ConsultVO">
+              SELECT C.CONSULT_NO
+		            ,C.TITLE
+		            ,C.CONTENT
+		            ,C.DT
+		            ,C.STATE_CD
+		            ,C.GUIDE_ID
+		            ,C.BEGIN_DATE
+		            ,C.END_DATE
+                    ,G.GUIDE_ID
+                    ,G.CAREER
+                    ,G.DC
+                    ,G.DUTY
+                    ,CD.WEEK
+		            ,CD.BEGIN_TIME
+		            ,CD.END_TIME
+		            ,CD.PRICE
+                    ,CASE WHEN WEEK = '1' THEN '월'
+	                    WHEN WEEK = '2' THEN '화'
+	                    WHEN WEEK = '3' THEN '수'
+	                    WHEN WEEK = '4' THEN '목'
+	                    WHEN WEEK = '5' THEN '금'
+	                    WHEN WEEK = '6' THEN '토'
+	                    WHEN WEEK = '0' THEN '일'
+	                    ElSE ' '
+	                    END AS WEEK,
+                    BEGIN_TIME, END_TIME, PRICE 
+		            ,FUN_CODENAME('D', G.DUTY) AS DUTY_NAME
+		            ,FUN_CODENAME('R', G.CAREER) AS CAREER
+		            ,FUN_CODENAME('J', C.JOB_CD) AS JOB_NAME
+	      FROM CONSULT C, GUIDE G, CONSULT_DT CD
+	      WHERE	C.GUIDE_ID=G.GUIDE_ID
+          AND C.CONSULT_NO = CD.CONSULT_NO
+          AND C.STATE_CD = '1' <!-- 승인되지 않은 상태 -->
+          AND C.GUIDE_ID= #{guideId}
+        ORDER BY C.CONSULT_NO DESC
+	</select> 
+	
+	
 	
 	
 	
