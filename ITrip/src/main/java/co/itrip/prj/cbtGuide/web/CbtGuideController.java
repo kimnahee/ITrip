@@ -184,7 +184,7 @@ public class CbtGuideController {
 		model.addAttribute("Bookmark", cgService.bookmarkList(vo));
 		
 		System.out.println("============================================vo :"+vo);
-		return "bookmark/bookmarkList";
+		return "Bookmark/bookmarkList";
 	}
 	
 	
