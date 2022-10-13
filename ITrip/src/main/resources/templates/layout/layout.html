@@ -180,7 +180,7 @@
 						<li class="dropdown">
 							<div sec:authorize="isAuthenticated()">
 								<form action="logout" method="post">
-										<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"> 
+										<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" th:if="${_csrf} ne null"> 
 										<input id="memberId" type="hidden" th:value="${#authentication.principal.member.memberId}">
 									<button class="btn btn-sm btn-outline-primary">로그아웃</button>
 								</form>

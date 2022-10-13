@@ -4,10 +4,7 @@
 	layout:decorate="~{layout/layout}">
 <head>
 <meta charset="UTF-8">
-<meta name="_csrf" th:content="${_csrf.token}" />
-<meta name="_csrf_header" th:content="${_csrf.headerName}" />
 <title>CBT 문제 목록</title>
-<script src="js/jquery-3.6.0.min.js"></script>
 <style>
 .form-group h3{
   display : inline-block;
@@ -211,8 +208,6 @@
 		    </form>
 		</div>-->
 		<script>
-		let csrfHeaderName = "${_csrf.headerName}";
-		let csrfToken = $("input[name=_csrf]").val();
 		
 		// 북마크
 		// 함수 호출
