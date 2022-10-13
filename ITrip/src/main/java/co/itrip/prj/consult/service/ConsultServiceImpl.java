@@ -94,5 +94,11 @@ public class ConsultServiceImpl implements ConsultService{
 		return 0;
 	}
 
+	@Override
+	public List<ConsultVO> alreadyConsult(ConsultVO vo) {
+		// TODO Auto-generated method stub
+		return map.alreadyConsult(vo);
+	}
+
 
 }

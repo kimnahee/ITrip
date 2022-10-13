@@ -44,7 +44,7 @@ public class ConsultController {
 	private PayformService payService; // 결제 서비스
 	
 	
-	//페이징
+	// 상담메인페이지 페이징
 	@GetMapping("/consultList.do")
 	public String findPage(ConsultVO vo, Model model, HttpServletRequest request,
 			@RequestParam(required = false, defaultValue = "1") int pageNum,
@@ -55,6 +55,26 @@ public class ConsultController {
 		model.addAttribute("job", cdService.jobCdList());
 		return "consult/consultList";
 	}
+	
+	// 카테고리별 검색 - 상담메인페이지
+	@RequestMapping("/ajaxJobListSearch.do")
+	@ResponseBody
+	public PageInfo<ConsultVO> ajaxJobListSearch(ConsultVO vo, Model model, HttpServletRequest request,
+			@RequestParam(required = false, defaultValue = "1") int pageNum,
+			@RequestParam(required = false, defaultValue = "8") int pageSize){
+		PageHelper.startPage(pageNum, pageSize);
+		vo.setEnnc("활성화");
+		return PageInfo.of(conService.findAll(vo));
+	}
+	
+	// 상담 단건 조회 (더보기)
+	@RequestMapping("/consultSelectOne.do")
+	public String consultSelectOne(ConsultVO vo, Model model, ConsultDtVO dtvo) {
+		model.addAttribute("consultOne", conService.consultSelectOne(vo));// 상담 정보
+		model.addAttribute("consultDt", conService.consultDtList(dtvo));  // 상담 가능 시간
+		return "consult/consultSelectOne";
+	}
+		
 	
 	// 상담 등록 페이지로 이동
 	@RequestMapping("/consultStart.do")
@@ -73,26 +93,26 @@ public class ConsultController {
 		return "redirect:gconsult.do";
 	}
 	
-	// 상담 상세보기
-	@RequestMapping("/consultSelectOne.do")
-	public String consultSelectOne(ConsultVO vo, Model model, ConsultDtVO dtvo) {
-		model.addAttribute("consultOne", conService.consultSelectOne(vo));// 상담 정보
-		model.addAttribute("consultDt", conService.consultDtList(dtvo));  // 상담 가능 시간
-		return "consult/consultSelectOne";
+	// 신청된 상담 리스트
+	@GetMapping("/alreadyConsult.do")
+	public String alreadyConsult(Principal principal, Model model, ConsultVO vo) {
+		 vo.setGuideId(principal.getName());
+		 model.addAttribute("alreadyList", conService.alreadyConsult(vo));
+		return "guide/alreadyConsult";
 	}
 	
-	// 카테고리별 검색 - 상담메인페이지
-	@RequestMapping("/ajaxJobListSearch.do")
-	@ResponseBody
-	public PageInfo<ConsultVO> ajaxJobListSearch(ConsultVO vo, Model model, HttpServletRequest request,
-			@RequestParam(required = false, defaultValue = "1") int pageNum,
-			@RequestParam(required = false, defaultValue = "8") int pageSize){
-		PageHelper.startPage(pageNum, pageSize);
-		vo.setEnnc("활성화");
-		return PageInfo.of(conService.findAll(vo));
+	// 신청된 상담 상세보기
+	@RequestMapping("/alreadyConsultOne.do")
+	public String alreadyConsultOne(Principal principal, ConsultVO vo, Model model, ConsultDtVO dtvo, GuideVO gvo) {
+		//vo.setGuideId(principal.getName());
+		//model.addAttribute("guide", guService.guideSelect(gvo)); // 로그인된 가이드 아이디 확인 (단건조회)
+		//model.addAttribute("joblist", cdService.jobCdList()); // 카테고리 공통코드
+		model.addAttribute("consultOne", conService.consultSelectOne(vo));
+		model.addAttribute("consultDt", conService.consultDtList(dtvo));
+		return "guide/alreadyConsultOne";
 	}
 	
-	// 활성화, 비활성화 - 가이드마이페이지
+	// 활성화, 비활성화 기능 - 가이드마이페이지
 	@PostMapping("/ajaxConsultState.do")
 	@ResponseBody
 	public int ajaxConsultState(ConsultVO vo) {
@@ -102,7 +122,7 @@ public class ConsultController {
 		return conService.consultState(vo);
 	}
 	
-	//채팅방 연결
+	// 채팅방 연결 - 가이드마이페이지
 	@GetMapping("/consultChat.do")
 	public String consultChat(ConsultVO vo, ConsultChatVO chatvo, Model model, HttpServletRequest request) {
 		int consultNo = Integer.parseInt(request.getParameter("consultNo"));
@@ -113,7 +133,7 @@ public class ConsultController {
 
 	}
 	
-	//상담 신청 상세 페이지
+	//유저 상담 신청 상세 페이지
 	@GetMapping("/consultRegister.do")
 	public String consultRegister(ConsultVO vo, ConsultDtVO dtvo, PayformVO pvo, Model model, HttpServletRequest request) {
 		int consultNo = Integer.parseInt(request.getParameter("consultNo"));
@@ -125,7 +145,7 @@ public class ConsultController {
 		return "consult/consultRegister";
 	}
 	
-	//상담 신청 시 가격 가져오기
+	//유저 상담 신청 시 금액 가져오기
 	@PostMapping("/ajaxConsultPrice.do")
 	@ResponseBody
 	public ConsultDtVO ajaxConsultPrice(ConsultDtVO vo, Model model, HttpServletRequest request) {
