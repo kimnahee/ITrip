@@ -162,5 +162,16 @@
 		where consult_no = #{consultNo}
 		and week = #{week}
 	</select>
+	
+	<select id="consultTime" resultType="int">
+	select substr(p.begin_time,1,2)
+	from consult_dt cd, payform p 
+	where cd.consult_no = p.no
+	and consult_no = 38
+	and cd.week = 5;
+	</select>
+	
+	
+	
 
 </mapper>

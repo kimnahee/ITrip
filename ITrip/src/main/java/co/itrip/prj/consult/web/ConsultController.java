@@ -134,6 +134,7 @@ public class ConsultController {
 		System.out.println(consultNo + day);
 		vo.setConsultNo(consultNo);
 		vo.setWeek(day);
+		//conService.consultTime()
 		return conService.ajaxConsultPrice(vo);
 	}
 }

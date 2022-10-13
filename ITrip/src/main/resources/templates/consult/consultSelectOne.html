@@ -5,8 +5,8 @@
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="UTF-8">
-<meta name="_csrf" th:content="${_csrf.token}"/>
-<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+<!-- <meta name="_csrf" th:content="${_csrf.token}"/>
+<meta name="_csrf_header" th:content="${_csrf.headerName}"/> -->
 <title>상담 상세보기</title>
 <script src="js/jquery-3.6.0.min.js"></script>
 <style type="text/css">
@@ -139,8 +139,7 @@
 		<script>
 		let consultNo = $("#consultNo").val();
 		let guideId = $("#guideId").html();
-		let csrfHeaderName = "${_csrf.headerName}";
-		let csrfToken = $("input[name=_csrf]").val();
+		let id = $("#memberId").val();
 		
 	
 		/*------------------------------
@@ -150,8 +149,6 @@
 		$(document).ready(function() {
 			console.log(consultNo)
 			console.log(guideId)
-			console.log(csrfHeaderName)
-			console.log(csrfToken)
 			heartCount();
 		})
 		

@@ -23,6 +23,8 @@ public interface ConsultService {
 	
 	
 	
-	ConsultDtVO ajaxConsultPrice(ConsultDtVO vo); //상담 신청시 가격 가져오기 
+	ConsultDtVO ajaxConsultPrice(ConsultDtVO vo); //상담 신청시 가격 가져오기 -은지
+	int consultTime(ConsultDtVO vo); // 상담 신청 시 시간 가져오기 - 은지
+	
 	ConsultChatVO consultChat(ConsultChatVO vo); //채팅방 연결
 }
