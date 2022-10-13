@@ -73,6 +73,7 @@ public class ClassController {
 		//String oFileName = file.getOriginalFilename();
 		String oFileName = file.getOriginalFilename();
 		fileDir.concat("Thumbnail");
+		System.out.println("=================" + fileDir);
 		File files = new File(fileDir);
 		if(!files.exists()) {
 			files.mkdirs();
