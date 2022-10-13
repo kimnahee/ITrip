@@ -41,7 +41,7 @@
 </div>
 <!-- Table head options end -->
 <form id="frm" action="alreadyClassOne.do" method="post">
-	<input type="text" id="classNo" name="classNo">
+	<input type="hidden" id="classNo" name="classNo">
 	<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 </form>
 			
@@ -49,19 +49,19 @@
 		
 			$("#classList").on("click", function(e) {
 				let no = $(e.target).closest("tr").children().html();
-				console.log(no);
+			//	console.log(no);
 				frm.classNo.value = no;
 				frm.submit();
 			})
 			
 			function hiddenList() {
 				row = $(".hidden");
-				console.log(row);
+			//	console.log(row);
 				row.css('display', 'none');
 			}
 			
 			$(document).ready(function(){    
-				hiddenList(); //페이지 로딩시 follow목록, follow수 출력
+				hiddenList(); 
 			});
 		</script>
 	</div>
