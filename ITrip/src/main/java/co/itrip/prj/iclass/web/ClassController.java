@@ -68,9 +68,14 @@ public class ClassController {
 	@PostMapping("/classInsert.do")
 	public String classInsert(AlarmVO avo, FollowVO fvo, ClassVO vo, ClassDtVO dtvo, MultipartFile file)
 			throws IllegalStateException, IOException {
-
+		
 		// 새로운파일저장경로
+		//String oFileName = file.getOriginalFilename();
 		String oFileName = file.getOriginalFilename();
+		File files = new File(fileDir, oFileName);
+		if(!files.exists()) {
+			 files.mkdirs();
+		}
 		if (!oFileName.isEmpty()) {
 			String sFileName = UUID.randomUUID().toString() + oFileName.substring(oFileName.lastIndexOf(".")); // 마지막.뒤에값
 																												// 가져오기
