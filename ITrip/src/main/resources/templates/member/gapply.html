@@ -12,6 +12,10 @@
 	width: 700px;
 	margin: 0 auto;
 }
+
+#textLengthCheck{
+	width: 80px;
+}
 </style>
 </head>
 <body layout:fragment="content">
@@ -48,8 +52,8 @@
 								</div>
 								<div class="col-12">
 									<div class="form-group mb-3">
-										<label class="form-label">소개(설명)</label>&nbsp; <input
-											type="text" id="textLengthCheck" size="5px">
+										<label class="form-label">소개(설명)</label>&nbsp; 
+										<input type="text" id="textLengthCheck" class="form-control ">
 										<textarea class="form-control" id="dc" rows="3" name="dc"
 											placeholder="introduce yourself"></textarea>
 									</div>
@@ -96,15 +100,16 @@
 		</div>
 	</div>
 	<script type="text/javascript">
+	
 		$("#dc").keyup(function(e) {
 			console.log("키업");
 			var content = $(this).val();
 			var length = getTextLength(content);
-			//var substr = sliceByByte(content, 100)
-			$("#textLengthCheck").val("(" + length + "/100)"); // 실시간 글자 수 카운팅
-			if (length > 100) {
-				alert("최대 100자까지 입력가능합니다.");
-				$(this).val(content.substring(0, 50));
+			var substr = sliceByByte(content, 150)
+			$("#textLengthCheck").val("(" + length + "/150)"); // 실시간 글자 수 카운팅
+			if (length > 150) {
+				alert("최대 150자까지 입력가능합니다.");
+				$(this).val(substr);
 				$('#textLengthCheck').html();
 			}
 
@@ -124,7 +129,7 @@
 			return len;
 		}
 		
-		/* // 바이트 단위로 자르는 코드
+		// 바이트 단위로 자르는 코드
 		function sliceByByte(str, maxByte) {
 
 			for (b = i = 0; c = str.charCodeAt(i);) {
@@ -141,7 +146,7 @@
 
 			return str.substring(0, i);
 
-		} */
+		} 
 
 		function message() {
 
