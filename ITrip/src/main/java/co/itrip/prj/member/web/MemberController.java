@@ -248,7 +248,10 @@ public class MemberController { //Principal
 		MemberVO dbVo = mService.memberSearch(vo);
 		
 		// 사용자가 입력한 값(이름, 이메일)이 DB에 저장된 이름과 이메일이 동일하면...
-		if (dbVo.getName().equals(vo.getName())  && dbVo.getEmail().equals(vo.getEmail())) {
+		//if (dbVo.getName().equals(vo.getName())  && dbVo.getEmail().equals(vo.getEmail())) {
+		System.out.println("===========================dbVo :"+dbVo);
+		System.out.println("===========================dbVo :"+dbVo != null);
+		if(dbVo != null) {
 			 model.addAttribute("v", dbVo);
 			 return "main/memberSearchList";
 		}else {

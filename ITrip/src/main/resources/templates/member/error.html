@@ -43,7 +43,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 	</div>
 	<form action="guideDelete.do" method="post" id="frm">
 		<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-		<input type="text" id="guideId" name="guideId" th:value="${members.memberId}">
+		<input type="hidden" id="guideId" name="guideId" th:value="${members.memberId}">
 	</form>
 	<script type="text/javascript">
 	$(".btn").on("click",function(){

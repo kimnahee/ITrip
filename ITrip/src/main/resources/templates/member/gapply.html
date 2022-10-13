@@ -7,14 +7,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Form Layout - Voler Admin Dashboard</title>
-
-<link rel="stylesheet" href="assets/css/bootstrap.css">
-
-<link rel="stylesheet"
-	href="assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
-<link rel="stylesheet" href="assets/css/app.css">
-<link rel="shortcut icon" href="assets/images/favicon.svg"
-	type="image/x-icon">
 <style>
 #testDiv {
 	width: 700px;
@@ -56,7 +48,8 @@
 								</div>
 								<div class="col-12">
 									<div class="form-group mb-3">
-										<label class="form-label">소개(설명)</label>
+										<label class="form-label">소개(설명)</label>&nbsp; <input
+											type="text" id="textLengthCheck" size="5px">
 										<textarea class="form-control" id="dc" rows="3" name="dc"
 											placeholder="introduce yourself"></textarea>
 									</div>
@@ -103,6 +96,53 @@
 		</div>
 	</div>
 	<script type="text/javascript">
+		$("#dc").keyup(function(e) {
+			console.log("키업");
+			var content = $(this).val();
+			var length = getTextLength(content);
+			//var substr = sliceByByte(content, 100)
+			$("#textLengthCheck").val("(" + length + "/100)"); // 실시간 글자 수 카운팅
+			if (length > 100) {
+				alert("최대 100자까지 입력가능합니다.");
+				$(this).val(content.substring(0, 50));
+				$('#textLengthCheck').html();
+			}
+
+
+		})
+
+		// 한글은 1바이트, 영어는 2바이트로 계산해서 바이트 수로 알려주는 코드.
+		function getTextLength(str) {
+			var len = 0;
+
+			for (var i = 0; i < str.length; i++) {
+				if (escape(str.charAt(i)).length == 6) {
+					len++;
+				}
+				len++;
+			}
+			return len;
+		}
+		
+		/* // 바이트 단위로 자르는 코드
+		function sliceByByte(str, maxByte) {
+
+			for (b = i = 0; c = str.charCodeAt(i);) {
+
+				b += c >> 7 ? 2 : 1;
+
+				if (b > maxByte)
+
+					break;
+
+				i++;
+
+			}
+
+			return str.substring(0, i);
+
+		} */
+
 		function message() {
 
 			if ($("#dc").val() == "") {
@@ -144,13 +184,6 @@
 			return true;
 		}
 	</script>
-
-	<script src="assets/js/feather-icons/feather.min.js"></script>
-	<script src="assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-	<script src="assets/js/app.js"></script>
-
-	<script src="assets/js/main.js"></script>
-
 
 </body>
 </html>
