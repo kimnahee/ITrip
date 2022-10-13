@@ -72,7 +72,7 @@ public class ClassController {
 		// 새로운파일저장경로
 		//String oFileName = file.getOriginalFilename();
 		String oFileName = file.getOriginalFilename();
-		File files = new File(fileDir, oFileName);
+		File files = new File(fileDir);
 		if(!files.exists()) {
 			 files.mkdirs();
 		}
