@@ -46,8 +46,8 @@ public class ClassVO {
 	private String sdate; // 검색 시작일
 	private String edate; // 검색 끝일
 	
-	private Date mindt; // 클래스 시작일
-	private Date maxdt; // 클래스 끝일
+	private String mindt; // 클래스 시작일
+	private String maxdt; // 클래스 끝일
 
 	
 	
