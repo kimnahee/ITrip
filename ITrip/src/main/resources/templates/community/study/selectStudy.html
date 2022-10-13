@@ -6,17 +6,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>스터디게시판 글 상세보기</title>
-<script src="js/jquery-3.6.0.min.js"></script>
-<link rel="stylesheet" href="bootstrap/voler/assets/css/bootstrap.css">
-<link rel="stylesheet"
-	href="bootstrap/voler/assets/vendors/quill/quill.bubble.css">
-<link rel="stylesheet"
-	href="bootstrap/voler/assets/vendors/quill/quill.snow.css">
-<link rel="stylesheet"
-	href="bootstrap/voler/assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
-<link rel="stylesheet" href="bootstrap/voler/assets/css/app.css">
-<link rel="shortcut icon"
-	href="bootstrap/voler/assets/images/favicon.svg" type="image/x-icon">
 <style>
 #exampleFormControlTextarea1 {
 	min-height: 250px;
@@ -50,9 +39,7 @@
 				<div class="card-body">
 					<form action="" method="post" id="frm" class="form form-horizontal"
 						th:object="${selectCommunity}">
-						<input type="hidden" th:name="${_csrf.parameterName}"
-							th:value="${_csrf.token}"> <input type="hidden" id="myId"
-							class="form-control" name="myId"
+						<input type="hidden" id="myId" class="form-control" name="myId"
 							th:value=${#authentication.principal.member.memberId}
 							readonly="readonly">
 						<div class="form-body">
@@ -80,8 +67,11 @@
 								</div>
 								<div id="atch" class="form-file"
 									th:if="${not #strings.isEmpty(selectCommunity.attach)}">
-									<span class="mb-2 text-md"><div style="text-align: center;">
-											<img th:src="@{/download(fileName=${'/STUDY/'+selectCommunity.attachDir})}" style="margin-bottom: 10px;">
+									<span class="mb-2 text-md"><div
+											style="text-align: center;">
+											<img
+												th:src="@{/download(fileName=${'/STUDY/'+selectCommunity.attachDir})}"
+												style="margin-bottom: 10px;">
 										</div></span>
 									<div class="form-group mb-3">
 										<label for="basicInput">첨부파일(이미지)</label> <input type="text"
@@ -92,7 +82,8 @@
 
 								<!-- 수정&삭제 권한 : 작성자만 보이게 -->
 								<div class="col-sm-12 d-flex justify-content-end" id="btn">
-									<div th:if="${selectCommunity.memberId} == ${#authentication.principal.member.memberId}">
+									<div
+										th:if="${selectCommunity.memberId} == ${#authentication.principal.member.memberId}">
 										<button type="button" id="updateBtn"
 											class="btn btn-primary btn-md mb-0">수정하기</button>
 										<button type="button"
@@ -163,8 +154,6 @@
 
 		<script>
 			let comNo = $("#comNo").val();
-			let csrfHeaderName = "${_csrf.headerName}";
-			let csrfToken=$("input[name=_csrf]").val();
 			let mid = $("#myId").val();
 			
 			function replyList(){
@@ -308,11 +297,5 @@
 			});
 		</script>
 	</div>
-	<script src="bootstrap/voler/assets/js/feather-icons/feather.min.js"></script>
-	<script src="bootstrap/voler/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-	<script src="bootstrap/voler/assets/js/app.js"></script>
-	<script src="bootstrap/voler/assets/vendors/quill/quill.min.js"></script>
-	<script src="bootstrap/voler/assets/js/pages/form-editor.js"></script>
-	<script src="bootstrap/voler/assets/js/main.js"></script>
 </body>
 </html>
