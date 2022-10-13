@@ -72,9 +72,10 @@ public class ClassController {
 		// 새로운파일저장경로
 		//String oFileName = file.getOriginalFilename();
 		String oFileName = file.getOriginalFilename();
+		fileDir.concat("Thumbnail");
 		File files = new File(fileDir);
 		if(!files.exists()) {
-			 files.mkdirs();
+			files.mkdirs();
 		}
 		if (!oFileName.isEmpty()) {
 			String sFileName = UUID.randomUUID().toString() + oFileName.substring(oFileName.lastIndexOf(".")); // 마지막.뒤에값
