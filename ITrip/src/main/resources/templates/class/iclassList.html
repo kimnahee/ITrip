@@ -25,8 +25,8 @@ layout:decorate="~{layout/layout}">
 					<div th:each="cList:${pageInfo.list}" id="searchClassList"> 
 		                <div class="col mb-5">
 		                    <div class="card h-100">
-		                        <img class="card-img-top" src="images/spring.png" alt="..." />
-		                        
+		                      <!--   <img class="card-img-top" src="images/spring.png" alt="..." /> -->
+                     		<img th:src="@{/download(fileName=${'/Thumbnail/'+classOne.attachDir})}" />
 		                        <div class="card-body p-4">
 		                            <div class="text-center">
 		                                <h5 class="fw-bolder" style="font-weight: bolder;" th:text="${cList.title}"></h5>
