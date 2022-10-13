@@ -37,7 +37,7 @@ p {
 										<div class="input-group mb-2">
 											<label class="input-group-text" for="utpCd">유형</label>
 											<select class="form-select" id="utpCd" name="utpCd" onchange="mySel(this.value)">
-												<option>======= 유형 선택 =======</option>
+												<option value="none">======= 유형 선택 =======</option>
 												<option th:each="utp : ${utpCdList}" th:value="${utp.cdNo}" th:utext="${utp.cdName}"></option>
 											</select>
 										</div>
@@ -48,7 +48,7 @@ p {
 										<div class="input-group mb-2">
 											<label class="input-group-text" for="langCd">언어</label>
 											<select class="form-select" id="langCd" name="langCd">
-												<option selected>==== 언어 선택 ====</option>
+												<option value="none">==== 언어 선택 ====</option>
 												<option th:each="lang : ${langCdList}" th:value="${lang.cdNo}" th:utext="${lang.cdName}"></option>
 											</select>
 										</div>
@@ -80,7 +80,7 @@ p {
 							</div>
 							<!-- 풀이내용까지 끝 -->
 							<div class="col-12 d-flex justify-content-end">
-								<button type="submit" class="btn btn-primary mr-1 mb-1">제출</button>
+								<button type="submit" class="btn btn-primary mr-1 mb-1 mk">제출</button>
 								<button type="reset" class="btn btn-light-secondary mr-1 mb-1">초기화</button>
 							</div>
 							</form>
@@ -127,6 +127,28 @@ p {
 		
 	}
 	
+
+	$(".mk").on("click",function(){
+		 if($("select[name=utpCd]").val() == "none" ){
+			alert("유형을 선택하세요.")
+			return false;
+		} 
+		 if($("select[name=langCd]").val() == "none" ){
+			alert("언어를 선택하세요.")
+			return false;
+		} 
+		 if($("#ques").val() == "" ){
+			alert("문제를 입력하세요.")
+			return false;
+		} 
+		 for(let i=0;i<4;i++){
+			 if($("#ex"+i).val() == "" ){
+				alert("보기"+i+"를 확인하세요.")
+				return false;
+				} 
+		 }
+		 
+	})
 		
 	</script>
 	</div>
