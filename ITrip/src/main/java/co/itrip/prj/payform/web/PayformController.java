@@ -42,21 +42,20 @@ public class PayformController {
 	
 	//경아 - 클래스구입
 	@PostMapping("/ClPayformInsert.do")
-	public String ClPayformInsert(PayformVO vo, ClassVO clvo, ClassDtVO cdvo ,ClassAttendVO cvo, CalendarVO cavo, Principal prin) {
+	public String ClPayformInsert(PayformVO vo, ClassVO clvo, ClassDtVO cdvo ,ClassAttendVO cvo, CalendarVO cavo, Principal prin, HttpServletRequest request) {
 		cvo.setMemberId(prin.getName());
-		String term = cdvo.getTerm();
-		int classNo = vo.getNo();
-		System.out.println(term);
-		clvo.setTerm(term);
-		clvo.setClassNo(classNo);
-		ClassVO condayList = classService.classSelectOne(clvo);
-		System.out.println("ccccccc"+condayList);
+		int classNo = Integer.parseInt(request.getParameter("classNo"));
+		System.out.println("classNo : " + classNo);
+		cdvo.setClassNo(classNo);
+		List<ClassDtVO> dtList = classService.classDtList(cdvo);
+		System.out.println("dtList : " + dtList);
+		System.out.println(dtList.size());
 		/*
 		 * for (int i = 0; i<condayList.size(); i++) {
 		 * System.out.println("============"+condayList.get(i));
 		 * payformService.clPayformInsert(vo,cvo,cavo); }
 		 */
-		return "redirect:myPage";
+		return "main/main";
 	}
 	
 	
