@@ -65,9 +65,9 @@ public class CbtUserController {
 	@PostMapping("/cbtUserInsert.do")
 	public String cbtUserInsert(CbtUserVO vo, Model  model, MultipartFile file,HttpServletRequest request) throws IllegalStateException, IOException {
 		String oFileName = file.getOriginalFilename();
-		File files = new File(fileDir, oFileName);
+		File files = new File(fileDir+"/CBT_USER/");
 		if(!files.exists()) {
-			 files.mkdirs();
+			files.mkdirs();
 		}
 		if(!oFileName.isEmpty()) {
 			String sFileName = UUID.randomUUID().toString()+oFileName.substring(oFileName.lastIndexOf("."));
