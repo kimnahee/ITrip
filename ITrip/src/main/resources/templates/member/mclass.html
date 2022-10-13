@@ -40,6 +40,16 @@
 	margin-bottom: 50px;
 }
 
+.card {
+	text-align: center;
+	margin-top: 50px;
+	margin-bottom: 50px;
+}
+
+li{
+height: 45px;
+}
+
 .table td img {
 	max-width: 100%;
 }
@@ -70,9 +80,8 @@
 					<div class="row" th:if="${#lists.isEmpty(pageInfo)}">
 						<table class="table">
 							<tr>
-								<td><h3 class='error-title'>진행중인 Class가 없습니다.</h3>
-									<br>
-								<h4>새로운 class를 신청해주세요.</h4></td>
+								<td><h3 class='error-title'>진행중인 Class가 없습니다.</h3> <br>
+									<h4>새로운 class를 신청해주세요.</h4></td>
 							</tr>
 							<tr>
 								<td>Go Mypage</td>
@@ -86,149 +95,103 @@
 							th:unless="${#lists.isEmpty(pageInfo)}" style="width: 380px;">
 
 							<!-- 개설전인 수업일때 -->
-							<div th:if="${cList.st == '개설전'}">
-								<table class="table table-bordered" style="width: 300px;">
-									<tbody>
-										<tr>
-											<!-- 클래스 이미지 -->
-											<td colspan="2"><a href="#" class="img"><img
-													th:src="@{*{cList.attachDir}}" alt="Image"
-													class="img-fluid" /></a></td>
-										</tr>
-										<tr>
-											<!-- 클래스 번호 -->
-											<td id="classNo" colspan="2" th:text="${cList.title}"></td>
-										</tr>
-										<tr>
-											<!-- 클래스 제목 -->
-											<td colspan="2" th:text="${cList.st}"></td>
-										</tr>
-										<tr>
-											<!-- 클래스 번호 -->
-											<td>가이드</td>
-											<td th:text="${cList.guideId}"></td>
-										</tr>
-										<tr>
-											<!-- 클래스 번호 -->
-											<td>클래스 기간</td>
-											<td th:text="${cList.mindt} + ' ~ ' + ${cList.maxdt}"></td>
-										</tr>
-										<tr>
-											<td colspan="2">
-												<div>
-													클래스 시작전인 수업입니다.<br> 다시 신청페이지를 확인하고 싶다면 아래 버튼을 눌러주세요.
-												</div>
-												<br> <a class="btn btn-primary py-2 px-3 classInfo"
-												href="#">신청페이지</a>
-												<div th:text="${cList.classNo}" style="display: none;"></div>
-											</td>
-										</tr>
-									</tbody>
-								</table>
+							<div class="card" th:if="${cList.st == '개설전'}">
+								<div class="card-content">
+									<div class="card-body">
+										<h4 class="card-title" th:text="${cList.title}">Card With
+											Header And Footer</h4>
+										<p class="card-text">
+											클래스 시작전인 수업입니다.<br> 다시 신청페이지를 확인하고 싶다면 아래 버튼을 눌러주세요.
+										</p>
+									</div>
+									 <img th:src="@{/download(fileName=${'/Thumbnail/'+cList.attachDir})}"
+										alt="Image" class="img-fluid" /> 
+									<ul class="list-group list-group-flush">
+										<li class="list-group-item" th:text="${cList.st}">Cras
+											justo odio</li>
+										<li class="list-group-item" th:text="${cList.guideId}">Vestibulum
+											at eros</li>
+										<li class="list-group-item"
+											th:text="${cList.mindt} + ' ~ ' + ${cList.maxdt}">Dapibus
+											ac facilisis in</li>
+									</ul>
+								</div>
+								<div class="card-footer d-flex justify-content-between">
+									<button class="btn btn-primary py-2 px-3 classInfo">신청페이지</button>
+									<div th:text="${cList.classNo}" style="display: none;"></div>
+								</div>
 							</div>
 
+							
 							<!-- 진행중인 수업일때 -->
-							<div th:if="${cList.st} == '진행중'">
-								<table class="table table-bordered" style="width: 300px;">
-									<tbody>
-										<tr>
-											<!-- 클래스 이미지 -->
-											<td colspan="2"><a href="#" class="img"><img
-													th:src="@{*{cList.attachDir}}" alt="Image"
-													class="img-fluid" /></a></td>
-										</tr>
-										<tr>
-											<!-- 클래스 번호 -->
-											<td style="display: none;" id="classNo" colspan="2"
-												th:text="${cList.classNo}"></td>
-										</tr>
-										<tr>
-											<!-- 클래스 번호 -->
-											<td id="title" colspan="2" th:text="${cList.title}"></td>
-										</tr>
-										<tr>
-											<!-- 클래스 제목 -->
-											<td colspan="2" th:text="${cList.st}"></td>
-										</tr>
-										<tr>
-											<!-- 클래스 번호 -->
-											<td>가이드</td>
-											<td th:text="${cList.guideId}"></td>
-										</tr>
-										<tr>
-											<!-- 클래스 번호 -->
-											<td>클래스 기간</td>
-											<td th:text="${cList.mindt} + ' ~ ' + ${cList.maxdt}"></td>
-										</tr>
-										<tr>
-											<td colspan="2">
-												<div>
-													<button style="width: 100px;"
-														class="btn btn-primary py-2 px-3 classChat">강의장</button>
-												</div>
-
-											</td>
-										</tr>
-									</tbody>
-								</table>
+							<div class="card" th:if="${cList.st} == '진행중'">
+								<div class="card-content">
+									<div class="card-body">
+										<h4 class="card-title" th:text="${cList.title}">Card With
+											Header And Footer</h4>
+										<p class="card-text">
+											진행되고 있는 수업입니다.<br> 강의장을 통해 수업에 참여해주시기 바랍니다.<br>
+											출석 횟수를 다 채울 시 수료증이 발급됩니다.
+										</p>
+									</div>
+									 <img th:src="@{/download(fileName=${'/Thumbnail/'+cList.attachDir})}"
+										alt="Image" class="img-fluid" /> 
+									<ul class="list-group list-group-flush">
+										<li class="list-group-item" th:text="${cList.st}">Cras
+											justo odio</li>
+										<li class="list-group-item" th:text="${cList.guideId}">Vestibulum
+											at eros</li>
+										<li class="list-group-item"
+											th:text="${cList.mindt} + ' ~ ' + ${cList.maxdt}">Dapibus
+											ac facilisis in</li>
+									</ul>
+								</div>
+								<div class="card-footer d-flex justify-content-between">
+								<input type="hidden" id="classNo" th:value="${cList.classNo}">
+								<button style="width: 100px;" class="btn btn-primary py-2 px-3 classChat">강의장</button>
+								</div>
 							</div>
-
-
+							
+							
 							<!-- 종료된 수업일때 -->
-							<div th:if="${cList.st == '종료'}">
-								<table class="table table-bordered" style="width: 300px;">
-									<tbody>
-										<tr>
-											<!-- 클래스 이미지 -->
-											<td colspan="2"><a href="#" class="img"><img
-													th:src="@{*{cList.attachDir}}" alt="Image"
-													class="img-fluid" /></a></td>
-										</tr>
-										<tr>
-											<!-- 클래스 번호 -->
-											<td style="display: none;" id="classNo" colspan="2"
-												th:text="${cList.classNo}"></td>
-										</tr>
-										<tr>
-											<!-- 클래스 번호 -->
-											<td id="classNo" colspan="2" th:text="${cList.title}"></td>
-										</tr>
-										<tr>
-											<!-- 클래스 제목 -->
-											<td colspan="2" th:text="${cList.st}"></td>
-										</tr>
-										<tr>
-											<!-- 클래스 번호 -->
-											<td>가이드</td>
-											<td th:text="${cList.guideId}"></td>
-										</tr>
-										<tr>
-											<!-- 클래스 번호 -->
-											<td colspan="2">진행완료된 수업입니다.<br>수업에 대한 리뷰작성과 수료증을
+							<div class="card" th:if="${cList.st == '종료'}">
+								<div class="card-content">
+									<div class="card-body">
+										<h4 class="card-title" th:text="${cList.title}">Card With
+											Header And Footer</h4>
+										<p class="card-text">
+											진행완료된 수업입니다.<br>수업에 대한 리뷰작성과 수료증을
 												발급받으실 수 있습니다.
-											</td>
-										</tr>
-										<tr>
-											<td colspan="2">
-												<div>
-													<form class="token" action="mcReview" method="post">
-														<input type="hidden" th:name="${_csrf.parameterName}"
-															th:value="${_csrf.token}"> <input name="guideId"
-															id="guideId" th:value="${cList.guideId}" type="hidden">
-														<input name="no" class="no" id="no"
-															th:value="${cList.classNo}" type="hidden">
-														<button type="button"
-															class="btn btn-primary py-2 px-3 reviewBtn">리뷰</button>
-														<button type="button" class="btn btn-primary py-2 px-3 "
-															id="certificate" th:each="att : ${attend}"
-															th:if="${att.classNo == cList.classNo} and ${att.complete == 1}">수료증</button>
-													</form>
-												</div>
-											</td>
-										</tr>
-									</tbody>
-								</table>
+										</p>
+									</div>
+									 <img th:src="@{/download(fileName=${'/Thumbnail/'+cList.attachDir})}" alt="Image" class="img-fluid" />
+									<ul class="list-group list-group-flush">
+										<li class="list-group-item" th:text="${cList.st}">Cras
+											justo odio</li>
+										<li class="list-group-item" th:text="${cList.guideId}">Vestibulum
+											at eros</li>
+										<li class="list-group-item"
+											th:text="${cList.mindt} + ' ~ ' + ${cList.maxdt}">Dapibus
+											ac facilisis in</li>
+									</ul>
+								</div>
+								<div class="card-footer d-flex justify-content-between">
+										<input type="hidden" id="classNo" th:value="${cList.classNo}">
+									<div>
+										<form class="token" action="mcReview" method="post">
+											<input type="hidden" th:name="${_csrf.parameterName}"
+												th:value="${_csrf.token}"> <input name="guideId"
+												id="guideId" th:value="${cList.guideId}" type="hidden">
+											<input name="no" class="no" id="no" th:value="${cList.classNo}" type="hidden">
+											<button type="button" class="btn btn-primary py-2 px-3 reviewBtn">리뷰</button>
+											<button type="button" class="btn btn-primary py-2 px-3 " id="certificate" th:each="att : ${attend}"
+												th:if="${att.classNo == cList.classNo} and ${att.complete == 1}">수료증</button>
+										</form>
+									</div>
+								</div>
 							</div>
+							
+							
 						</div>
 
 					</div>
@@ -278,6 +241,7 @@
 				let token = $("meta[name='_csrf']").attr("content");
 				let header = $("meta[name='_csrf_header']").attr("content");
 
+				
 				// 클래스 상제페이지로이동
 				$(".classInfo").on("click", function() {
 					let no = event.target.nextElementSibling.innerHTML
@@ -324,22 +288,19 @@
 				$("#certificate").on(
 						"click",
 						function(e) {
-							let classNo = $(e.target).closest("tr").prev().prev().prev()
-									.prev().prev().children(0).html();
+							let classNo = $(e.target).prev().prev().val();
 							let memberId = $("#memberId").val(); //수강자 이름(현재 로그인한 사람)
 							console.log(classNo);
-							location.href = "/certificate.do?classNo=" + classNo
-										+ "&&memberId=" + memberId;
+							location.href = "/certificate.do?classNo="
+									+ classNo + "&&memberId=" + memberId;
 						})
 
 				//강의장 링크연결
 				$(".classChat").on(
 						"click",
 						function(e) {
-							let classNo = $(e.target).closest("tr").prev()
-									.prev().prev().prev().prev().children(0)
-									.html();
-							//console.log(classNo);
+							let classNo = $(e.target).prev().val();
+							console.log(classNo);
 							location.href = "/classChat.do?classNo=" + classNo;
 						})
 			</script>

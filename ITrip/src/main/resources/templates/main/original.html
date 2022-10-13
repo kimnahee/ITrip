@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+<head>
+<meta charset="UTF-8">
+<title>Main</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="bootstrap/property/fonts/icomoon/style.css" />
+    <link rel="stylesheet" href="bootstrap/property/fonts/flaticon/font/flaticon.css" />
+
+    <link rel="stylesheet" href="bootstrap/property/css/tiny-slider.css" />
+    <link rel="stylesheet" href="bootstrap/property/css/aos.css" />
+    <link rel="stylesheet" href="bootstrap/property/css/style.css" />
+<style>
+</style>
+</head>
+<body>
+	<div layout:fragment="content">
+	 
+<div class="container">
+        <div class="row justify-content-center align-items-center">
+          <div class="col-lg-9 text-center">
+            <form
+              action="#"
+              class="narrow-w form-search d-flex align-items-stretch mb-3"
+              data-aos="fade-up"
+              data-aos-delay="200"
+            >
+              <input
+                type="text"
+                class="form-control px-4"
+                placeholder="Your ZIP code or City. e.g. New York"
+              />&nbsp;&nbsp;
+              <button type="submit" class="btn">Search</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    <div class="hero">
+      <div class="hero-slide">
+        <div
+          class="img overlay" style="background-image: url('bootstrap/property/images/hero_bg_3.jpg')"
+        ></div>
+        <div
+          class="img overlay"
+          style="background-image: url('bootstrap/property/images/hero_bg_2.jpg')"
+        ></div>
+        <div
+          class="img overlay"
+          style="background-image: url('bootstrap/property/images/hero_bg_1.jpg')"
+        ></div>
+      </div>
+
+    </div>
+    
+    
+		<!-- 윗부분 2개 -->
+	    <section id="card-caps" style="margin-top: 20px; margin-bottom: 60px;">
+	        <div class="row">
+	            <div class="col-xl-3 col-md-6 col-sm-12">
+	                <div class="card">
+	                    <div class="card-content">
+	                        <img class="card-img img-fluid" src="bootstrap/property/images/icon/main/consult_main.png" alt="Card image">
+	                        <div class="card-img-overlay overlay-dark d-flex justify-content-between flex-column">
+	                            <div class="overlay-content">
+	                            	<h4 class="card-title mb-50">1:1 상담</h4>
+	                                <p class="card-text text-ellipsis">
+	                                    IT 직무에 관련된 다양한 상담을 받아보세요.
+	                                </p>
+	                            </div>
+	                            <div class="overlay-status">
+	                                <a href="consultList.do" class="btn btn-outline-white btn-sm">바로가기</a>
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	            <div class="col-xl-3 col-md-6 col-sm-12">
+	                <div class="card">
+	                    <div class="card-content">
+	                        <img class="card-img img-fluid" src="bootstrap/property/images/icon/main/class_main.png" alt="Card image">
+	                        <div class="card-img-overlay overlay-dark bg-overlay d-flex justify-content-between flex-column">
+	                            <div class="overlay-content">
+	                                <h4 class="card-title mb-50">온라인 클래스</h4>
+	                                <p class="card-text text-ellipsis">
+	                                    IT에 관련된 다양한 클래스를 수강해보세요.
+	                                </p>
+	                            </div>
+	                            <div class="overlay-status">
+	                                <a href="iClassList.do" class="btn btn-outline-white btn-sm">바로가기</a>
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	            <div class="col-xl-3 col-md-6 col-sm-12">
+	                <div class="card">
+	                    <div class="card-content">
+	                        <img class="card-img img-fluid" src="bootstrap/property/images/icon/main/Community.png" alt="Card image">
+	                        <div class="card-img-overlay overlay-dark d-flex justify-content-between flex-column">
+	                            <div class="overlay-content">
+	                            	<h4 class="card-title mb-50">커뮤니티</h4>
+	                                <p class="card-text text-ellipsis">
+	                                    여러 사람들과 스터디, 잡담을 나눠보세요.
+	                                </p>
+	                            </div>
+	                            <div class="overlay-status text-right">
+	                                <a href="timeLine.do" class="btn btn-outline-white btn-sm">바로가기</a>
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	            <div class="col-xl-3 col-md-6 col-sm-12">
+	                <div class="card">
+	                    <div class="card-content">
+	                        <img class="card-img img-fluid" src="bootstrap/property/images/icon/main/CBT.png">
+	                        <div class="card-img-overlay overlay-dark d-flex justify-content-between flex-column">
+	                            <div class="overlay-content">
+	                                <h4 class="card-title mb-50">CBT</h4>
+	                                <p class="card-text text-ellipsis">
+	                                    클래스를 듣고 부족한 점을 문제를 풀면서 채워보세요.
+	                                </p>
+	                            </div>
+	                            <div class="overlay-status text-right">
+	                                <a href="cbtGuideMain.do" class="btn btn-outline-white btn-sm">바로가기</a>
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	    </section>
+	    
+
+ <script src="bootstrap/property/js/bootstrap.bundle.min.js"></script>
+    <script src="bootstrap/property/js/tiny-slider.js"></script>
+    <script src="bootstrap/property/js/aos.js"></script>
+    <script src="bootstrap/property/js/navbar.js"></script>
+    <script src="bootstrap/property/js/counter.js"></script>
+    <script src="bootstrap/property/js/custom.js"></script>
+	</div>
+</body>
+</html>

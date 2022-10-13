@@ -24,6 +24,10 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 	width:900px;
 	margin:0 auto;
 }
+
+#textLengthCheck,#textLengthCheck2{
+	width: 80px;
+}
 </style>
 </head>
 <body layout:fragment="content">
@@ -67,7 +71,8 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
                     </div>
                     <div class="col-md-8">
                                 <div class="form-group mb-3">
-                                    <textarea class="form-control" id="content" name="content" rows="3" placeholder="50자 이상 100자 이하으로 작성가능합니다."></textarea>
+                                	<input type="text" id="textLengthCheck" class="form-control ">
+                                    <textarea class="form-control" id="content" name="content" rows="3" placeholder="클래스 설명은 150자 이하로 작성가능합니다."></textarea>
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -75,7 +80,8 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
                     </div>
                     <div class="col-md-8">
                                 <div class="form-group mb-3">
-                                    <textarea class="form-control" id="crclm" name="crclm" rows="6" placeholder="커리큘럼은 100자 이상 500자 이하으로 작성가능합니다."></textarea>
+                                	<input type="text" id="textLengthCheck2" class="form-control ">
+                                    <textarea class="form-control" id="crclm" name="crclm" rows="6" placeholder="커리큘럼은 500자 이하로 작성가능합니다."></textarea>
                                 </div>
                             </div>
                     
@@ -411,15 +417,70 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
         	 
              }
          
-         /* let sample = document.getElementsByName('classCnt');
-     		console.log(sample);
-     	        for(var i=0; i<sample.length; i++){
-     			if(sample[i].checked == true){
-     			alert(sample[i].value);
-     			console.log(sample[i].value);
-     			}
-     		}*/
-     		
+        // 설명 & 커리큘럼 글자 수 체크
+        $("#content").keyup(function(e) {
+			console.log("키업");
+			var content = $(this).val();
+			var length = getTextLength(content);
+			var substr = sliceByByte(content, 150)
+			$("#textLengthCheck").val("(" + length + "/150)"); // 실시간 글자 수 카운팅
+			if (length > 150) {
+				alert("최대 150자까지 입력가능합니다.");
+				$(this).val(substr);
+				$('#textLengthCheck').html();
+			}
+
+
+		})
+		
+		$("#crclm").keyup(function(e) {
+			console.log("키업");
+			var content = $(this).val();
+			var length = getTextLength(content);
+			var substr = sliceByByte(content, 500)
+			$("#textLengthCheck2").val("(" + length + "/500)"); // 실시간 글자 수 카운팅
+			if (length > 500) {
+				alert("최대 300자까지 입력가능합니다.");
+				$(this).val(substr);
+				$('#textLengthCheck2').html();
+			}
+
+
+		})
+
+		// 한글은 1바이트, 영어는 2바이트로 계산해서 바이트 수로 알려주는 코드.
+		function getTextLength(str) {
+			var len = 0;
+
+			for (var i = 0; i < str.length; i++) {
+				if (escape(str.charAt(i)).length == 6) {
+					len++;
+				}
+				len++;
+			}
+			return len;
+		}
+		
+		// 바이트 단위로 자르는 코드
+		function sliceByByte(str, maxByte) {
+
+			for (b = i = 0; c = str.charCodeAt(i);) {
+
+				b += c >> 7 ? 2 : 1;
+
+				if (b > maxByte)
+
+					break;
+
+				i++;
+
+			}
+
+			return str.substring(0, i);
+
+		} 
+         
+         
      	// 폼 재출전 체크
    		 function message() {
     			
@@ -440,35 +501,13 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     				return false;
     			}
     			
-    			if ($("#content").val() != "") {
-
-   				var count = /^[\w\Wㄱ-ㅎㅏ-ㅣ가-힣]{50,100}$/;
-
-   				if (count.test($("#content").val()) == false) {
-   					alert("설명은 50자 이상 100자 이하으로 작성가능합니다.");
-   					$("#content").focus();
-   					return false;
-   				}
-
-   			}
-    			
+    				
     			if($("#crclm").val() == "") {
     				alert('신청할 클래스의 커리큘럼을 적어주세요.');
     				$("#crclm").focus();
     				return false;
     			}
     			
-    			if ($("#crclm").val() != "") {
-
-   				var count = /^[\w\Wㄱ-ㅎㅏ-ㅣ가-힣]{100,500}$/;
-
-   				if (count.test($("#crclm").val()) == false) {
-   					alert("커리큘럼은 100자 이상 500자 이하으로 작성가능합니다.");
-   					$("#crclm").focus();
-   					return false;
-   				}
-
-   			}
     			
     			if($("#file").val() == "") {
     				alert('클래스를 대표하는 사진을 첨부해주세요.');
