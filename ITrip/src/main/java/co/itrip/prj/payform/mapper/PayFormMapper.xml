@@ -8,10 +8,10 @@
 </select>
 
 <insert id="clPayformInsert">
-	INSERT INTO PAYFORM VALUES(#{merchant_uid},#{name},#{amount},#{member_id},'CLASS',#{no},sysdate,null,null,null)
+	INSERT INTO PAYFORM VALUES(#{merchantUid},#{name},#{amount},#{member_id},'CLASS',#{no},sysdate,null,null,null)
 </insert>
 
 <insert id="coPayformInsert">
-	INSERT INTO PAYFORM VALUES(#{merchant_uid},#{name},#{amount},#{member_id}, #{category} ,#{no},sysdate, #{conday},#{beginTime},#{beginTime})
+	INSERT INTO PAYFORM VALUES(#{merchantUid},#{name},#{amount},#{member_id}, #{category} ,#{no},sysdate, #{conday},#{beginTime},#{beginTime})
 </insert>
 </mapper>
