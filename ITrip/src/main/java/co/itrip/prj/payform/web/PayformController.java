@@ -40,6 +40,7 @@ public class PayformController {
 	
 
 	
+	
 	//경아 - 클래스구입
 	@PostMapping("/ClPayformInsert.do")
 	public String ClPayformInsert(PayformVO vo, ClassVO clvo, ClassDtVO cdvo ,ClassAttendVO cvo, CalendarVO cavo, Principal prin, HttpServletRequest request) {

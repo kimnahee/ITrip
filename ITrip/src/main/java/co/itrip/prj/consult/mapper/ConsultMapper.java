@@ -25,7 +25,8 @@ public interface ConsultMapper {
 
 	List<ConsultVO> myConsultList(ConsultVO vo); // 마이페이지 상담 전체조회 - 소정
 
-	ConsultDtVO ajaxConsultPrice(ConsultDtVO vo); //상담 신청시 가격 가져오기 
+	ConsultDtVO ajaxConsultPrice(ConsultDtVO vo); //상담 신청시 가격 가져오기 (서비스에는 없음) -은지
+	int consultTime(ConsultDtVO vo); // 상담 신청 시 시간 가져오기 - 은지
 	ConsultChatVO consultChat(ConsultChatVO vo); //채팅방 연결 - 나희
 	
 }

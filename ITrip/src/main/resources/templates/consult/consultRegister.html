@@ -90,6 +90,13 @@ th {
 				</div>
 				
 				<script th:inline="javascript">
+				var testArr = [];
+				
+				function test () {
+					
+					testArr.push("16","19");
+				}
+				
 				/*<![CDATA[*/
 					//데이트피커 default 옵션(한글처리)
 					$.datepicker.setDefaults({
@@ -138,6 +145,8 @@ th {
 								    xhr.setRequestHeader("X-CSRF-TOKEN", csrfToken);
 								},
 								success : function(data){
+										test ();
+										console.log("========g======"+testArr);
 										let price = data.price;
 										$("#frmamount").val(price);
 										$("#price").empty();
@@ -158,22 +167,52 @@ th {
 										
 										let times=[];  // 시간들을 배열로 받음
 
+										//let alreadyTimesCnt = testArr.length;
+
 											for(let i=btime; i<etime; i++){ // 시간만큼 반복문 돌림
-												times.push(i)
+												
+												/* for(let j=0; j<testArr.length; j++){
+													
+													if (testArr[j] != i){ 
+											
+														console.log("testArr[j]="+testArr[j])
+														console.log("i="+i);
+														
+														console.log("타임즈"+times)
+														
+													}
+												
+												} */
+												times.push(i);
+
+												/* console.log(i)
+												
+												for(let j=0;j< alreadyTimesCnt;j++){
+													if(i != testArr[j]){
+														times.push(i)
+													}
+												}
+													 */
+												
+												
+												
 											}
 											
+
+
 											let obj = document.createElement("select"); // 셀렉트박스 만들기
 												obj.style.width = '100px'
 												obj.setAttribute('id', 'selected');
+											
 										
-											for (key in times) { 
+									  	for (key in times) { 
 												let opt=document.createElement("option"); // 옵션태그 만들기
 												opt.value=times[key];   // 배열에 담겨져 있는 값을 넘겨준다.
 												opt.text=times[key]+'시'; // 배열에 담겨져 있는 값을 보여준다.	
 												obj.appendChild(opt); // 셀렉트박스에 html 요소 추가
-											}
+											} 
 												
-										console.log(obj);	
+										console.log(obj);	 
 										
 										console.log( document.getElementById("objArea")); 
 										document.getElementById("objArea").appendChild(obj); // <td id="objArea">안에 넣기
@@ -327,6 +366,9 @@ th {
  					} 
 					 
 					/*]]>*/
+					
+					
+					
 				</script>
 
 			</div>

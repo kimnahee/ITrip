@@ -26,6 +26,7 @@ public class ConsultVO {
 	private String dutyName; // 가이드 직무 //consultMapper에서 조인구문으로 가져와서 목록에 뿌려주기 cdName
 	
 	private List<ConsultDtVO> consultDt; // ConsultDtVO
+	
 	private String week; // 요일
 	private String beginTime; // 시작시간
 	private String endTime; // 종료시간

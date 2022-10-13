@@ -1,5 +1,7 @@
 package co.itrip.prj.consult.service;
 
+import java.util.List;
+
 import lombok.Data;
 
 @Data
@@ -13,6 +15,10 @@ public class ConsultDtVO {
 	private String endTime; // 종료시간
 	private Integer price; //상담결제금액
 	private String day;
+	
+	private List<Integer> times;// 상담신청시 필터링 된 출력시간   -은지
+	
+	
 
 	
 
