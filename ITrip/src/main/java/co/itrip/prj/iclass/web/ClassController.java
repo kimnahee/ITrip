@@ -72,9 +72,9 @@ public class ClassController {
 		// 새로운파일저장경로
 		//String oFileName = file.getOriginalFilename();
 		String oFileName = file.getOriginalFilename();
-		fileDir.concat("Thumbnail");
+		File files = new File(fileDir+"/Thumbnail/");
 		System.out.println("=================" + fileDir);
-		File files = new File(fileDir);
+		System.out.println("----------------" + files);
 		if(!files.exists()) {
 			files.mkdirs();
 		}
