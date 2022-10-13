@@ -70,7 +70,7 @@
 	
 	<select id="myClassList" resultType="co.itrip.prj.iclass.service.ClassVO">
 		 SELECT C.* ,DT.MINDT, DT.MAXDT, p.member_id,
-     				CASE WHEN  SYSDATE BETWEEN MINDT AND MAXDT THEN '진행중'
+     				CASE WHEN  SYSDATE BETWEEN TO_DATE(MINDT, 'yyyy-mm-dd') AND TO_DATE(MAXDT, 'yyyy-mm-dd') THEN '진행중'
                     <![CDATA[WHEN  SYSDATE < MINDT THEN '개설전']]> <!--  Query안에 사용되고 있는 부등호가 문자열이라는 것을 의미 -->
                     ELSE '종료'
                     END ST
