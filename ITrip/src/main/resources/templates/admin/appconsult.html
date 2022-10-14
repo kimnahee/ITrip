@@ -5,8 +5,6 @@
 <head>
 <script src="js/jquery-3.6.0.min.js"></script>
 <meta charset="UTF-8">
-<meta name="_csrf" th:content="${_csrf.token}"/>
-<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
 <style type="text/css">
 	#searchTab{
 		width: 900px;
@@ -131,7 +129,6 @@
 				location.href = '/appConsult.do?pageNum=' + p;
 			}
 			
-			let token = $("meta[name='_csrf']").attr("content");
 			
 			$(".searchBtn").on("click",function() {
 				let key = $("#key").val();
@@ -149,7 +146,7 @@
 				data:{'key':key, 'val':val, "pageNum":p},
 				beforeSend:function(xhr) {
 					xhr.setRequestHeader("AJAX", true);
-				    xhr.setRequestHeader("X-CSRF-TOKEN", token);
+				    xhr.setRequestHeader("X-CSRF-TOKEN", csrfToken);
 				},
 				success:function result(res) {
 					console.log(res);
@@ -286,7 +283,7 @@
 						data:{'consultNo':cNo, 'stateCd':opVal},
 						beforeSend:function(xhr) {
 							xhr.setRequestHeader("AJAX", true);
-						    xhr.setRequestHeader("X-CSRF-TOKEN", token);
+						    xhr.setRequestHeader("X-CSRF-TOKEN", csrfToken);
 						},
 						success:function result(res) {
 							alert('수정완료'); // res: 응답 body부 데이터
