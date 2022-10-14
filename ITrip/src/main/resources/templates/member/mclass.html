@@ -77,14 +77,14 @@ height: 45px;
 				<div class="row">
 
 					<!-- 결제한 class가 없을때 -->
-					<div class="row" th:if="${#lists.isEmpty(pageInfo)}">
+					<div class="row" th:if="${#lists.isEmpty(pageInfo.list)}">
 						<table class="table">
 							<tr>
 								<td><h3 class='error-title'>진행중인 Class가 없습니다.</h3> <br>
 									<h4>새로운 class를 신청해주세요.</h4></td>
 							</tr>
 							<tr>
-								<td>Go Mypage</td>
+								<td><a href="/myPage">Go Mypage</a></td>
 							</tr>
 						</table>
 					</div>
@@ -92,7 +92,7 @@ height: 45px;
 					<!-- 결제한 Class가 있을 때 -->
 					<div class="row" style="margin-bottom: 30px;">
 						<div th:each="cList : ${pageInfo.list}"
-							th:unless="${#lists.isEmpty(pageInfo)}" style="width: 380px;">
+							th:unless="${#lists.isEmpty(pageInfo.list)}" style="width: 380px;">
 
 							<!-- 개설전인 수업일때 -->
 							<div class="card" th:if="${cList.st == '개설전'}">

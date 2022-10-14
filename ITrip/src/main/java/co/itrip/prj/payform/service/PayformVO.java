@@ -13,7 +13,7 @@ import lombok.Data;
 @Data
 public class PayformVO {
 	
-	private String merchant_uid;      // 주문번호 (결제고유번호 class : cl001..., consult: co001...)
+	private String merchantUid;      // 주문번호 (결제고유번호 class : cl001..., consult: co001...)
 	                                  // ※ 한 번 결제고유번호로 결제 수행하면 결제 안되니 테스트 할 때 주의 필요 
 	private String name;              // 주문명 : 클래스 이름, 상담 이름...
 	private int amount;               // 금액
