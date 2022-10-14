@@ -7,8 +7,8 @@
 	 FROM PAYFORM
 </select>
 
-<insert id="clPayformInsert">
-	INSERT INTO PAYFORM VALUES(#{merchantUid},#{name},#{amount},#{member_id},'CLASS',#{no},sysdate,null,null,null)
+<insert id="clPayformInsert" parameterType="co.itrip.prj.payform.service.PayformVO">
+	INSERT INTO PAYFORM VALUES(#{merchantUid},#{name},#{amount},#{member_id},'CLASS',#{no},sysdate, #{conday},#{beginTime},#{beginTime})
 </insert>
 
 <insert id="coPayformInsert">
