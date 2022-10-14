@@ -68,8 +68,7 @@ public class GuideController {
 		
 		String oFileName = file.getOriginalFilename();
 		if (!oFileName.isEmpty()) {
-			String sFileName = UUID.randomUUID().toString() + oFileName.substring(oFileName.lastIndexOf(".")); // 마지막.뒤에값
-																												// 가져오기
+			String sFileName = UUID.randomUUID().toString() + oFileName.substring(oFileName.lastIndexOf(".")); // 마지막.뒤에값 가져오기
 			String path = fileDir + "/guide/" + sFileName;
 			file.transferTo(new File(path));
 			vo.setAttach(oFileName);
