@@ -5,36 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Navs - Voler Admin Dashboard</title>
     
-    <link rel="stylesheet" href="bootstrap/voler/assets/css/bootstrap.css">
-    
-    <link rel="stylesheet" href="bootstrap/voler/assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
-    <link rel="stylesheet" href="bootstrap/voler/assets/css/app.css">
-    <link rel="shortcut icon" href="bootstrap/voler/assets/images/favicon.svg" type="image/x-icon">
-    <script src="js/jquery-3.6.0.min.js"></script>
-<link rel="apple-touch-icon" sizes="76x76"
-	href="bootstrap/material/assets/img/apple-icon.png">
-<link rel="icon" type="image/png"
-	href="bootstrap/material/assets/img/favicon.png">
 <title>스터디게시판</title>
-<!--     Fonts and icons     -->
-<link rel="stylesheet" type="text/css"
-	href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
-<!-- Nucleo Icons -->
-<link href="bootstrap/material/assets/css/nucleo-icons.css"
-	rel="stylesheet" />
-<link href="bootstrap/material/assets/css/nucleo-svg.css"
-	rel="stylesheet" />
-<!-- Font Awesome Icons -->
-<script src="https://kit.fontawesome.com/42d5adcbca.js"
-	crossorigin="anonymous"></script>
-<!-- Material Icons -->
-<link
-	href="https://fonts.googleapis.com/icon?family=Material+Icons+Round"
-	rel="stylesheet">
-<!-- CSS Files -->
-<link id="pagestyle"
-	href="bootstrap/material/assets/css/material-dashboard.css?v=3.0.0"
-	rel="stylesheet" />
+
 
     <style>
    #center {
@@ -106,8 +78,8 @@
 									<th class="text-center text-uppercase text-secondary text-md font-weight-bolder opacity-7">조회수</th>
 								</tr>
 							</thead>
-							<tbody>
-								<tr th:each="study : ${pageInfo.list}" th:if="${study.ctgry == '스터디' }">
+							<tbody id="studyList">
+								<tr th:each="study : ${pageInfo.list}" >
 									<td><p class="text-md text-secondary mb-0"  th:text="${study.comNo}">글번호</p></td>
 									<td><p class="text-md text-secondary mb-0" th:text="${study.title}">글제목</p></td>
 									<td><p class="text-md text-secondary mb-0" th:text="${study.memberId}">작성자</p></td>
@@ -117,7 +89,7 @@
 							</tbody>
 							
 						</table>
-					</div>
+					</div><br>
 						<!-- 페이지네이션 -->
 						<nav aria-label="Page navigation example">
 							<ul class="pagination pagination-info  justify-content-center">
@@ -152,11 +124,11 @@
                             <!-- 자유게시판 -->
                             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                                  <div class="card-body px-0 pb-2">
-                            <div class="table-responsive p-0" th:if="${#lists.isEmpty(pageInfo.list)}">
+                            <div class="table-responsive p-0" th:if="${#lists.isEmpty(pagefo.list)}">
 								<p>자유게시판에 작성한 게시글이 없습니다.</p>						
 						    </div>
                                  
-					<div class="table-responsive p-0" th:unless="${#lists.isEmpty(pageInfo.list)}">
+					<div class="table-responsive p-0" th:unless="${#lists.isEmpty(pagefo.list)}">
 						<table class="table align-items-center mb-0">
 							<thead>
 								<tr>
@@ -168,7 +140,7 @@
 								</tr>
 							</thead>
 							<tbody id="freeList">
-								<tr th:each="study : ${pageInfo.list}" th:if="${study.ctgry == '자유게시판' }">
+								<tr th:each="study : ${pagefo.list}" >
 									<td><p class="text-md text-secondary mb-0" th:text="${study.comNo}">글번호</p></td>
 									<td><p class="text-md text-secondary mb-0" th:text="${study.title}">글제목</p></td>
 									<td><p class="text-md text-secondary mb-0" th:text="${study.memberId}">작성자</p></td>
@@ -177,32 +149,32 @@
 								</tr>
 							</tbody>
 						</table>
-					</div>
+					</div><br>
 						<!-- 페이지네이션 -->
 						<nav aria-label="Page navigation example">
 							<ul class="pagination pagination-info  justify-content-center">
 								<li class="page-item disabled"
-									th:if="${pageInfo.isIsFirstPage()}"><span
+									th:if="${pagefo.isIsFirstPage()}"><span
 									class="page-link">«</span></li>
 								<li class="page-item"
-									th:if="${!pageInfo.isIsFirstPage() && pageInfo.getList().size() > 0}"><a
+									th:if="${!pagefo.isIsFirstPage() && pagefo.getList().size() > 0}"><a
 									class="page-link"
-									th:href="|javascript:gopage([[${pageInfo.getPrePage()}]])|"
+									th:href="|javascript:gopage([[${pagefo.getPrePage()}]])|"
 									rel="prev">«</a></li>
 								<li
-									th:class="|page-item ${(pageInfo.pageNum eq page) ? 'active': ''} |"
-									th:each="page:${pageInfo.navigatepageNums}"><span
-									class="page-link" th:if="${pageInfo.pageNum eq page}"
+									th:class="|page-item ${(pagefo.pageNum eq page) ? 'active': ''} |"
+									th:each="page:${pagefo.navigatepageNums}"><span
+									class="page-link" th:if="${pagefo.pageNum eq page}"
 									th:text="${page}"></span> <a class="page-link"
-									th:unless="${pageInfo.pageNum eq page}"
+									th:unless="${pagefo.pageNum eq page}"
 									th:href="|javascript:gopage(${page})|" th:text="${page}">{{$page
 										}}</a></li>
-								<li class="page-item" th:if="${pageInfo.hasNextPage}"><a
+								<li class="page-item" th:if="${pagefo.hasNextPage}"><a
 									class="page-link"
-									th:href="|javascript:gopage([[${pageInfo.getNextPage()}]])|"
+									th:href="|javascript:gopage([[${pagefo.getNextPage()}]])|"
 									rel="next">»</a></li>
 								<li class="page-item disabled"
-									th:unless="${pageInfo.hasNextPage}"><span
+									th:unless="${pagefo.hasNextPage}"><span
 									class="page-link">»</span></li>
 							</ul>
 						</nav>
@@ -237,7 +209,7 @@
 								</tr>
 							</tbody>
 						</table>
-					</div>
+					</div><br>
 						<!-- 페이지네이션 -->
 						<nav aria-label="Page navigation example">
 							<ul class="pagination pagination-info  justify-content-center">
@@ -282,6 +254,7 @@
     					function(e) {
     						let comNo = $(e.target).closest("tr").children(1)
     								.children(1).html();
+    						console.log(comNo);
     						location.href = "/selectCommunity.do?comNo=" + comNo;
     					})
     					
@@ -290,6 +263,7 @@
 					function(e) {
 						let comNo = $(e.target).closest("tr").children(1)
 								.children(1).html();
+						console.log(comNo);
 						location.href = "/selectFree.do?comNo=" + comNo;
 					})	
     					
@@ -304,11 +278,6 @@
                     
     
     <!-- 페이징 처리 -->
-    <script src="bootstrap/voler/assets/js/feather-icons/feather.min.js"></script>
- 
-	<script src="bootstrap/voler/assets/vendors/simple-datatables/simple-datatables.js"></script>
-	<script src="bootstrap/voler/assets/js/vendors.js"></script>
-	
 
 </body>
 </html>

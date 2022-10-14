@@ -130,18 +130,18 @@ public class MemberController { //Principal
 	@GetMapping("/myWriter")
 	public String myWriter(CommunityVO vo,CSBoardVO csvo, Model model, Principal principal,
 			@RequestParam(required = false, defaultValue = "1") int pageNum,
-			@RequestParam(required = false, defaultValue = "5") int pageSize) {
+			@RequestParam(required = false, defaultValue = "10") int pageSize) {
 		
 		PageHelper.startPage(pageNum, pageSize);
 		
-		vo.setCtgry("''");
 		vo.setMemberId(principal.getName());
 		
 		csvo.setMemberId(principal.getName());
 		csvo.setCtgry("QNA");
-		
+        
+		model.addAttribute("pageInfo", PageInfo.of(comService.myStudy(vo)));
+		model.addAttribute("pagefo", PageInfo.of(comService.myFree(vo)));
 		model.addAttribute("pageOutfo", PageInfo.of(csService.findAll(csvo)));
-		model.addAttribute("pageInfo", PageInfo.of(comService.findAll(vo)));
 		
 		return "member/mywriter";
 	}
