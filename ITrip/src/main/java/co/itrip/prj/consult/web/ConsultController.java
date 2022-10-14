@@ -108,6 +108,7 @@ public class ConsultController {
 		//model.addAttribute("guide", guService.guideSelect(gvo)); // 로그인된 가이드 아이디 확인 (단건조회)
 		//model.addAttribute("joblist", cdService.jobCdList()); // 카테고리 공통코드
 		model.addAttribute("consultOne", conService.consultSelectOne(vo));
+		System.out.println(conService.consultSelectOne(vo));
 		model.addAttribute("consultDt", conService.consultDtList(dtvo));
 		return "guide/alreadyConsultOne";
 	}

@@ -21,14 +21,20 @@ public class CalendarServiceImple implements CalendarService {
 
 	@Override
 	public List<CalendarVO> myCalendarList(CalendarVO vo) {
-		// 캘린더리스트
+		// 상담 캘린더리스트
 		return map.myCalendarList(vo);
 	}
 
 	@Override
 	public int classCalendarInsert(CalendarVO vo) {
-		// 수강생 캘린더 등록
+		// 클래스 캘린더 등록
 		return map.classCalendarInsert(vo);
+	}
+
+	@Override
+	public List<CalendarVO> myClassCalendarList(CalendarVO vo) {
+		// 클래스 캘린더 리스트
+		return map.myCalendarList(vo);
 	}
 
 }

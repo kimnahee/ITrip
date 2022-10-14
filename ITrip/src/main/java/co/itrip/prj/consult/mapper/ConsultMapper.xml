@@ -78,6 +78,7 @@
 	                   WHEN G.CAREER= '5' THEN 'Lead레벨(15년 이상)'
 	                ELSE ' '
 	            END AS CAREER
+	            ,FUN_CODENAME('J', C.JOB_CD) AS JOB_NAME
       FROM CONSULT C, GUIDE G, CMMNCD CM
       WHERE C.GUIDE_ID=G.GUIDE_ID  
       AND G.DUTY= CM.CD_NO
@@ -174,41 +175,18 @@
 	
 	<!-- 가이드마이페이지에 내가 등록한 전체 상담 조회 [박은지] -->
 	<select id="alreadyConsult" resultType="co.itrip.prj.consult.service.ConsultVO" parameterType="co.itrip.prj.consult.service.ConsultVO">
-              SELECT C.CONSULT_NO
-		            ,C.TITLE
-		            ,C.CONTENT
-		            ,C.DT
-		            ,C.STATE_CD
-		            ,C.GUIDE_ID
-		            ,C.BEGIN_DATE
-		            ,C.END_DATE
-                    ,G.GUIDE_ID
-                    ,G.CAREER
-                    ,G.DC
-                    ,G.DUTY
-                    ,CD.WEEK
-		            ,CD.BEGIN_TIME
-		            ,CD.END_TIME
-		            ,CD.PRICE
-                    ,CASE WHEN WEEK = '1' THEN '월'
-	                    WHEN WEEK = '2' THEN '화'
-	                    WHEN WEEK = '3' THEN '수'
-	                    WHEN WEEK = '4' THEN '목'
-	                    WHEN WEEK = '5' THEN '금'
-	                    WHEN WEEK = '6' THEN '토'
-	                    WHEN WEEK = '0' THEN '일'
-	                    ElSE ' '
-	                    END AS WEEK,
-                    BEGIN_TIME, END_TIME, PRICE 
-		            ,FUN_CODENAME('D', G.DUTY) AS DUTY_NAME
-		            ,FUN_CODENAME('R', G.CAREER) AS CAREER
-		            ,FUN_CODENAME('J', C.JOB_CD) AS JOB_NAME
-	      FROM CONSULT C, GUIDE G, CONSULT_DT CD
-	      WHERE	C.GUIDE_ID=G.GUIDE_ID
-          AND C.CONSULT_NO = CD.CONSULT_NO
-          AND C.STATE_CD = '1' <!-- 승인되지 않은 상태 -->
-          AND C.GUIDE_ID= #{guideId}
-        ORDER BY C.CONSULT_NO DESC
+               SELECT CONSULT_NO
+		            ,TITLE
+		            ,CONTENT
+		            ,DT
+		            ,STATE_CD
+		            ,GUIDE_ID
+		            ,BEGIN_DATE
+		            ,END_DATE
+	      FROM CONSULT 
+	      WHERE	STATE_CD = '1'
+          AND GUIDE_ID= #{guideId}
+        ORDER BY CONSULT_NO DESC
 	</select> 
 	
 	
