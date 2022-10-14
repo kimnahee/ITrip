@@ -122,6 +122,7 @@ layout:decorate="~{layout/layout}">
             
 	<form id="frm" method="post">
 		<input type="hidden" id="classNo" name="classNo">
+		<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 	</form>
     
     <script type="text/javascript">
