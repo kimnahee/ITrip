@@ -28,6 +28,8 @@ import co.itrip.prj.follow.service.FollowService;
 import co.itrip.prj.follow.service.FollowVO;
 import co.itrip.prj.guide.service.GuideService;
 import co.itrip.prj.guide.service.GuideVO;
+import co.itrip.prj.iclass.service.ClassChatVO;
+import co.itrip.prj.iclass.service.ClassService;
 import co.itrip.prj.iclass.service.ClassVO;
 import co.itrip.prj.member.service.MemberService;
 import co.itrip.prj.member.service.MemberVO;
@@ -52,6 +54,9 @@ public class GuideController {
 	
 	@Value("${file.dir}")
 	private String fileDir; // 파일 저장할 디폴트 경로 C:/Temp
+	
+	@Autowired
+	private ClassService cService;
 	
 
 	
@@ -112,6 +117,14 @@ public class GuideController {
 		return "guide/gconsult";
 	}
 	
+	// 링크 입력버튼 체크
+	@GetMapping("/lickCheck.do")
+	@ResponseBody
+	public ClassChatVO linkCheck(ClassChatVO vo, HttpServletRequest request) {
+		int classNo = Integer.parseInt(request.getParameter("classNo"));
+		vo.setClassNo(classNo);
+		return cService.classChatLink(vo);
+	}
 	
 	// 은지 - 가이드 마이페이지 -가이드가 개설한 클래스 리스트
 	@GetMapping("/gclass.do")

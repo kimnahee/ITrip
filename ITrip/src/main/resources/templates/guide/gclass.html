@@ -66,6 +66,7 @@
 										<tr>
 											<td colspan="2">
 												<div th:if="${classlist.st} == '진행중'" >
+													<input th:value="${classlist.classNo}">
 													<button type="button" class="btn btn-primary py-2 px-1 link" data-toggle="modal" data-target="#inlineForm">
                         							링크입력
                     								</button>&nbsp;&nbsp;
@@ -96,7 +97,7 @@
 													<div class="modal-body">
 														<div class="form-group">
 															<input type="hidden" th:value="${classlist.classNo}" name="classNo">
-															<input id="classlick" type="text" class="form-control" name="chatLink">
+															<input id="classlick" type="text" class="form-control classlick" name="chatLink">
 														</div>
 													</div>
 													<div class="modal-footer">
@@ -140,15 +141,38 @@
 		    // 클래스 링크 입력
 		    function message() {
 				
-				if($("#classlick").val() == "") {
+				if($(".classlick").val() == "") {
     				alert('링크를 입력후 제출해주세요.');
-    				$("#classlick").focus();
+    				$(".classlick").focus();
     				return false;
     			}
 				
 				alert("링크입력이 완료되었습니다.");
 				return true;
 			}
+			
+			
+			$(".link").on("click", function(e) {
+				
+				let classNo = $(e.target).prev().val();
+				
+				$.ajax({
+					url : "/lickCheck.do",
+					type : "get",
+					data : {
+						'classNo' : classNo
+					},
+					success : function(data) {
+						console.log("출력" + data);
+
+						
+					}
+
+				})
+				
+				console.log(classNo);
+				
+			})
 
 			
 		</script>

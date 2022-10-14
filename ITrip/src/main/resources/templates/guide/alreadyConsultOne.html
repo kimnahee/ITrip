@@ -19,6 +19,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 	width:900px;
 	margin:0 auto;
 }
+
 </style>
 </head>
 <body layout:fragment="content">
@@ -29,8 +30,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
         <div class="card">
             <div class="card-header">
             <h4 class="card-title">Consult 신청폼</h4>
-            <p>가이드*는 가이드정보 수정페이지에서 수정 가능합니다.</p>
-            <p>price(가격)은 1시간당 금액으로 입력해주세요.</p>
+
             </div>
             <div class="card-content">
 				<div class="card-body">
@@ -57,8 +57,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 									<label>상담 카테고리</label>
 								</div>
 								<div class="col-md-8 form-group">
-									<input type="text" id="jobName" class="form-control" name="jobName" readonly="readonly" th:value="${consultOne.jobName}">
-									</input>
+									<input type="text" id="jobName" class="form-control" name="jobName" th:value="${consultOne.jobName}" readonly="readonly">
 								</div>
 								<div class="col-md-3">
 									<label>상담가능기간</label>
@@ -81,22 +80,24 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 								</div>
 								
 						<div class="col-md-8 form-group "  >
-						<th:block th:each="i : ${#numbers.sequence(0,6)}">
+						<th:block th:each=" co: ${consultDt}">
 							<div class="row">	
-							<input type="text" th:value="${i}" th:name="|consultDt[${i}].week|"> [[${consultDt}]]
 							
-							<p class="col-md-1" th:data-no="${i}" ></p>
+							
+							<p class="col-md-1" ></p>
 					
+								<b th:text="${co.week}" ></b>
 									<div class="col-md-3  form-group">
+									
 										<input type="text"
-											class="timestart form-control "  id = "beginTime" th:name"|ConsultDt[${i}].beginTime| " readonly="readonly">
+											class="timestart form-control "  id = "beginTime" th:value="${co.beginTime} " readonly="readonly">
 									</div> 시~
                    						 <div class="col-md-3"  >
-										<input type="text" id="endTime" class="timestart form-control " th:name"|ConsultDt[${i}].endTime|" readonly="readonly">
+										<input type="text" id="endTime" class="timestart form-control "  th:value="${co.endTime}" readonly="readonly">
 									</div> 시 
                     				<div class="col-md-3" >
 										<input type="number" min="0" id="price"
-											class="form-control" th:name="|ConsultDt[${0}].price|"
+											class="form-control"  th:value="${co.price}"
 											placeholder="price" readonly="readonly">
 									</div>
 									
@@ -114,32 +115,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
         </div>
         </div>
 
-        <script th:inline="javascript">
- 
-		let day = ["일", "월", "화", "수", "목", "금", "토"]
-		for (var i = 0; i <= day.length; i++) { // 배열 arr의 모든 요소의 인덱스(index)를 출력함.
-			$("[data-no]").eq(i).html(day[i]);
-			
-		    }
-       
-         let classtime = document.getElementById("classtime");
-  	
-  	$(document).ready(function() {
-  		let consultDt = $("#beginTime").attr("name")
-          console.log("-------" +consultDt);
-         })
-         
-         console.log(data);
-         
-         /*<![CDATA[*/
-
-    var message = [[${consultDt}]];
-    console.log(message);
-
-	/*]]>*/
-         
-        </script>
-         
+    
         
          
          <script src="bootstrap/voler/assets/js/feather-icons/feather.min.js"></script>

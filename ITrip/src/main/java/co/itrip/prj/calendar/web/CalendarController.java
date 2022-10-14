@@ -34,7 +34,7 @@ public class CalendarController {
 	
 	
 	
-	// 상담리스트
+	// 상담, 클래스 리스트
 	@GetMapping("/calendarList.do")
 	@ResponseBody
 	public List<CalendarVO> calendarList(CalendarVO vo) {

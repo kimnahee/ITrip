@@ -32,7 +32,7 @@ public class PayformServiceImpl implements PayformService {
 	@Transactional
 	public int clPayformInsert(PayformVO vo,ClassAttendVO cvo, CalendarVO cavo) {
 		map.clPayformInsert(vo);
-		calmap.classCalendarInsert(cavo);
+		//calmap.classCalendarInsert(cavo);
 		return cmap.classAttendInsert(cvo);
 	}
 

@@ -4,8 +4,6 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 layout:decorate="~{layout/layout}">
 <head>
 <meta charset="utf-8" />
-<meta name="_csrf" th:content="${_csrf.token}"/>
-<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
 <title>♡</title>
 </head>
 <body layout:fragment="content">
@@ -25,8 +23,12 @@ layout:decorate="~{layout/layout}">
 					<div th:each="cList:${pageInfo.list}" id="searchClassList"> 
 		                <div class="col mb-5">
 		                    <div class="card h-100">
-		                      <img class="card-img-top" src="images/spring.png" alt="..." />
-                     		<!-- <img th:src="@{/download(fileName=${'/Thumbnail/'+classOne.attachDir})}" /> -->
+
+                        
+		                      <!--   <img class="card-img-top" src="images/spring.png" alt="..." /> -->
+                     		<img th:src="@{/download(fileName=${'/Thumbnail/'+cList.attachDir})}" />
+
+
 		                        <div class="card-body p-4">
 		                            <div class="text-center">
 		                                <h5 class="fw-bolder" style="font-weight: bolder;" th:text="${cList.title}"></h5>
@@ -111,11 +113,8 @@ layout:decorate="~{layout/layout}">
     	frm.action ="iClassSelectOne.do"
     	frm.classNo.value = no
     	frm.submit()
-    }) 
-    
-    
-	let csrfToken = $("input[name=_csrf]").val();
-	
+    })
+	    
     function jobSearch(p,jobCd) {
     	console.log(jobCd)
     	console.log(p)

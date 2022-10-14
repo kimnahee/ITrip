@@ -66,9 +66,10 @@ th {
 						 <form  id="frm" name="frm" class="form form-horizontal" method="post">
 									<div class="form-group" > 
 										<div>
+
 											<input type="text" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 											<input type="text" id="member_id" class="form-control" name="member_id" th:value=${#authentication.principal.member.memberId} >
-											<input type="text" id="consultNo"  name="merchant_uid" class="form-control" th:value="'CO'+${consult.consultNo+#authentication.principal.member.memberId+(max+1)}">
+											<input type="text" id="consultNo"  name="merchantUid" class="form-control" th:value="'CO'+${consult.consultNo+#authentication.principal.member.memberId+(max+1)}">
 											<input type="text" id="consultNo"  name="consultNo" class="form-control" th:value="${consult.consultNo}">
 											<input type="text" id="no"  name="no" class="form-control" th:value="${consult.consultNo}">
 											<input type="text" id="title" name="name" class="form-control" th:value="${consult.title}">
@@ -90,12 +91,6 @@ th {
 				</div>
 				
 				<script th:inline="javascript">
-				var testArr = [];
-				
-				function test () {
-					
-					testArr.push("16","19");
-				}
 				
 				/*<![CDATA[*/
 					//데이트피커 default 옵션(한글처리)
@@ -145,8 +140,6 @@ th {
 								    xhr.setRequestHeader("X-CSRF-TOKEN", csrfToken);
 								},
 								success : function(data){
-										test ();
-										console.log("========g======"+testArr);
 										let price = data.price;
 										$("#frmamount").val(price);
 										$("#price").empty();
@@ -166,39 +159,9 @@ th {
 										var time = etime-btime;
 										
 										let times=[];  // 시간들을 배열로 받음
-
-										//let alreadyTimesCnt = testArr.length;
-
-											for(let i=btime; i<etime; i++){ // 시간만큼 반복문 돌림
-												
-												/* for(let j=0; j<testArr.length; j++){
-													
-													if (testArr[j] != i){ 
-											
-														console.log("testArr[j]="+testArr[j])
-														console.log("i="+i);
-														
-														console.log("타임즈"+times)
-														
-													}
-												
-												} */
-												times.push(i);
-
-												/* console.log(i)
-												
-												for(let j=0;j< alreadyTimesCnt;j++){
-													if(i != testArr[j]){
-														times.push(i)
-													}
-												}
-													 */
-												
-												
-												
-											}
-											
-
+										for(let i=btime; i<etime; i++){ // 시간만큼 반복문 돌림
+											times.push(i);
+										}	
 
 											let obj = document.createElement("select"); // 셀렉트박스 만들기
 												obj.style.width = '100px'

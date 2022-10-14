@@ -166,7 +166,6 @@ public class AdminController {
 	        	  String originFileName = URLDecoder.decode(fileName, "UTF-8");
 	              String onlyFileName = originFileName.substring(originFileName.lastIndexOf("_") + 1);
 	              File file = new File(fileDir, originFileName);
-
 	              if(file.exists()) {
 	                  String agent = request.getHeader("User-Agent");
 
@@ -195,6 +194,8 @@ public class AdminController {
 	                  os.flush();
 	                  os.close();
 	                  is.close();
+	              } else {
+	            	  file.mkdirs();
 	              }
 	        } catch (IOException e) {
 	            e.printStackTrace();

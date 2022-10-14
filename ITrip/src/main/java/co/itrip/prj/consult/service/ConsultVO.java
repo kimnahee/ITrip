@@ -17,7 +17,7 @@ public class ConsultVO {
 	private String stateCd; // 상담승인 여부코드
 	private String guideId; // 가이드 아이디
 	private String jobCd; // 업무카테고리코드
-	private String jobName; 
+	private String jobName; // 업무이름
 
 	private String ennc; // 상태변화 (상담 활성화/비활성화) 
 	private Date beginDate; // 시작일자
