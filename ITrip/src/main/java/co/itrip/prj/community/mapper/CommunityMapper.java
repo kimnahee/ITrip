@@ -26,6 +26,8 @@ public interface CommunityMapper {
 
 	//페이징 처리
 	List<CommunityVO> findAll(CommunityVO vo);
+	List<CommunityVO> myStudy(CommunityVO vo); // 내가 쓴 스터디게시판
+	List<CommunityVO> myFree(CommunityVO vo); // 내가 쓴 자유게시판
 	
 	//댓글
 	List<ReplyVO> replyList(ReplyVO vo);//댓글 목록

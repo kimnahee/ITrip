@@ -102,4 +102,16 @@ public class CommunityServiceImpl implements CommunityService {
 		return map.studySearch(vo);
 	}
 
+	@Override
+	public List<CommunityVO> myStudy(CommunityVO vo) {
+		// TODO Auto-generated method stub
+		return map.myStudy(vo);
+	}
+
+	@Override
+	public List<CommunityVO> myFree(CommunityVO vo) {
+		// TODO Auto-generated method stub
+		return map.myFree(vo);
+	}
+
 }
