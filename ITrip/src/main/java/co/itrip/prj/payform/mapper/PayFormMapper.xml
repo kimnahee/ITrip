@@ -8,10 +8,10 @@
 </select>
 
 <insert id="clPayformInsert" parameterType="co.itrip.prj.payform.service.PayformVO">
-	INSERT INTO PAYFORM VALUES(#{merchantUid},#{name},#{amount},#{member_id},'CLASS',#{no},sysdate, #{conday},#{beginTime},#{beginTime})
+	INSERT INTO PAYFORM VALUES(#{merchantUid},#{name},#{amount},#{member_id},'CLASS',#{no},sysdate, to_date(#{conday}, 'yyyy-MM-dd'), #{beginTime},#{beginTime})
 </insert>
 
 <insert id="coPayformInsert">
-	INSERT INTO PAYFORM VALUES(#{merchantUid},#{name},#{amount},#{member_id}, #{category} ,#{no},sysdate, #{conday},#{beginTime},#{beginTime})
+	INSERT INTO PAYFORM VALUES(#{merchantUid},#{name},#{amount},#{member_id}, #{category} ,#{no},sysdate, to_date(#{conday}, 'yyyy-MM-dd'), #{beginTime},#{beginTime})
 </insert>
 </mapper>
