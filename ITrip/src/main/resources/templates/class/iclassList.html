@@ -26,7 +26,7 @@ layout:decorate="~{layout/layout}">
 		                <div class="col mb-5">
 		                    <div class="card h-100">
 		                      <!--   <img class="card-img-top" src="images/spring.png" alt="..." /> -->
-                     		<img th:src="|@{/download(fileName=/Thumbnail/${cList.attachDir})}|" />
+                     		<img th:src="@{/download(fileName=${'/Thumbnail/'+cList.attachDir})}" />
 		                        <div class="card-body p-4">
 		                            <div class="text-center">
 		                                <h5 class="fw-bolder" style="font-weight: bolder;" th:text="${cList.title}"></h5>
