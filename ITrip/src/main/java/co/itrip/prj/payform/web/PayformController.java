@@ -53,7 +53,8 @@ public class PayformController {
 		String name = request.getParameter("name");
 		
 		//payform에 먼저 insert해야함(부모키가 없음) => 수정필요
-		
+		vo.setNo(classNo);
+		payformService.clPayformInsert(vo, cvo, cavo);
 		cdvo.setClassNo(classNo);
 		List<ClassDtVO> dtList = classService.classDtList(cdvo);
 		System.out.println("dtList : " + dtList);
@@ -75,7 +76,7 @@ public class PayformController {
 			calendarService.calendarInsert(cavo);
 		}
 		
-		return "main/main";
+		return "redirect:iClassList.do";
 	}
 	
 	
