@@ -58,6 +58,7 @@ p {
                             <!-- 유형에 따라 변경 될 곳-->
                             <div id ="dynamicArea">
                             <div class="form-group mb-3" id="answer">
+                            ''
                             </div>
                             
                              <!-- 유형에 따라 변경 될 곳 끝 -->
@@ -150,10 +151,20 @@ p {
            
            newDiv.innerHTML = `<div class="col-sm-10 keywordArea" style="width:100%">
             <div class="form-group position-relative has-icon-right">
+
+                <input type="text" class="form-control" id="keyword" name="keyword"
+                    placeholder="정답 키워드를 입력해주세요.z 키워드로 채점이 진행됩니다.">
+                    <div class="form-control-icon"><a style="cursor: pointer;" onclick="add()"><h1>+</h1></a>
+                </div>
+            </div>
+        </div>`;
+        	
+
                 <input type="text" class="form-control keyword"  name="keyword"
                     placeholder="정답 키워드를 입력해주세요. 키워드로 채점이 진행됩니다.">
                     <div class="form-control-icon"><a style="cursor: pointer;" onclick="add()"><h1>+</h1></a> </div></div>`;
            document.getElementById("testArea").append(newDiv);
+
         }
         function insertCall(){
             let insertText = confirm("등록하겠습니까?");

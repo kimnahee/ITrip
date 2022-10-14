@@ -23,9 +23,11 @@ layout:decorate="~{layout/layout}">
 					<div th:each="cList:${pageInfo.list}" id="searchClassList"> 
 		                <div class="col mb-5">
 		                    <div class="card h-100">
+
                         
 		                      <!--   <img class="card-img-top" src="images/spring.png" alt="..." /> -->
                      		<img th:src="@{/download(fileName=${'/Thumbnail/'+cList.attachDir})}" />
+
 
 		                        <div class="card-body p-4">
 		                            <div class="text-center">
@@ -54,37 +56,6 @@ layout:decorate="~{layout/layout}">
 	            </div>
 	        </div>
 	    </section>
-        
-        
-<!--           <div class="card col-xs-12 col-sm-6 col-md-5 col-lg-4" th:each="cList:${pageInfo.list}" id="searchClassList">
-			<div>
-              <a href="#" class="img"><img th:src="@{*{cList.attachDir}}"alt="Image" class="img-fluid"></a>
-               <a href="#" class="img"><img th:src="@{/download(fileName=${cList.attachDir})}" alt="Image" class="img-fluid"/></a>
-               <a href="#" class="img"><img src="images/note3.png" alt="Image" class="img-fluid"/></a>
-              <div class="property-content">
-                <div class="price mb-2"><span th:text=${cList.price} class="cPrice"></span></div>
-                <div>
-                     <img src="images/dt.png" width="20px;"></img>  
-                     <span class="caption badge bg-warning" th:text="${cList.term}"></span>
-                  <span class="city d-block mb-3" th:text="${cList.title}"></span>
-
-                    <div class="">
-                      <span class="">주요기능 </span>
-                      <h5 class="card-title" th:text="${cList.cdName}"></h5>
-                    </div>
-                    <div class="">
-                      <span class="">정원 </span>
-                      <h5 class="card-title" th:text="${cList.psncpa}+명"></h5>
-                    </div>
-                
-                    <a href="#"  class="btn btn-primary py-2 px-3 classInfo">더보기</a>
-				 	<div th:text="${cList.classNo}" style="display: none"></div>
-                </div>
-              </div>
-            </div>
-          </div> -->
-          
-          
         </div>
         
         <div class="row align-items-center py-5" id="pagingNav">
@@ -174,21 +145,6 @@ layout:decorate="~{layout/layout}">
 	function makeClassList(data) {
 		$('#classList').html("");
 		$.each(data, function(index, item){
-			
-			var row0 = '<div class="card col-xs-12 col-sm-6 col-md-5 col-lg-4">'
-				+'<div class="property-item mb-30">'
-         		+'<a href="#" class="img"><img src='+item.attachDir+' alt="Image" class="img-fluid"></a>'
-           		+'<div class="property-content">'
-           		+'<div class="price mb-2"><span class="cPrice">'+item.price+'</span></div>'
-           		+'<div><img src="images/dt.png" width="20px;"></img><span class="caption badge bg-warning">'+item.term+'</span>'
-            	+'<span class="city d-block mb-3">'+item.title+'</span>'
-				+'<div class=""><span class="">주요기능 </span><h5 class="card-title">'+item.cdName+'</h5>'
-              	+'</div><div class="">'
-               	+'<span class="">정원 </span><h5 class="card-title">'+item.psncpa+'명</h5> </div>'
-               	+'<a href="#"  class="btn btn-primary py-2 px-3 classInfo">더보기</a>'
-				+'<div style="display: none">'+item.classNo+'</div></div></div></div></div>'
-	
-				
 			var row = '<br><div id="searchClassList" style="width:370px;margin:30px;"> <div class="col mb-5"><div class="card h-100">'
                 +'<img class="card-img-top" src="images/cbtuser.png" alt="..." />'
                 +'<div class="card-body p-4"><div class="text-center">'

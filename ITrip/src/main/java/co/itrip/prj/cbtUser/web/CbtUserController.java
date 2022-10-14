@@ -121,7 +121,7 @@ public class CbtUserController {
 		if(!oFileName.isEmpty()) {
 			//기존파일삭제
 			CbtUserVO cbtVo = cbtUserService.cbtUserMyOne(vo);
-			File beforeFile = new File("C:/Temp/CBT_USER/"+cbtVo.getAttachDir());
+			File beforeFile = new File(fileDir+"/CBT_USER/"+cbtVo.getAttachDir());
 		  	if( beforeFile.exists() ){ //파일존재여부확인
 	    		if(beforeFile.isDirectory()){ //파일이 디렉토리인지 확인
 	    			File[] files = beforeFile.listFiles();
@@ -158,7 +158,7 @@ public class CbtUserController {
 		
 		CbtUserVO cbtVo = cbtUserService.cbtUserMyOne(vo);
 		
-		File file = new File("C:/Temp/CBT_USER/"+cbtVo.getAttachDir());
+		File file = new File(fileDir+"/CBT_USER/"+cbtVo.getAttachDir());
         
     	if( file.exists() ){ //파일존재여부확인
     		if(file.isDirectory()){ //파일이 디렉토리인지 확인

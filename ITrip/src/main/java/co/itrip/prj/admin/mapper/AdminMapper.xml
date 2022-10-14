@@ -2,19 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="co.itrip.prj.admin.mapper.AdminMapper">
 
-<!-- 모든회원리스트 -->
+<!--[박경아] 모든회원리스트 -->
 <select id="memberList" resultType="co.itrip.prj.member.service.MemberVO"
  						parameterType="co.itrip.prj.member.service.MemberVO">
 	select * from member
 </select>
 
-<!-- 권한별회원리스트 -->
+<!--[박경아] 권한별회원리스트 -->
 <select id="memberListOf" resultType="co.itrip.prj.member.service.MemberVO"
  						parameterType="co.itrip.prj.member.service.MemberVO">
 	select * from member where auth = #{auth}
 </select>
 
-<!-- 가이드신청 리스트 -->
+<!--[박경아] 가이드신청 리스트 -->
 <select id="memberAuthList" resultType="co.itrip.prj.guide.service.GuideVO"
  						parameterType="co.itrip.prj.guide.service.GuideVO">
 	select g.guide_id, g.career,FUN_CODENAME('R',g.career) career_cd_name,
@@ -30,12 +30,14 @@
 		and g.guide_id = m.member_id
 		order by dt desc
 </select>
+
+<!--[박경아] 가이드신청자 한명정보 -->
 <select id="memberAuthOne" resultType="co.itrip.prj.guide.service.GuideVO"
  						parameterType="co.itrip.prj.guide.service.GuideVO">
 	SELECT * FROM GUIDE WHERE GUIDE_ID = #{guideId}
 </select>
 
-<!-- 멤버->가이드 권한수정 -->
+<!--[박경아] 멤버->가이드 권한수정 -->
 <update id="memberAuthUpdate" parameterType="co.itrip.prj.guide.service.GuideVO">
 	update guide set 
 	<if test="stateCd==1">state_cd = '2'</if>
@@ -44,7 +46,7 @@
 	 
 </update>
 
-<!-- 멤버->가이드 수정되면 멤버테이블에서도 수정 -->
+<!--[박경아] 멤버->가이드 수정되면 멤버테이블에서도 수정 -->
 <update id="memberAuthUpdateTo" parameterType="co.itrip.prj.member.service.MemberVO">
 	
 	update member set 
@@ -52,7 +54,7 @@
 	 where member_id=#{guideId}
 </update>
 
-<!-- 회원검색 -->
+<!--[박경아] 회원검색 -->
 <select id="ajaxSearchMember" resultType="co.itrip.prj.member.service.MemberVO">
 	select * from member where
 		<choose>
@@ -66,7 +68,7 @@
 </select>
 
 
-<!-- classList뿌리기 -->
+<!-- [권소정] classList뿌리기 -->
 <select id="classList" resultType="co.itrip.prj.iclass.service.ClassVO" parameterType="co.itrip.prj.iclass.service.ClassVO">
 	SELECT  DISTINCT C.CLASS_NO, 
 	        C.TITLE, 
@@ -99,7 +101,7 @@
      ORDER BY C.DT
 </select>
 
-<!-- consultList뿌리기 -->
+<!-- [권소정] consultList뿌리기 -->
 <select id="ConsultList" resultType="co.itrip.prj.consult.service.ConsultVO" parameterType="co.itrip.prj.consult.service.ConsultVO">
         SELECT C.CONSULT_NO, C.TITLE, C.CONTENT, C.DT, G.GUIDE_ID, C.JOB_CD, C.ENNC, C.BEGIN_DATE, C.END_DATE, CM.CD_NAME AS DUTY_NAME	 
 		,CASE  WHEN G.CAREER= '1' THEN '신입(1년 이하)'
@@ -121,7 +123,7 @@
 		   ORDER BY C.DT 
 </select>
 
-<!-- class 승인상태변경 -->
+<!-- [권소정] class 승인상태변경 -->
 <update id="classUpdate">
 	update class set 
 		<if test="confmCd==0">confm_cd = '2' ,ennc = '활성화'</if>
@@ -129,7 +131,7 @@
 	where class_no = #{classNo}
 </update>
 
-<!-- consult 승인상태변경 -->
+<!-- [권소정] consult 승인상태변경 -->
 <update id="consultUpdate">
 	update consult set 
 		<if test="stateCd==0">state_cd = '2' ,ennc = '활성화'</if>
@@ -137,7 +139,7 @@
 	where consult_no = #{consultNo}
 </update>
 
-	<!-- 상담 검색 -->
+	<!-- [권소정] 상담 검색 -->
 	<select id="consultSearch" resultType="co.itrip.prj.consult.service.ConsultVO">
 		SELECT C.CONSULT_NO, C.TITLE, C.CONTENT, C.DT, G.GUIDE_ID, C.JOB_CD, C.ENNC, C.BEGIN_DATE, C.END_DATE, CM.CD_NAME AS DUTY_NAME	 
 		,CASE  WHEN G.CAREER= '1' THEN '신입(1년 이하)'
@@ -168,6 +170,7 @@
 		  ORDER BY C.DT 
 	</select>
 	
+	<!-- [권소정] 클래스 검색 -->
 	<select id="classSearch" resultType="co.itrip.prj.iclass.service.ClassVO">
 		SELECT  DISTINCT C.CLASS_NO, 
 	        C.TITLE, 

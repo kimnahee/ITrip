@@ -5,11 +5,6 @@
 	<!-- 나만의 CBT 문제,시간,카테고리선택 -->
 	<select id="cbtCustomMakeSelect" resultType="co.itrip.prj.cbtCustom.service.CbtCustomVO" 
 		parameterType="co.itrip.prj.cbtCustom.service.CbtCustomVO">
-<!--  		SELECT * FROM CBT_GUIDE 
- 			WHERE LANG_CD=#{langCd} 
- 			AND GTP_CD = '1' 
- 			<![CDATA[AND ROWNUM <= #{pcs}]]> -->
- 			 
  			SELECT CBT_NO,
 	            QUES,
 	            CNSR,

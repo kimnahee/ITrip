@@ -12,6 +12,11 @@ import co.itrip.prj.cbtCustom.service.CbtCustomVO;
 import co.itrip.prj.cbtGuide.service.CbtGuideVO;
 import co.itrip.prj.cmmncd.service.CmmnCdService;
 
+/**
+* 나만의CBT 
+* @author 박경아
+* @date 2022.10.04
+*/
 @Controller
 public class CbtCustomController {
 

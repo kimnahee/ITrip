@@ -3,6 +3,11 @@ package co.itrip.prj.cbtCustom.service;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+* 나만의CBT 문제정보
+* @author 박경아
+* @date 2022.10.04
+*/
 @Getter
 @Setter
 public class CbtCustomVO {

@@ -64,28 +64,21 @@ public class ClassController {
 	}
 
 	// Class insert & 파일처리
-
 	@PostMapping("/classInsert.do")
 	public String classInsert(AlarmVO avo, FollowVO fvo, ClassVO vo, ClassDtVO dtvo, MultipartFile file)
 			throws IllegalStateException, IOException {
-		
 		// 새로운파일저장경로
-		//String oFileName = file.getOriginalFilename();
 		String oFileName = file.getOriginalFilename();
 		File files = new File(fileDir+"/Thumbnail/");
-		System.out.println("=================" + fileDir);
-		System.out.println("----------------" + files);
 		if(!files.exists()) {
 			files.mkdirs();
 		}
 		if (!oFileName.isEmpty()) {
 			String sFileName = UUID.randomUUID().toString() + oFileName.substring(oFileName.lastIndexOf(".")); // 마지막.뒤에값
-																												// 가져오기
 			String path = fileDir + "/Thumbnail/" + sFileName;
 			file.transferTo(new File(path));
 			vo.setAttach(oFileName);
 			vo.setAttachDir(sFileName);
-
 		}
 		cService.classInsert(vo);
 
