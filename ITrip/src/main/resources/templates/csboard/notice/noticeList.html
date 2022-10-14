@@ -73,7 +73,9 @@
 						</table>
 						<br>
 						<!-- 권한이 ROLE_ADMIN이면 -->
-						<button id="insertBtn" class="btn btn-primary btn-md mb-0">글쓰기</button>
+						<div th:if="${#authentication.principal.member.auth} == 'ROLE_ADMIN'">
+							<button id="insertBtn" class="btn btn-primary btn-md mb-0">글쓰기</button>
+						</div>
 						<br>
 					</div>
 					<!-- 페이지네이션 -->

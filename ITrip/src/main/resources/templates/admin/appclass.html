@@ -2,8 +2,6 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
 <head>
 <meta charset="UTF-8">
-<meta name="_csrf" th:content="${_csrf.token}"/>
-<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
 <style type="text/css">
 	#searchTab{
 		width: 900px;
@@ -127,9 +125,6 @@
 				location.href = '/appClass.do?pageNum=' + p;
 			} 
 			
-		 	let token = $("meta[name='_csrf']").attr("content");
-			let header = $("meta[name='_csrf_header']").attr("content");
-			
 			$(".searchBtn").on("click",function(){
 				
 				let sdate = $("#sdate").val();
@@ -149,7 +144,7 @@
 					data:{'sdate':sdate, 'edate':edate, "pageNum":p},
 					beforeSend:function(xhr) {
 						xhr.setRequestHeader("AJAX", true);
-					    xhr.setRequestHeader("X-CSRF-TOKEN", token);
+					    xhr.setRequestHeader("X-CSRF-TOKEN", csrfToken);
 					},
 					success:function result(res) {
 						
@@ -289,7 +284,7 @@
 						data:{'classNo':cNo, 'confmCd':opVal},
 						beforeSend:function(xhr) {
 							xhr.setRequestHeader("AJAX", true);
-						    xhr.setRequestHeader("X-CSRF-TOKEN", token);
+						    xhr.setRequestHeader("X-CSRF-TOKEN", csrfToken);
 						},
 						success:function result(res){
 							alert('수정완료');

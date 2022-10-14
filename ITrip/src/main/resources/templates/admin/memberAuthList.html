@@ -4,8 +4,6 @@
 	layout:decorate="~{layout/layout}">
 <head>
 <meta charset="UTF-8">
-<meta name="_csrf" th:content="${_csrf.token}"/>
-<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
 <title>Insert title here</title>
 <style type="text/css">
 #tbody tr:hover{
@@ -110,8 +108,6 @@
 		function gopage(p) {
 			location.href = '/memberAuthList.do?pageNum=' + p;
 		}
-		
-		let csrfToken=$("input[name=_csrf]").val();
 		
 		function updateFnc(memId){
 			

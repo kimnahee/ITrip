@@ -101,17 +101,19 @@
 						</a></li>
 
 						<!-- 관리자 페이지 : 권한에 따라 보이게? -->
-						<li class='sidebar-title'>관리자 페이지</li>
-						<li class="sidebar-item  has-sub"><a href="#"
-							class='sidebar-link'> <i data-feather="user" width="20"></i>
-								<span>관리자</span>
-						</a>
-							<ul class="submenu ">
-								<li><a href="memberAuthList.do">멘토신청 목록</a></li>
-								<li><a href="memberList.do">회원목록</a></li>
-								<li><a href="appClass.do">클래스 승인</a></li>
-								<li><a href="appConsult.do">상담 승인</a></li>
-							</ul></li>
+						<div sec:authorize="isAuthenticated()" th:if="${#authentication.principal.member.auth} == 'ROLE_ADMIN'">
+							<li class='sidebar-title' >관리자 페이지</li>
+							<li class="sidebar-item  has-sub"><a href="#"
+								class='sidebar-link'> <i data-feather="user" width="20"></i>
+									<span>관리자</span>
+							</a>
+								<ul class="submenu ">
+									<li><a href="memberAuthList.do">멘토신청 목록</a></li>
+									<li><a href="memberList.do">회원목록</a></li>
+									<li><a href="appClass.do">클래스 승인</a></li>
+									<li><a href="appConsult.do">상담 승인</a></li>
+								</ul></li>
+						</div>
 
 					</ul>
 				</div>
