@@ -74,11 +74,15 @@ public class CbtGuideController {
 	@PostMapping("/cbtGuideInsert.do")
 	public String cbtGuideInsert(CbtGuideVO vo, CbtKeywordVO kvo, Model model, MultipartFile file) throws IllegalStateException, IOException {
 		
-		// 파일처리 : C에 파일이 업로드 되도록 수정
+		// 파일처리 : AWS에 파일 업로드
 		String oFileName=file.getOriginalFilename();
+		File files = new File(fileDir+"/CBT_GUIDE/");
+		if (!files.exists()) { //만약 디렉토리가 존재하지 않으면 디렉토리 생성
+			files.mkdirs();
+		}
 		if(!oFileName.isEmpty()) {
 			String sFileName = UUID.randomUUID().toString()+oFileName.substring(oFileName.lastIndexOf("."));
-			String path = fileDir+"/cbtGuide/"+sFileName;
+			String path = fileDir+"/CBT_GUIDE/"+sFileName;
 		    file.transferTo(new File(path));
 		    vo.setAttach(oFileName);
 		    vo.setAttachDir(sFileName);
@@ -152,21 +156,44 @@ public class CbtGuideController {
 	public String cbtGuideUpdate(CbtGuideVO vo, CbtKeywordVO kVo, HttpServletRequest request,
 			@RequestParam("file") MultipartFile file) throws IllegalStateException, IOException {
 		
-	    //CbtGuideVO fVo = cgService.cbtGuideListOne(vo);
-	    
-	    //File file = new File("C:/Temp/cbtGuide/"+fVo.getAttachDir());
-		
-		// 파일처리 수정해야함 ! 파일이 지워졌다가 다시 등록되도록...
-		// 파일처리 : C에 파일이 업로드 되도록 수정
-		String oFileName=file.getOriginalFilename();
+		//기존파일삭제
+	    String oFileName = file.getOriginalFilename();
+	    if(!oFileName.isEmpty()) {
+	    	CbtGuideVO cbtVo = cgService.cbtGuideListOne(vo);
+	    	File beforeFile = new File(fileDir+"/CBT_GUIDE/"+cbtVo.getAttachDir());
+	    	if(beforeFile.exists()) { //파일존재여부확인
+	    		if(beforeFile.isDirectory()) { // 파일이 디렉토렉토리에 있는지 확인 
+	    			File[] files = beforeFile.listFiles();
+	    			for(int i=0; i<files.length; i++) {
+	    				if(files[i].delete()) {
+	    					System.out.println(files[i].getName()+"삭제성공");
+	    				}else {
+	    					System.out.println(files[i].getName()+"삭제실패");
+	    				}
+	    			}
+	    			
+	    		}if(beforeFile.delete()) {
+	    			System.out.println("파일삭제 성공");
+	    		}else {
+	    			System.out.println("파일삭제 실패");
+	    		}
+	    	}else {
+	    		System.out.println("파일이 존재하지 않습니다.");
+	    	}
+	    }
+	    //업로드
+		File files = new File(fileDir+"/CBT_GUIDE/");
+		if (!files.exists()) { //만약 디렉토리가 존재하지 않으면 디렉토리 생성
+			files.mkdirs();
+		}
 		if(!oFileName.isEmpty()) {
 			String sFileName = UUID.randomUUID().toString()+oFileName.substring(oFileName.lastIndexOf("."));
-			String path = fileDir+"/cbtGuide/"+sFileName;
+			String path = fileDir+"/CBT_GUIDE/"+sFileName;
 		    file.transferTo(new File(path));
 		    vo.setAttach(oFileName);
 		    vo.setAttachDir(sFileName);
 		}
-		
+	    
 		cgService.cbtGuideUpdate(vo); //파일 처리 후 수정
 		return "redirect:/cbtGuideMyList.do";
 	}
@@ -174,16 +201,38 @@ public class CbtGuideController {
 	/* 문제 삭제 */
 	@GetMapping("/cbtGuideDelete.do")
 	public String cbtGuideDelete(CbtGuideVO vo, HttpServletRequest request) {
-		cgService.cbutGuideDelet(vo);
+		
+		//기존파일삭제
+		CbtGuideVO cbtVo = cgService.cbtGuideListOne(vo);
+		File file = new File(fileDir+"/CBT_GUIDE/"+cbtVo.getAttachDir());
+		
+	    	if(file.exists()) { //파일존재여부확인
+	    		if(file.isDirectory()) { // 파일이 디렉토렉토리에 있는지 확인 
+	    			File[] files = file.listFiles();
+	    			for(int i=0; i<files.length; i++) {
+	    				if(files[i].delete()) {
+	    					System.out.println(files[i].getName()+"삭제성공");
+	    				}else {
+	    					System.out.println(files[i].getName()+"삭제실패");
+	    				}
+	    			}
+	    			
+	    		}if(file.delete()) {
+	    			System.out.println("파일삭제 성공");
+	    			cgService.cbutGuideDelet(vo);
+	    		}else {
+	    			System.out.println("파일삭제 실패");
+	    		}
+	    	}else {
+	    		System.out.println("파일이 존재하지 않습니다.");
+	    	}
 		return "redirect:/cbtGuideMain.do";
 	}
 	/* 즐겨찾기 목록*/
 	@GetMapping("/bookmarkList.do")
 	public String bookmarkList(CbtGuideVO vo,Principal prin, Model model, HttpServletRequest request) {
 		vo.setMemberId(prin.getName()); //로그인된 사용자 정보 가져와 담기
-		model.addAttribute("Bookmark", cgService.bookmarkList(vo));
-		
-		System.out.println("============================================vo :"+vo);
+		model.addAttribute("bookmark", cgService.bookmarkList(vo));
 		return "Bookmark/bookmarkList";
 	}
 	
