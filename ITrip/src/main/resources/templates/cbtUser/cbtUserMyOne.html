@@ -108,30 +108,27 @@
 			</form>
 		</section>
 		
-		<script type="text/javascript">
-			let preLangCd = document.getElementById("preLangCd").value
-			let preCnsr = document.getElementById("preCnsr").value
-			$("select option[value*="+preLangCd+"]").prop('selected',true);
-			$("input[value*="+preCnsr+"]").prop('checked',true);
-			
-			function deleteCbt(cbtNo){
-				// alert("삭제하시겠습니까???")
-				let del = confirm("정말 삭제하시겠습니까?")
-				if(del == true){
-					frm.action ="cbtUserMyDelete.do"
-				    frm.submit()
-				}else{
-					alert("삭제가 취소되었습니다.")
-				}
-		    	
+	<script type="text/javascript">
+		let preLangCd = document.getElementById("preLangCd").value
+		let preCnsr = document.getElementById("preCnsr").value
+		$("select option[value*="+preLangCd+"]").prop('selected',true);
+		$("input[value*="+preCnsr+"]").prop('checked',true);
+		
+		function deleteCbt(cbtNo){
+			let del = confirm("정말 삭제하시겠습니까?")
+			if(del == true){
+				frm.action ="cbtUserMyDelete.do"
+			    frm.submit()
+			}else{
+				alert("삭제가 취소되었습니다.")
 			}
-			
-
-			//수정취소버튼클릭시
-			$("#listBtn").on("click",function(){
-			   location.href = "/cbtUserMyList.do";
-			})
-		</script>
+		}
+		
+		//수정취소버튼클릭시
+		$("#listBtn").on("click",function(){
+		   location.href = "/cbtUserMyList.do";
+		})
+	</script>
 </div>
 </body>
 </html>

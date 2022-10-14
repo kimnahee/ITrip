@@ -170,7 +170,6 @@
 			</div><!-- end of slide_item -->
 		</div><!-- end of slides  -->
 	</div>	<!-- end of content  -->
-			
 </div><!-- end of th:if  -->
 
 <div id="langCd" th:if="!${#lists.isEmpty(cbtOne)}" th:text="${cbtOne.langCd}"style="display: none;" ></div>
@@ -406,8 +405,6 @@ function gopage(p){
 			if(res.total==0){
 				feedbackArea.innerHTML+= "<tr><td colspan='4'>댓글이 없습니다 .....</td></tr>"
 			}else{
-				
-			
 				res.list.forEach((elem,idx,arr)=>{
 					if(mId == elem.memberId){
 						feedbackArea.innerHTML+= 
@@ -430,7 +427,6 @@ function gopage(p){
 			    	ph+='<li class="page-item">'
 					+'<a class="page-link" href="javascript:gopage('+res.prePage+')" rel="prev">«</a></li>'
 			    }
-		
 				for(page of res.navigatepageNums){
 					ph+="<li class='page-item ("+res.pageNum +" eq "+ page+") ? 'active': ''} '></li>"
 					if(res.pageNum == page){
@@ -440,13 +436,11 @@ function gopage(p){
 					}
 					ph+="</li>"
 				}
-			
 				if(res.hasNextPage ==true){
 					ph+=' <li class="page-item"><a class="page-link" href="javascript:gopage('+res.nextPage+')" rel="next">»</a></li>'
 				}else{
 					ph+='<li class="page-item disabled"><span class="page-link">»</span></li></ul></nav>'
 				}
-				
 				pageArea.innerHTML = ph
 				//paging..end	
 			}
@@ -476,9 +470,8 @@ $(document).on("click","#fbInsert", function(e){
 		success : function(data,idx,arr){
 			console.log(data);
 			if(data == 1){
-				//alert("댓글이 성공적으로 등록되었습니다.")
+				alert("댓글이 성공적으로 등록되었습니다.")
 				
-				//똑같은아작스 또 호출해야되나;? 
 				$.ajax({
 					url:'/feedbackList.do',
 					type:'get',
@@ -535,7 +528,7 @@ $(document).on("click",".fbDelete", function(e){
 		dataType:'json',
 		data:{'feedbackNo':fNo},
 		success:function result(res){
-			alert("삭제완료")
+			alert("댓글이 삭제되었습니다.")
 			if(res==1){
 				$this.closest("tr").remove()
 			}

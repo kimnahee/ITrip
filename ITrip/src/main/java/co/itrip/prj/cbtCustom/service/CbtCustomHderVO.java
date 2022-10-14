@@ -5,6 +5,11 @@ import java.sql.Date;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+* 나만의CBT 채점
+* @author 박경아
+* @date 2022.10.04
+*/
 @Getter
 @Setter
 public class CbtCustomHderVO {

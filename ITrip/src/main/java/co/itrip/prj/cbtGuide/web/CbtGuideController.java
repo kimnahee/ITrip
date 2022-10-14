@@ -181,7 +181,7 @@ public class CbtGuideController {
 	@GetMapping("/bookmarkList.do")
 	public String bookmarkList(CbtGuideVO vo,Principal prin, Model model, HttpServletRequest request) {
 		vo.setMemberId(prin.getName()); //로그인된 사용자 정보 가져와 담기
-		model.addAttribute("Bookmark", cgService.bookmarkList(vo));
+		model.addAttribute("bookmark", cgService.bookmarkList(vo));
 		
 		System.out.println("============================================vo :"+vo);
 		return "Bookmark/bookmarkList";
