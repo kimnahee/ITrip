@@ -76,17 +76,12 @@
                                 <textarea class="form-control" id="explna" name="explna" rows="3" th:text="${my.explna}" ></textarea>
                             </div>
                              <!--파일-->
-                            <div class="col-md-6 mb-1">
-                                    <div class="input-group mb-8">
-                                        <span class="input-group-text" id="inputGroupFileAddon01"><i data-feather="upload"></i></span>
-                                        <div class="form-file">
-                                            <input type="file" class="form-file-input" id="attach" name="file" aria-describedby="attach">
-		                                     <label class="form-file-label" for="inputGroupFile01">
-                                                <span class="form-file-text"th:text="${my.attach}" readonly="readonly"></span>
-		                                     </label> 
-                                        </div>
-                                    </div>
-      					   </div>
+      					   <div class="form-file">
+								<div th:if="${!#lists.isEmpty(myList.attachDir)}">
+                                   <img th:src="@{/download(fileName=${'/CBT_GUIDE/'+my.attachDir})}" th:text="${my.attach}" style="width: 100px;"/>
+                                </div>   
+                                   <input type="file" id="attach" class="form-control form-group" name="file" >
+                                </div>
                             <div class="col-12 d-flex justify-content-end">
                                 <button type="button" class="btn btn-primary mr-2 mb-3" id="update">수정</button>
                                 <button type="reset" class="btn btn-light-secondary mr-1 mb-3">초기화</button>

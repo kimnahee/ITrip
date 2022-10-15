@@ -76,8 +76,9 @@ th {
 											<input type="hidden" id="guideId" name="guideId" class="form-control" th:value="${consult.guideId}">
 											<input type="hidden" id="frmamount" name="amount" value="">
 											<input type="hidden" id="frmconday" name="conday" value="">
-											<input type="hidden"   id="category" name="category" class="form-control" value="CONSULT">
+											<input type="hidden" id="category" name="category" class="form-control" value="CONSULT">
 											<input type="hidden" id="frmBeginTime" name="beginTime" class="form-control" value="" >
+										<!--	<input type="hidden" id="frmEndTime" name="endTime" class="form-control" value="" > -->
 											<input type="button" onclick="pay()" class="btn btn-primary btn-sm mb-0" id="payForm" value="신청하기" style="margin-top: 10px; float: right;">
 											</div>
 										</div>
@@ -155,7 +156,8 @@ th {
 										
 										var end = data.endTime;		// 종료시간
 										var etime = end.substr(0,2); 
-								
+										//$("#frmEndTime").val(etime);
+										
 										var time = etime-btime;
 										
 										let times=[];  // 시간들을 배열로 받음
@@ -191,7 +193,8 @@ th {
 											let value= e.target.value;
 											console.log(value+"sadasdasd");
 									$("#frmBeginTime").val(value);
-										})
+									//$("#frmEndTime").val(value);
+									    })
 										
 
 						
