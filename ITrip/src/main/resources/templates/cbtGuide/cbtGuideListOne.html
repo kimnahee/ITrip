@@ -73,17 +73,11 @@
                                 <textarea class="form-control" id="explna" name="explna" rows="3" th:text="${my.explna}" readonly="readonly"></textarea>
                             </div>
                             <!--파일-->
-                            <div class="col-md-6 mb-1">
-                                    <div class="input-group mb-8">
-                                        <span class="input-group-text" id="inputGroupFileAddon01"><i data-feather="upload"></i></span>
-                                        <div class="form-file">
-                                            <input type="text" class="form-file-input" id="attach" name="file" aria-describedby="attach"  readonly="readonly">
-		                                     <label class="form-file-label" for="inputGroupFile01">
-                                                <span class="form-file-text"th:text="${my.attach}" readonly="readonly"></span>
-		                                     </label> 
-                                        </div>
-                                    </div>
-      					   </div>
+      					   <div class="form-file">
+								<div th:if="${!#lists.isEmpty(myList.attachDir)}">
+                                   <img th:src="@{/download(fileName=${'/CBT_GUIDE/'+my.attachDir})}" th:text="${my.attach}" style="width: 100px;"/>
+                                </div>   
+                                </div>
                             <div class="col-12 d-flex justify-content-end">
                                 <button type="button" class="btn btn-primary mr-2 mb-3" id="updateBtn">수정</button>
                                 <button type="button" class="btn btn-outline-primary mr-2 mb-3"
@@ -133,6 +127,7 @@
 	//삭제버튼
 	$("#deleteBtn").on("click",function(){
 	    let cNo = $("#cbtNo0").val();
+	    console.log(cNo);
 	    console.log(cNo+"삭제예정 ㅇㅇ");
 	    location.href = "/cbtGuideDelete.do?cbtNo="+cNo;
 	})

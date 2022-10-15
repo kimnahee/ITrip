@@ -30,13 +30,11 @@ public class CustomLoginFailHandler implements AuthenticationFailureHandler {
 		String msg = "아이디 또는 비밀번호가 일치하지 않습니다.";
 		
 		if(exception instanceof BadCredentialsException) {
-			
 		}else if(exception instanceof InsufficientAuthenticationException) {
 			msg ="Invalid Secret Key";
 		}
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/login?error=true&exception="+msg);
 		dispatcher.forward(request, response);
-
 	}
 }
