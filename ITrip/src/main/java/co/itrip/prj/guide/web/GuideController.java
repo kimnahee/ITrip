@@ -93,6 +93,15 @@ public class GuideController {
 		return "guide/cstart";
 	}
 	
+	// 링크 입력버튼 체크
+	@GetMapping("/lickCheck.do")
+	@ResponseBody
+	public ClassChatVO linkCheck(ClassChatVO vo, HttpServletRequest request) {
+		int classNo = Integer.parseInt(request.getParameter("classNo"));
+		vo.setClassNo(classNo);
+		return cService.classChatLink(vo);
+	}
+	
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
@@ -114,15 +123,6 @@ public class GuideController {
 		vo.setStateCd("2");
 		model.addAttribute("consultList", conservice.consultList(vo));
 		return "guide/gconsult";
-	}
-	
-	// 링크 입력버튼 체크
-	@GetMapping("/lickCheck.do")
-	@ResponseBody
-	public ClassChatVO linkCheck(ClassChatVO vo, HttpServletRequest request) {
-		int classNo = Integer.parseInt(request.getParameter("classNo"));
-		vo.setClassNo(classNo);
-		return cService.classChatLink(vo);
 	}
 	
 	// 은지 - 가이드 마이페이지 -가이드가 개설한 클래스 리스트

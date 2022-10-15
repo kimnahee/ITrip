@@ -66,19 +66,19 @@
 										<tr>
 											<td colspan="2">
 												<div th:if="${classlist.st} == '진행중'" >
-													<input th:value="${classlist.classNo}">
-													<button type="button" class="btn btn-primary py-2 px-1 link" data-toggle="modal" data-target="#inlineForm">
+													<button type="button" class="btn btn-primary py-2 px-1 link" disabled='disabled'>
                         							링크입력
                     								</button>&nbsp;&nbsp;
 							                       <button class="btn btn-primary py-2 px-1 classChat" >강의실 입장</button>
 							               		</div>
 							               		<div th:unless="${classlist.st} == '진행중'" >
-							                       <button class="btn btn-primary py-2 px-1 link" disabled='disabled'>링크입력</button>&nbsp;&nbsp;
+							               		<input th:value="${classlist.classNo}">
+							                       <button class="btn btn-primary py-2 px-1 link" data-toggle="modal" data-target=".inlineForm" >링크입력</button>&nbsp;&nbsp;
 							                       <button class="btn btn-primary py-2 px-1 classChat" disabled='disabled'>강의실 입장</button>
 							               		</div> 
 							               		
 							               		<!-- 링크입력 모달 -->
-									<div class="modal fade text-left" id="inlineForm" tabindex="-1"
+									<div class="modal fade text-left inlineForm" id="inlineForm" tabindex="-1"
 										role="dialog" aria-labelledby="myModalLabel33"
 										aria-hidden="true">
 										<div
@@ -155,6 +155,7 @@
 			$(".link").on("click", function(e) {
 				
 				let classNo = $(e.target).prev().val();
+				console.log(classNo);
 				
 				$.ajax({
 					url : "/lickCheck.do",
@@ -164,13 +165,23 @@
 					},
 					success : function(data) {
 						console.log("출력" + data);
+						
+						 if(data == "") {
+						
+						
+						}else{
+						
+						    let link = data.chatLink;
+						    $(".classlick").val(link);
+						    $(".classlick").prop('readonly', true);
 
+						} 
 						
 					}
 
 				})
 				
-				console.log(classNo);
+				
 				
 			})
 
