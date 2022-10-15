@@ -62,6 +62,7 @@ th {
 
 								</tr>
 							</table>
+
 							<form id="frm" name="frm" class="form form-horizontal"
 								method="post">
 								<div class="form-group">
@@ -93,6 +94,7 @@ th {
 									</div>
 								</div>
 							</form>
+
 						</div>
 						<hr>
 						<div id="formArea"></div>
@@ -164,7 +166,8 @@ th {
 										
 										var end = data.endTime;		// 종료시간
 										var etime = end.substr(0,2); 
-								
+										//$("#frmEndTime").val(etime);
+										
 										var time = etime-btime;
 										
 										let times=[];  // 시간들을 배열로 받음
@@ -197,16 +200,13 @@ th {
 						})
 						
 						$("#price").on("change", '#selected', e=>{ // click과 change 이벤트가 결과가 같음 디폴트 선택값때문에 서브밋에 이벤트 검
+
 							let value= e.target.value;
 							console.log(value+"sadasdasd");
 							$("#beginTime").val(value);
 						})
-										
 
-						
-										
-										
-						let week = [[${consultDT}]];
+          	let week = [[${consultDT}]];
 						let length = [[${consultDT}]].length; //크기
 						
 						//요일 => 숫자 변환

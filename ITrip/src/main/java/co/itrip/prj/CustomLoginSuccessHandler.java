@@ -22,14 +22,12 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-			Authentication authentication) throws IOException, ServletException {
+		                             	Authentication authentication) throws IOException, ServletException {
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();	
 		HttpSession session = request.getSession();
 		session.setAttribute("name", userDetails.getUsername());
-		//request.getSession().setAttribute("name", userDetails.getUsername());
-			String cpath = request.getContextPath();
-			//th:text="${session.name}"
-			response.sendRedirect("/");		
+		String cpath = request.getContextPath();
+		response.sendRedirect("/");		
 	}
 
 }

@@ -146,7 +146,8 @@
         		type:'post',
         		data : {'mId' : mId},
         		beforeSend: function(xhr){
-    		    	xhr.setRequestHeader(header, token);
+    		    	xhr.setRequestHeader("AJAX", true);
+					xhr.setRequestHeader("X-CSRF-TOKEN", csrfToken);
     		    },
         		success: function(data){
         			if(data == 0){
@@ -168,8 +169,8 @@
     
     //닉네임 중복체크
     $("#nick").blur(function(){ 
-    	var token = $("meta[name='_csrf']").attr("content");
-        var header = $("meta[name='_csrf_header']").attr("content");
+    	//var token = $("meta[name='_csrf']").attr("content");
+        //var header = $("meta[name='_csrf_header']").attr("content");
 		
     	let mNick = $("#nick").val();
     	    mId = $("#memberId").val();
@@ -184,7 +185,8 @@
         		type:'post',
         		data : {'mNick' : mNick},
         		beforeSend: function(xhr){
-    		    	xhr.setRequestHeader(header, token);
+    		    	xhr.setRequestHeader("AJAX", true);
+					xhr.setRequestHeader("X-CSRF-TOKEN", csrfToken);
     		    },
         		success: function(data){
         			console.log(data);
@@ -276,8 +278,8 @@
     
     // 이메일 인증번호
     $("#checkEmail").click(function(){
-        var token = $("meta[name='_csrf']").attr("content");
-        var header = $("meta[name='_csrf_header']").attr("content");
+       // var token = $("meta[name='_csrf']").attr("content");
+        //var header = $("meta[name='_csrf_header']").attr("content");
         
         let mEmail = $("#email").val();
         if ($("#emailRegChk").val() == 'true'){
@@ -331,8 +333,11 @@
     	console.log($("#pwChk").val());
     	console.log($("#nameChk").val());
     	
-    	if($("#idChk").val() == 'true' & $("#nickChk").val() == 'true' & $("#pwChk").val() =='true' & $("#nameChk").val() == 'true' & $("#emailChk").val() == 'true' 
-    		&  $("#emailRegChk").val() =='true' &  $("#emailChk").val() == 'true' & $("#pwRegChk").val() =='true'){
+
+    	if($("#idChk").val() == 'true' & $("#nickChk").val() == 'true' & $("#pwChk").val() =='true' & $("#nameChk").val() == 'true' 
+    		&  $("#emailRegChk").val() =='true'  & $("#pwRegChk").val() =='true'){
+    		//&  $("#emailChk").val() == 'true'
+
     		alert("회원가입 되었습니다!")
 	    	frm.action="/memberInsert.do";
 	    	frm.submit();

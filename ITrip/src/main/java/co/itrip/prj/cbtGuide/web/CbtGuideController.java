@@ -201,7 +201,9 @@ public class CbtGuideController {
 	/* 문제 삭제 */
 	@GetMapping("/cbtGuideDelete.do")
 	public String cbtGuideDelete(CbtGuideVO vo, HttpServletRequest request) {
-		
+		System.out.println("=====================controllerdelete 실행됨 =====================");
+		System.out.println("======================vo"+vo);
+		System.out.println("======================request"+request.getParameter("cNo"));
 		//기존파일삭제
 		CbtGuideVO cbtVo = cgService.cbtGuideListOne(vo);
 		File file = new File(fileDir+"/CBT_GUIDE/"+cbtVo.getAttachDir());
@@ -225,6 +227,7 @@ public class CbtGuideController {
 	    		}
 	    	}else {
 	    		System.out.println("파일이 존재하지 않습니다.");
+	    		cgService.cbutGuideDelet(vo);
 	    	}
 		return "redirect:/cbtGuideMain.do";
 	}
