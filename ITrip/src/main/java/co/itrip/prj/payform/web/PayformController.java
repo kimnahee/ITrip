@@ -87,7 +87,15 @@ public class PayformController {
 		//System.out.println("!!!!!!!!!"+no);
 		//System.out.println("!!!!!!!!!"+vo.getNo());
 		vo.setMember_id(prin.getName());
+		int end = Integer.parseInt(vo.getBeginTime()) + 1;
+		String begin = vo.getBeginTime();
+		String beginTime = begin + ":00";
+		String endTime = end + ":00";
+		System.out.println("testttttttt" + endTime);
+		vo.setBeginTime(beginTime);
+		vo.setEndTime(endTime);
 		payformService.coPayformInsert(vo,cvo);
+		System.out.println(vo);
 		return "redirect:myPage";
 	}
 	
