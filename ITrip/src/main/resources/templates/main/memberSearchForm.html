@@ -126,7 +126,8 @@
 	 // 아이디/비밀번호 찾기 버튼
     function searchCall(){
     	
-    	if($("#name").val() != '' & $("#emailRegChk").val() == 'true' & $("#emailChk").val() == 'true' ){
+    	if($("#name").val() != '' & $("#emailRegChk").val() == 'true' ){
+    	//& $("#emailChk").val() == 'true' 
 	    	frm.submit();
     	}else{
     		alert("이름 또는 이메일을 다시 한 번 확인 해주세요.");

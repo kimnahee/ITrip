@@ -48,7 +48,6 @@ public class MemberServiceImpl implements MemberService {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(); // 암호화처리를 위한 인스턴스 생성
 		String result = encoder.encode(vo.getPw()); // 사용자가 입력한 pw값을 암호화처리
 		vo.setPw(result);
-		//boolean pwchk = encoder.matches(vo.getPw(), result); //사용자가 입력한 값과 암호화 처리된 값이 동일한지 확인
 
 		int r = map.memberInsert(vo);
 		
