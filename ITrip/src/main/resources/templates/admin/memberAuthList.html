@@ -37,15 +37,15 @@
 										</tr>
 									</thead>
 									<tbody id="tbody">
-										<tr th:each="g:${pageInfo.list}" th:id="${g.guideId}" style="cursor: pointer;">
+										<tr th:each="g:${pageInfo.list}">
 											<th th:text=${g.guideId}></th>
 											<td th:text=${g.nick}></td>
 											<td th:text=${g.dutyCdName}></td>
 											<td th:text=${g.careerCdName}></td>
-											<td th:text=${g.dc}></td>
+											<td><a class="dc" th:id="${g.guideId}" th:text=${g.dc} style="cursor: pointer;"></a></td>
 											<td><a th:href="@{download(fileName='/guide/'+${g.attachDir})}"  th:text="${g.attach}" ></a></td>
 											<td th:text=${g.cdName}></td>
-											<td th:id="${g.guideId }">
+											<td th:id="${g.guideId+'Udp'}">
 												<input type="button" th:onclick="updateFnc(this.getAttribute('id'))"
 												class="btn btn-primary btn-l" value="수정" th:name="${g.guideId}" th:id="${g.guideId}">
 											</td>
@@ -110,8 +110,10 @@
 		}
 		
 		function updateFnc(memId){
-			
-			let modifyTd = document.getElementById(memId);
+
+			console.log(memId)
+			let modifyTd = document.getElementById(memId+"Udp");
+			console.log(modifyTd)
 			modifyTd.previousElementSibling.innerText="";
 			
 			let td = modifyTd.previousElementSibling
@@ -162,7 +164,7 @@
 		}
 	
 		
-		  $("#tbody").on("click","tr",function(e){
+		  $("#tbody").on("click",".dc",function(e){
 			  e.preventDefault();
 			  $.ajax({
 				url:"/memberAuthOne.do",

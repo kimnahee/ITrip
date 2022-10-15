@@ -332,7 +332,7 @@
     	console.log($("#nameChk").val());
     	
     	if($("#idChk").val() == 'true' & $("#nickChk").val() == 'true' & $("#pwChk").val() =='true' & $("#nameChk").val() == 'true' & $("#emailChk").val() == 'true' 
-    		&  $("#emailRegChk").val() =='true' &  $("#emailChk").val() == 'true' & $("#pwRegChk").val() =='true'){
+    		&  $("#emailRegChk").val() =='true' &  $("#emailChk").val() == 'true'){// & $("#pwRegChk").val() =='true'
     		alert("회원가입 되었습니다!")
 	    	frm.action="/memberInsert.do";
 	    	frm.submit();
