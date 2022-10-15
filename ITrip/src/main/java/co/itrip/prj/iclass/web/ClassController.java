@@ -32,6 +32,8 @@ import co.itrip.prj.iclass.service.ClassChatVO;
 import co.itrip.prj.iclass.service.ClassDtVO;
 import co.itrip.prj.iclass.service.ClassService;
 import co.itrip.prj.iclass.service.ClassVO;
+import co.itrip.prj.payform.service.PayformService;
+import co.itrip.prj.payform.service.PayformVO;
 
 @Controller
 public class ClassController {
@@ -50,6 +52,9 @@ public class ClassController {
 
 	@Autowired
 	private AlarmService aService; // 알람 서비스
+	
+	@Autowired
+	private PayformService payService; // 알람 서비스
 
 	// 클래스리스트
 	@GetMapping("/iClassList.do")
@@ -117,9 +122,10 @@ public class ClassController {
 
 	// 경아 - 클래스상세보기certificate.do
 	@RequestMapping("/iClassSelectOne.do")
-	public String iClassSelectOne(ClassVO vo, Model model, ClassDtVO dvo) {
+	public String iClassSelectOne(ClassVO vo, Model model, ClassDtVO dvo,PayformVO pvo) {
 		model.addAttribute("classOne", cService.classSelectOne(vo));
 		model.addAttribute("classDt", cService.classDtList(dvo));
+		model.addAttribute("max", payService.payCount(pvo));
 		return "class/iclassSelectOne";
 	}
 

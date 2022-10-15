@@ -48,7 +48,7 @@ p {
 										<div class="input-group mb-2">
 											<label class="input-group-text" for="langCd">언어</label>
 											<select class="form-select" id="langCd" name="langCd">
-												<option value="none">==== 언어 선택 ====</option>
+												<option value="none">======= 언어 선택 =======</option>
 												<option th:each="lang : ${langCdList}" th:value="${lang.cdNo}" th:utext="${lang.cdName}"></option>
 											</select>
 										</div>
