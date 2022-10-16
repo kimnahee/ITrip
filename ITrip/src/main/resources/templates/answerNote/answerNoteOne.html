@@ -52,7 +52,6 @@ layout:decorate="~{layout/layout}" xmlns:sec="http://www.thymeleaf.org/extras/sp
 							
 							
 							
-								<!-- <h3>문제 <span th:text="${cbt.cbtNo}"></span><i data-feather='star'onclick="bookmark()" style="cursor: pointer;"></i></h3> -->
 								<input type="hidden" id="cbtNo0" name="cbtNo0" th:value="${cbt.cbtNo}"> 
 								<input type="hidden" id="PreGtpCd" name="PreGtpCd" th:value="${cbtGuideVO.gtpCd}">
 								<input type="hidden" id="PreLangCd" name="PreLangCd" th:value="${cbtGuideVO.langCd}">
@@ -216,7 +215,7 @@ layout:decorate="~{layout/layout}" xmlns:sec="http://www.thymeleaf.org/extras/sp
 					
 					for(let i =0; i < res.length; i++){
 						if(res[i] == 0) { // 빈 즐겨찾기 아이콘
-							bma[i].innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="lightblue" class="bi bi-star " viewBox="0 0 16 16">
+							bma[i].innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="lightblue" class="bi bi-star" viewBox="0 0 16 16">
 								                <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
 								  	            </svg>`;					 
 						} else { // 꽉 즐겨찾기 아이콘
@@ -236,10 +235,13 @@ layout:decorate="~{layout/layout}" xmlns:sec="http://www.thymeleaf.org/extras/sp
 		$('.bookmark').on("click","li",function(e) {
 			
 			let tg = e.currentTarget; 
+			console.log(tg);
 			let bCd = tg.value; // 즐겨찾기코드 (1,2,3 중 클릭한 값으로 담김)
+			console.log(bCd);
 			let cNo = tg.parentElement.parentElement.nextElementSibling.value; // 즐겨찾기 한 문제번호
+			console.log(cNo);
 			let ul =  tg.parentElement.parentElement.parentElement.childNodes[3].childNodes[2].childNodes[0]; //svg 태그
-		
+
 			console.log(ul);
 			if($(ul).hasClass("bi-star")){ //비어있으면
 				bookmarkInsert(tg);

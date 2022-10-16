@@ -151,10 +151,11 @@ public class AdminController {
 	//경아 - 회원->가이드 권한수정
 	@PostMapping("/memberAuthUpdate.do")
 	@ResponseBody
-	public int memberAuthUpdate(GuideVO vo,MemberVO mvo) {
+	public int memberAuthUpdate(GuideVO vo, MemberVO mvo) {
 		mvo.setMemberId(vo.getGuideId());
-		adminService.memberAuthUpdateTo(mvo);
-		return  adminService.memberAuthUpdate(vo);
+		adminService.memberAuthUpdate(vo);
+		
+		return  adminService.memberAuthUpdateTo(mvo);
 	}
 	
 	
