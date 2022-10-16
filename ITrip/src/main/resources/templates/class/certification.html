@@ -116,7 +116,7 @@
 				</tr>
 				<tr>
 				<!-- 로고 수정하기 -->
-					<td><img src="images/logo.svg" style="width: 100px; height: 100px;"></td>
+					<td><img src="bootstrap/voler/assets/images/logo.svg" style="width: 200px; height: 100px;"></td>
 				</tr>
 			</tbody>
 		</table>
@@ -131,13 +131,10 @@
 		function savePDF() {
 			//저장 영역 div id
 			html2canvas($('#pdfArea')[0], {
-				//logging : true,		// 디버그 목적 로그
-				//proxy: "html2canvasproxy.php",
 				allowTaint : true, // cross-origin allow 
 				useCORS : true, // CORS 사용한 서버로부터 이미지 로드할 것인지 여부
 				scale : 2
 			// 기본 96dpi에서 해상도를 두 배로 증가
-
 			})
 					.then(
 							function(canvas) {

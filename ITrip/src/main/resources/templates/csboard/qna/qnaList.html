@@ -51,7 +51,7 @@
 						<table class="table align-items-center mb-0">
 							<thead>
 								<tr>
-									<th class="text-uppercase text-secondary text-md font-weight-bolder opacity-7">글번호</th>
+									<th class="text-uppercase text-secondary text-md font-weight-bolder opacity-7" style="display: none;">글번호</th>
 									<th class="text-uppercase text-secondary text-md font-weight-bolder opacity-7 ps-2">글제목</th>
 									<th class="text-center text-uppercase text-secondary text-md font-weight-bolder opacity-7">작성자</th>
 									<th class="text-center text-uppercase text-secondary text-md font-weight-bolder opacity-7">작성일자</th>
@@ -60,7 +60,7 @@
 							</thead>
 							<tbody id="csList">
 								<tr th:each="cs : ${pageInfo.list}">
-									<td><p class="text-md text-secondary mb-0"
+									<td style="display: none;"><p class="text-md text-secondary mb-0"
 											th:text="${cs.csNo}">글번호</p></td>
 									<td><p class="text-md text-secondary mb-0 title"
 											th:text="${cs.title}">글제목</p></td>

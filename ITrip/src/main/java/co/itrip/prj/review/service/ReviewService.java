@@ -10,6 +10,7 @@ public interface ReviewService {
 	
 	int classReviewInsert(ReviewVO vo); // 소정 - 클래스 리뷰등록
 	ReviewVO classReviewSelect(ReviewVO vo);  // 소정 - 리뷰 단건조회
+	ReviewVO consultReviewSelect(ReviewVO vo);
 	int deleteReview(ReviewVO vo); //소정 - 리뷰삭제
 
 }

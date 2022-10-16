@@ -23,7 +23,7 @@ layout:decorate="~{layout/layout}">
                         <div> <!-- @{C:/Temp}+ -->
                         	<!-- <img th:src="@{*{classOne.attachDir}}"alt="Image" class="img-fluid" width="500px" style="float: right;"> -->
 
-                     		<img th:src="@{/download(fileName=${'/Thumbnail/'+classOne.attachDir})}" width="300px" style="float: right;" />
+                     		<!-- <img th:src="@{/download(fileName=${'/Thumbnail/'+classOne.attachDir})}" width="300px" style="float: right;" /> -->
 
                         </div>
                         <div class="divider">
@@ -109,7 +109,7 @@ layout:decorate="~{layout/layout}">
     <form action="ClPayformInsert.do" id="frm" method="post">
     	<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 		<input type="hidden" id="memberId" name="member_id" th:value="${#authentication.principal.member.memberId}">
-    	<input type="hidden" id="merchantUid" name="merchantUid" th:value="${'CL'+${classOne.classNo+#authentication.principal.member.memberId+(max+1)}">
+    	<input type="hidden" id="merchantUid" name="merchantUid" th:value="${'CL'+classOne.classNo+#authentication.principal.member.memberId+(max+1)}">
     	<input type="hidden" id="classNo" name="classNo" th:value="${classOne.classNo}">
     	<input type="hidden" id="name" name="name" th:value=${classOne.title}>
     	<input type="hidden" id="price" name="amount" th:value=${classOne.price}>

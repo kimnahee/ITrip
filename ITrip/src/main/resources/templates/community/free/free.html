@@ -4,8 +4,8 @@
 	layout:decorate="~{layout/layout}">
 <head>
 <meta charset="utf-8" />
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>자유게시판 글목록</title>
 <script src="js/jquery-3.6.0.min.js"></script>
 <style>
 .table {
@@ -60,7 +60,7 @@
 						<table class="table align-items-center mb-0">
 							<thead>
 								<tr>
-									<th class="text-uppercase text-secondary text-md font-weight-bolder opacity-7">글번호</th>
+									<th class="text-uppercase text-secondary text-md font-weight-bolder opacity-7" style="display: none;">글번호</th>
 									<th class="text-uppercase text-secondary text-md font-weight-bolder opacity-7 ps-2">글제목</th>
 									<th style="display: none;" class="text-center text-uppercase text-secondary text-md font-weight-bolder opacity-7">작성자</th>
 									<th class="text-center text-uppercase text-secondary text-md font-weight-bolder opacity-7">작성일자</th>
@@ -69,7 +69,7 @@
 							</thead>
 							<tbody id="freeList">
 								<tr th:each="free : ${pageInfo.list}">
-									<td><p class="text-md text-secondary mb-0" th:text="${free.comNo}">글번호</p></td>
+									<td style="display: none;"><p class="text-md text-secondary mb-0" th:text="${free.comNo}">글번호</p></td>
 									<td><p class="text-md text-secondary mb-0" th:text="${free.title}">글제목</p></td>
 									<td style="display: none;"><p class="text-md text-secondary mb-0" th:text="${free.memberId}">작성자</p></td>
 									<td><p class="text-md text-secondary mb-0" th:text="${free.dt}">작성일자</p></td>

@@ -5,16 +5,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title></title>
+<title>실시간 타임라인</title>
 <script src="js/jquery-3.6.0.min.js"></script>
-<link rel="stylesheet" href="bootstrap/voler/assets/css/bootstrap.css">
-<link rel="stylesheet"
-	href="bootstrap/voler/assets/vendors/simple-datatables/style.css">
-<link rel="stylesheet"
-	href="bootstrap/voler/assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
-<link rel="stylesheet" href="bootstrap/voler/assets/css/app.css">
-<link rel="shortcut icon"
-	href="bootstrap/voler/assets/images/favicon.svg" type="image/x-icon">
 <style>
 .table {
 	margin-left: auto;
@@ -62,6 +54,10 @@
     color: #fff;
     background-color: #5A8DEE;
     border-color: #5A8DEE;
+    overflow: hidden;
+  	white-space: nowrap;
+	text-overflow: ellipsis;
+	word-break: break-all;
 }
 </style>
 </head>
