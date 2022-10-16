@@ -13,10 +13,44 @@
 	  padding-left: 1em;
 	  padding-right: 1em; 
  }
+ /* 일요일 날짜 빨간색 */
+.fc-day-sun a {
+  color: red;
+  text-decoration: none;
+}
+
+/* 토요일 날짜 파란색 */
+.fc-day-sat a {
+  color: blue;
+  text-decoration: none;
+}
+
+/* 월~금 날짜 검은색 */
+.fc-day-mon a {
+  color: black;
+  text-decoration: none;
+}
+.fc-day-tue a {
+  color: black;
+  text-decoration: none;
+}
+.fc-day-wed a {
+  color: black;
+  text-decoration: none;
+}
+.fc-day-thu a {
+  color: black;
+  text-decoration: none;
+}
+.fc-day-fri a {
+  color: black;
+  text-decoration: none;
+}
 
 #calendar {
 	max-height: 100%;
 }
+
 </style>
  <!-- jquery CDN -->  
  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
@@ -38,21 +72,27 @@ let csrfToken = $("input[name=_csrf]").val(); // 토큰받아오기
      var calendarEl = document.getElementById('calendar');
 	 let schedules = []; 
 	//캘린더 전체리스트 ajax
-		$.ajax({
+	$.ajax({
 	    url: 'calendarList.do',
 	    data : {'guideId' : guideId},
 		dataType : 'json',
-	    success: function(res){
+	    success: function(res){			
 	        var list = res;
 	        console.log(list);
 	        $.each(list, function(idx, calendar) {
-						console.log(calendar.no)
+						console.log(calendar);
 						let event = {};
-						event.id = calendar.no;
-						event.title = calendar.name + '/ '+calendar.beginTime +'시';
+						var uid = calendar.merchantUid;
+						var type = uid.substr(0,2);
+						console.log(type);
+						if (type=='CO') {
+						backgroundColor : "#008000"	
+						 		 			
+						}
+						event.id = type
+						event.title = calendar.name + '/ '+calendar.beginTime +'시'+ '/ ' + calendar.memberId
 						event.start = calendar.conday;
 						event.end = calendar.conday;
-						
 						
 						schedules.push(event); // 담기
 					})
@@ -60,15 +100,17 @@ let csrfToken = $("input[name=_csrf]").val(); // 토큰받아오기
 
         var calendar = new FullCalendar.Calendar(calendarEl, {
         	 height: '850px',
+        	 locale: 'ko', // 한국어 설정
 	         headerToolbar: {          
 	         left: 'prev,next today',         
 	         center: 'title',          
-	         right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'        
-	         },
-	          events : schedules,
+	         right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'   
+			 },
 
+	          events :schedules,
+	
         });
-
+  
         calendar.render();
 	    },
 	});

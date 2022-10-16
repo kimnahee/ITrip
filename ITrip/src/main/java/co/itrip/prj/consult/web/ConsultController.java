@@ -117,9 +117,7 @@ public class ConsultController {
 	@PostMapping("/ajaxConsultState.do")
 	@ResponseBody
 	public int ajaxConsultState(ConsultVO vo) {
-		//int consultNo = Integer.parseInt(request.getParameter("consultNo"));
 		System.out.println(vo);
-		// vo.setConsultNo(get)
 		return conService.consultState(vo);
 	}
 	

@@ -22,6 +22,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
 import co.itrip.prj.cmmncd.service.CmmnCdService;
+import co.itrip.prj.consult.service.ConsultChatVO;
 import co.itrip.prj.consult.service.ConsultService;
 import co.itrip.prj.consult.service.ConsultVO;
 import co.itrip.prj.follow.service.FollowService;
@@ -114,23 +115,27 @@ public class GuideController {
 	}	
 	
 	// 은지 - 가이드 마이페이지 -가이드가 개설한 상담 리스트
-	@RequestMapping("/gconsult.do")
-	public String gconsult(ConsultVO vo, Model model, Principal principal) {
-		
+	@GetMapping("/gconsult.do")
+	public String gconsult(ConsultVO vo, Model model, Principal principal, HttpServletRequest request,
+			@RequestParam(required = false, defaultValue = "1") int pageNum,
+			@RequestParam(required = false, defaultValue = "3") int pageSize){
+		PageHelper.startPage(pageNum, pageSize);
 		vo.setGuideId(principal.getName());
-		
 		// 승인 완료된 상담 
 		vo.setStateCd("2");
-		model.addAttribute("consultList", conservice.consultList(vo));
-		return "guide/gconsult";
+		model.addAttribute("pageInfo", PageInfo.of(conservice.consultList(vo)));
+		return "guide/gconsult"; 
 	}
 	
 	// 은지 - 가이드 마이페이지 -가이드가 개설한 클래스 리스트
 	@GetMapping("/gclass.do")
-	public String gclass(ClassVO vo, Model model, Principal principal) {
+	public String gclass(ClassVO vo, Model model, Principal principal,
+			@RequestParam(required = false, defaultValue = "1") int pageNum,
+			@RequestParam(required = false, defaultValue = "4") int pageSize){
+		PageHelper.startPage(pageNum, pageSize);
 		vo.setGuideId(principal.getName());
 		vo.setConfmCd("2");
-		model.addAttribute("classList", guService.myIClassList(vo));
+		model.addAttribute("pageInfo", PageInfo.of(guService.myIClassList(vo)));
 		return "guide/gclass";
 	}
 	
@@ -178,6 +183,23 @@ public class GuideController {
 		vo.setGuideId(principal.getName());
 		model.addAttribute("pageInfo", PageInfo.of(guService.userList(vo)));
 		return "guide/userList";
+	}
+	
+	//consultLinkInsert.do
+	// 가이드 상담 링크 입력
+	@PostMapping("/consultLinkInsert.do")
+	public String consultLinkInsert(ConsultChatVO vo) {
+		conservice.consultLinkInsert(vo);
+		return "redirect:gconsult.do";
+	}
+	
+	// 링크 입력버튼 체크
+	@GetMapping("/ajaxLinkCheck.do")
+	@ResponseBody
+	public ConsultChatVO ajaxLinkCheck( ConsultChatVO vo, HttpServletRequest request) {
+		int consultNo = Integer.parseInt(request.getParameter("consultNo"));
+		vo.setConsultNo(consultNo);
+		return conservice.consultChat(vo); // 채팅방 연결
 	}
 
 	//경아 - 가이드신청 승인거절시 가이드테이블에서삭제 

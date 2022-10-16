@@ -24,7 +24,9 @@
 			  ,NO
 			  ,GUIDE_ID
 			  ,MEMBER_ID
-			  ,NAME
+			  ,CASE WHEN LENGTH(name) > 5 THEN SUBSTR(name,0,5)||'..'
+		                ELSE SUBSTR(name,0,5)
+		          		END AS name
 			  ,CONDAY
 			  ,BEGIN_TIME
 		FROM CALENDAR

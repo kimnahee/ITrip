@@ -9,11 +9,11 @@
     <meta name="keywords" content="bootstrap, bootstrap5" />
     <title>GuideConsult</title> 
 <style>
-	.table{
+.table{
 		text-align: center;
 		margin-top: 50px;
 		margin-bottom: 50px;
-	}
+	} 
 	
 	.table td img{
 		max-width: 100%;
@@ -39,8 +39,8 @@
 					<!-- 상담 등록/승인요청한 상담 버튼 -->
 					<div class="row" style="margin-bottom: 30px;">
 							<div>
-								<td><button id="consultStart" style="width: 140px;" class="btn btn-sm btn-primary">등록하기</button></td>
-								<td><button id="insertedStart" style="width: 140px;" class="btn btn-sm btn-primary">등록한 상담목록</button></td>
+								<td><button id="consultStart" style="width: 140px;" class="btn btn-sm btn-primary">상담등록하기</button></td>
+								<td><button id="insertedStart" style="width: 140px;" class="btn btn-sm btn-primary">등록대기목록</button></td>
 								<td><button id="calendarStart" style="width: 140px;" class="btn btn-sm btn-primary">상담캘린더</button></td>
 							</div>
 					</div>
@@ -48,7 +48,7 @@
 					<!-- 진행중인 상담이 있을 때 -->
 						<!-- 상담이 활성화일 때 -->
 					<div class="row" style="margin-bottom: 30px;">
-						<div th:each="con : ${consultList}" th:if="${con.stateCd == '2'}" style="width: 380px;">
+						<div th:each="con : ${pageInfo.list}" th:if="${con.stateCd == '2'}" style="width: 380px;">
 							<table class="table table-hover" style="width: 300px;">
 								<thead>
 									<th colspan="2"><button id="consultStart" style="width: 100px;" class="btn btn-sm btn-outline-primary enncState" th:text="${con.ennc}"></button></th>
@@ -71,8 +71,39 @@
 										<td th:text="${con.career}"></td>
 									</tr>
 									<tr>
-										<td><button style="width: 100px;" class="btn btn-sm btn-primary consultStart">링크</button></td>
-										<td><button style="width: 100px;" class="btn btn-sm btn-primary consultChat">채팅방</button></td>
+										<td><button style="width: 100px;" class="btn btn-sm btn-primary link" data-toggle="modal" data-target=".inlineForm" >링크입력</button></td>
+										<td><button style="width: 100px;" class="btn btn-sm btn-primary consultChat">채팅방</button>
+										<input type="hidden" th:value="${con.consultNo}">							               		<!-- 링크입력 모달 -->
+									<div class="modal fade text-left inlineForm" id="inlineForm" tabindex="-1"
+										role="dialog" aria-labelledby="myModalLabel33"
+										aria-hidden="true">
+										<div
+											class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+											role="document">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h6 class="modal-title" id="myModalLabel33">링크입력창</h6>
+													<button type="button" class="close" data-dismiss="modal"
+														aria-label="Close">
+														<i data-feather="x"></i>
+													</button>
+												</div>
+												<form action="consultLinkInsert.do" method="post" onsubmit="return message()">
+												<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+													<div class="modal-body">
+														<div class="form-group">
+															<input type="hidden" th:value="${con.consultNo}" name="consultNo">
+															<input id="classlick" type="text" class="form-control classlick" name="chatLink">
+														</div>
+													</div>
+													<div class="modal-footer">
+														<button type="submit" class="btn btn-primary ml-1 clink">입력</button>
+													</div>
+												</form>
+											</div>
+										</div>
+									</div>
+									<!-- 링크입력 모달 --></td>
 									</tr>
 								</tbody>								
 							</table>
@@ -80,17 +111,48 @@
 					</div>
 			</div>
 		</div>
+		<!-- 페이지네이션 -->
+					<nav aria-label="Page navigation example">
+						<ul class="pagination pagination-info  justify-content-center">
+							<li class="page-item disabled"
+								th:if="${pageInfo.isIsFirstPage()}"><span
+								class="page-link">«</span></li>
+							<li class="page-item"
+								th:if="${!pageInfo.isIsFirstPage() && pageInfo.getList().size() > 0}"><a
+								class="page-link"
+								th:href="|javascript:gopage([[${pageInfo.getPrePage()}]])|"
+								rel="prev">«</a></li>
+							<li th:class="|page-item ${(pageInfo.pageNum eq page) ? 'active': ''} |"
+								th:each="page:${pageInfo.navigatepageNums}"><span
+								class="page-link" th:if="${pageInfo.pageNum eq page}"
+								th:text="${page}"></span> <a class="page-link"
+								th:unless="${pageInfo.pageNum eq page}"
+								th:href="|javascript:gopage(${page})|" th:text="${page}">{{$page}}</a></li>
+							<li class="page-item" th:if="${pageInfo.hasNextPage}"><a
+								class="page-link"
+								th:href="|javascript:gopage([[${pageInfo.getNextPage()}]])|"
+								rel="next">»</a></li>
+							<li class="page-item disabled"
+								th:unless="${pageInfo.hasNextPage}"><span
+								class="page-link">»</span></li>
+						</ul>
+					</nav>
+					
 	</div>
+	
 	<script type="text/javascript">
 	let csrfHeaderName = "${_csrf.headerName}";
 	let csrfToken = $("input[name=_csrf]").val();
 	let consultNo = $("#consultNo").html(); //상담번호(전역변수)
-
-	//상담리스트 상태 변경(활성화 => 비활성화 & 비활성화 => 활성화)
+	
+	function gopage(p) {
+		location.href = '/gconsult.do?pageNum=' + p;
+		}
+	/*-----------------------------------------------
+	  상담리스트 상태 변경(활성화 => 비활성화 & 비활성화 => 활성화)
+	-------------------------------------------------*/
 	$(".enncState").on("click", e=> {
-		//console.log(consultNo)
 		let ennc =  $(e.target).html();
-		//console.log(ennc)
 		if(ennc == '비활성화'){
 			ennc = '활성화'
 		} else {
@@ -104,7 +166,6 @@
 				xhr.setRequestHeader("AJAX", true);
 				xhr.setRequestHeader("X-CSRF-TOKEN", csrfToken);
 			},success : function(data) {
-				//console.log(data);
 				if(data == 1){ // 1이면 업데이트 성공
 					if($(e.target).html() == '비활성화'){
 						$(e.target).html('활성화') 
@@ -116,7 +177,41 @@
 		})
 	})
 	
-	//링크 입력하는 부분(만들기)
+	/*-------
+	  링크입력
+	---------*/
+	 function message() {
+				if($(".classlick").val() == "") {
+    				alert('링크를 입력후 제출해주세요.');
+    				$(".classlick").focus();
+    				return false;
+    			}
+				alert("링크입력이 완료되었습니다.");
+				return true;
+			}
+			$(".link").on("click", function(e) {
+				//let consultNo = $(e.target).prev().val();
+				//console.log(consultNo);
+				$.ajax({
+					url : "/ajaxLinkCheck.do",
+					type : "get",
+					data : { 'consultNo' : consultNo
+					},
+					success : function(data) {
+						console.log("출력" + data);				
+						 if(data == "") {
+	
+						}else{
+						
+						    let link = data.chatLink;
+						    $(".classlick").val(link);
+						    $(".classlick").prop('readonly', true);
+
+						} 			
+					}
+				})
+			})
+	
 	
 	//채팅방 연결
 	$(".consultChat").on("click", function(e){
@@ -133,6 +228,8 @@
 	$("#calendarStart").on("click", function(e){
 		location.href="/calendar.do";
 	})
+	
+	// 등록한 상담 리스트 보기
 	$("#insertedStart").on("click", function(e){
 		location.href="/alreadyConsult.do";
 	})

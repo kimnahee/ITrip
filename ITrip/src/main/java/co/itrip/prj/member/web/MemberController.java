@@ -149,7 +149,7 @@ public class MemberController { //Principal
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
 	
-	// 상담 리뷰
+	// 은지 - 상담 리뷰
 	@GetMapping("/conReview")
 	public String conReview() {
 		return "member/consultReview";
@@ -157,7 +157,7 @@ public class MemberController { //Principal
 	
 	
 
-	// 유저 회원 정보 수정페이지
+	// 은지 - 유저 회원 정보 수정페이지
 	@GetMapping("/mrecive.do")
 	public String mrecive(Principal principal, MemberVO vo, Model model) {
 		vo.setMemberId(principal.getName());
@@ -165,7 +165,7 @@ public class MemberController { //Principal
 		return "member/mrecive";
 	}
 	
-	// 회원 정보 수정페이지에서 수정 후  form action -> DB수정 -> 수정된 정보 바로 적용
+	// 은지 - 회원 정보 수정페이지에서 수정 후  form action -> DB수정 -> 수정된 정보 바로 적용
 	@PostMapping("/mreviceUpdate.do")
 	public String mreviceUpdate(MemberVO vo, Principal principal) {
 		vo.setMemberId(principal.getName());
@@ -173,23 +173,8 @@ public class MemberController { //Principal
 		return "redirect:myPage";
 	}
 	
-//	// 가이드 회원 정보 수정페이지
-//	@GetMapping("/gmrecive.do")
-//	public String mrecive1(Principal principal, MemberVO vo, Model model) {
-//		vo.setMemberId(principal.getName());
-//		model.addAttribute("member", mService.memberSelect(vo)); 
-//		return "member/gmrecive";
-//	}
-	
-//	// 회원 정보 수정페이지에서 수정 후  form action -> DB수정 -> 수정된 정보 바로 적용
-//	@PostMapping("/gmreviceUpdate.do")
-//	public String mreviceUpdate1(MemberVO vo, Principal principal) {
-//		vo.setMemberId(principal.getName());
-//		mService.memberUpdate(vo);
-//		// principal 로 아이디값 받아올때 변경한값 담을 위치
-//		return "redirect:gmyPage.do";
-//	}
 
+///////////////////////////////////////////////////////////////////////////////////////////////
 	
 	/* 김하은 : 회원가입*/
 	@PostMapping("/memberInsert.do")

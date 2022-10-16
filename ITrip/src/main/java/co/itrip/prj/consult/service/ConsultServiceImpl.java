@@ -96,8 +96,14 @@ public class ConsultServiceImpl implements ConsultService{
 
 	@Override
 	public List<ConsultVO> alreadyConsult(ConsultVO vo) {
-		// TODO Auto-generated method stub
+		// 가이드가 신청중인 상담 리스트
 		return map.alreadyConsult(vo);
+	}
+
+	@Override
+	public int consultLinkInsert(ConsultChatVO vo) {
+		// 상담 링크 등록
+		return map.consultLinkInsert(vo);
 	}
 
 
