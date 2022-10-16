@@ -205,15 +205,15 @@
         		}
         	})
         }
-        
              function makeTr(data) {
         		let tr = $("<tr>").append($("<td>").html(data.guideId))
         						  .append($("<td>").html(data.nick))
         						  .append($("<td>").html(data.cdName))
-        						  .append($("<td>").append($("<div>").append($("<button>").addClass("btn").addClass("deletF").addClass("btn-outline-primary").html("unfo"))))
+        						  .append($("<td>").append($("<div>").append($("<button>").addClass("btn")
+        						  .addClass("deletF").addClass("btn-outline-primary").html("unfo"))))
        	 		return tr;
         }  
-
+             // 팔로우 수
              function makeH(data) {
          		let h2 = $("<h2>").addClass("mb-1").html(data.length)
         	 		return h2;
