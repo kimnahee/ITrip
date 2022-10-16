@@ -40,8 +40,8 @@
 <!--[박경아] 멤버->가이드 권한수정 -->
 <update id="memberAuthUpdate" parameterType="co.itrip.prj.guide.service.GuideVO">
 	update guide set 
-	<if test="stateCd==1">state_cd = '2'</if>
-	<if test="stateCd==2">state_cd = '3'</if>
+	<if test="stateCd==2">state_cd = '2'</if>
+	<if test="stateCd==3">state_cd = '3'</if>
 	 where guide_id = #{guideId}
 	 
 </update>
@@ -50,8 +50,8 @@
 <update id="memberAuthUpdateTo" parameterType="co.itrip.prj.member.service.MemberVO">
 	
 	update member set 
-	 auth = case when ( SELECT state_cd FROM guide WHERE guide_id = #{guideId}) ='2' then 'GUIDE' else 'USER' end
-	 where member_id=#{guideId}
+	 auth = case when ( SELECT state_cd FROM guide WHERE guide_id = #{memberId} ) = '2' then 'GUIDE' else 'USER' end
+	 where member_id=#{memberId}
 </update>
 
 <!--[박경아] 회원검색 -->

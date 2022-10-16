@@ -33,7 +33,9 @@
 				on c.job_cd = cm.cd_no
 				left join class_dt dt
 				on c.class_no = dt.class_no
-				where cm.cd_ini = 'J' and dt.ctime_no=1  order by 1 
+				where cm.cd_ini = 'J'
+				and c.confm_cd = 2 
+				and dt.ctime_no=1  order by 1 
 
 	</select><!-- and ennc = '활성화' -->
 	

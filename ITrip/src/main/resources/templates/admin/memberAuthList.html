@@ -125,11 +125,11 @@
 			
 			author.forEach(function (ath,idx) {
 				console.log(idx)
-				select.innerHTML += '<option value='+idx+'>'+ ath +'</option>';
+				select.innerHTML += '<option value='+(idx+1)+'>'+ ath +'</option>';
 			})
 			
 			td.append(select)
-			$("select option[value*='0']").prop('disabled',true);
+			$("select option[value*='1']").prop('disabled',true);
 			
 			let btn = modifyTd.firstElementChild  
 			btn.value='수정완료';
