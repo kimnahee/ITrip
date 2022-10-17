@@ -126,7 +126,7 @@ public class MemberController { //Principal
 		return "member/classReview";
 	}
 
-	// 마이페이지 내가 쓴 글(스터디게시판)
+	// 마이페이지 내가 쓴 글
 	@GetMapping("/myWriter")
 	public String myWriter(CommunityVO vo,CSBoardVO csvo, Model model, Principal principal,
 			@RequestParam(required = false, defaultValue = "1") int pageNum,
