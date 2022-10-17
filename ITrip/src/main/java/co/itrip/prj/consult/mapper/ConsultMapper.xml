@@ -147,7 +147,7 @@
                                     FROM DUAL) sys
 		where c.consult_no = p.no
         and p.category ='CONSULT'
-		and p.member_id = #{memberId};
+		and p.member_id = #{memberId}
 	</select>
 	
 	<insert id="consultLinkInsert">
