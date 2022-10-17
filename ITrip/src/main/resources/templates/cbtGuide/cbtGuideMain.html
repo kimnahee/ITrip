@@ -223,7 +223,6 @@ hr {
 				<input type="hidden" id="langCd" name="langCd" ></input>
 			</form>
 		</div>
-		<!-- LAYOUT 안에 SCRIPT있어야함! -->
 		<script>
 			// 버튼 클릭했을 때 cbt타입코드와 lang코드를 넘기는 클릭이벤트
 			$(".langSelc").on("click", ".question", function(e) {
@@ -231,10 +230,6 @@ hr {
 				let tg = e.target.id;
 				let gNo = tg.substring(1, 2); //전체 조회 중 유형 코드 추출 
 				let lNo = tg.substring(3); //전체 조회 중 언어 코드 추출
-
-				console.log(tg);
-				console.log(gNo);
-				console.log(lNo);
 
 				if (gNo == '4') {
 					$("#gtpCd").val('4');

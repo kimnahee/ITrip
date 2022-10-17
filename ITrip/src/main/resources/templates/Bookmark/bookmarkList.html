@@ -153,6 +153,12 @@
                                              <hr>
                                              <b class="card-text mb-3" th:text="${bm.ques}"></b><br>
                                              <br>
+                                              <!-- 이미지가 있으면 이미지 출력-->
+											<div id="atch" class="form-group" th:if="${not #strings.isEmpty(bm.attach)}">
+												<div class="form-file">
+												    <img class ="img-fluid" th:src="@{/download(fileName=${'/CBT_GUIDE/'+bm.attachDir})}" style="margin-bottom: 10px; width:600px;">
+												</div>
+											</div> <!-- 이미지 출력 끝 -->
                                              <!-- 보기 영역 -->
                                              <div th:if="${bm.ex1} != null">
                                                 <div class="form-check">
@@ -227,6 +233,12 @@
                                              <hr>
                                              <b class="card-text mb-3" th:text="${bm.ques}"></b><br>
                                              <br>
+                                              <!-- 이미지가 있으면 이미지 출력-->
+											<div id="atch" class="form-group" th:if="${not #strings.isEmpty(bm.attach)}">
+												<div class="form-file">
+												    <img class ="img-fluid" th:src="@{/download(fileName=${'/CBT_GUIDE/'+bm.attachDir})}" style="margin-bottom: 10px; width:600px;">
+												</div>
+											</div> <!-- 이미지 출력 끝 -->
                                              <!-- 보기 영역 -->
                                              <div th:if="${bm.ex1} != null">
                                                 <div class="form-check">
@@ -290,29 +302,27 @@
       <script>
 
 		$('.anserCall').on("click", function(e) {
-							let tg = e.currentTarget;
-							let crrCnsr = tg.nextElementSibling.value; //정답
+			let tg = e.currentTarget;
+			let crrCnsr = tg.nextElementSibling.value; //정답
 
-							if (tg.value == 1) { //객관식이면
-								let chk = $('input[name=radioChk]:checked')
-										.val();
-								if (chk == crrCnsr) {
-									alert("정답입니다.")
-								} else {
-									alert("오답입니다. 정답은 " + crrCnsr
-											+ "번 입니다.");
-								}
+			if (tg.value == 1) { //객관식이면
+				let chk = $('input[name=radioChk]:checked')
+						.val();
+				if (chk == crrCnsr) {
+					alert("정답입니다.")
+				} else {
+					alert("오답입니다. 정답은 " + crrCnsr + "번 입니다.");
+				}
 
-							} else { //단답형이면
-								let sCnsr = tg.parentElement.childNodes[16].childNodes[1].childNodes[1].value; // 단답형 인풋 영역
-								if (sCnsr == crrCnsr) {
-									alert("정답입니다.")
-								} else {
-									alert("오답입니다. 정답은 [" + crrCnsr
-											+ "]입니다.");
-								} 
-							}
-						})
+			} else { //단답형이면
+				let sCnsr = tg.parentElement.childNodes[16].childNodes[1].childNodes[1].value; // 단답형 인풋 영역
+				if (sCnsr == crrCnsr) {
+					alert("정답입니다.")
+				} else {
+					alert("오답입니다. 정답은 [" + crrCnsr + "]입니다.");
+				} 
+			}
+		})
       </script>
    </div>
 </body>

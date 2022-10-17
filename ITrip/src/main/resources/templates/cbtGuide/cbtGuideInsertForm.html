@@ -138,17 +138,16 @@ p {
         
         function add(){ 
          let newDiv = document.createElement("div");
-           //newDiv.setAttribute("class","col-sm-6 keywordArea");
 
            newDiv.innerHTML = `<div class="col-sm-10 keywordArea" style="width:100%">
            <div class="form-group position-relative has-icon-right">
            <input type="text" class="form-control keyword"  name="keyword"
                     placeholder="정답 키워드를 입력해주세요. 키워드로 채점이 진행됩니다.">
-                    <div class="form-control-icon"><a style="cursor: pointer;" onclick="add()"><h1>+</h1></a> </div></div>`;
+                    <div class="form-control-icon"><a style="cursor: pointer;" 
+                    onclick="add()"><h1>+</h1></a> </div></div>`;
            document.getElementById("testArea").append(newDiv);
-           
-
         }
+        
         function insertCall(){
             let insertText = confirm("등록하겠습니까?");
             if(insertText){

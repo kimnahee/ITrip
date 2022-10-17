@@ -142,8 +142,8 @@
 					                                </div>
 												    <!-- 북마크 끝 -->
 													<input type="hidden" id="cbtNo0" name="cbtNo0" th:value="${cbt.cbtNo}">
-													<input type="hidden" id="PreGtpCd" name="PreGtpCd" th:value="${tCd}">
-													<input type="hidden" id="PreLangCd" name="PreLangCd" th:value="${lCd}">
+												<input type="hidden" id="PreGtpCd" name="PreGtpCd" th:value="${cbtGuideVO.gtpCd}">
+													<input type="hidden" id="PreLangCd" name="PreLangCd" th:value="${cbtGuideVO.langCd}">
 													<span id="QUES" th:text="${cbt.ques}">문제</span>
 													<br> <a>&nbsp;&nbsp;[ 출제자 : <span
 														th:text="${cbt.memberId}"></span> ]
@@ -264,7 +264,6 @@
 			} else{
 				var result = confirm("즐겨찾기가 되어있습니다. 즐겨찾기를 취소하겠습니까?");
 				if(result){
-				    
 				    bookmarkDelete(tg);
 				}else{
 					alert("취소하였습니다.");
@@ -322,52 +321,35 @@
 			      let cbtNos = document.getElementsByName("cbtNo0"); 
 			      $("#gtpCd").val($("#PreGtpCd").val())
 			      $("#langCd").val($("#PreLangCd").val());
-			      //console.log($("#PreGtpCd").val());
+			      console.log($("#PreGtpCd").val());
+			      console.log("클릭됨")
 			      
 			      if($("#PreGtpCd").val() == 1 ){ //=================== 객관식 유형JS
 			      
-			      let chks1 = $('input[name=cbt0]:checked').val();
-			      let chks2 = $('input[name=cbt1]:checked').val();
-			      let chks3 = $('input[name=cbt2]:checked').val();
-			      let chks4 = $('input[name=cbt3]:checked').val();
-			      let chks5 = $('input[name=cbt4]:checked').val();
-		    
-		      let choiceCnt = 0; //라디오 박스 유효성 검사용 카운트
-		     //라디오 타입의 네임이 choice를 for문 돌면서 checked value값 담음    
-              $("#cnsr1").val(chks1);
-				    $("#cnsr2").val(chks2);
-				    $("#cnsr3").val(chks3);
-				    $("#cnsr4").val(chks4);
-				    $("#cnsr5").val(chks5);
-		     
-		     // 유효성검사 나중에 보충할 예정
-			    /* if (checkArray[i].checked == true) { 
-			    	console.log("chekArry:",checkArray[i],",value:",checkArray[i].value);
-				    choiceCnt++;
-				    flag = false;
-				    //유효성 검사
-				    if(choiceCnt == cbtNos.length){
-				       console.log("문제를 다 풀었습니다..");
-				       choice_f=true;
-			       }  
-			   } */
-		    //유효성 검사2
-		   /*  if(choiceCnt < cbtNos.length){
-			       alert("덜 푼 문제가 있습니다.");
-			       choice_f = false;
-			   }  */
+			         //라디오 타입의 네임이  checked value값 담음    
+				      let chks1 = $('input[name=cbt0]:checked').val();
+				      let chks2 = $('input[name=cbt1]:checked').val();
+				      let chks3 = $('input[name=cbt2]:checked').val();
+				      let chks4 = $('input[name=cbt3]:checked').val();
+				      let chks5 = $('input[name=cbt4]:checked').val();
+			    
+	                  $("#cnsr1").val(chks1);
+					  $("#cnsr2").val(chks2);
+					  $("#cnsr3").val(chks3);
+					  $("#cnsr4").val(chks4);
+					  $("#cnsr5").val(chks5);
 			   
-            //문제 번호 리스트 
-           	for(var i = 0; i< cbtNos.length; i++){
-           		console.log("문제번호:",cbtNos[i].value);
-           	    $("#cbtNo1").val(cbtNos[0].value);
-			    $("#cbtNo2").val(cbtNos[1].value);
-			    $("#cbtNo3").val(cbtNos[2].value);
-			    $("#cbtNo4").val(cbtNos[3].value);
-			    $("#cbtNo5").val(cbtNos[4].value);  
-				    
-            }
-            	$("#myFrm").submit();
+		                //문제 번호들을 hidden Form에 담음
+		              for(var i = 0; i< cbtNos.length; i++){
+			           	    $("#cbtNo1").val(cbtNos[0].value);
+						    $("#cbtNo2").val(cbtNos[1].value);
+						    $("#cbtNo3").val(cbtNos[2].value);
+						    $("#cbtNo4").val(cbtNos[3].value);
+						    $("#cbtNo5").val(cbtNos[4].value);  
+		                }
+                
+            	     $("#myFrm").submit();
+            	     
 			      }else if($("#PreGtpCd").val() == 2 ){ //================ 단답형 유형 JS 
 		            	 var shortCnsrs = document.getElementsByName("inputCNSR"); // 단답형 text박스
 		                 var cnsrCnt = 0;

@@ -89,36 +89,35 @@
 		
 		<if test="gtpCd!=4">
 			SELECT G.CBT_NO,
-			       G.QUES,
-			       G.LANG_CD,
-			       G.CNSR,
-			       G.EX1,
-			       G.EX2, 
-		    	   G.EX3,
-		    	   G.EX4,
+	               G.QUES,
+	               G.LANG_CD,
+	               FUN_CODENAME('L',G.LANG_CD) LANG_CD_name,
+	               G.CNSR,
+	               G.EX1, G.EX2, G.EX3, G.EX4,
 		    	   G.ATTACH,
 		    	   G.ATTACH_DIR,
-		    	   G.CNSR_CNT, G.CALL, 
+		    	   G.CNSR_CNT,
+		    	   G.CALL, 
 		    	   G.EXPLNA,
 		    	   G.GTP_CD,
+		    	   FUN_CODENAME('G',G.GTP_CD) GTP_CD_name,
 		    	   G.MEMBER_ID
-			FROM (SELECT ROWNUM AS ROWNO, 
+			FROM (SELECT ROWNUM AS ROWNO,
 			             CBT_NO,
 			             QUES,
 			             LANG_CD,
-                         CNSR, 
-			             EX1,
-			             EX2,
-			             EX3,
-			             EX4,
+			             FUN_CODENAME('L',LANG_CD) LANG_CD_name,
+			             CNSR, 
+			             EX1, EX2, EX3, EX4,
 			             ATTACH,
 			             ATTACH_DIR,
 			             CNSR_CNT, 
 			             CALL,
 			             EXPLNA,
 			             GTP_CD,
+			             FUN_CODENAME('G',GTP_CD) GTP_CD_name,
 			             MEMBER_ID  
-			       FROM CBT_GUIDE 
+			      FROM CBT_GUIDE 
 			       WHERE  GTP_CD=#{gtpCd} 
 			        AND LANG_CD=#{langCd} 
 			       ORDER BY DBMS_RANDOM.VALUE) G
