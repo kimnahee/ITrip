@@ -103,8 +103,8 @@
 				</div>
 			</div>
 			<form id="frm" action="" method="post">
-				<input type="text" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-				<input type="text" name="cbtNo" th:value="${myCbt.cbtNo}" >
+				<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+				<input type="hidden" name="cbtNo" th:value="${myCbt.cbtNo}" >
 			</form>
 		</section>
 		

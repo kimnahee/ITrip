@@ -74,13 +74,13 @@ public class ClassController {
 			throws IllegalStateException, IOException {
 		// 새로운파일저장경로
 		String oFileName = file.getOriginalFilename();
-		File files = new File(fileDir+"/Thumbnail/");
+		File files = new File(fileDir+"/classimg/");
 		if(!files.exists()) {
 			files.mkdirs();
 		}
 		if (!oFileName.isEmpty()) {
 			String sFileName = UUID.randomUUID().toString() + oFileName.substring(oFileName.lastIndexOf(".")); // 마지막.뒤에값
-			String path = fileDir + "/Thumbnail/" + sFileName;
+			String path = fileDir + "/classimg/" + sFileName;
 			file.transferTo(new File(path));
 			vo.setAttach(oFileName);
 			vo.setAttachDir(sFileName);
