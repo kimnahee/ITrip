@@ -104,7 +104,7 @@ height: 45px;
 											클래스 시작전인 수업입니다.<br> 다시 신청페이지를 확인하고 싶다면 아래 버튼을 눌러주세요.
 										</p>
 									</div>
-									 <img th:src="@{/download(fileName=${'/Thumbnail/'+cList.attachDir})}"
+									 <img th:src="@{/download(fileName=${'/classimg/'+cList.attachDir})}"
 										alt="Image" class="img-fluid" /> 
 									<ul class="list-group list-group-flush">
 										<li class="list-group-item" th:text="${cList.st}">Cras
@@ -134,7 +134,7 @@ height: 45px;
 											출석 횟수를 다 채울 시 수료증이 발급됩니다.
 										</p>
 									</div>
-									 <img th:src="@{/download(fileName=${'/Thumbnail/'+cList.attachDir})}"
+									 <img th:src="@{/download(fileName=${'/classimg/'+cList.attachDir})}"
 										alt="Image" class="img-fluid" /> 
 									<ul class="list-group list-group-flush">
 										<li class="list-group-item" th:text="${cList.st}">Cras
@@ -164,7 +164,7 @@ height: 45px;
 												발급받으실 수 있습니다.
 										</p>
 									</div>
-									 <img th:src="@{/download(fileName=${'/Thumbnail/'+cList.attachDir})}" alt="Image" class="img-fluid" />
+									 <img th:src="@{/download(fileName=${'/classimg/'+cList.attachDir})}" alt="Image" class="img-fluid" />
 									<ul class="list-group list-group-flush">
 										<li class="list-group-item" th:text="${cList.st}">Cras
 											justo odio</li>
