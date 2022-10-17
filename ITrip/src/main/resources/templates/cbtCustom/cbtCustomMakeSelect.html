@@ -47,7 +47,7 @@
 										<div id="atch" class="form-group"th:if="${not #strings.isEmpty(cbt.attach)}">
 											<span class="mb-2 text-md">
 												<div style="text-align: center;">
-													<img th:src="@{*{attachDir}}" style="margin-bottom: 10px;">
+													  <img th:src="@{/download(fileName=${'/CBT_GUIDE/'+cbt.attachDir})}" style="margin-bottom: 10px; width:600px;">
 												</div>
 											</span>
 										</div>
