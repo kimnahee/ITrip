@@ -158,7 +158,7 @@ layout:decorate="~{layout/layout}" xmlns:sec="http://www.thymeleaf.org/extras/sp
 		function reCheck(cNo,idx){
 			newAnswer = $("#newAnswer"+cNo).val()
 			realCnsr = $('input[id=cnsr'+(idx)+']').val()
-			
+			    
 			if(newAnswer == realCnsr){
 				alert("정답입니다.")
 			}else{
