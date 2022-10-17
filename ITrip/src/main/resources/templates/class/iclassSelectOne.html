@@ -22,9 +22,7 @@ layout:decorate="~{layout/layout}">
                     <div class="card-body">
                         <div> <!-- @{C:/Temp}+ -->
                         	<!-- <img th:src="@{*{classOne.attachDir}}"alt="Image" class="img-fluid" width="500px" style="float: right;"> -->
-
-                     		 <img th:src="@{/download(fileName=${'/Thumbnail/'+classOne.attachDir})}" width="300px" style="float: right;" /> 
-
+                     		 <img th:src="@{/download(fileName=${'/classimg/'+classOne.attachDir})}" width="350px" style="float: right;"/> 
                         </div>
                         <div class="divider">
                             <div class="divider-text">기본정보</div>
