@@ -119,7 +119,7 @@
 						</div>
 						<div class="card-body"> 
 							<div th:if="${cbtOne.attachDir !=null}">
-                     			<img th:src="@{/download(fileName=${'/CBT_USER/'+cbtOne.attachDir})}" alt="이미지" style="margin-bottom: 10px;width: 350px;"/><br>
+                     			<img th:src="@{/download(fileName=${'/CBT_USER/'+cbtOne.attachDir})}" alt="이미지" style="margin-bottom: 10px;width: 500px;"/><br>
 							</div>
 							<div class="form-check">
 								<b>1</b>. <a href="#" class="ex" th:text="${cbtOne.ex1}"></a><br> 
@@ -151,7 +151,7 @@
 						</div>
 						<div class="card-body cnsrOX"> 
 							<div th:if="${cbtOne.attachDir !=null}">
-                     			<img th:src="@{/download(fileName=${'/CBT_USER/'+cbtOne.attachDir})}" alt="이미지" style="margin-bottom: 10px;width: 350px;"/><br>
+                     			<img th:src="@{/download(fileName=${'/CBT_USER/'+cbtOne.attachDir})}" alt="이미지" style="margin-bottom: 10px;width: 500px;"/><br>
                      		</div>
 							<label for="cnsr" class="form-label">O 또는 X를 선택하세요.</label>
 							<div class="form-check">
@@ -277,7 +277,7 @@ function newQuestion(res){
 			if(res.attachDir != null){
 				cardContent.innerHTML += 
 					`<div class="card-body">
-					<img src="${'/download?fileName=/CBT_USER/'+res.attachDir}" alt="이미지" style="margin-bottom: 10px;width: 350px;"/><br>`
+					<img src="${'/download?fileName=/CBT_USER/'+res.attachDir}" alt="이미지" style="margin-bottom: 10px;width: 500px;"/><br>`
 			}
 		cardContent.innerHTML += 
 			`<div class="form-check">
@@ -298,7 +298,7 @@ function newQuestion(res){
 			if(res.attachDir != null){
 				cardContent.innerHTML +=
 					`<div class="card-body">
-					 <img src="${'/download?fileName=/CBT_USER/'+res.attachDir}" alt="이미지" style="margin-bottom: 10px;width: 350px;"/><br>`
+					 <img src="${'/download?fileName=/CBT_USER/'+res.attachDir}" alt="이미지" style="margin-bottom: 10px;width: 500px;"/><br>`
 			}
 		cardContent.innerHTML += 
 				`<div class="card-body cnsrOX"> 
