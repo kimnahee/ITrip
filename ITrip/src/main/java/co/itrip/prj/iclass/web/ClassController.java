@@ -80,7 +80,7 @@ public class ClassController {
 		}
 		if (!oFileName.isEmpty()) {
 			String sFileName = UUID.randomUUID().toString() + oFileName.substring(oFileName.lastIndexOf(".")); // 마지막.뒤에값
-			String path = fileDir + "/Thumbnail/" + sFileName;
+			String path = fileDir + "/classimg/" + sFileName;
 			file.transferTo(new File(path));
 			vo.setAttach(oFileName);
 			vo.setAttachDir(sFileName);
