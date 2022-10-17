@@ -39,13 +39,13 @@ layout:decorate="~{layout/layout}" xmlns:sec="http://www.thymeleaf.org/extras/sp
 								<a>&nbsp;&nbsp;[ 출제자 : <span th:text="${cbt.memberId}"></span> ] </a>
 							</div>
 						</div>
-						<div id="atch" class="form-group"th:if="${not #strings.isEmpty(cbt.attach)}">
-							<span class="mb-2 text-md">
-								<div style="text-align: center;">
-									  <img th:src="@{/download(fileName=${'/CBT_GUIDE/'+cbt.attachDir})}" style="margin-bottom: 10px; width:600px;">
-								</div>
-							</span>
-						</div>
+					<div id="atch" class="form-group"th:if="${not #strings.isEmpty(cbt.attach)}">
+						<span class="mb-2 text-md">
+							<div style="text-align: center;">
+								  <img th:src="@{/download(fileName=${'/CBT_GUIDE/'+cbt.attachDir})}" style="margin-bottom: 10px; width:600px;">
+							</div>
+						</span>
+					</div>
 						<div class="form-check">
 							<input class="form-check-input" type="radio" th:id="|cbt${cbt.cbtNo}1|" th:name="|cbt${st.index}|" value="1"> 
 							<label class="form-check-label" th:for="|cbt${cbt.cbtNo}1|" th:text="${cbt.ex1}"></label>

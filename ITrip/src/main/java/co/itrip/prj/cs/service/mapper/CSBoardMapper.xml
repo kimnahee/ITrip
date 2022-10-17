@@ -9,6 +9,7 @@
 		title,
 		content,
 		member_id,
+		nick,
 		dt,
 		hit,
 		orgno,
@@ -28,6 +29,7 @@
 		title,
 		content,
 		member_id,
+		nick,
 		dt,
 		hit,
 		orgno,
@@ -52,7 +54,7 @@
 		insert into csboard
 		values(#{csNo}, #{title}, #{content},
 		#{memberId},
-		sysdate, 0, #{csNo}, 0, 0, #{ctgry})
+		sysdate, 0, #{csNo}, 0, 0, #{ctgry}, #{nick})
 	</insert>
 	
 	<!-- 게시글 수정 -->
@@ -81,7 +83,7 @@
 			from csboard
 		</selectKey>
 		insert into csboard
-		values(#{csNo}, 'RE:' || #{title}, #{content}, #{memberId}, sysdate, 0, #{orgNo}, #{groupOdr}+1, #{groupLyr}+1, 'QNA')
+		values(#{csNo}, 'RE:' || #{title}, #{content}, #{memberId}, sysdate, 0, #{orgNo}, #{groupOdr}+1, #{groupLyr}+1, 'QNA', #{nick})
 	</insert>
 	
 	<!-- 답글 상태 수정 -->

@@ -43,7 +43,7 @@
 											<td th:text=${g.dutyCdName}></td>
 											<td th:text=${g.careerCdName}></td>
 											<td><a class="dc" th:id="${g.guideId}" th:text=${g.dc} style="cursor: pointer;"></a></td>
-											<td><a th:href="@{download(fileName='/guide/'+${g.attachDir})}"  th:text="${g.attach}" ></a></td>
+											<td><a th:href="@{download(fileName='/empfile/'+${g.attachDir})}"  th:text="${g.attach}" ></a></td>
 											<td th:text=${g.cdName}></td>
 											<td th:id="${g.guideId+'Udp'}">
 												<input type="button" th:onclick="updateFnc(this.getAttribute('id'))"

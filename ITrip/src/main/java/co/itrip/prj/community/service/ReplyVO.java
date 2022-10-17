@@ -11,5 +11,6 @@ public class ReplyVO {
 	private int comNo;
 	private String content;
 	private String memberId;
+	private String nick;
 	private Date dt;
 }
