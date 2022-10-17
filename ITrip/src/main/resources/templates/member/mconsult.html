@@ -64,7 +64,6 @@ height: 45px;
 				<!-- 결제한 상담이 있을 때 -->
 				<div class="row" th:unless="${#lists.isEmpty(pageInfo.list)}">
 					<div th:each="con : ${pageInfo.list}" style="width: 380px;">
-					
 					 <!-- 상담이 진행중일 때 -->
 							<div class="card" th:if="${con.st == '진행중'}">
 								<div class="card-content">
