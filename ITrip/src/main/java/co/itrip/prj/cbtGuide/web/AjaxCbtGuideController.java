@@ -32,7 +32,7 @@ public class AjaxCbtGuideController {
 	private CbtGuideService cgService;
 
 	@PostMapping("/ajaxMyCbtLongList.do")
-	public MyCbtLongVO ajaxMyCbtLongList(CbtGuideVO vo, MyCbtLongVO myVo,  Model model, HttpServletRequest request) {
+	public MyCbtLongVO ajaxMyCbtLongList(CbtGuideVO vo, MyCbtLongVO myVo) {
 		cgService.ajaxMyCbtLongInsert(myVo); // 사용자가 입력한 값 등록
 		return cgService.ajaxMyCbtLongList(myVo);
 	}

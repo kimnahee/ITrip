@@ -245,14 +245,10 @@ public class CbtGuideServiceImpl implements CbtGuideService {
 	/* 즐겨찾기 카운트 */
 	@Override
 	public List<Integer>  ajaxBookmarkCount(BookmarkVO vo) {
-		System.out.println("=========================ServiceImpl"+ vo);
 		List<Integer> r = new ArrayList<>();
 		for(int i = 0; i < vo.getCbtNos().size(); i++) {
 			vo.setCbtNo(vo.getCbtNos().get(i)); 
-			System.out.println("=========================vo.getCbtNo()"+vo.getCbtNos().get(i));
 		    r.add(map.ajaxBookmarkCount(vo));
-		    System.out.println("===========================+r : " +r);
-			
 		}
 		
 		return r;

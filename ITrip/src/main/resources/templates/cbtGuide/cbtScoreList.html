@@ -27,11 +27,11 @@
               <thead>
                 <tr>
                   <th scope="col">#</th>
-                  <th scope="col" >문제 1</th>
-                  <th scope="col">문제 2</th>
-                  <th scope="col">문제 3</th>
-                  <th scope="col">문제 4</th>
-                  <th scope="col">문제 5</th>
+                  <th scope="col" >문제 <span th:text="${myList.cbtNo1}"></span> </th>
+                  <th scope="col" >문제 <span th:text="${myList.cbtNo2}"></span> </th>
+                  <th scope="col" >문제 <span th:text="${myList.cbtNo3}"></span> </th>
+                  <th scope="col" >문제 <span th:text="${myList.cbtNo4}"></span> </th>
+                  <th scope="col" >문제 <span th:text="${myList.cbtNo5}"></span> </th>
                 </tr>
               </thead>
               <tbody>
@@ -62,8 +62,14 @@
 											<div class="col-12">
 												<div class="form-group" >
 													<img alt="" src="images/O.png" style="position:absolute; z-index:2;width: 55px;">
-													&nbsp;&nbsp;<h4>문제</h4><br>
+													&nbsp;&nbsp;<h4>문제<span  th:text="${o.cbtNo}"></span></h4><br>
 													<h5><span th:text="${o.ques}"></span></h5>
+													<!-- 이미지가 있으면 이미지 출력-->
+													<div id="atch" class="form-group" th:if="${not #strings.isEmpty(o.attach)}">
+														<div class="form-file">
+														    <img th:src="@{/download(fileName=${'/CBT_GUIDE/'+o.attachDir})}" style="margin-bottom: 10px; width:600px;">
+														</div>
+													</div> <!-- 이미지 출력 끝 -->
 													<div th:if="${o.ex1} != null">
 													<label>1. <span th:text="${o.ex1}"></span></label><br>
 													<label>2. <span th:text="${o.ex2}"></span></label><br>
@@ -101,8 +107,14 @@
 											<div class="col-12">
 												<div class="form-group">
 												    <img alt="" src="images/X.png" style="position:absolute; z-index:2;width: 55px">
-												    &nbsp;&nbsp;<h4>문제<br></h4>
+												    &nbsp;&nbsp;<h4>문제<span  th:text="${x.cbtNo}"></span></h4>
 													<h5><span th:text="${x.ques}"></span></h5>
+													<!-- 이미지가 있으면 이미지 출력-->
+													<div id="atch" class="form-group" th:if="${not #strings.isEmpty(x.attach)}">
+														<div class="form-file">
+														    <img th:src="@{/download(fileName=${'/CBT_GUIDE/'+x.attachDir})}" style="margin-bottom: 10px; width:600px;">
+														</div>
+													</div> <!-- 이미지 출력 끝 -->
 													<div th:if="${x.ex1} != null">
 													<label>1. <span th:text="${x.ex1}"></span></label><br>
 													<label>2. <span th:text="${x.ex2}"></span></label><br>
