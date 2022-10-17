@@ -6,7 +6,7 @@
 		<selectKey keyProperty="calendarNo" order="BEFORE" resultType="int">
 			SELECT CASE WHEN MAX(CALENDAR_NO) IS NULL THEN 1 ELSE MAX(CALENDAR_NO)+1 END FROM CALENDAR
 		</selectKey>
-		INSERT INTO CALENDAR VALUES (#{calendarNo},#{merchantUid},#{guideId},#{member_id},#{name},#{conday},#{beginTime},#{no})
+		INSERT INTO CALENDAR VALUES (#{calendarNo},#{merchantUid},#{guideId},#{member_id},#{name}, to_date(#{conday}, 'yyyy-MM-dd'),#{beginTime},#{no})
 	</insert>
 	
 	<!-- 클래스 결제 시 캘린더 테이블에 내용 추가 [박은지] -->
@@ -15,7 +15,7 @@
 			SELECT CASE WHEN MAX(CALENDAR_NO) IS NULL THEN 1 ELSE MAX(CALENDAR_NO)+1 END FROM CALENDAR
 		</selectKey>
 		
-		INSERT INTO CALENDAR VALUES (#{calendarNo},#{merchantUid},#{guideId},#{member_id},#{name}, to_date(#{conday}, 'yyyy-mm-dd') ,#{beginTime},#{no})
+		INSERT INTO CALENDAR VALUES (#{calendarNo},#{merchantUid},#{guideId},#{member_id},#{name}, to_date(#{conday}, 'yyyy-MM-dd') ,#{beginTime},#{no})
 	</insert>
 	
 	<!-- 가이드 별 캘린더 상담 리스트[박은지] -->
