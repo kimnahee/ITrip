@@ -74,7 +74,7 @@ public class ClassController {
 			throws IllegalStateException, IOException {
 		// 새로운파일저장경로
 		String oFileName = file.getOriginalFilename();
-		File files = new File(fileDir+"/Thumbnail/");
+		File files = new File(fileDir+"/classimg/");
 		if(!files.exists()) {
 			files.mkdirs();
 		}
