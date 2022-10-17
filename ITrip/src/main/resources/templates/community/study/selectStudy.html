@@ -42,6 +42,9 @@
 						<input type="hidden" id="myId" class="form-control" name="myId"
 							th:value=${#authentication.principal.member.memberId}
 							readonly="readonly">
+							<input type="hidden" id="myNick" class="form-control" name="myNick"
+							th:value=${#authentication.principal.member.nick}
+							readonly="readonly">
 						<div class="form-body">
 							<div class="row">
 								<div class="form-group" style="display: none;">
@@ -155,7 +158,7 @@
 		<script>
 			let comNo = $("#comNo").val();
 			let mid = $("#myId").val();
-			let nick = $("#nick").val();
+			let nick = $("#myNick").val();
 			
 			function replyList(){
 				$.ajax({ 
