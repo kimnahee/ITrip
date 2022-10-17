@@ -36,4 +36,5 @@ public interface CommunityMapper {
 	int replyInsert(ReplyVO vo);//댓글 등록
 	int replyUpdate(ReplyVO vo);//댓글 수정
 	int replyDelete(ReplyVO vo);//댓글 삭제
+	int replyCount(ReplyVO vo);//댓글 개수
 }

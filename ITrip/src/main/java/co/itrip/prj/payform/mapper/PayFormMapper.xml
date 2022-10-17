@@ -15,6 +15,6 @@
 
 <!-- 상담 결제 등록 [박은지] -->
 <insert id="coPayformInsert">
-	INSERT INTO PAYFORM VALUES(#{merchantUid},#{name},#{amount},#{member_id}, #{category} ,#{no},sysdate, to_date(#{conday}, 'yyyy-MM-dd'), #{beginTime},#{endTime})
+	INSERT INTO PAYFORM VALUES(#{merchantUid},#{name},#{amount},#{member_id}, #{category} ,#{no},sysdate, #{conday}, #{beginTime},#{endTime})
 </insert>
 </mapper>
