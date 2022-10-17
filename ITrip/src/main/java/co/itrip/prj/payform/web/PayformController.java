@@ -101,10 +101,6 @@ public class PayformController {
 	
 	
 	
-	
-	
-	
-	
 	/*
 	 * 2022.09.27 작업하였으나 API변경으로 인해 사용안함
 	 * @GetMapping("/payformTest.do") public String payformTest() { return

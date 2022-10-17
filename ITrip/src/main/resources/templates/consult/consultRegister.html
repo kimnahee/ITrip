@@ -71,22 +71,22 @@ th {
 											th:value="${_csrf.token}"> <input type="hidden"
 											id="member_id" class="form-control" name="member_id"
 											th:value=${#authentication.principal.member.memberId}>
-										<input type="text" id="merchantUid" name="merchantUid"
+										<input type="hidden" id="merchantUid" name="merchantUid"
 											class="form-control"
 											th:value="'CO'+${consult.consultNo+#authentication.principal.member.memberId+(max+1)}">
-										<input type="text" id="consultNo" name="consultNo"
+										<input type="hidden" id="consultNo" name="consultNo"
 											class="form-control" th:value="${consult.consultNo}">
-										<input type="text" id="no" name="no" class="form-control"
+										<input type="hidden" id="no" name="no" class="form-control"
 											th:value="${consult.consultNo}"> <input type="hidden"
 											id="title" name="name" class="form-control"
-											th:value="${consult.title}"> <input type="text"
+											th:value="${consult.title}"> <input type="hidden"
 											id="guideId" name="guideId" class="form-control"
-											th:value="${consult.guideId}"> <input type="text"
+											th:value="${consult.guideId}"> <input type="hidden"
 											id="amount" name="amount" value=""> <input
-											type="text" id="conday" name="conday" value=""> <input
-											type="text" id="category" name="category"
+											type="hidden" id="conday" name="conday" value=""> <input
+											type="hidden" id="category" name="category"
 											class="form-control" value="CONSULT"> <input
-											type="text" id="beginTime" name="beginTime"
+											type="hidden" id="beginTime" name="beginTime"
 											class="form-control" value=""> <input type="button"
 											onclick="pay()" class="btn btn-primary btn-sm mb-0"
 											id="payForm" value="신청하기"

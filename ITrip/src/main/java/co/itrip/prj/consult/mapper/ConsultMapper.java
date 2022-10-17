@@ -27,6 +27,8 @@ public interface ConsultMapper {
 
 	ConsultDtVO ajaxConsultPrice(ConsultDtVO vo); //상담 신청시 가격 가져오기 (서비스에는 없음) -은지
 	int consultTime(ConsultDtVO vo); // 상담 신청 시 시간 가져오기 - 은지
+	
+	int consultLinkInsert(ConsultChatVO vo); // 가이드 상담 링크 입력 -은지
 	ConsultChatVO consultChat(ConsultChatVO vo); //채팅방 연결 - 나희
 	
 }

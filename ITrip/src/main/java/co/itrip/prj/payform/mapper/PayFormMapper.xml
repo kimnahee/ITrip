@@ -2,15 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="co.itrip.prj.payform.mapper.PayFormMapper">
 
+<!-- 결제 횟수 카운트 [박은지] -->
 <select id="payCount" resultType="int">
 	SELECT NVL(COUNT(*),1)
 	 FROM PAYFORM
 </select>
 
+<!-- 클래스 결제 등록 [박경아] -->
 <insert id="clPayformInsert" parameterType="co.itrip.prj.payform.service.PayformVO">
 	INSERT INTO PAYFORM VALUES(#{merchantUid},#{name},#{amount},#{member_id},'CLASS',#{no},sysdate, to_date(#{conday}, 'yyyy-MM-dd'), #{beginTime},#{endTime})
 </insert>
 
+<!-- 상담 결제 등록 [박은지] -->
 <insert id="coPayformInsert">
 	INSERT INTO PAYFORM VALUES(#{merchantUid},#{name},#{amount},#{member_id}, #{category} ,#{no},sysdate, to_date(#{conday}, 'yyyy-MM-dd'), #{beginTime},#{endTime})
 </insert>

@@ -10,6 +10,12 @@
 <meta content="" name="keywords">
 <meta content="" name="description">
 <style>
+	.modal-body {
+		padding: 10%;
+	}
+	.modal {
+		width: 100%;
+	}
 	.table{
 		text-align: center;
 		margin-top: 50px;
@@ -27,6 +33,7 @@
 	    border-radius: 0.25rem;
 	    font-size: 1.6rem;
 	}
+
 </style>
 </head>
 <body>
@@ -52,7 +59,7 @@
 							                    <div class="modal-dialog modal-dialog-scrollable" role="document">
 							                        <div class="modal-content">
 								                        <div class="modal-header">
-								                            <h5 class="modal-title" id="exampleModalScrollableTitle"> Follower </h5>
+								                            <h5 class="modal-title" id="exampleModalScrollableTitle"> Follower List </h5>
 								                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 								                            <i data-feather="x"></i>
 								                            </button>
@@ -62,8 +69,9 @@
 								                    			<thead>
 								                        			<tr>
 											                            <th class='col-md-4'>USER ID</th>
-											                            <th class='col-md-5'>NICK NAME</th>
-											                            <th class='col-md-5'>삭제</th>
+											                            <th class='col-md-4'>NICK NAME</th>
+											                            <th class='col-md-4'>UNFOLLOW</th>
+											                            <th></th>
 								                       				</tr>
 								                    			</thead> 
 								                    			<tbody id="followBody">
@@ -111,7 +119,7 @@
 								<tr>
 									<td><button id="gConsult" style="width: 150px;" class="btn btn-sm btn-primary">1:1상담</button></td>
 									<td><button id="gClass" style="width: 150px;" class="btn btn-sm btn-primary">class</button></td>
-									<td><button id="grevice" style="width: 150px;" class="btn btn-sm btn-primary">회원정보수정</button></td>
+									<td><button id="grevice" style="width: 150px;" class="btn btn-sm btn-primary">가이드정보수정</button></td>
 									<td><button id="userList" style="width: 150px;" class="btn btn-sm btn-primary">수강생 리스트</button></td>
 								</tr>
 							</table>
@@ -155,8 +163,10 @@
 	                    </div>
 	                    -->
 					</div>
+					
 				</div>
 		<script>
+		
     	let guideId = $("#guideId").val();
     	
         /*------------	
@@ -183,9 +193,9 @@
     		location.href = "/userList.do";
     	})
     	
-       /*------------	
+       /*----------------	
    	   // 팔로워 리스트 띄우기
-   	   -------------*/
+   	   -----------------*/
        function followerList() {
 	       	$.ajax({
 	       		url : "/followerList.do",
@@ -195,22 +205,22 @@
 	       			 $("#fcount").append(makeH(data));
 	       			 // 내용 출력
 	           	     data.forEach(element=>{
-	       				$("#followBody").append(makeTr(element));
+	       			$("#followBody").append(makeTr(element));
 	           		})  
 	       		}
 	       	})
        }
-    	
+       
         /*------------	
    	   // 내용 출력할 Tr생성
    	   -------------*/    	
         function makeTr(data) {
    			let tr = $("<tr>").append($("<td>").html(data.memberId))
-   						  .append($("<td>").html(data.nick))
-   						  .append($("<td>").append($("<div>").append($("<button>").addClass("btn").addClass("deletF").html("unfo"))))
+   						      .append($("<td>").html(data.nick))
+   						      .append($("<td>").append($("<div>").append($("<button>").addClass("btn").addClass("deletF").html("삭제").css("color","red"))));
   	 		return tr;
        }  
-        
+
         /*------------	
    	   // 헤드생성
    	   -------------*/ 
@@ -238,12 +248,11 @@
 	   				   $("#followBody").empty();
 	   				   $("#fcount").empty();
 	   				   followerList();
-	   				   
-	   			   }
-	   		   }
-	   	   })
-      })  
-        	
+	   			   		}
+	   		   		   }
+	   	  		 })
+     	})  
+     	   	
    	$(document).ready(function(){    
 			followerList(); //페이지 로딩시 follow목록, follow수 출력
 		});

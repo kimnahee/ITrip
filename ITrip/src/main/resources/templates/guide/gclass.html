@@ -38,7 +38,7 @@
 					<button id="startClass" style="width: 140px;" class="btn btn-sm btn-primary">등록하기</button>
 					<button id="alreadyClass" style="width: 150px;" class="btn btn-sm btn-primary">등록한 클래스 목록</button>
 				</div>
-				<div th:each="classlist : ${classList}" th:if="${classlist.confmCd == '2'}" style="width: 380px; display: inline-block;">
+				<div th:each="classlist : ${pageInfo.list}" th:if="${classlist.confmCd == '2'}" style="width: 380px; display: inline-block;">
 								<table class="table table-hover table-bordered" style="width: 300px;">
 									<tbody>
 										<tr style="display: none;">
@@ -114,9 +114,40 @@
 									</tbody>								
 								</table>
 							</div>
+									<!-- 페이지네이션 -->
+					<nav aria-label="Page navigation example">
+						<ul class="pagination pagination-info  justify-content-center">
+							<li class="page-item disabled"
+								th:if="${pageInfo.isIsFirstPage()}"><span
+								class="page-link">«</span></li>
+							<li class="page-item"
+								th:if="${!pageInfo.isIsFirstPage() && pageInfo.getList().size() > 0}"><a
+								class="page-link"
+								th:href="|javascript:gopage([[${pageInfo.getPrePage()}]])|"
+								rel="prev">«</a></li>
+							<li th:class="|page-item ${(pageInfo.pageNum eq page) ? 'active': ''} |"
+								th:each="page:${pageInfo.navigatepageNums}"><span
+								class="page-link" th:if="${pageInfo.pageNum eq page}"
+								th:text="${page}"></span> <a class="page-link"
+								th:unless="${pageInfo.pageNum eq page}"
+								th:href="|javascript:gopage(${page})|" th:text="${page}">{{$page}}</a></li>
+							<li class="page-item" th:if="${pageInfo.hasNextPage}"><a
+								class="page-link"
+								th:href="|javascript:gopage([[${pageInfo.getNextPage()}]])|"
+								rel="next">»</a></li>
+							<li class="page-item disabled"
+								th:unless="${pageInfo.hasNextPage}"><span
+								class="page-link">»</span></li>
+						</ul>
+					</nav>
 			</div>
 		<script type="text/javascript">
 			let memberId = $("#memberId").val(); //현재 접속한 사람 아이디
+			
+			function gopage(p) {
+			location.href = '/gclass.do?pageNum=' + p;
+			}
+		
 
 			//클래스 등록
 			$("#startClass").on("click", function() {
