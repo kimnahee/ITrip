@@ -117,4 +117,9 @@ public class CommunityServiceImpl implements CommunityService {
 		return map.freeDelete(vo);
 	}
 
+	@Override
+	public int replyCount(ReplyVO vo) {
+		return map.replyCount(vo);
+	}
+
 }

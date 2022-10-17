@@ -240,4 +240,9 @@
 		order by com_no desc
 	</select>
 	
+	<select id="replyCount" resultType="Integer">
+		select count(*)
+		from reply 
+		where com_no = #{com_no};
+	</select>
 </mapper>
