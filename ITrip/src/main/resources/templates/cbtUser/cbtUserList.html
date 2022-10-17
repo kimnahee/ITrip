@@ -413,8 +413,9 @@ function gopage(p){
 					}else{
 						feedbackArea.innerHTML+=
 							"<tr><td>"+(idx+1)+"</td><td>"+elem.content+"</td><td>"
-							+elem.nick+"</td><td><button type='button' class='badge bg-warning' disabled='disabled'>x</button></td></tr>";
+							+elem.nick+"</td><td><button type='button'  class='badge bg-warning fbDelete' id='fbDelete'>x</button></td></tr>";
 					}
+					//content.value =""
 				})
 				
 				//paging..start
@@ -490,7 +491,7 @@ $(document).on("click","#fbInsert", function(e){
 							}else{
 								feedbackArea.innerHTML+=
 									"<tr><td>"+(idx+1)+"</td><td>"+elem.content+"</td><td>"
-									+elem.nick+"</td><td><button type='button' class='' disabled='disabled'>x</button></td></tr>";
+									+elem.nick+"</td><td><button type='button'  class='badge bg-warning fbDelete' id='fbDelete'>x</button></td></tr>";
 							}
 						})
 						content=""

@@ -103,7 +103,7 @@ public class ClassController {
 		} // 나를 팔로우하는 멤버 리스트(flist)
 
 
-		return "guide/gclass";
+		return "redirect:gclass.do";
 	}
 
 		
