@@ -30,31 +30,10 @@ layout:decorate="~{layout/layout}" xmlns:sec="http://www.thymeleaf.org/extras/sp
 						<div class="col-12">
 							<div class="form-group">
 							
-							
-							<!-- 북마크 -->
-							<div data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user"><h3>문제<span th:text="${cbt.cbtNo}"></span>
-							<a class="bmArea" style="cursor: pointer" th:data-no="${st.index}"></a></h3>
-							</div>
-							<!-- 북마크 목록-->
-							     <div class="dropdown-menu">
-							     <ul class="bookmark">
-									<li class="list-group py-2 px-4" id="bookmark1" name="bookmark1" value="1" style="cursor: pointer;">
-									<span><i data-feather="star"></i> 중요한 문제</span>
-									</li>
-									<li class="list-group py-2 px-4" id="bookmark2" name="bookmark2" value="2" style="cursor: pointer;">
-									<span><i data-feather="star"></i> 개념이 부족한</span>
-									</li>
-									<li class="list-group  py-2 px-4" id="bookmark3" name="bookmark3" value="3" style="cursor: pointer;">
-									<span><i data-feather="star"></i> 실수</span></li>
-							     </ul>
-                               </div>
-						    <!-- 북마크 끝 -->
-							
-							
-							
+						 		<h4>문제 <span th:text="${cbt.cbtNo}"></span></h4>
 								<input type="hidden" id="cbtNo0" name="cbtNo0" th:value="${cbt.cbtNo}"> 
-								<input type="hidden" id="PreGtpCd" name="PreGtpCd" th:value="${cbtGuideVO.gtpCd}">
-								<input type="hidden" id="PreLangCd" name="PreLangCd" th:value="${cbtGuideVO.langCd}">
+								<!-- <input type="hidden" id="PreGtpCd" name="PreGtpCd" th:value="${cbtGuideVO.gtpCd}">
+								<input type="hidden" id="PreLangCd" name="PreLangCd" th:value="${cbtGuideVO.langCd}"> -->
 								<input type="hidden" th:id="|cnsr${st.index}|" name="cnsr" th:value="${cbt.cnsr}">
 								<br> <span id="QUES" th:text="${cbt.ques}">문제</span> 
 								<a>&nbsp;&nbsp;[ 출제자 : <span th:text="${cbt.memberId}"></span> ] </a>
@@ -190,116 +169,6 @@ layout:decorate="~{layout/layout}" xmlns:sec="http://www.thymeleaf.org/extras/sp
 		
 		
 		
-
-		// 함수 호출
-		$(document).ready(function() {
-			BookmarkCount();
-		})
-		
-		function BookmarkCount() {
-			//화면에 먼저 즐겨찾기 상태를 출력함
-			let bma = document.getElementsByClassName("bmArea"); // 북마크 생성되는 영역
-			let size = document.getElementsByName("cbtNo0").length; //문제 갯수
-			let bmul = document.getElementsByClassName("bookmark"); // 북마크 ul태그
-			
-			let cbtNos = [];
-			// 문제번호 5개를 배열에 담기
-			for(var i = 0; i < size; i++){
-			    cbtNos.push(document.getElementsByName("cbtNo0")[i].value);
-			}
-			console.log(cbtNos);
-			$.ajax({
-				url : "/ajaxBookmarkCount.do",
-				data : {'cbtNos' : cbtNos},
-				success : function(res) {
-					
-					for(let i =0; i < res.length; i++){
-						if(res[i] == 0) { // 빈 즐겨찾기 아이콘
-							bma[i].innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="lightblue" class="bi bi-star" viewBox="0 0 16 16">
-								                <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
-								  	            </svg>`;					 
-						} else { // 꽉 즐겨찾기 아이콘
-							bma[i].innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="lightblue" class="bi bi-star-fill" viewBox="0 0 16 16">
-								                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
-								                </svg>`
-						}
-					}
-				},
-				error: function(err){
-					console.error(err);
-				} 
-			})
-		}
-
-		 //클릭하면 즐겨찾기 추가 또는 삭제
-		$('.bookmark').on("click","li",function(e) {
-			
-			let tg = e.currentTarget; 
-			console.log(tg);
-			let bCd = tg.value; // 즐겨찾기코드 (1,2,3 중 클릭한 값으로 담김)
-			console.log(bCd);
-			let cNo = tg.parentElement.parentElement.nextElementSibling.value; // 즐겨찾기 한 문제번호
-			console.log(cNo);
-			let ul =  tg.parentElement.parentElement.parentElement.childNodes[3].childNodes[2].childNodes[0]; //svg 태그
-
-			console.log(ul);
-			if($(ul).hasClass("bi-star")){ //비어있으면
-				bookmarkInsert(tg);
-			} else{
-				var result = confirm("즐겨찾기가 되어있습니다. 즐겨찾기를 취소하겠습니까?");
-				if(result){
-				    
-				    bookmarkDelete(tg);
-				}else{
-					alert("취소하였습니다.");
-				}
-			}
-		   
-		}) 
-		
-		// 즐겨찾기 추가
-		function bookmarkInsert(tg){
-			let cNo = tg.parentElement.parentElement.nextElementSibling.value; // 즐겨찾기 한 문제번호
-			let bCd = tg.value; // 즐겨찾기코드 (1,2,3 중 클릭한 값으로 담김)
-			let bma = tg.parentElement.parentElement.parentElement.childNodes[3].childNodes[2]; // 즐겨찾기 이미지 영역
-			 $.ajax({
-			        url: '/ajaxBookmarkInsert.do',
-			        type: 'post',
-			        dataType: 'json',
-			        data: { 'cbtNo':cNo , 'bmCd' : bCd },
-			    	beforeSend: function(xhr){
-						xhr.setRequestHeader("AJAX", true);
-						xhr.setRequestHeader("X-CSRF-TOKEN", csrfToken);
-				    },
-			        success: function insertSuccess(resp){
-			            alert('즐겨찾기에 등록했습니다.');
-			            bma.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="lightblue" class="bi bi-star-fill" viewBox="0 0 16 16">
-                            <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
-                            </svg>`
-			        },
-			        error: function insertError(xhr, err) {
-			           console.error("Error on ajax call: " + err); }}); 
-		 }
-		//즐겨찾기 삭제
-		function bookmarkDelete(tg) {
-		console.log("일단실행됨")
-			
-			let cNo = tg.parentElement.parentElement.nextElementSibling.value; // 즐겨찾기 한 문제번호
-			let bma = tg.parentElement.parentElement.parentElement.childNodes[3].childNodes[2]; // 즐겨찾기 이미지 영역
-			console.log("cNo", cNo);
-			$.ajax({
-				url:"/ajaxBookmarDelete.do",
-				data : {'cbtNo':cNo },
-				success : function(data) {
-					if(confirm("즐겨찾기를 취소했습니다.")) { // 빈 하트
-						bma.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="lightblue" class="bi bi-star " viewBox="0 0 16 16">
-                            <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
-                            </svg>`;					 
-					} 
-				}
-			})
-		}
-		 
 	</script>
 </div>
 </body>
