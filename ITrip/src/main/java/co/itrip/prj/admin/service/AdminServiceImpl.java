@@ -62,10 +62,6 @@ public class AdminServiceImpl implements AdminService {
 
 	}
 
-	@Override
-	public int memberAuthUpdateTo(MemberVO vo) {
-		return map.memberAuthUpdateTo(vo);
-	}
 
 	@Override
 	public List<ConsultVO> consultSearch(ConsultVO vo) {
@@ -87,6 +83,11 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public GuideVO memberAuthOne(GuideVO vo) {
 		return map.memberAuthOne(vo);
+	}
+
+	@Override
+	public int memberAuthUpdateTo(MemberVO vo) {
+		return map.memberAuthUpdateTo(vo);
 	}
 
 	

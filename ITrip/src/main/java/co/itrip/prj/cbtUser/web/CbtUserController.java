@@ -100,15 +100,6 @@ public class CbtUserController {
 	@PostMapping("/cbtUserMyOne.do")
 	public String cbtUserListOne(CbtUserVO vo, Model model) {
 		model.addAttribute("langCdList",cmmnCdService.cdList("L"));
-
-		/*
-		 * String ucd = cmmnCdService.cdNameList("U", vo.getUtpCd()); String lcd =
-		 * cmmnCdService.cdNameList("L", vo.getLangCd()); vo.setUtpCdName(ucd);
-		 * vo.setLangCdName(lcd);
-		 */
-		System.out.println("~~~~~~~~~~~~~~"+vo.getUtpCd());
-		System.out.println("~~~~~~~~~~~~~~"+vo.getUtpCdName());
-		
 		model.addAttribute("myCbt", cbtUserService.cbtUserMyOne(vo));
 		return "cbtUser/cbtUserMyOne";
 	}
@@ -180,6 +171,7 @@ public class CbtUserController {
     	}else{
     		System.out.println("파일이 존재하지 않습니다.");
     	}
+		cbtUserService.cbtUserMyDelete(vo);
 
 		return "redirect:cbtUserMyList.do";
 	}
