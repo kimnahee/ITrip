@@ -6,17 +6,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>QNA 작성하기</title>
-<script src="js/jquery-3.6.0.min.js"></script>
-<link rel="stylesheet" href="bootstrap/voler/assets/css/bootstrap.css">
-<link rel="stylesheet"
-	href="bootstrap/voler/assets/vendors/quill/quill.bubble.css">
-<link rel="stylesheet"
-	href="bootstrap/voler/assets/vendors/quill/quill.snow.css">
-<link rel="stylesheet"
-	href="bootstrap/voler/assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
-<link rel="stylesheet" href="bootstrap/voler/assets/css/app.css">
-<link rel="shortcut icon"
-	href="bootstrap/voler/assets/images/favicon.svg" type="image/x-icon">
 <style>
 #exampleFormControlTextarea1 {
 	min-height: 500px;
@@ -50,10 +39,16 @@
 									<textarea class="form-control" id="exampleFormControlTextarea1"
 										name="content" rows="3" placeholder="내용"></textarea>
 								</div>
-								<div class="form-group mb-3">
+								<div class="form-group mb-3" style="display: none;">
 									<input type="text" id="memberId" class="form-control"
 										name="memberId"
 										th:value=${#authentication.principal.member.memberId}
+										readonly="readonly">
+								</div>
+								<div class="form-group mb-3">
+									<input type="text" id="nick" class="form-control"
+										name="nick"
+										th:value=${#authentication.principal.member.nick}
 										readonly="readonly">
 								</div>
 								<div class="form-group mb-3">

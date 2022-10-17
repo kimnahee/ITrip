@@ -71,7 +71,7 @@
 								<tr th:each="free : ${pageInfo.list}">
 									<td style="display: none;"><p class="text-md text-secondary mb-0" th:text="${free.comNo}">글번호</p></td>
 									<td><p class="text-md text-secondary mb-0" th:text="${free.title}">글제목</p></td>
-									<td style="display: none;"><p class="text-md text-secondary mb-0" th:text="${free.memberId}">작성자</p></td>
+									<td style="display: none;"><p class="text-md text-secondary mb-0" th:text="${free.nick}">작성자</p></td>
 									<td><p class="text-md text-secondary mb-0" th:text="${free.dt}">작성일자</p></td>
 									<td><p class="text-md text-secondary mb-0" th:text="${free.hit}">조회수</p></td>
 								</tr>

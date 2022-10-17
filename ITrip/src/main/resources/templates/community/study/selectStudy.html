@@ -56,8 +56,8 @@
 								</div>
 								<div class="form-group mb-3">
 									<label for="basicInput">작성자</label> <input type="text"
-										id="memberId" class="form-control" name="memberId"
-										th:field=*{memberId} readonly="readonly">
+										id="nick" class="form-control" name="nick"
+										th:field=*{nick} readonly="readonly">
 								</div>
 								<div class="form-group mb-3">
 									<label for="exampleFormControlTextarea1" class="form-label">내용</label>
@@ -155,6 +155,7 @@
 		<script>
 			let comNo = $("#comNo").val();
 			let mid = $("#myId").val();
+			let nick = $("#nick").val();
 			
 			function replyList(){
 				$.ajax({ 
@@ -177,7 +178,7 @@
 			function makeTr(data){
 				let tr = `<tr>
 					<td class="text-center" style="display:none;">${data.reNo}</td>
-					<td class="text-center">${data.memberId}</td>
+					<td class="text-center">${data.nick}</td>
 					<td class="text-center">${data.content}</td>
 					<td class="text-center">${data.dt}</td>
 					<td>`;
@@ -272,7 +273,7 @@
 				$.ajax({ 
 					url : "/replyInsert.do",
 					type : "post",
-					data : {"comNo" : comNo, "content" : content, "memberId" : mid},
+					data : {"comNo" : comNo, "content" : content, "memberId" : mid, "nick" : nick},
 					beforeSend: function(xhr){
 						xhr.setRequestHeader("AJAX", true);
 					    xhr.setRequestHeader("X-CSRF-TOKEN", csrfToken);

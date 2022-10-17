@@ -8,6 +8,7 @@
 		title,
 		content,
 		member_id,
+		nick,
 		dt,
 		hit,
 		attach,
@@ -45,7 +46,7 @@
 		</selectKey>
 		insert into comboard
 		values(#{comNo}, #{title}, #{content},
-		#{memberId}, sysdate, 0, #{attach}, #{attachDir}, '스터디')
+		#{memberId}, sysdate, 0, #{attach}, #{attachDir}, '스터디', #{nick})
 	</insert>
 
 	<update id="studyUpdate">
@@ -73,7 +74,7 @@
 		<choose>
 			<when test="key == 1"> and title like '%'|| #{val} ||'%'</when>
 			<when test="key == 2"> and content like '%'|| #{val} ||'%'</when>
-			<when test="key == 3"> and member_id like '%'|| #{val} ||'%'</when>
+			<when test="key == 3"> and nick like '%'|| #{val} ||'%'</when>
 		</choose>
 		order by com_no
 		desc
@@ -101,7 +102,7 @@
 		</selectKey>
 		insert into comboard
 		values(#{comNo}, #{title}, #{content},
-		#{memberId}, sysdate, 0, #{attach}, #{attachDir}, '자유게시판')
+		#{memberId}, sysdate, 0, #{attach}, #{attachDir}, '자유게시판', #{nick})
 	</insert>
 
 	<update id="freeUpdate">
@@ -114,6 +115,12 @@
 		</set>
 		where com_no = #{comNo}
 	</update>
+	
+	<delete id="freeDelete">
+		delete
+		from comboard
+		where com_no=#{comNo}
+	</delete>
 	
 	<!-- 검색+페이징(자유게시판) -->
 	<select id="freeSearch" resultType="co.itrip.prj.community.service.CommunityVO">
@@ -135,6 +142,7 @@
 		com_no,
 		content,
 		member_id,
+		nick,
 		dt
 		from reply
 		where
@@ -156,7 +164,7 @@
 		</selectKey>
 		insert into reply
 		values(#{reNo}, #{comNo}, #{content}, #{memberId},
-		sysdate)
+		sysdate, #{nick})
 	</insert>
 
 	<!-- 댓글 수정 -->
@@ -186,6 +194,7 @@
 				title,
 				content,
 				member_id,
+				nick,
 				dt,
 				hit,
 				attach,
