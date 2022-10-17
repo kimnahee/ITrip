@@ -118,7 +118,7 @@ public class GuideController {
 	@GetMapping("/gconsult.do")
 	public String gconsult(ConsultVO vo, Model model, Principal principal, HttpServletRequest request,
 			@RequestParam(required = false, defaultValue = "1") int pageNum,
-			@RequestParam(required = false, defaultValue = "3") int pageSize){
+			@RequestParam(required = false, defaultValue = "4") int pageSize){
 		PageHelper.startPage(pageNum, pageSize);
 		vo.setGuideId(principal.getName());
 		// 승인 완료된 상담 
