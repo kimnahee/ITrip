@@ -73,7 +73,7 @@
 								<tr th:each="study : ${pageInfo.list}">
 									<td style="display: none;"><p class="text-md text-secondary mb-0" th:text="${study.comNo}">글번호</p></td>
 									<td><p class="text-md text-secondary mb-0" th:text="${study.title}">글제목</p></td>
-									<td><p class="text-md text-secondary mb-0" th:text="${study.memberId}">작성자</p></td>
+									<td><p class="text-md text-secondary mb-0" th:text="${study.nick}">작성자</p></td>
 									<td><p class="text-md text-secondary mb-0" th:text="${study.dt}">작성일자</p></td>
 									<td><p class="text-md text-secondary mb-0" th:text="${study.hit}">조회수</p></td>
 								</tr>
@@ -163,9 +163,9 @@
 						 if(data.list.length != 0){
 							data.list.forEach(elem => {
 								a += '<tr>';
-								a += '<td><p class="text-md text-secondary mb-0">' + elem.comNo + '</p></td>';
+								a += '<td style="display:none;"><p class="text-md text-secondary mb-0">' + elem.comNo + '</p></td>';
 								a += '<td><p class="text-md text-secondary mb-0">' + elem.title + '</p></td>';
-								a += '<td><p class="text-md text-secondary mb-0">' + elem.memberId + '</p></td>';
+								a += '<td><p class="text-md text-secondary mb-0">' + elem.nick + '</p></td>';
 								a += '<td><p class="text-md text-secondary mb-0">'+ elem.dt + '</p></td>';
 								a += '<td><p class="text-md text-secondary mb-0">' + elem.hit + '</p></td></tr>';
 							})

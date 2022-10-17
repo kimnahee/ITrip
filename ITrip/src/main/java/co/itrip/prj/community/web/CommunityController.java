@@ -178,6 +178,15 @@ public class CommunityController {
 		dao.freeUpdate(vo);
 		return "redirect:free.do";
 	}
+	
+	// 자유게시판 글 삭제
+	@GetMapping("/freeDelete.do")
+	public String freeDelete(CommunityVO vo, Model model, HttpServletRequest request) {
+		System.out.println(request.getParameter("comNo")); // 글번호 확인
+		vo.setComNo(Integer.parseInt(request.getParameter("comNo")));
+		dao.freeDelete(vo);
+		return "redirect:free.do";
+	}
 
 	// 페이징 처리(스터디게시판)
 	@GetMapping("/study.do")
@@ -242,9 +251,11 @@ public class CommunityController {
 		String comNo = request.getParameter("comNo");
 		String content = request.getParameter("content");
 		String memberId = request.getParameter("memberId");
+		String nick = request.getParameter("nick");
 		vo.setComNo(Integer.parseInt(comNo));
 		vo.setContent(content);
 		vo.setMemberId(memberId);
+		vo.setNick(nick);
 		return dao.replyInsert(vo);
 	}
 

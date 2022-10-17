@@ -12,6 +12,7 @@ public class CommunityVO {
 	private String title;
 	private String content;
 	private String memberId;
+	private String nick;
 	private Date dt;
 	private int hit;
 	private String attach;
