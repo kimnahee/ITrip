@@ -315,7 +315,7 @@
 				}
 
 			} else { //단답형이면
-				let sCnsr = tg.parentElement.childNodes[16].childNodes[1].childNodes[1].value; // 단답형 인풋 영역
+				let sCnsr = tg.previousElementSibling.childNodes[1].childNodes[1].value;// 단답형 인풋 영역
 				if (sCnsr == crrCnsr) {
 					alert("정답입니다.")
 				} else {
