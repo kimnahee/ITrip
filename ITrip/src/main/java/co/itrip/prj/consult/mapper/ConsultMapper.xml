@@ -137,11 +137,11 @@
 	
 	<!-- 신청한 상담 목록 [박은지]-->
 	<select id="myConsultList" resultType="co.itrip.prj.consult.service.ConsultVO">
-		select c.ennc, c.guide_id, c.consult_no, c.title, p.conday, p.begin_time  as stime,
-                                    case <![CDATA[when p.conday = sys.day and p.begin_time <= sys.time  then '진행중']]>
-                                         <![CDATA[when p.conday = sys.day and p.begin_time > sys.time  then '진행전']]>
-                                         <![CDATA[when p.conday > sys.day then '개설전']]>
-                                         <![CDATA[when p.conday < sys.day  then '종료']]>
+		select c.ennc, c.guide_id, c.consult_no, c.title, substr(p.conday, 1, 8), p.begin_time  as stime,
+                                    case <![CDATA[when substr(p.conday, 1, 8) = sys.day and p.begin_time <= sys.time  then '진행중']]>
+                                         <![CDATA[when substr(p.conday, 1, 8) = sys.day and p.begin_time > sys.time  then '진행전']]>
+                                         <![CDATA[when substr(p.conday, 1, 8) > sys.day then '개설전']]>
+                                         <![CDATA[whensubstr(p.conday, 1, 8) < sys.day  then '종료']]>
                                          end ST
 		from consult c, payform p ,(SELECT substr(CURRENT_TIMESTAMP,1,8) day, substr(CURRENT_TIMESTAMP,10,5) time
                                     FROM DUAL) sys
