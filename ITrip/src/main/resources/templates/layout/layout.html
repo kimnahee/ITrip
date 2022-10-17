@@ -237,8 +237,6 @@
 			
 			//알람 상태 업데이트
 			$("#alarmList").on("click", function(e){
-				let csrfHeaderName = "${_csrf.headerName}";
-				let csrfToken=$("input[name=_csrf]").val();
 				if($(e.target).prop('tagName') == 'SPAN'){
 					let alarmNo = $(e.target).closest("div").prev().html();
 					$.ajax({ 
@@ -273,10 +271,7 @@
 			
 			//알람 리스트 출력
 			function alarmList(){
-				let csrfHeaderName = "${_csrf.headerName}";
-				let csrfToken=$("input[name=_csrf]").val();
 				let id = $("#memberId").val();
-				
 				$.ajax({ 
 					url : "/alarmList.do",
 					type : "post",
@@ -294,14 +289,11 @@
 								<div class="alert alert-info alert-dismissible show fade">
 									${element.alarmMsg}
 								<button type="button" class="close" data-dismiss="alert"
-									aria-label="Close">
-									<span aria-hidden="true">&times;</span>
+									aria-label="Close"><span aria-hidden="true">&times;</span>
 								</button>
 							</div>
 							</li>`;
-
 							$("#alarmList").html(a);
-							//console.log(element.alarmMsg);
 						})
 					}
 				})
@@ -309,10 +301,7 @@
 			
 			//알람 카운트 개수 출력
 			function alarmCount(){
-				let csrfHeaderName = "${_csrf.headerName}";
-				let csrfToken=$("input[name=_csrf]").val();
 				let id = $("#memberId").val();
-				
 				$.ajax({ 
 					url : "/alarmCount.do",
 					type : "post",

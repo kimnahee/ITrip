@@ -76,6 +76,10 @@ public class CommunityController {
 	@PostMapping("/studyInsert.do")
 	public String studyInsert(CommunityVO vo, MultipartFile file) throws IllegalStateException, IOException {
 		String oFileName = file.getOriginalFilename();
+		File files = new File(fileDir+"/STUDY/");
+		if(!files.exists()) {
+			files.mkdirs();
+		}
 		if(!oFileName.isEmpty()) {
 			String sFileName = UUID.randomUUID().toString()+oFileName.substring(oFileName.lastIndexOf("."));
 			String path = fileDir+"/STUDY/"+sFileName;
@@ -134,6 +138,10 @@ public class CommunityController {
 	@PostMapping("/freeInsert.do")
 	public String freeInsert(CommunityVO vo, MultipartFile file) throws IllegalStateException, IOException {
 		String oFileName = file.getOriginalFilename();
+		File files = new File(fileDir+"/FREE/");
+		if(!files.exists()) {
+			files.mkdirs();
+		}
 		if(!oFileName.isEmpty()) {
 			String sFileName = UUID.randomUUID().toString()+oFileName.substring(oFileName.lastIndexOf("."));
 			String path = fileDir+"/FREE/"+sFileName;
@@ -170,18 +178,6 @@ public class CommunityController {
 		dao.freeUpdate(vo);
 		return "redirect:free.do";
 	}
-
-	// 페이징
-	// 페이징 처리(전체게시판)
-//	@GetMapping("/pageTest.do")
-//	public String findPage(CommunityVO vo, Model model, HttpServletRequest request,
-//			@RequestParam(required = false, defaultValue = "1") int pageNum,
-//			@RequestParam(required = false, defaultValue = "10") int pageSize) {
-//		PageHelper.startPage(pageNum, pageSize);
-//		vo.setCtgry("''");
-//		model.addAttribute("pageInfo", PageInfo.of(dao.findAll(vo)));
-//		return "community/timeLine";
-//	}
 
 	// 페이징 처리(스터디게시판)
 	@GetMapping("/study.do")
@@ -246,9 +242,6 @@ public class CommunityController {
 		String comNo = request.getParameter("comNo");
 		String content = request.getParameter("content");
 		String memberId = request.getParameter("memberId");
-		System.out.println("comNo" + comNo);
-		System.out.println("content" + content);
-		System.out.println("memberId" + memberId);
 		vo.setComNo(Integer.parseInt(comNo));
 		vo.setContent(content);
 		vo.setMemberId(memberId);

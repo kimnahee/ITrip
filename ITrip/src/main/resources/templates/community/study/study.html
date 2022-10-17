@@ -62,7 +62,7 @@
 						<table class="table align-items-center mb-0">
 							<thead>
 								<tr>
-									<th class="text-uppercase text-secondary text-md font-weight-bolder opacity-7">글번호</th>
+									<th class="text-uppercase text-secondary text-md font-weight-bolder opacity-7" style="display: none;">글번호</th>
 									<th class="text-uppercase text-secondary text-md font-weight-bolder opacity-7 ps-2">글제목</th>
 									<th class="text-center text-uppercase text-secondary text-md font-weight-bolder opacity-7">작성자</th>
 									<th class="text-center text-uppercase text-secondary text-md font-weight-bolder opacity-7">작성일자</th>
@@ -71,7 +71,7 @@
 							</thead>
 							<tbody id="studyList">
 								<tr th:each="study : ${pageInfo.list}">
-									<td><p class="text-md text-secondary mb-0" th:text="${study.comNo}">글번호</p></td>
+									<td style="display: none;"><p class="text-md text-secondary mb-0" th:text="${study.comNo}">글번호</p></td>
 									<td><p class="text-md text-secondary mb-0" th:text="${study.title}">글제목</p></td>
 									<td><p class="text-md text-secondary mb-0" th:text="${study.memberId}">작성자</p></td>
 									<td><p class="text-md text-secondary mb-0" th:text="${study.dt}">작성일자</p></td>
