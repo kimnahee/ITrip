@@ -65,9 +65,14 @@ public class GuideController {
 	
 	//소정 가이드 insert & 파일처리
 	@PostMapping("/guideInsert.do")
-	public String guideInsert(GuideVO vo, Model model, MultipartFile file) throws IllegalStateException, IOException {
-		
+	public String guideInsert(GuideVO vo, Model model, MultipartFile file) 
+			throws IllegalStateException, IOException {
+		// 새로운파일저장경로
 		String oFileName = file.getOriginalFilename();
+		File files = new File(fileDir+"/empfile/");
+		if(!files.exists()) {
+			files.mkdirs();
+		}
 		if (!oFileName.isEmpty()) {
 			String sFileName = UUID.randomUUID().toString() + oFileName.substring(oFileName.lastIndexOf(".")); // 마지막.뒤에값 가져오기
 			String path = fileDir + "/guide/" + sFileName;
@@ -136,6 +141,7 @@ public class GuideController {
 		vo.setGuideId(principal.getName());
 		vo.setConfmCd("2");
 		model.addAttribute("pageInfo", PageInfo.of(guService.myIClassList(vo)));
+		System.out.println("======================================================================="+PageInfo.of(guService.myIClassList(vo)));
 		return "guide/gclass";
 	}
 	
