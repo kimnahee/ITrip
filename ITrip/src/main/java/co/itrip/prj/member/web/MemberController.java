@@ -196,14 +196,15 @@ public class MemberController { //Principal
 		MemberVO memberDao = mService.memberSelect(vo); //DB의 pw를 가져옴 
 		String DBpw = memberDao.getPw(); // DB의 비밀번호
 		
-		
 		PasswordEncoder reqPw = new BCryptPasswordEncoder(); // 암호화처리를 위한 인스턴스 생성
 	
 		if(reqPw.matches(vo.getPw(), DBpw)) {
-			System.out.println("비밀번호가 맞음...!");
-			return "redirect:/mrecive.do";
+			if(memberDao.getAuth().equals("ROLE_GUIDE")) {
+				  return "redirect:gmrecive.do";
+				}else {
+				  return "redirect:/mrecive.do";
+				}
 		}else {
-			System.out.println("비밀번호가 틀림...!");
 			model.addAttribute("error", "비밀번호가 틀렸습니다.");
 			model.addAttribute("exception", exception);
 			
