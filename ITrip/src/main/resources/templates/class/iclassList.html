@@ -146,7 +146,7 @@ layout:decorate="~{layout/layout}">
 		$('#classList').html("");
 		$.each(data, function(index, item){
 			var row = '<br><div id="searchClassList" style="width:370px;margin:30px;"> <div class="col mb-5"><div class="card h-100">'
-                +'<img src="@{/download(fileName=${/classimg/'+item.attachDir+'})}"  height="200px;" />'
+                +'<img src="/download?fileName=/classimg/'+item.attachDir+'"  height="200px;" />'
                 +'<div class="card-body p-4"><div class="text-center">'
                 +'<h5 class="fw-bolder" style="font-weight: bolder;">'+item.title+'</h5>'
                 +'<div><img src="images/dt.png" width="20px;"></img>  '

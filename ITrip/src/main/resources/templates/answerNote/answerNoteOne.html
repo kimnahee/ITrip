@@ -125,11 +125,11 @@ layout:decorate="~{layout/layout}" xmlns:sec="http://www.thymeleaf.org/extras/sp
 	<input type="hidden" th:id="|myans${myCnsr.cbtNo5}|" name="myans" th:value="${myCnsr.cnsr5}"><br>
 	
 	<script type="text/javascript">
-		//객관식 정답비교 
+		//경아 - 이전에 선택한 오답선택해놓기
 		$.each($('input[name="cbtNo0"]'),function (idx,elem) {
 			$("#cbt"+elem.value+($("#mycnsr"+(idx+1)+"").val())).prop("checked",true)
 		})
-		
+		//객관식 정답비교 
 		$.each($('.row'),function(idx,elem){
 			$("input[name=cbt"+idx+"]").on("click",function(){
 				if($(this).val() == $("#cnsr"+idx).val()){
@@ -152,7 +152,7 @@ layout:decorate="~{layout/layout}" xmlns:sec="http://www.thymeleaf.org/extras/sp
 			}
 		})
 		
-		//div에  틀렸던 답변 넣기 
+		//경아 - div에 틀렸던 답변 넣기 
 		$.each($('.myans'),function(idx,elem){
 			name = $('#'+elem.id).attr("id")
 			if(elem.id == name){
