@@ -98,9 +98,9 @@
 							<table class="table table-bordered">
 								<thead>
 									<tr>
-										<th>i-consult 1:1</td>
-										<th>i-Class</th>
-										<th>가이드수정</th>
+										<th>I-CONSULT 1:1</td>
+										<th>I-ClASS</th>
+										<th>일정관리</th>
 										<th>수강생 목록</th>
 									</tr>
 								</thead>
@@ -113,57 +113,22 @@
 								<tr>
 									<td>상담중인 내역을 보는 곳입니다.</td>
 									<td>진행중인 클래스를 보는 곳입니다.</td>
-									<td>가이드 정보를 수정하는 곳입니다.</td>
+									<td>상담,클래스 일정을 확인 하는 곳입니다.</td>
 									<td>수강중인 유저들을 보는 곳입니다.</td>
 								</tr>
 								<tr>
 									<td><button id="gConsult" style="width: 150px;" class="btn btn-sm btn-primary">1:1상담</button></td>
-									<td><button id="gClass" style="width: 150px;" class="btn btn-sm btn-primary">class</button></td>
-									<td><button id="grevice" style="width: 150px;" class="btn btn-sm btn-primary">가이드정보수정</button></td>
-									<td><button id="userList" style="width: 150px;" class="btn btn-sm btn-primary">수강생 리스트</button></td>
+									<td><button id="gClass" style="width: 150px;" class="btn btn-sm btn-primary">CLASS</button></td>
+									<td><button id="calendar" style="width: 150px;" class="btn btn-sm btn-primary">일정관리</button></td>
+									<td><button id="userList" style="width: 150px;" class="btn btn-sm btn-primary">수강생 목록</button></td>
 								</tr>
 							</table>
 						</div>
 						<div class="text-center">
-                			<a class="btn" href="/pwChkForm.do">회원수정</a>
-           	 			</div>
-           	 			
-	             <!--Disabled Backdrop Modal -->
-	             <!-- 회원탈퇴 이동(김하은) 
-                			/<a class="btn block" data-toggle="modal" data-backdrop="false" data-target="#backdrop">회원탈퇴</a>
-	                    <div class="modal fade text-left" id="backdrop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel4"
-	                    aria-hidden="true">
-	                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-	                        <div class="modal-content">
-		                        <div class="modal-header">
-		                            <h4 class="modal-title" id="myModalLabel4">회원 탈퇴</h4>/
-		                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		                            <i data-feather="x"></i>
-		                            </button>
-		                        </div>
-		                        <div class="modal-body">
-		                            <p>
-		                            가입된 회원정보 모두 삭제 됩니다. 작성하신 게시물은 삭제되지 않습니다.
-									탈퇴 후 같은 계정으로 재가입시 기존에 가직 있던 적립금은 복원되지 않습니다.
-									회원탈퇴를 진행하시겠습니까?
-		                            </p>
-		                        </div>
-		                        <div class="modal-footer">
-		                            <button type="button" class="btn btn-light-secondary" data-dismiss="modal">
-		                            <i class="bx bx-x d-block d-sm-none"></i>
-		                            <span class="d-none d-sm-block">취소</span>
-		                            </button>
-		                            <button type="button" class="btn btn-primary ml-1" data-dismiss="modal">
-		                            <i class="bx bx-check d-block d-sm-none"></i>
-		                            <span class="d-none d-sm-block">탈퇴하기</span>
-		                            </button>
-		                        </div>
-	                        </div>
-	                    </div>
-	                    </div>
-	                    -->
-					</div>
-					
+                			<a class="btn" href="/pwChkForm.do">회원정보수정</a> / 
+                			<a class="btn" href="/grevice.do">가이드정보수정</a>
+           	 			</div>	         
+					</div>					
 				</div>
 		<script>
 		
@@ -185,8 +150,8 @@
     		location.href = "/gclass.do";
     	})
     	
-    	$("#gRevice").on("click", function(e){
-    		location.href = "/grevice.do";
+    	$("#calendar").on("click", function(e){
+    		location.href = "/calendar.do";
     	})
     	
     	$("#userList").on("click", function(e){

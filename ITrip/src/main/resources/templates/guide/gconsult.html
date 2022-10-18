@@ -40,7 +40,7 @@
 							<div>
 								<td><button id="consultStart" style="width: 140px;" class="btn btn-sm btn-primary">상담등록하기</button></td>
 								<td><button id="insertedStart" style="width: 140px;" class="btn btn-sm btn-primary">등록대기목록</button></td>
-								<td><button id="calendarStart" style="width: 140px;" class="btn btn-sm btn-primary">상담캘린더</button></td>
+								<!-- <td><button id="calendarStart" style="width: 140px;" class="btn btn-sm btn-primary">일정관리</button></td> -->
 							</div>
 					</div>
 					<br>
@@ -220,10 +220,6 @@
 	//상담 등록
 	$("#consultStart").on("click", function(e){
 		location.href="/consultStart.do";
-	})
-	//캘린더 연결
-	$("#calendarStart").on("click", function(e){
-		location.href="/calendar.do";
 	})
 	
 	// 등록한 상담 리스트 보기

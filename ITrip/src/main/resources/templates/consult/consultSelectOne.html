@@ -111,7 +111,7 @@
         
         <div class="modal-content">
             <div class="modal-header" id="average">
-	            <h4 class="modal-title">총점  <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="gold" class="bi bi-star-fill" viewBox="0 0 16 16">
+	            <h4 class="modal-title">총점  <svg xmlns="http://www.w3.org/2000/svg" width="40" height="30" fill="gold" class="bi bi-star-fill" viewBox="0 0 16 16">
 		                        	<path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
 		                        </svg><span id="score"></span></h4>
 	            
@@ -119,7 +119,7 @@
 	                <i data-feather="x"></i>
 	            </button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body"  width="40" height="100" >
                <table class="form-group">
                 <thead id="contentHead">
                 	</thead>
@@ -269,7 +269,7 @@
 						for(let i = 0; i< element.star; i++){ // DB 별점 점수만큼 반복문 돌려 아이콘 그려주기
 								star += starIcon; 
 							}
-							let makeTr = `<tr><th class='col-md-4 mb-3'>`+star+`</th>
+							let makeTr = `<tr><th class='col-md-5'>`+star+`</th>
 							            	<th class='col-md-3'>구분 : ${element.ctgry}</th>
 							            	<th class='col-md-4'>닉네임 : ${element.nick}</th>
 							            	<th class='col-md-1'>`;
