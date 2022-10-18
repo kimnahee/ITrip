@@ -46,7 +46,7 @@
 										<!-- 이미지가 있으면 이미지 출력-->
 										<div id="atch" class="form-group"th:if="${not #strings.isEmpty(cbt.attach)}">
 											<span class="mb-2 text-md">
-												<div style="text-align: center;">
+												<div>
 													  <img th:src="@{/download(fileName=${'/CBT_GUIDE/'+cbt.attachDir})}" style="margin-bottom: 10px; width:600px;">
 												</div>
 											</span>
