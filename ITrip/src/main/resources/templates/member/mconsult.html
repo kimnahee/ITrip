@@ -86,7 +86,7 @@ height: 45px;
 										<li class="list-group-item" th:text="'가이드  / '+${con.guideId}">Vestibulum
 											at eros</li>
 										<li class="list-group-item"
-											th:text="'상담일, 시작시간 /'+${con.conday}+', '+${con.stime}">Dapibus
+											th:text="'상담일, 시작시간 /'+${#strings.substring(con.conday,0,10)}+', '+${con.stime}">Dapibus
 											ac facilisis in</li>
 									</ul>
 								</div>
@@ -97,37 +97,6 @@ height: 45px;
 							</div>
 					 
 					 
-						<!-- <div th:if="${con.st == '진행중'}">
-							<table class="table table-bordered" style="width: 350px;">
-								<tr style="display: none;">
-									<td th:text="${con.consultNo}"></td>
-								</tr>
-								<tr>
-									<td th:text="${con.title}"></td>
-								</tr>
-								<tr>
-									<td th:text="${con.st}"></td>
-								</tr>
-								<tr>
-									<td th:text="'가이드  / '+${con.guideId}"></td>
-								</tr>
-								<tr>
-									<td th:text="'상담일, 시작시간 /'+${con.conday}+', '+${con.stime}"></td>
-								</tr>
-								<tr>
-									<td><div>
-								상담시간입니다.<br>
-	              							아래 채팅창을 눌러 가이드와 상담을 하실 수 있습니다.
-									</div></td>
-								</tr>
-								<tr>
-									<td>
-										<button class="btn btn-primary py-2 px-3 consultChat">채팅방</button>
-									</td>
-								</tr>
-							</table>
-						</div> -->
-						
 						<!-- 상담이 진행전일 때 -->
 						<div class="card" th:if="${con.st == '진행전'}">
 								<div class="card-content">
@@ -149,7 +118,7 @@ height: 45px;
 										<li class="list-group-item" th:text="'가이드  / '+${con.guideId}">Vestibulum
 											at eros</li>
 										<li class="list-group-item"
-											th:text="'상담일, 시작시간 /'+${con.conday}+', '+${con.stime}">Dapibus
+											th:text="'상담일, 시작시간 /'+${#strings.substring(con.conday,0,10)}+', '+${con.stime}">Dapibus
 											ac facilisis in</li>
 									</ul>
 								</div>
@@ -159,37 +128,6 @@ height: 45px;
 								</div>
 							</div>
 						
-						
-						<!-- <div th:if="${con.st == '진행전'}">
-							<table class="table table-bordered" style="width: 350px;">
-								<tr style="display: none;">
-									<td th:text="${con.consultNo}"></td>
-								</tr>
-								<tr>
-									<td th:text="${con.title}"></td>
-								</tr>
-								<tr>
-									<td th:text="${con.st}"></td>
-								</tr>
-								<tr>
-									<td th:text="'가이드  / '+${con.guideId}"></td>
-								</tr>
-								<tr>
-									<td th:text="'상담일, 시작시간 /'+${con.conday}+', '+${con.stime}"></td>
-								</tr>
-								<tr>
-									<td><div>
-								아직 상담시간이 되지 않았습니다.<br>
-	              							문의 할 점이 있으시면 아래로 문의 부탁드립니다.
-									</div></td>
-								</tr>
-								<tr>
-									<td>
-									<button class="btn btn-primary py-2 px-3 qnaList">Q&A</button>
-									</td>
-								</tr>
-							</table>
-						</div> -->
 						
 						<!-- 상담이 개설전일 때 -->
 						<div class="card" th:if="${con.st == '개설전'}">
@@ -212,7 +150,7 @@ height: 45px;
 										<li class="list-group-item" th:text="'가이드  / '+${con.guideId}">Vestibulum
 											at eros</li>
 										<li class="list-group-item"
-											th:text="'상담일, 시작시간 /'+${con.conday}+', '+${con.stime}">Dapibus
+											th:text="'상담일, 시작시간 /'+${#strings.substring(con.conday,0,10)}+', '+${con.stime}">Dapibus
 											ac facilisis in</li>
 									</ul>
 								</div>
@@ -222,37 +160,6 @@ height: 45px;
 								</div>
 							</div>
 						
-						
-						<!-- <div th:if="${con.st == '개설전'}">
-							<table class="table table-bordered" style="width: 350px;">
-								<tr style="display: none;">
-									<td th:text="${con.consultNo}"></td>
-								</tr>
-								<tr>
-									<td th:text="${con.title}"></td>
-								</tr>
-								<tr>
-									<td th:text="${con.st}"></td>
-								</tr>
-								<tr>
-									<td th:text="'가이드  / '+${con.guideId}"></td>
-								</tr>
-								<tr>
-									<td th:text="'상담일, 시작시간 /'+${con.conday}+', '+${con.stime}"></td>
-								</tr>
-								<tr>
-									<td><div>
-								아직 상담일자가 되지 않았습니다.<br>
-	              							문의 할 점이 있으시면 아래로 문의 부탁드립니다.
-									</div></td>
-								</tr>
-								<tr>
-									<td>
-									<button class="btn btn-primary py-2 px-3 qnaList">Q&A</button>
-									</td>
-								</tr>
-							</table>
-						</div> -->
 						
 						<!-- 상담이 종료되었을 때 -->
 						<div class="card" th:if="${con.st == '종료'}">
@@ -274,9 +181,8 @@ height: 45px;
 											justo odio</li>
 										<li class="list-group-item" th:text="'가이드  / '+${con.guideId}">Vestibulum
 											at eros</li>
-										<li class="list-group-item"
-											th:text="'상담일, 시작시간 /'+${con.conday}+', '+${con.stime}">Dapibus
-											ac facilisis in</li>
+										<li class="list-group-item" th:text="'상담일, 시작시간 /'+${#strings.substring(con.conday,0,10)}+', '+${con.stime}">
+										Dapibus ac facilisis in</li>
 									</ul>
 								</div>
 								<div class="card-footer d-flex justify-content-between">
@@ -285,40 +191,6 @@ height: 45px;
 								<button class="btn btn-primary py-2 px-3 consultReview">리뷰</button>
 								</div>
 							</div>
-						
-						
-						<!-- <div th:if="${con.st == '종료'}">
-							<table class="table table-bordered" style="width: 350px;">
-								<tr style="display: none;">
-									<td th:text="${con.consultNo}"></td>
-								</tr>
-								<tr>
-									<td th:text="${con.title}"></td>
-								</tr>
-								<tr>
-									<td th:text="${con.st}"></td>
-								</tr>
-								<tr>
-									<td th:text="'가이드  / '+${con.guideId}"></td>
-								</tr>
-								<tr>
-									<td th:text="'상담일, 시작시간 /'+${con.conday}+', '+${con.stime}"></td>
-								</tr>
-								<tr>
-									<td><div>
-								종료된 상담입니다.<br>
-	              							다시 상담내용을 보고 싶다면 아래 버튼을 눌러주세요.
-									</div></td>
-								</tr>
-								<tr>
-									<td>
-										<button class="btn btn-primary py-2 px-3 consultChat">상담내용</button>
-										<button class="btn btn-primary py-2 px-3 consultReview">리뷰</button>
-									</td>
-								</tr>
-							</table>
-						</div> -->
-						
 						
 					</div>
 				</div>

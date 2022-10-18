@@ -43,8 +43,8 @@ public class ClassVO {
 	private String jobName; // 주요기능
 	private String st; // 개설전/진행전/종료
 	
-	private String sdate; // 검색 시작일
-	private String edate; // 검색 끝일
+	private Date sdate; // 검색 시작일
+	private Date edate; // 검색 끝일
 	
 	private String mindt; // 클래스 시작일
 	private String maxdt; // 클래스 끝일

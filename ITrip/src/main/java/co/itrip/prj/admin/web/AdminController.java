@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.sql.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -100,8 +101,8 @@ public class AdminController {
 	// 클래스 검색
 	@GetMapping("/dateSearch.do")
 	@ResponseBody
-	private PageInfo<ClassVO> dateSearch(@RequestParam("sdate") String sdate,
-			@RequestParam("edate") String edate, Model model, ClassVO vo,
+	private PageInfo<ClassVO> dateSearch(@RequestParam("sdate") Date sdate,
+			@RequestParam("edate") Date edate, Model model, ClassVO vo,
 			@RequestParam(required = false, defaultValue = "1") int pageNum,
 			@RequestParam(required = false, defaultValue = "5") int pageSize) {
 		vo.setSdate(sdate);
