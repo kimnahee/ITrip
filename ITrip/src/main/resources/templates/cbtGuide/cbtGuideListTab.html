@@ -134,7 +134,7 @@
 															<span><i data-feather="star"></i> 중요한 문제</span>
 															</li>
 															<li class="list-group py-2 px-4" id="bookmark2" name="bookmark2" value="2" style="cursor: pointer;">
-															<span><i data-feather="star"></i> 개념이 부족한</span>
+															<span><i data-feather="star"></i> 개념이 부족한 문제</span>
 															</li>
 															<li class="list-group  py-2 px-4" id="bookmark3" name="bookmark3" value="3" style="cursor: pointer;">
 															<span><i data-feather="star"></i> 실수</span></li>
@@ -297,7 +297,6 @@
 		 }
 		//즐겨찾기 삭제
 		function bookmarkDelete(tg) {
-		console.log("일단실행됨")
 			
 			let cNo = tg.parentElement.parentElement.nextElementSibling.value; // 즐겨찾기 한 문제번호
 			let bma = tg.parentElement.parentElement.parentElement.childNodes[3].childNodes[2]; // 즐겨찾기 이미지 영역
@@ -306,7 +305,7 @@
 				url:"/ajaxBookmarDelete.do",
 				data : {'cbtNo':cNo },
 				success : function(data) {
-					if(confirm("즐겨찾기를 취소했습니다.")) { // 빈 하트
+					if(confirm("즐겨찾기를 취소했습니다.")) { // 별 상태변경
 						bma.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="lightblue" class="bi bi-star " viewBox="0 0 16 16">
                             <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
                             </svg>`;					 
@@ -354,7 +353,8 @@
 		            	 var shortCnsrs = document.getElementsByName("inputCNSR"); // 단답형 text박스
 		                 var cnsrCnt = 0;
 		                 var cnsr_f = false;
-		                 console.log("단답형 버튼 실행은 됨")
+		                 console.log(shortCnsrs);
+		                 
 		                 
 		                 for (var i = 0; i < shortCnsrs.length; i++)  {
 		     				    $("#cnsr1").val(shortCnsrs[0].value);
