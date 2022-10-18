@@ -41,7 +41,7 @@ layout:decorate="~{layout/layout}" xmlns:sec="http://www.thymeleaf.org/extras/sp
 						</div>
 					<div id="atch" class="form-group"th:if="${not #strings.isEmpty(cbt.attach)}">
 						<span class="mb-2 text-md">
-							<div style="text-align: center;">
+							<div>
 								  <img th:src="@{/download(fileName=${'/CBT_GUIDE/'+cbt.attachDir})}" style="margin-bottom: 10px; width:600px;">
 							</div>
 						</span>
@@ -88,6 +88,13 @@ layout:decorate="~{layout/layout}" xmlns:sec="http://www.thymeleaf.org/extras/sp
 								<input type="hidden" th:id="|cnsr${st.index}|" name="cnsr" th:value="${cbt.cnsr}">
 								<input type="hidden" id="cbtNo0" name="cbtNo0" th:value="${cbt.cbtNo}"> 
 								<a>&nbsp;&nbsp;[ 출제자 : <span th:text="${cbt.memberId}"></span> ]</a><br>
+					<div id="atch" class="form-group"th:if="${not #strings.isEmpty(cbt.attach)}">
+						<span class="mb-2 text-md">
+							<div>
+								  <img th:src="@{/download(fileName=${'/CBT_GUIDE/'+cbt.attachDir})}" style="margin-bottom: 10px; width:600px;">
+							</div>
+						</span>
+					</div>
 								[ 나의 오답 : <span class="myans" th:id="|myans${cbt.cbtNo}|" ></span> ]
 								<span>&nbsp;&nbsp; 새로운답변을 입력해보세요.</span><br>
 							</div>
