@@ -39,7 +39,7 @@ public class ITripApplication {
 		model.addAttribute("error", error);
 		model.addAttribute("exception", exception);
 		return "main/loginForm";
-	}
+	} 
 	
 	//로그인 폼
 	@GetMapping("/loginForm.do")

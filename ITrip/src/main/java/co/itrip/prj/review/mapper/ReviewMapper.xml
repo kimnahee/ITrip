@@ -27,7 +27,7 @@
 		   END 
 			 FROM REVIEW
 	</selectKey> 
-	INSERT INTO REVIEW VALUES (#{reviewNo},'enji','소라미',#{content}, sysdate, 'CONSULT', #{memberId}, #{star}, 88 )
+	INSERT INTO REVIEW VALUES (#{reviewNo}, #{guideId}, #{nick},#{content}, sysdate, 'CONSULT', #{memberId}, #{star}, #{no})
 	</insert>
 	
 	<insert id="classReviewInsert">
@@ -51,7 +51,7 @@
 		and pay.no = #{no}
 	</select>
 	
-		<select id="consultReviewSelect" resultType="co.itrip.prj.review.service.ReviewVO">
+	<select id="consultReviewSelect" resultType="co.itrip.prj.review.service.ReviewVO">
 		select re.review_no, re.guide_id, re.nick, re.content, re.dt, re.ctgry, re.member_id, re.star, re.no  
 		from review re, payform pay
 		where re.no = pay.no
